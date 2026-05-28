@@ -1,0 +1,53 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Kōura habitat, behaviour, and the design of artificial reefs in New Zealand lakes"
+  author: "Olivier V. Raven"
+  date: "today"
+  
+  chapters:
+  - index.qmd
+  - acknowledgements.qmd
+  - dividers/ch1_divider.qmd
+  - 01_general_intro.qmd
+  - dividers/ch2_divider.qmd
+  - 02_koura_fear/index.qmd
+  - dividers/ch3_divider.qmd
+  - 03_koura_shoreline_habitats/index.qmd
+  - dividers/ch4_divider.qmd
+  - 04_koura_mesocosm/index.qmd
+  - dividers/ch5_divider.qmd
+  - 05_stone_piles_rotoiti/index.qmd
+  - dividers/ch6_divider.qmd
+  - 06_general_discussion.qmd
+  - references.qmd
+  - appendices.qmd
+
+bibliography: references/references.bib
+csl: references/apa.csl
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+  pdf:
+    documentclass: scrbook
+    papersize: a4
+    fontsize: 12pt
+    linestretch: 1.5
+    geometry:
+      - top=25mm
+      - bottom=25mm
+      - left=35mm
+      - right=25mm
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    include-in-header:
+      text: |
+        \usepackage{setspace}
+        \onehalfspacing

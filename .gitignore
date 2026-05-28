@@ -1,0 +1,67 @@
+# Chapter folders — each has its own individual git repo
+02_koura_fear/
+03_koura_shoreline_habitats/
+04_koura_mesocosm/
+05_stone_piles_rotoiti/
+synthesis/lakes/
+synthesis/stone_piles_okaro/
+
+# Large media files
+*.jpg
+*.JPG
+*.jpeg
+*.JPEG
+*.mp4
+*.MP4
+*.MOV
+*.mov
+*.gif
+*.GIF
+*.tif
+*.tiff
+
+# Large data files
+*.csv
+*.nc
+*.dat
+*.zip
+*.rds
+*.RData
+*.xlsx
+*.xls
+*.pptx
+*.docx
+*.gpkg
+*.hobo
+*.boris
+
+# GIS shapefiles (large binary)
+*.dbf
+*.shp
+*.shx
+*.prj
+
+# R artifacts
+.Rproj.user
+.Rhistory
+.Ruserdata
+*.ijm
+
+# Quarto generated output
+_site/
+_book/
+_freeze/
+.quarto/
+**/.quarto/
+**/_freeze/
+**/*.quarto_ipynb
+
+# Node/JS build artifacts
+node_modules/
+*.map
+
+# Cache/temp
+*.log
+*.kv
+*.kv-wal
+*.kv-shm

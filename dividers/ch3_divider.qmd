@@ -1,0 +1,9 @@
+# Where do Kōura Live
+
+![](../images/ch3_cover.jpg){fig-align="center" width="100%"}
+
+::: {.callout-note appearance="minimal"}
+*Which natural shoreline features do kōura prefer?*
+:::
+
+{{< pagebreak >}}

@@ -1,0 +1,9 @@
+# Native vs. Novel Threats
+
+![](../images/ch2_cover.jpg){fig-align="center" width="100%"}
+
+::: {.callout-note appearance="minimal"}
+*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
+:::
+
+{{< pagebreak >}}
