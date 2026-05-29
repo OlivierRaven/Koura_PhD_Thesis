@@ -35,9 +35,9 @@ Output is written to the `_book/` folder.
 
 ## Chapter repositories
 
-| Chapter | Folder | Repository |
-|---------|--------|------------|
-| 2 — Kōura fear & behaviour | `02_koura_fear/` | https://github.com/OlivierRaven/Koura_NCE |
-| 3 — Shoreline habitats | `03_koura_shoreline_habitats/` | https://github.com/OlivierRaven/Koura_shoreline_habitats |
-| 4 — Mesocosm experiment | `04_koura_mesocosm/` | https://github.com/OlivierRaven/Koura_Mesocosm |
-| 5 — Stone piles Rotoiti | `05_stone_piles_rotoiti/` | https://github.com/OlivierRaven/Stone_Piles_Rotoiti |
+| Chapter                    | Folder                         | Repository |
+|----------------------------|--------------------------------|------------|
+| 2 — Kōura fear & behaviour | `02_koura_fear/`               | https://github.com/OlivierRaven/Koura_NCE |
+| 3 — Shoreline habitats     | `03_koura_shoreline_habitats/` | https://github.com/OlivierRaven/Koura_shoreline_habitats |
+| 4 — Mesocosm experiment    | `04_koura_mesocosm/`           | https://github.com/OlivierRaven/Koura_Mesocosm |
+| 5 — Stone piles Rotoiti    | `05_stone_piles_rotoiti/`      | https://github.com/OlivierRaven/Stone_Piles_Rotoiti |

@@ -65,3 +65,5 @@ node_modules/
 *.kv
 *.kv-wal
 *.kv-shm
+
+/.quarto/
