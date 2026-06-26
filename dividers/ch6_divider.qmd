@@ -1,9 +1,28 @@
+::: {.content-visible when-format="pdf"}
+\thispagestyle{empty}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{../images/ch6_cover.jpg}}}
+\null
+\newpage
+\pagecolor{thesissand}
+:::
+
 # General Conclusion
 
+::: {.content-visible when-format="pdf"}
+\vspace{1cm}
+\begin{center}
+\textit{What do these findings mean for the future of kōura habitat restoration?}
+\end{center}
+:::
+
+::: {.content-visible unless-format="pdf"}
 ![](../images/ch6_cover.jpg){fig-align="center" width="100%"}
 
-::: {.callout-note appearance="minimal"}
-*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
+*What do these findings mean for the future of kōura habitat restoration?*
+:::
+
+::: {.content-visible when-format="pdf"}
+\afterpage{\pagecolor{thesiscream}}
 :::
 
 {{< pagebreak >}}

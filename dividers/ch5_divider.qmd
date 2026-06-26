@@ -1,9 +1,28 @@
-# Native vs. Novel Threats
+::: {.content-visible when-format="pdf"}
+\thispagestyle{empty}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{../images/ch5_cover.jpg}}}
+\null
+\newpage
+\pagecolor{thesissand}
+:::
 
+# Stone piles Rotoiti
+
+::: {.content-visible when-format="pdf"}
+\vspace{1cm}
+\begin{center}
+\textit{Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti?}
+\end{center}
+:::
+
+::: {.content-visible unless-format="pdf"}
 ![](../images/ch5_cover.jpg){fig-align="center" width="100%"}
 
-::: {.callout-note appearance="minimal"}
-*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
+*Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti?*
+:::
+
+::: {.content-visible when-format="pdf"}
+\afterpage{\pagecolor{thesiscream}}
 :::
 
 {{< pagebreak >}}

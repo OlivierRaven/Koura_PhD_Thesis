@@ -51,6 +51,7 @@ synthesis/stone_piles_okaro/
 _site/
 _book/
 _freeze/
+_preview/
 .quarto/
 **/.quarto/
 **/_freeze/
@@ -67,3 +68,5 @@ node_modules/
 *.kv-shm
 
 /.quarto/
+
+/.luarc.json

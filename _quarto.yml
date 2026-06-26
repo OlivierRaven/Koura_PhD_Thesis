@@ -21,12 +21,12 @@ book:
   - dividers/ch5_divider.qmd
   - 05_stone_piles_rotoiti/index.qmd
   - dividers/ch6_divider.qmd
-  - 06_general_discussion.qmd
+  - 06_general_conclusion.qmd
   - references.qmd
   - appendices.qmd
 
 bibliography: references/references.bib
-csl: references/apa.csl
+csl: references/springer-basic-author-date.csl
 
 format:
   html:
@@ -47,7 +47,16 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
+    mainfont: "Crimson Pro"
+    sansfont: "Source Sans Pro"
     include-in-header:
       text: |
         \usepackage{setspace}
         \onehalfspacing
+        \usepackage{xcolor}
+        \usepackage{afterpage}
+        \usepackage{eso-pic}
+        \definecolor{thesiscream}{RGB}{255, 252, 240}
+        \definecolor{thesissand}{RGB}{232, 212, 162}
+        \pagecolor{thesiscream}
+        \addtokomafont{disposition}{\sffamily}
