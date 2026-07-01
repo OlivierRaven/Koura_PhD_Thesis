@@ -1,6 +1,6 @@
 ::: {.content-visible when-format="pdf"}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/koura_bucket.jpg}}}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}}}
 \null
 \newpage
 \pagecolor{thesissand}
@@ -16,7 +16,7 @@
 :::
 
 ::: {.content-visible unless-format="pdf"}
-![](../images/koura_bucket.jpg){fig-align="center" width="100%"}
+![](../images/ch1_cover.jpg){fig-align="center" width="100%"}
 
 *How can habitat enhancement structures support the restoration of kōura populations in Aotearoa New Zealand's lakes?*
 :::

@@ -10,9 +10,9 @@ synthesis/stone_piles_okaro/
 *.jpg
 *.JPG
 !images/ch*.jpg
-!images/koura_bucket.jpg
+!images/thesis_cover.jpg
 !docs/images/ch*.jpg
-!docs/images/koura_bucket.jpg
+!docs/images/thesis_cover.jpg
 *.jpeg
 *.JPEG
 *.mp4
