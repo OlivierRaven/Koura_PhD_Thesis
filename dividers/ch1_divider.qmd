@@ -1,12 +1,12 @@
 ::: {.content-visible when-format="pdf"}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}}}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/koura_bucket.jpg}}}
 \null
 \newpage
 \pagecolor{thesissand}
 :::
 
-# General Introduction
+# General Introduction {.unnumbered}
 
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}
@@ -16,7 +16,7 @@
 :::
 
 ::: {.content-visible unless-format="pdf"}
-![](../images/ch1_cover.jpg){fig-align="center" width="100%"}
+![](../images/koura_bucket.jpg){fig-align="center" width="100%"}
 
 *How can habitat enhancement structures support the restoration of kōura populations in Aotearoa New Zealand's lakes?*
 :::

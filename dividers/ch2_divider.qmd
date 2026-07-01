@@ -6,7 +6,7 @@
 \pagecolor{thesissand}
 :::
 
-# Native vs. Novel Threats
+# Native vs. Novel Threats {.unnumbered}
 
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}

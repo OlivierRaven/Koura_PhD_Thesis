@@ -6,7 +6,7 @@
 \pagecolor{thesissand}
 :::
 
-# General Conclusion
+# General Conclusion {.unnumbered}
 
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}

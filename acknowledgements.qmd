@@ -1,9 +1,9 @@
 
-Quote: 
-"The more we learn, the easier the human world becomes—but the natural world only grows more wondrous in its complexity"
+# Acknowledgements {.unnumbered}
+
+> "The more we learn, the easier the human world becomes—but the natural world only grows more wondrous in its complexity"
 
 
-Acknowledgements
 
 First and foremost, I would like to express my deepest gratitude to the giants on whose shoulders I stood to advance the study of kōura (freshwater crayfish) in Aotearoa New Zealand. In particular, I thank Alan A. Devcich, Laura Beverley Francis, Grant E. Barnes, Brendan J. Hicks, C. L. Hopkins, I. G. Jowett, Karin Olsson, Per Nyström, Stephanie M. Parkyn, Nisikawa Usio, Colin R. Townsend, and many others whose foundational work has shaped our understanding of this species. It has been a privilege to build upon their contributions and contribute to the conservation of kōura.
 

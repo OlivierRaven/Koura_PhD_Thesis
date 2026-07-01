@@ -6,7 +6,7 @@
 \pagecolor{thesissand}
 :::
 
-# Stone piles Rotoiti
+# Stone piles Rotoiti {.unnumbered}
 
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}
