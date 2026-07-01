@@ -4,7 +4,7 @@ project:
   post-render: deploy.R
 
 book:
-  title: "Kōura habitat, behaviour, and the design of habitat enhancing structures in New Zealand lakes"
+  title: "Restoring native freshwater crayfish habitat in invaded lake ecosystems"
   author: "Olivier V. Raven"
   date: "today"
   

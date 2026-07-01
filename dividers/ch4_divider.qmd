@@ -6,7 +6,7 @@
 \pagecolor{thesissand}
 :::
 
-# Structure over Material {.unnumbered}
+# Structure over Material {.unnumbered .unlisted}
 
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}
