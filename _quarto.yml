@@ -49,7 +49,7 @@ format:
     toc-depth: 3
     number-sections: true
     mainfont: "Crimson Pro"
-    sansfont: "Source Sans Pro"
+    sansfont: "Source Sans 3"
     include-in-header:
       text: |
         \usepackage{setspace}

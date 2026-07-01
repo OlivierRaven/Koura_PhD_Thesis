@@ -1,6 +1,6 @@
 ::: {.content-visible when-format="pdf"}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{../images/ch6_cover.jpg}}}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch6_cover.jpg}}}
 \null
 \newpage
 \pagecolor{thesissand}
