@@ -61,6 +61,9 @@ _preview/
 node_modules/
 *.map
 
+# Claude Code agent worktrees (gitlinks — never commit these)
+.claude/worktrees/
+
 # Cache/temp
 *.log
 *.kv
