@@ -1,9 +1,10 @@
 project:
   type: book
-  output-dir: _book
+  output-dir: docs
+  post-render: deploy.R
 
 book:
-  title: "Kōura habitat, behaviour, and the design of artificial reefs in New Zealand lakes"
+  title: "Kōura habitat, behaviour, and the design of habitat enhancing structures in New Zealand lakes"
   author: "Olivier V. Raven"
   date: "today"
   
