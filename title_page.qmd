@@ -1,0 +1,59 @@
+# {.unnumbered .unlisted}
+
+::: {.content-visible when-format="pdf"}
+\thispagestyle{empty}
+\begin{center}
+
+\vspace*{2.5cm}
+
+{\fontsize{22}{28}\selectfont\bfseries Restoring native freshwater crayfish habitat\\[0.3cm]in invaded lake ecosystems}
+
+\vspace{4.5cm}
+
+{\fontsize{12}{20}\selectfont
+A thesis submitted in fulfilment of the requirements\\[0.4cm]
+for the degree of\\[0.6cm]
+\textbf{Doctor of Philosophy}\\[0.2cm]
+Te Aka Mātuatua --- School of Science\\[0.6cm]
+at\\[0.6cm]
+\textbf{The University of Waikato}\\[1.2cm]
+by\\[0.6cm]
+\textbf{Olivier V. Raven}
+}
+
+\vspace{3cm}
+
+\includegraphics[width=6.5cm]{images/Waik_Word_RGB_V-New.jpg}
+
+\vspace{2cm}
+
+{\fontsize{12}{14}\selectfont 2026}
+
+\end{center}
+\newpage
+:::
+
+::: {.content-visible unless-format="pdf"}
+<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:82vh; text-align:center; padding:2rem 1rem;">
+
+<h1 style="font-family:'Crimson Pro',Georgia,serif; font-size:2rem; font-weight:700; max-width:560px; line-height:1.45; margin:0 0 3.5rem;">
+Restoring native freshwater crayfish habitat in invaded lake ecosystems
+</h1>
+
+<p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; line-height:2.4; margin:0 0 2.5rem;">
+A thesis submitted in fulfilment of the requirements<br>
+for the degree of<br>
+<strong>Doctor of Philosophy</strong><br>
+Te Aka Mātuatua — School of Science<br>
+at<br>
+<strong>The University of Waikato</strong><br>
+by<br>
+<strong>Olivier V. Raven</strong>
+</p>
+
+<img src="images/Waik_Word_RGB_V-New.jpg" style="width:210px; margin:0 0 2.5rem;">
+
+<p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; margin:0;">2026</p>
+
+</div>
+:::

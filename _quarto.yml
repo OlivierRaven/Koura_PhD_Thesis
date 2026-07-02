@@ -10,6 +10,8 @@ book:
   
   chapters:
   - index.qmd
+  - title_page.qmd
+  - abstract.qmd
   - acknowledgements.qmd
   - dividers/ch1_divider.qmd
   - 01_general_intro.qmd
