@@ -33,10 +33,23 @@ csl: references/springer-basic-author-date.csl
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly
+      dark: darkly
+    code-fold: true
+    code-tools: true
+    code-summary: "View Code"
     toc: true
     toc-depth: 3
+    toc-location: left
     number-sections: true
+    smooth-scroll: true
+    format-links: [pdf, docx]
+  docx:
+    reference-doc: references/reference.docx
+    filters:
+      - at: pre-quarto
+        path: filters/docx-title-page.lua
   pdf:
     documentclass: scrbook
     papersize: a4

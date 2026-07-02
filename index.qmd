@@ -1,4 +1,4 @@
-# Cover {.unnumbered .unlisted}
+#   {.unnumbered .unlisted}
 
 ::: {.content-visible unless-format="pdf"}
 ![](images/thesis_cover.jpg){fig-align="center" width="100%"}
