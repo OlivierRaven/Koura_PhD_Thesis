@@ -6,7 +6,7 @@
 \pagecolor{thesissand}
 :::
 
-# Where do Kōura Live {.unnumbered .unlisted}
+# Where do Kōura Live {.unnumbered}
 
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}

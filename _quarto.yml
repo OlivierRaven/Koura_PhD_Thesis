@@ -13,17 +13,11 @@ book:
   - title_page.qmd
   - abstract.qmd
   - acknowledgements.qmd
-  - dividers/ch1_divider.qmd
   - 01_general_intro.qmd
-  - dividers/ch2_divider.qmd
   - 02_koura_fear/index.qmd
-  - dividers/ch3_divider.qmd
   - 03_koura_shoreline_habitats/index.qmd
-  - dividers/ch4_divider.qmd
   - 04_koura_mesocosm/index.qmd
-  - dividers/ch5_divider.qmd
   - 05_stone_piles_rotoiti/index.qmd
-  - dividers/ch6_divider.qmd
   - 06_general_conclusion.qmd
   - references.qmd
   - appendices.qmd
@@ -43,6 +37,7 @@ format:
     toc-depth: 3
     toc-location: left
     number-sections: true
+    number-depth: 1
     smooth-scroll: true
     format-links: [pdf, docx]
   docx:
@@ -54,7 +49,7 @@ format:
     documentclass: scrbook
     papersize: a4
     fontsize: 12pt
-    linestretch: 1.5
+    linestretch: 1.2
     geometry:
       - top=25mm
       - bottom=25mm
@@ -63,6 +58,7 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
+    number-depth: 1
     mainfont: "Crimson Pro"
     sansfont: "Source Sans 3"
     include-in-header:
