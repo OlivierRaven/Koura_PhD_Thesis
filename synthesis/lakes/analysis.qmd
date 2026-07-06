@@ -1,0 +1,1708 @@
+---
+title: "Kōura and their livable lake habitats"
+author: "Olivier V. Raven"
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    code-fold: true
+    code-tools: true
+    code-summary: "View Code"
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    smooth-scroll: true
+fig-width: 8
+fig-height: 6
+execute:
+  warning: false
+  message: false
+  cache: true
+---
+
+# Livable habitat thresholds
+```{r}
+#| label: thresholds
+
+# Change these two values to redefine what counts as "livable habitat" for kōura throughout the whole analysis (AEME casts, buoy data, depth ranges, lake maps, trend analysis — every downstream calculation reads from these two variables).
+
+DO_THRESHOLD   <- 5   # mg/L — dissolved oxygen must be >= this value
+TEMP_THRESHOLD <- 21  # °C   — temperature must be <= this value
+```
+
+# Load packages
+```{r}
+#| label: setup
+#| include: false
+
+# Resolve paths relative to this file — works during render and interactive RStudio sessions
+this_file <- knitr::current_input(dir = TRUE)
+if (!is.null(this_file) && nzchar(this_file)) {
+  base_dir <- normalizePath(dirname(this_file))
+} else if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+  base_dir <- normalizePath(dirname(rstudioapi::getActiveDocumentContext()$path))
+} else {
+  base_dir <- getwd()
+}
+knitr::opts_knit$set(root.dir = base_dir)
+setwd(base_dir)
+
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+Sys.setenv(LERNZMP_API = "lernzmp_lakes")
+
+packages <- c("nzffdr", "sf", "broom", "rLakeAnalyzer", "patchwork", "gganimate", "terra", "pak", "tmap", "tidyverse", "readxl", "ggspatial", "cowplot", "ggrepel", "maptiles", "tidyterra", "osmdata")
+
+quiet_load <- function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    suppressWarnings(suppressMessages(install.packages(pkg, dependencies = TRUE)))
+  }
+  suppressPackageStartupMessages(require(pkg, character.only = TRUE, quietly = TRUE))
+  invisible(TRUE)
+}
+
+invisible(lapply(packages, quiet_load))
+
+if (!requireNamespace("AEME", quietly = TRUE)) {
+  pak::pak("limnotrack/AEME")
+}
+suppressPackageStartupMessages(library(AEME))
+
+if (!requireNamespace("aemetools", quietly = TRUE)) {
+  pak::pak("limnotrack/aemetools@dev")
+}
+suppressPackageStartupMessages(library(aemetools))
+
+if (!requireNamespace("bathytools", quietly = TRUE)) {
+  pak::pak("limnotrack/bathytools")
+}
+suppressPackageStartupMessages(library(bathytools))
+
+```
+
+# Set paths and load the bathymetry data
+```{r}
+#| label: setup-paths
+
+raw_data_dir <- "data/raw"
+der_data_dir <- "data/derived"
+fig_dir      <- "outputs"
+
+dir.create(der_data_dir, showWarnings = FALSE, recursive = TRUE)
+dir.create(fig_dir,      showWarnings = FALSE, recursive = TRUE)
+
+# Bathymetry is now fetched live from the Limnotrack API for all 12 lakes (see "DATA PREP for maps" section) rather than the local data/raw/bathy_all_lakes/*.tif files.
+
+base_theme_bw <- theme_classic() +
+  theme(text     = element_text(family = "Arial", size = 11),
+    axis.title   = element_text(face = "plain"),
+    axis.text    = element_text(face = "plain"),
+    plot.title   = element_text(face = "plain"),
+    strip.text   = element_text(face = "plain"),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3))
+theme_set(base_theme_bw)
+
+```
+
+# Study lakes overview map
+```{r}
+#| label: fig-study-lakes-map
+#| echo: false
+#| fig-width: 8
+#| fig-height: 8
+#| out-width: "100%"
+#| fig-cap: "Overview of the 12 Rotorua Te Arawa lakes coloured by Trophic Level Index (TLI, most recent year available from LAWA). Inset shows the location of the study region within Aotearoa New Zealand."
+
+gis_base <- "data/raw/gis_layers"
+
+# Read and validate spatial layers
+all_lakes <- sf::st_read(
+  file.path(gis_base, "Lakes/12_lakes.gpkg"), quiet = TRUE
+) |> sf::st_make_valid() |> sf::st_transform(2193)
+
+nz_land <- sf::st_read(
+  file.path(gis_base, "Coastline/nz-coastlines-and-islands-polygons-topo-150k.shp"),
+  quiet = TRUE
+) |> sf::st_make_valid() |> sf::st_transform(2193)
+
+# Use "name" column (macronated); fall back to "name_ascii", then first non-NA column
+non_geom <- names(all_lakes)[!sapply(all_lakes, inherits, what = "sfc")]
+name_col <- if ("name" %in% non_geom && any(!is.na(all_lakes[["name"]]))) {
+  "name"
+} else if ("name_ascii" %in% non_geom) {
+  "name_ascii"
+} else {
+  candidates <- grep("^name", non_geom, ignore.case = TRUE, value = TRUE)
+  candidates <- candidates[!sapply(candidates, \(col) all(is.na(all_lakes[[col]])))]
+  candidates[1]
+}
+all_lakes <- dplyr::rename(all_lakes, lake_name = dplyr::all_of(name_col))
+all_lakes <- dplyr::mutate(all_lakes,
+  # Remove "Lake " prefix
+  lake_name = sub("^Lake\\s+", "", lake_name),
+  # Keep only the first name — strip " / …", " (…)", " & …" and trailing whitespace
+  lake_name = trimws(sub("\\s*[/(\\&].*$", "", lake_name)),
+  # Correct missing macrons
+  lake_name = dplyr::case_when(
+    grepl("^[Oo]kataina",  lake_name)                  ~ "Ōkataina",
+    grepl("^[Oo]karo$",    lake_name)                  ~ "Ōkaro",
+    grepl("^[Oo]kareka",   lake_name)                  ~ "Ōkareka",
+    grepl("^Rotoma$",      lake_name, ignore.case = TRUE) ~ "Rotomā",
+    grepl("^Rotokakahi",   lake_name, ignore.case = TRUE) ~ "Rotokākahi",
+    TRUE ~ lake_name
+  )
+)
+
+# ── Trophic state per lake (sourced from LAWA / BOPRC; matches tbl-bop-lake-overview) ──
+trophic_lookup <- tibble::tribble(
+  ~lake_name,       ~trophic_state,
+  "Rotorua",        "Eutrophic",
+  "Rotoiti",        "Mesotrophic",
+  "Rotoehu",        "Eutrophic",
+  "Rotomā",         "Oligotrophic",
+  "Ōkataina",       "Oligotrophic",
+  "Ōkareka",        "Mesotrophic",
+  "Tikitapu",       "Oligotrophic",
+  "Rotokākahi",     "Mesotrophic",
+  "Tarawera",       "Oligotrophic",
+  "Rotomahana",     "Mesotrophic",
+  "Ōkaro",          "Eutrophic",
+  "Rerewhakaaitu",  "Eutrophic"
+)
+
+trophic_colors <- c(
+  #"Microtrophic"  = "#3a9dba",
+  "Oligotrophic"  = "#7ab648",
+  "Mesotrophic"   = "#e9ec0c",
+  "Eutrophic"     = "#e26715"
+  #"Super-trophic" = "#c0392b"
+  )
+
+trophic_lookup <- trophic_lookup |>
+  dplyr::mutate(
+    trophic_state = factor(trophic_state, levels = names(trophic_colors))
+  )
+
+all_lakes <- all_lakes |>
+  dplyr::left_join(trophic_lookup, by = "lake_name")
+
+# Map extent
+pad      <- 3000
+lake_bb  <- sf::st_bbox(all_lakes)
+xlim_map <- c(lake_bb["xmin"] - pad, lake_bb["xmax"] + pad)
+ylim_map <- c(lake_bb["ymin"] - pad, lake_bb["ymax"] + pad)
+
+# ── Base tile layer: download once per provider, cache as local TIFF ──────────
+.provider   <- "Esri.WorldShadedRelief"
+.zoom       <- 11
+tiles_cache <- file.path(fig_dir, paste0("basemap_", gsub("\\.", "_", .provider), ".tif"))
+if (!file.exists(tiles_cache)) {
+  aoi <- sf::st_as_sfc(lake_bb) |> sf::st_buffer(pad + 5000)
+  tiles_raw <- maptiles::get_tiles(aoi, provider = .provider, zoom = .zoom, crop = TRUE)
+  terra::writeRaster(tiles_raw, tiles_cache, overwrite = TRUE)
+}
+basemap <- terra::project(terra::rast(tiles_cache), "EPSG:2193")
+
+# ── Roads: load from cache if available, skip otherwise ──────────────────────
+roads_cache <- file.path(fig_dir, "roads_osm.rds")
+roads <- if (file.exists(roads_cache)) readRDS(roads_cache) else NULL
+
+# ── Label points: extract as plain x/y so ggrepel works without coord_sf stat ─
+lake_pts    <- suppressWarnings(sf::st_point_on_surface(all_lakes))
+lake_coords <- data.frame(
+  lake_name = lake_pts$lake_name,
+  x         = sf::st_coordinates(lake_pts)[, 1],
+  y         = sf::st_coordinates(lake_pts)[, 2]
+)
+
+# ── Main map ──────────────────────────────────────────────────────────────────
+p_main <- ggplot() +
+  tidyterra::geom_spatraster_rgb(data = basemap) +
+  { if (!is.null(roads)) geom_sf(data = roads, color = "#c07030", linewidth = 0.35, alpha = 0.85) } +
+  geom_sf(data = all_lakes, aes(fill = trophic_state), color = "#2a2a2a", linewidth = 0.4, alpha = 0.88) +
+  scale_fill_manual(
+    values   = trophic_colors,
+    name     = "Trophic state",
+    drop     = FALSE,
+    na.value = "grey70",
+    guide    = guide_legend(
+      title.position = "top",
+      keywidth       = unit(0.7, "cm"),
+      keyheight      = unit(0.5, "cm"),
+      override.aes   = list(alpha = 1, color = NA)
+    )
+  ) +
+  ggrepel::geom_label_repel(
+    data             = lake_coords,
+    aes(x = x, y = y, label = lake_name),
+    size             = 3,
+    fontface         = "bold",
+    fill             = alpha("white", 0.88),
+    color            = "black",
+    label.size       = 0.12,
+    label.padding    = unit(0.15, "lines"),
+    label.r          = unit(0.08, "lines"),
+    segment.color    = "black",
+    segment.size     = 0.3,
+    min.segment.length = 0.2,
+    box.padding      = 0.45,
+    force            = 3.5,
+    max.overlaps     = Inf,
+    seed             = 42
+  ) +
+  ggspatial::annotation_scale(location = "bl", width_hint = 0.28, text_cex = 0.8) +
+  ggspatial::annotation_north_arrow(
+    location = "tr",
+    style    = ggspatial::north_arrow_orienteering(text_size = 7),
+    height   = unit(0.9, "cm"), width = unit(0.9, "cm")
+  ) +
+  coord_sf(xlim = xlim_map, ylim = ylim_map, crs = sf::st_crs(all_lakes),
+           expand = FALSE) +
+  labs(x = NULL, y = NULL) +
+  theme_void() +
+  theme(
+    panel.border      = element_rect(fill = NA, color = "black", linewidth = 0.5),
+    legend.position   = "none",
+    legend.background = element_rect(fill = alpha("white", 0.85), color = "grey60", linewidth = 0.3),
+    legend.title      = element_text(size = 9, face = "bold"),
+    legend.text       = element_text(size = 8)
+  )
+
+# ── Inset NZ map ─────────────────────────────────────────────────────────────
+study_box <- sf::st_as_sfc(lake_bb) |> sf::st_buffer(20000)
+
+p_inset <- ggplot() +
+  geom_sf(data = nz_land,   fill = "#d4cdb5", color = "#6a5a3a", linewidth = 0.15) +
+  geom_sf(data = study_box, fill = alpha("#d62728", 0.25),
+          color = "#d62728", linewidth = 0.8) +
+  coord_sf(xlim = c(1100000, 2100000), ylim = c(4750000, 6200000),
+           crs = sf::st_crs(nz_land), expand = FALSE) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#c0d8ec"),
+    panel.border     = element_rect(fill = NA, color = "black", linewidth = 0.5)
+  )
+
+# ── Combine ───────────────────────────────────────────────────────────────────
+# Extract legend from a temporary copy of p_main that has the legend enabled,
+# then draw it above the inset in the bottom-right corner.
+p_legend_source <- p_main +
+  theme(legend.position = c(0.5, 0.5))  # position doesn't matter — just enables it
+p_legend <- cowplot::get_legend(p_legend_source)
+
+p_combined <- cowplot::ggdraw(p_main) +
+  cowplot::draw_plot(p_inset,  x = 0.68, y = 0.03, width = 0.30, height = 0.33) +
+  cowplot::draw_plot(p_legend, x = 0.68, y = 0.36, width = 0.30, height = 0.20)
+
+ggsave(
+  file.path(fig_dir, "fig-study-lakes-map.png"),
+  p_combined, width = 8, height = 8, dpi = 300, bg = "white"
+)
+
+p_combined
+```
+
+# Kōura and catfish distribution maps (NZFFD)
+```{r}
+#| label: nz-distribution-maps
+#| fig-width: 12
+#| fig-height: 9
+
+nzffdms <- read_csv("data/raw/nzffdms.csv", show_col_types = FALSE)
+nzffd_clean    <- nzffdr_clean(nzffdms)
+nzffd_clean    <- nzffdr_add_dates(nzffd_clean)
+nzffd_enhanced <- nzffdr_taxon_threat(nzffd_clean)
+
+# Valid NZTM coordinates only
+nzffd_valid <- nzffd_enhanced |>
+  filter(!is.na(eastingNZTM), !is.na(northingNZTM))
+
+# Kōura — unique survey locations
+nzffd_koura <- nzffd_valid |>
+  filter(str_detect(tolower(taxonCommonName), "koura|kōura")) |>
+  distinct(eastingNZTM, northingNZTM, .keep_all = TRUE)
+
+# Catfish — unique survey locations
+nzffd_catfish <- nzffd_valid |>
+  filter(str_detect(tolower(taxonCommonName), "catfish")) |>
+  distinct(eastingNZTM, northingNZTM, .keep_all = TRUE)
+
+# Convert to sf (NZTM EPSG:2193)
+nzffd_koura_sf   <- st_as_sf(nzffd_koura,   coords = c("eastingNZTM", "northingNZTM"), crs = 2193)
+nzffd_catfish_sf <- st_as_sf(nzffd_catfish, coords = c("eastingNZTM", "northingNZTM"), crs = 2193)
+
+nz_map <- nzffdr_nzmap
+
+map_theme <- theme_void() +
+  theme(
+    plot.title    = element_text(face = "bold", size = 13, hjust = 0.5, margin = margin(b = 3)),
+    plot.subtitle = element_text(size = 9, hjust = 0.5, colour = "grey40", margin = margin(b = 6)),
+    plot.margin   = margin(8, 8, 8, 8)
+  )
+
+# Crop to NZ main islands — excludes Chatham Islands (far east, ~176°W)
+nz_main_xlim <- c(165.5, 178.8)
+nz_main_ylim <- c(-47.8, -33.8)
+
+koura_map <- ggplot() +
+  geom_sf(data = nz_map, fill = "grey92", colour = "grey60", linewidth = 0.3) +
+  geom_sf(data = nzffd_koura_sf, colour = "#2171b5", size = 0.7, alpha = 0.5, shape = 16) +
+  coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim) +
+  labs(
+    title    = "Kōura",
+    subtitle = paste0(format(nrow(nzffd_koura), big.mark = ","), " survey locations")
+  ) +
+  map_theme
+
+catfish_map <- ggplot() +
+  geom_sf(data = nz_map, fill = "grey92", colour = "grey60", linewidth = 0.3) +
+  geom_sf(data = nzffd_catfish_sf, colour = "#d73027", size = 0.7, alpha = 0.5, shape = 16) +
+  coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim) +
+  labs(
+    title    = "Brown bullhead catfish",
+    subtitle = paste0(format(nrow(nzffd_catfish), big.mark = ","), " survey locations")
+  ) +
+  map_theme
+
+nz_distribution <- koura_map + catfish_map +
+  plot_annotation(
+    theme    = theme(
+      plot.title    = element_text(face = "bold", size = 14, hjust = 0.5),
+      plot.subtitle = element_text(size = 10, hjust = 0.5, colour = "grey40")
+    )
+  )
+
+nz_distribution
+
+ggsave(file.path(fig_dir, "fig-nz-distribution-maps.png"), nz_distribution,
+       width = 12, height = 9, dpi = 300)
+```
+
+# Run LERNZmp (AEME)
+```{r}
+#| label: aeme-load-or-run
+
+hypsograph_path    <- file.path(der_data_dir, "hypsograph_data.csv")
+water_quality_path <- file.path(der_data_dir, "water_quality_data.csv")
+
+if (file.exists(hypsograph_path) && file.exists(water_quality_path)) {
+
+  # Derived files already exist — skip the slow model loop
+  hypsograph_data    <- read_csv(hypsograph_path,    show_col_types = FALSE)
+  water_quality_data <- read_csv(water_quality_path, show_col_types = FALSE)
+
+} else {
+
+  # All 12 Rotorua Te Arawa lakes (Bay of Plenty Regional Council programme)
+  lid_files <- c("LID11133", "LID14290", "LID15325", "LID40102", "LID40188", "LID54730",
+                 "LID15312", "LID15621", "LID40071", "LID54731", "LID54732", "LID54733")
+
+  metadata <- read.csv("data/raw/lernzmp/LERNZmp_lake_metadata.csv") |>
+    dplyr::filter(aeme_file %in% lid_files)
+
+  model <- c("glm_aed", "gotm_wet")
+  path  <- "aeme"
+
+  hypsograph_data    <- tibble()
+  water_quality_data <- tibble()
+
+  for (i in seq_along(lid_files)) {
+    lid     <- lid_files[i]
+    lake_id <- as.integer(sub("^LID", "", lid))
+
+    result <- tryCatch({
+      aeme <- aemetools::get_aeme(id = lake_id, api_key = "lernzmp_lakes")
+      if (lid == "LID40188") {
+        shoreline    <- aemetools::get_lake_shape(id = 40188, api_key = "lernzmp_lakes")
+        contours     <- aemetools::lt_fetch(
+          "lake_contours",
+          filter = aemetools::lt_filter(lernzmp_id == "LID40188")
+        ) |>
+          dplyr::mutate(depth = depth_m)
+        bathy_raster <- rasterise_bathy(shoreline = shoreline, contours = contours,
+                                        res = 8, crs = 2193)
+        lake_elev    <- max(contours$elevation_m)
+        upd_hyps     <- bathy_to_hypso(bathy_raster) |>
+          dplyr::mutate(elev = lake_elev + depth) |>
+          extrap_hyps(z_range = 0.05, ext_elev = 3)
+        aeme <- add_hypsograph(aeme, hypsograph = upd_hyps)
+      }
+
+      inp           <- input(aeme)
+      lake_metadata <- metadata |> dplyr::filter(aeme_file == lid)
+
+      hyps <- inp$hypsograph |>
+        dplyr::filter(depth <= 0) |>
+        mutate(
+          LID               = lid,
+          lake_name         = lake_metadata$Name,
+          region            = lake_metadata$Region,
+          geomorphic_type   = lake_metadata$Geomorphic.type,
+          max_depth         = lake_metadata$Depth,
+          total_area        = lake_metadata$Area,
+          depth_measurement = lake_metadata$Depth.measurement,
+          data_quality      = lake_metadata$Data,
+          area_ha           = area / 10000
+        )
+
+      lake_observations <- aeme@observations[["lake"]] |>
+        dplyr::select(Date, depth_mid, var_aeme, value) |>
+        mutate(
+          lake_name         = lake_metadata$Name,
+          region            = lake_metadata$Region,
+          geomorphic_type   = lake_metadata$Geomorphic.type,
+          max_depth         = lake_metadata$Depth,
+          depth_measurement = lake_metadata$Depth.measurement,
+          data_quality      = lake_metadata$Data
+        )
+
+      message("AEME data fetched for ", lid, " (", lake_metadata$Name, ")")
+      list(hyps = hyps, obs = lake_observations)
+
+    }, error = function(e) {
+      message("Skipping ", lid, " — no AEME model/data available: ", conditionMessage(e))
+      NULL
+    })
+
+    if (!is.null(result)) {
+      hypsograph_data    <- bind_rows(hypsograph_data,    result$hyps)
+      water_quality_data <- bind_rows(water_quality_data, result$obs)
+    }
+  }
+
+  write_csv(hypsograph_data,    hypsograph_path)
+  write_csv(water_quality_data, water_quality_path)
+}
+
+```
+
+# DATA PREP (functions)
+```{r}
+#---- Global settings / helpers ----
+# All 12 Rotorua Te Arawa lakes — fixed display/facet order
+lake_order <- c("Rotorua", "Rotoiti", "Rotoehu", "Rotomā",
+                "Ōkataina", "Ōkāreka", "Tikitapu", "Rotokākahi",
+                "Tarawera", "Rotomahana", "Ōkaro", "Rerewhakaaitu")
+season_order <- c("Summer", "Autumn", "Winter", "Spring")
+
+#Fetch buoy water-quality profiler data from the Limnotrack API
+get_lake_wqprofiler <- function(lake = "rotorua", type = "pro",
+                                api_url = "https://api.limnotrack.com",
+                                api_key = "lernzmp_lakes") {
+
+  res <- aemetools::api_request(api_url = api_url, api_key = api_key,
+                                endpoint = "get_lake_wqprofiler",
+                                query = list(lake = lake, type = type))
+
+  if (httr2::resp_status(res) != 200) {
+    cli::cli_abort("API request failed with status: ", httr2::resp_status(res))
+  }
+
+  res |>
+    httr2::resp_body_string() |>
+    jsonlite::fromJSON()
+}
+
+recode_lake_names <- function(x) {
+dplyr::recode(x,
+  "Rotoma" = "Rotomā", "Okareka" = "Ōkāreka", "Okaro" = "Ōkaro",
+  "Okataina" = "Ōkataina", "Rotokakahi" = "Rotokākahi"
+)
+}
+
+add_season_nz <- function(df, date_col = "Date") {
+df |>
+mutate(
+!!date_col := as.Date(.data[[date_col]]),
+Day = lubridate::day(.data[[date_col]]),
+# Month label is locale-dependent (used for display only) — Season below uses
+# the numeric month so it doesn't break under non-English R session locales.
+Month = lubridate::month(.data[[date_col]], label = TRUE, abbr = TRUE),
+Month_num = lubridate::month(.data[[date_col]]),
+Year = lubridate::year(.data[[date_col]]),
+Season = case_when(
+Month_num %in% c(12, 1, 2) ~ "Summer",
+Month_num %in% c(3, 4, 5)  ~ "Autumn",
+Month_num %in% c(6, 7, 8)  ~ "Winter",
+Month_num %in% c(9, 10, 11) ~ "Spring",
+TRUE ~ NA_character_
+),
+Season = factor(Season, levels = season_order),
+# Southern Hemisphere summer spans the New Year (Dec-Jan-Feb), so a plain calendar
+# Year splits one continuous summer into two groups. Convention used here: December
+# rolls forward into the FOLLOWING year's summer label, so "Summer 2021" = Dec 2020 +
+# Jan 2021 + Feb 2021 — matching how NZ/climate-science usage names a summer after the
+# January/February it mostly falls in (i.e. "summer 2020/21" -> Season_Year 2021).
+# Autumn/Winter/Spring don't cross the New Year, so Season_Year == Year for those.
+Season_Year = if_else(Month_num == 12, Year + 1L, Year)
+) |>
+dplyr::select(-Month_num)
+}
+
+#Compute livable habitat per cast/profile using the same logic for both sources
+#(Non-livable area summed across depth layers; livable = surface area - non-livable)
+
+calc_livable_habitat_summary <- function(df,
+source_label,
+lake_col = "Lake",
+date_col = "Date",
+cast_col = "Cast_ID",
+depth_col = "Depth",
+do_col = "DO",
+temp_col = "Temp",
+area0_col = "Area_depth_0",
+arealayer_col = "Area_at_Depth",
+do_threshold = DO_THRESHOLD,
+temp_threshold = TEMP_THRESHOLD) {
+df |>
+mutate(
+Source = source_label,
+Lake = recode_lake_names(.data[[lake_col]]),
+Lake = stringr::str_replace(Lake, "\\s*\\(.*\\)", "")) |>
+add_season_nz(date_col = date_col) |>
+mutate(
+Livable_Habitat = .data[[do_col]] >= do_threshold & .data[[temp_col]] <= temp_threshold) |>
+group_by(Lake, .data[[date_col]], .data[[cast_col]]) |>
+summarise(
+Area_depth_0 = first(.data[[area0_col]]),
+Day = first(Day),
+Month = first(Month),
+Year = first(Year),
+Season = first(Season),
+Non_livable_area = sum(.data[[arealayer_col]][!Livable_Habitat], na.rm = TRUE),
+Sum_Livable_Habitat_Area = Area_depth_0 - Non_livable_area,
+Livable_Habitat_Percentage = (Sum_Livable_Habitat_Area / Area_depth_0) * 100,
+.groups = "drop"
+) |>
+mutate(
+Lake = factor(Lake, levels = lake_order),
+Season = factor(Season, levels = season_order)
+)
+}
+
+calc_depth_ranges <- function(df,
+                             source_label,
+                             lake_col = "Lake",
+                             date_col = "Date",
+                             cast_col = "Cast_ID",
+                             depth_col = "Depth",
+                             livable_col = "Livable_Habitat") {
+
+  df1 <- df |>
+    mutate(
+      Lake = recode_lake_names(.data[[lake_col]]),
+      Lake = stringr::str_replace(Lake, "\\s*\\(.*\\)", ""),
+      Lake = factor(Lake, levels = lake_order)
+    ) |>
+    add_season_nz(date_col = date_col) |>
+    group_by(Lake, Year, Season, .data[[date_col]], .data[[cast_col]]) |>
+    summarise(
+      cast_shallowest = min(.data[[depth_col]], na.rm = TRUE),
+      cast_deepest    = max(.data[[depth_col]], na.rm = TRUE),
+      shallowest_livable = ifelse(any(.data[[livable_col]], na.rm = TRUE),
+        min(.data[[depth_col]][.data[[livable_col]]], na.rm = TRUE), NA_real_),
+      deepest_livable = ifelse(any(.data[[livable_col]], na.rm = TRUE),
+        max(.data[[depth_col]][.data[[livable_col]]], na.rm = TRUE), NA_real_),
+      .groups = "drop"
+    )
+
+  df1 |>
+    group_by(Lake, Year, Season) |>
+    summarise(
+      Date = as.Date(first(.data[[date_col]])),
+      cast_shallowest = min(cast_shallowest, na.rm = TRUE),
+      cast_deepest    = max(cast_deepest, na.rm = TRUE),
+      shallowest_livable = mean(shallowest_livable, na.rm = TRUE),
+      deepest_livable    = mean(deepest_livable, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    mutate(
+      Source = source_label,
+      Lake   = factor(Lake, levels = lake_order),
+      Season = factor(Season, levels = season_order)
+    )
+}
+
+
+```
+
+
+# DATA PREP (AEME profiles + hypsograph join)
+```{r}
+hypsograph_data <- read_csv("data/derived/hypsograph_data.csv", show_col_types = FALSE)
+water_quality_data <- read_csv("data/derived/water_quality_data.csv", show_col_types = FALSE)
+
+#Keep DO and temperature; clean lake names
+
+DO_Tem_data <- water_quality_data |>
+filter(var_aeme %in% c("CHM_oxy", "HYD_temp")) |>
+mutate(lake_name = stringr::str_replace(lake_name, "\\s*\\(.*\\)", ""))
+
+#Optional check plot
+
+ggplot(DO_Tem_data, aes(value, depth_mid, colour = Date)) +
+geom_line() +
+facet_wrap(var_aeme ~ lake_name, scales = "free") +
+scale_y_reverse()
+
+#Wide DO/Temp table
+
+DO_Tem_data1 <- DO_Tem_data |>
+dplyr::select(Date, depth_mid, var_aeme, value, lake_name) |>
+# The live API can return duplicate readings for the same Date/depth/lake/variable
+# (the old local .rds snapshots were already deduplicated) — average them so
+# pivot_wider gets one value per cell instead of a list-col.
+tidyr::pivot_wider(names_from = var_aeme, values_from = value, values_fn = mean) |>
+rename(
+Lake = lake_name,
+Depth = depth_mid,
+DO = CHM_oxy,
+Temp = HYD_temp
+) |>
+dplyr::select(Lake, Date, Depth, DO, Temp)
+
+#Cast IDs per lake-date profile
+
+DO_Tem_data1 <- DO_Tem_data1 |>
+group_by(Lake, Date) |>
+mutate(Cast_ID = dplyr::cur_group_id()) |>
+ungroup()
+
+#Hypsograph processing: area per depth layer
+
+hypsograph_data1 <- hypsograph_data |>
+filter(depth == floor(depth)) |>
+mutate(
+depth = abs(depth),
+Area_at_Depth = abs(area_ha - lag(area_ha, default = first(area_ha)))
+) |>
+filter(!is.na(area_ha)) |>
+arrange(lake_name, depth) |>
+group_by(lake_name) |>
+mutate(
+Area_at_Depth = if_else(depth == 0, 0, Area_at_Depth),
+Area_depth_0 = first(area_ha)
+) |>
+ungroup() |>
+dplyr::select(
+Lake = lake_name,
+Depth = depth,
+Area = area_ha,
+Area_at_Depth,
+Area_depth_0,
+Total_area = total_area
+) |>
+mutate(Lake = stringr::str_replace(Lake, "\\s*\\(.*\\)", ""))
+
+```
+
+# Check hypsographs — verify depth profiles before building maps
+```{r}
+#| label: fig-hypsograph-check
+#| fig-width: 12
+#| fig-height: 10
+
+hypsograph_check_data <- hypsograph_data1 |>
+  mutate(Lake = recode_lake_names(Lake), Lake = factor(Lake, levels = lake_order))
+
+# Flag lakes where the shallowest measured depth is > 1 m (missing littoral zone)
+shallow_check <- hypsograph_check_data |>
+  group_by(Lake) |>
+  summarise(
+    min_depth    = min(Depth, na.rm = TRUE),
+    max_depth    = max(Depth, na.rm = TRUE),
+    n_depths     = n(),
+    area_at_0    = Area[Depth == min(Depth)][1],
+    .groups = "drop"
+  ) |>
+  mutate(
+    shallow_ok = min_depth <= 1,
+    coverage   = round(n_depths / (max_depth + 1), 2)
+  )
+
+print(shallow_check)
+
+# Depths where area does not change between consecutive steps
+flat_steps <- hypsograph_check_data |>
+  arrange(Lake, Depth) |>
+  group_by(Lake) |>
+  mutate(area_change = Area - lag(Area)) |>
+  filter(!is.na(area_change), area_change == 0) |>
+  select(Lake, Depth, Area) |>
+  ungroup()
+
+if (nrow(flat_steps) > 0) {
+  message("Depth steps with no area change:")
+  print(flat_steps)
+} else {
+  message("No flat steps found — area changes at every depth.")
+}
+
+# Check depth resolution in the shallow zone (0–10 m)
+# A gap > 1 m here causes the visible straight-line drop in the hypsograph
+shallow_gaps <- hypsograph_check_data |>
+  arrange(Lake, Depth) |>
+  filter(Depth <= 10) |>
+  group_by(Lake) |>
+  mutate(
+    depth_gap   = Depth - lag(Depth),
+    area_change = Area  - lag(Area)
+  ) |>
+  filter(!is.na(depth_gap), depth_gap > 1) |>
+  select(Lake, from_depth = Depth, depth_gap, Area, area_change) |>
+  ungroup()
+
+if (nrow(shallow_gaps) > 0) {
+  message("Shallow-zone gaps > 1 m (potential straight-line artefact in hypsograph):")
+  print(shallow_gaps)
+} else {
+  message("Shallow zone (0–10 m) measured at ≤ 1 m intervals for all lakes.")
+}
+
+# Lakes with potential shallow-zone problems
+problem_lakes <- shallow_check |> filter(!shallow_ok) |> pull(Lake)
+if (length(problem_lakes) > 0) {
+  message("Lakes missing shallow (<= 1 m) bathymetry: ", paste(problem_lakes, collapse = ", "))
+} else {
+  message("All lakes have depth measurements at or near 0 m.")
+}
+
+hypsograph_check_plot <- hypsograph_check_data |>
+  ggplot(aes(x = Area, y = Depth)) +
+  geom_line(colour = "#0065a9", linewidth = 0.8) +
+  geom_point(size = 0.8, colour = "#0065a9") +
+  # Red point at the shallowest measured depth so problem lakes are immediately visible
+  geom_point(
+    data = hypsograph_check_data |>
+      group_by(Lake) |> slice_min(Depth, n = 1, with_ties = FALSE),
+    colour = "red", size = 2.5, shape = 21, fill = "red", stroke = 0.5
+  ) +
+  scale_y_reverse() +
+  facet_wrap(~ Lake, scales = "free", ncol = 3) +
+  labs(x = "Area (ha)", y = "Depth (m)",
+       title = "Hypsograph check — red dot = shallowest measured depth (should be at or near 0 m)",
+       caption = paste0(
+         if (length(problem_lakes) > 0)
+           paste("Potential shallow-zone gaps:", paste(problem_lakes, collapse = ", "))
+         else
+           "All lakes measured to near-surface depth."
+       ))
+
+hypsograph_check_plot
+ggsave(file.path(fig_dir, "fig-hypsograph-check.png"), hypsograph_check_plot,
+       width = 12, height = 10, dpi = 300)
+```
+
+```{r}
+#Combine DO/Temp profiles with hypsograph
+
+DO_Tem_area_data <- DO_Tem_data1 |>
+left_join(hypsograph_data1, by = c("Lake", "Depth")) |>
+filter(!is.na(Area))
+
+#Final standardise
+
+DO_Tem_area_data <- DO_Tem_area_data |>
+mutate(
+Lake = recode_lake_names(Lake),
+Lake = factor(Lake, levels = lake_order)
+) |>
+add_season_nz("Date")
+
+#Temp and DO plots
+
+DO_Tem_area_data$Season <- factor(DO_Tem_area_data$Season, levels = season_order)
+
+TEMP_plot <- ggplot(DO_Tem_area_data, aes(Temp, Depth, col = Season, group = Cast_ID)) +
+geom_line() +
+geom_vline(xintercept = TEMP_THRESHOLD, linetype = "dashed") +
+scale_y_reverse() +
+facet_wrap(~ Lake, scales = "free_y", ncol = 3)
+
+DO_plot <- ggplot(DO_Tem_area_data, aes(DO, Depth, col = Season, group = Cast_ID)) +
+geom_line() +
+geom_vline(xintercept = DO_THRESHOLD, linetype = "dashed") +
+scale_y_reverse() +
+facet_wrap(~ Lake, scales = "free_y", ncol = 3)
+
+TEMP_plot / DO_plot
+
+```
+
+
+# Livable habitat — cast data prep (AEME)
+```{r}
+#| label: livable-cast-prep
+
+DO_Tem_area_data <- DO_Tem_area_data |>
+  mutate(Livable_Habitat = DO >= DO_THRESHOLD & Temp <= TEMP_THRESHOLD)
+
+livable_habitat_sum <- calc_livable_habitat_summary(
+  df           = DO_Tem_area_data,
+  source_label = "Cast",
+  lake_col     = "Lake",  date_col     = "Date",   cast_col     = "Cast_ID",
+  depth_col    = "Depth", do_col       = "DO",     temp_col     = "Temp",
+  area0_col    = "Area_depth_0",                   arealayer_col = "Area_at_Depth"
+)
+```
+
+# DATA PREP for maps
+```{r}
+# All lakes now have bathymetry (fetched via API)
+area_data_all_lakes <- DO_Tem_area_data
+
+# First cast per Lake–Year–Month
+monthly_casts <- area_data_all_lakes |>
+distinct(Lake, Year, Month, Date, Cast_ID) |>
+arrange(Lake, Year, Month, Date) |>
+group_by(Lake, Year, Month) |>
+slice(1) |>
+ungroup()
+
+bathy_to_points <- function(r, lake_name) {
+df <- as.data.frame(r, xy = TRUE, na.rm = TRUE)
+names(df)[3] <- "depth"
+df |> mutate(Lake = lake_name)
+}
+
+# Bathymetry for all 12 lakes — fetched live from the Limnotrack API (lake shoreline +
+# depth contours, rasterised), the same approach used for the Rotoehu hypsograph fix.
+# Cached to disk the same way as the AEME CSVs / livable_combined.rds: load straight
+# from bathy_rasters.rds if it already exists, otherwise fetch from the API (which has
+# turned out to be quite flaky/intermittent) and save so we don't need to hit it again.
+# Delete data/derived/bathy_rasters.rds to force a fresh re-fetch from the API.
+bathy_rasters_rds <- file.path(der_data_dir, "bathy_rasters.rds")
+
+if (file.exists(bathy_rasters_rds)) {
+
+  bathy_rasters <- readRDS(bathy_rasters_rds) |> lapply(terra::unwrap)
+
+} else {
+
+  bathy_lakes <- tibble::tribble(
+    ~lake_id, ~lake_name,
+    11133,    "Rotorua",
+    54730,    "Rotoiti",
+    40188,    "Rotoehu",
+    40102,    "Rotomā",
+    54731,    "Ōkataina",
+    15325,    "Ōkāreka",
+    15312,    "Tikitapu",
+    15621,    "Rotokākahi",
+    54732,    "Tarawera",
+    54733,    "Rotomahana",
+    14290,    "Ōkaro",
+    40071,    "Rerewhakaaitu"
+  )
+
+  # lt_filter()'s server-side NSE doesn't reliably see local variables (confirmed: both a
+  # plain variable and rlang `!!` injection fail with "object not found", and in the original
+  # session it silently fell back to stale/wrong data instead of erroring). Side-step it
+  # entirely — fetch every lake's contours once, unfiltered, then filter locally per lake
+  # with plain dplyr::filter(), which we know works correctly everywhere else in this script.
+  all_contours <- aemetools::lt_fetch("lake_contours", limit = 50000)
+
+  # Lakes with no contour data on the API fall back to these local raster snapshots
+  local_bathy_files <- c(
+    "54730" = "data/raw/bathy_all_lakes/54730_lake_rotoiti.tif"
+  )
+
+  fetch_bathy_raster <- function(lake_id, lake_name) {
+    tryCatch({
+      shoreline <- aemetools::get_lake_shape(id = lake_id, api_key = "lernzmp_lakes")
+      lid_str   <- paste0("LID", lake_id)
+      contours  <- all_contours |>
+        dplyr::filter(lernzmp_id == lid_str) |>
+        dplyr::mutate(depth = depth_m)
+      if (nrow(contours) == 0) stop("No contour rows found for ", lid_str)
+      # Scale resolution to lake size (~150x150 grid) so small lakes (e.g. Tikitapu, Ōkaro)
+      # get crisp detail instead of the blocky look a fixed 50m grid gives them, while huge
+      # lakes (e.g. Rotorua) stay capped so interpolation doesn't get unreasonably slow.
+      lake_area_m2 <- as.numeric(sf::st_area(shoreline))
+      res_dynamic  <- pmin(50, pmax(5, round(sqrt(lake_area_m2) / 150)))
+      bathy_raster <- rasterise_bathy(shoreline = shoreline, contours = contours, res = res_dynamic, crs = 2193)
+      message("Bathymetry fetched for ", lake_name, " (LID", lake_id, ")")
+      terra::wrap(round(abs(bathy_raster)))
+    }, error = function(e) {
+      local_path <- local_bathy_files[as.character(lake_id)]
+      if (!is.na(local_path) && file.exists(local_path)) {
+        message("No API contours for ", lake_name, " (LID", lake_id, ") — using local raster fallback")
+        return(terra::wrap(round(abs(terra::rast(local_path)))))
+      }
+      message("Skipping bathymetry for ", lake_name, " (LID", lake_id, "): ", conditionMessage(e))
+      NULL
+    })
+  }
+
+  bathy_rasters <- Map(fetch_bathy_raster, bathy_lakes$lake_id, bathy_lakes$lake_name)
+  names(bathy_rasters) <- bathy_lakes$lake_name
+  bathy_rasters <- bathy_rasters[!sapply(bathy_rasters, is.null)]
+
+  # Don't cache an obviously incomplete result (e.g. a full API outage where almost
+  # everything failed) — that would lock in the bad result for every future run until
+  # someone notices and manually deletes the file. Only save if most lakes succeeded.
+  if (length(bathy_rasters) >= round(nrow(bathy_lakes) * 0.5)) {
+    saveRDS(bathy_rasters, bathy_rasters_rds)
+  } else {
+    warning("Only ", length(bathy_rasters), "/", nrow(bathy_lakes),
+            " lakes got bathymetry this run — not caching (likely API outage). ",
+            "Re-run later once the API is back up.")
+  }
+  bathy_rasters <- lapply(bathy_rasters, terra::unwrap)
+
+}
+
+bathy_points <- purrr::imap(bathy_rasters, bathy_to_points) |> bind_rows()
+
+max_depth_lake <- bathy_points |>
+group_by(Lake) |>
+summarise(Max_depth = max(depth, na.rm = TRUE), .groups = "drop")
+
+set.seed(1)
+bathy_points_sub <- bathy_points |> group_by(Lake) |> slice_sample(n = 20000) |> ungroup()
+bathy_grid <- bathy_points |> mutate(Depth_round5 = floor(depth / 5) * 5)
+
+profile_conditions <- area_data_all_lakes |>
+select(Lake, Date, Cast_ID, Depth, Year, Season, Livable_Habitat)
+
+bathy_cast <- bathy_points_sub |>
+rename(Depth = depth) |>
+left_join(profile_conditions, by = c("Lake", "Depth")) |>
+mutate(
+Lake = factor(Lake, levels = lake_order),
+Cast_label = paste(Year, format(Date, "%Y-%m-%d"), Cast_ID, Lake, Season, sep = " | ")
+) |>
+arrange(Year, Date, Cast_ID, Lake)
+
+```
+
+
+# Data prep — buoy CTD data (cached independently of the combined prep below,
+# so changes elsewhere — e.g. thresholds — don't force a needless buoy re-fetch)
+```{r}
+#| label: buoy-fetch
+
+buoy_raw_rds <- file.path(der_data_dir, "buoy_raw_data.rds")
+
+if (file.exists(buoy_raw_rds)) {
+
+  CTD_buoy <- readRDS(buoy_raw_rds)
+
+} else {
+
+  # Lake slugs match the API's naming (lowercase, no macrons); Title-cased afterwards so
+  # recode_lake_names() can map them to the macron spellings used everywhere else.
+  buoy_lake_slugs <- c("rotorua", "rotoiti", "rotoehu", "rotoma", "okareka", "okaro",
+                       "tikitapu", "rotokakahi", "rerewhakaaitu", "okataina", "tarawera", "rotomahana")
+
+  fetch_buoy_api <- function(lake_slug) {
+    tryCatch({
+      df <- get_lake_wqprofiler(lake_slug)
+      df$Lake <- stringr::str_to_title(lake_slug)
+      message("Buoy data fetched for ", lake_slug, ": ", nrow(df), " rows")
+      df
+    }, error = function(e) {
+      message("No buoy data from API for ", lake_slug, ": ", conditionMessage(e))
+      NULL
+    })
+  }
+
+  CTD_buoy_list <- lapply(buoy_lake_slugs, fetch_buoy_api)
+  names(CTD_buoy_list) <- buoy_lake_slugs
+
+  # Fall back to local CSVs for any lake the API didn't return (currently only Ōkaro has these)
+  if (is.null(CTD_buoy_list[["okaro"]])) {
+    Okaro_CTD_buoy_files <- list.files("data/raw/Okaro_buoy_profiles", pattern = "\\.csv$", full.names = TRUE)
+    if (length(Okaro_CTD_buoy_files) > 0) {
+      message("Falling back to local CSVs for okaro")
+      Okaro_CTD_buoy        <- bind_rows(lapply(Okaro_CTD_buoy_files, read.csv))
+      Okaro_CTD_buoy$Lake   <- "Okaro"
+      CTD_buoy_list[["okaro"]] <- Okaro_CTD_buoy
+    }
+  }
+
+  CTD_buoy <- bind_rows(CTD_buoy_list)
+  if (nrow(CTD_buoy) == 0) stop("No buoy CTD data could be fetched for any lake")
+
+  saveRDS(CTD_buoy, buoy_raw_rds)
+
+}
+```
+
+# Data prep — livable habitat combined (Cast + Buoy CTD)
+```{r}
+#| label: livable-combined-prep
+
+combined_rds <- file.path(der_data_dir, "livable_combined.rds")
+
+if (file.exists(combined_rds)) {
+
+  saved               <- readRDS(combined_rds)
+  livable_habitat_sum <- saved$livable_habitat_sum
+  livable_habitat_all <- saved$livable_habitat_all
+  depth_ranges_all    <- saved$depth_ranges_all
+
+} else {
+
+  # ---- Cast depth ranges (all lakes) ----
+  livable_depth_season <- calc_depth_ranges(
+    df           = area_data_all_lakes,
+    source_label = "Cast",
+    lake_col     = "Lake", date_col  = "Date",  cast_col  = "Cast_ID",
+    depth_col    = "Depth", livable_col = "Livable_Habitat"
+  ) |>
+    left_join(max_depth_lake, by = "Lake") |>
+    mutate(Lake = factor(Lake, levels = lake_order))
+
+  # CTD_buoy comes from the independently-cached "buoy-fetch" chunk above —
+  # no re-fetching needed here.
+  Buoy_data <- CTD_buoy |>
+    dplyr::select(Lake, DateTime, DptSns, TmpWtr, DOconc) |>
+    rename(Depth = DptSns, Temp = TmpWtr, DO = DOconc) |>
+    distinct(Lake, DateTime, .keep_all = TRUE) |>
+    mutate(DateTime = as.POSIXct(DateTime, format = "%Y-%m-%d %H:%M:%S")) |>
+    tidyr::drop_na(DateTime, Depth) |>
+    mutate(
+      Date  = as.Date(DateTime),
+      Time  = format(DateTime, "%H:%M:%S"),
+      Year  = lubridate::year(DateTime),
+      # Month label is locale-dependent (display only) — Season uses numeric month instead
+      Month = lubridate::month(DateTime, label = TRUE),
+      Day   = lubridate::day(DateTime),
+      Season = case_when(
+        lubridate::month(DateTime) %in% c(12, 1, 2) ~ "Summer",
+        lubridate::month(DateTime) %in% c(3, 4, 5)  ~ "Autumn",
+        lubridate::month(DateTime) %in% c(6, 7, 8)  ~ "Winter",
+        lubridate::month(DateTime) %in% c(9, 10, 11) ~ "Spring",
+        TRUE ~ NA_character_
+      ),
+      Date_Time_Numeric = as.numeric(DateTime),
+      Time_of_Day = case_when(
+        lubridate::hour(DateTime) >= 6  & lubridate::hour(DateTime) < 12 ~ "Morning",
+        lubridate::hour(DateTime) >= 12 & lubridate::hour(DateTime) < 18 ~ "Afternoon",
+        lubridate::hour(DateTime) >= 18 & lubridate::hour(DateTime) < 24 ~ "Evening",
+        TRUE ~ "Night"
+      )
+    )
+
+  Buoy_data1 <- Buoy_data |>
+    arrange(Lake, Date, Time) |>
+    mutate(
+      Depth   = round(Depth),
+      cast_id = cumsum(Depth < lag(Depth, default = first(Depth))) + 1,
+      cast_id = as.factor(cast_id)
+    ) |>
+    group_by(Lake, Date) |>
+    mutate(num_casts = n_distinct(cast_id)) |>
+    ungroup() |>
+    group_by(Lake, Date, cast_id, Depth) |>
+    summarise(
+      Temp = mean(Temp, na.rm = TRUE),
+      DO   = mean(DO,   na.rm = TRUE),
+      across(-c(Temp, DO), dplyr::first),
+      .groups = "drop"
+    )
+
+  Buoy_data2 <- Buoy_data1 |>
+    left_join(hypsograph_data1, by = c("Lake", "Depth")) |>
+    mutate(
+      Lake = recode_lake_names(Lake),
+      Lake = factor(Lake, levels = lake_order),
+      Livable_Habitat = DO >= DO_THRESHOLD & Temp <= TEMP_THRESHOLD
+    )
+
+  Buoy_livable_habitat <- calc_livable_habitat_summary(
+    df           = Buoy_data2 |> rename(Cast_ID = cast_id),
+    source_label = "CTD",
+    lake_col     = "Lake",  date_col     = "Date",   cast_col     = "Cast_ID",
+    depth_col    = "Depth", do_col       = "DO",     temp_col     = "Temp",
+    area0_col    = "Area_depth_0",                   arealayer_col = "Area_at_Depth"
+  )
+
+  buoy_livable_depth_season <- calc_depth_ranges(
+    df           = Buoy_data2 |> rename(Cast_ID = cast_id),
+    source_label = "CTD",
+    lake_col     = "Lake",  date_col    = "Date",   cast_col    = "Cast_ID",
+    depth_col    = "Depth", livable_col = "Livable_Habitat"
+  )
+
+  # ---- Combine Cast + Buoy ----
+  livable_habitat_all <- bind_rows(
+    livable_habitat_sum  |> mutate(Source = "Cast", Cast_ID = as.character(Cast_ID)),
+    Buoy_livable_habitat |> mutate(Source = "CTD",  Cast_ID = as.character(Cast_ID))
+  ) |>
+    mutate(
+      Source = factor(Source, levels = c("Cast", "CTD")),
+      Lake   = factor(Lake,   levels = lake_order),
+      Season = factor(Season, levels = season_order)
+    )
+
+  depth_ranges_all <- bind_rows(
+    livable_depth_season      |> mutate(Source = "Cast"),
+    buoy_livable_depth_season |> mutate(Source = "CTD")
+  ) |>
+    mutate(
+      Source = factor(Source, levels = c("Cast", "CTD")),
+      Lake   = factor(Lake,   levels = lake_order),
+      Season = factor(Season, levels = season_order)
+    )
+
+  saveRDS(
+    list(
+      livable_habitat_sum = livable_habitat_sum,
+      livable_habitat_all = livable_habitat_all,
+      depth_ranges_all    = depth_ranges_all
+    ),
+    combined_rds
+  )
+
+}
+```
+
+# Trend analysis — is livable habitat changing over time?
+```{r}
+#| label: livable-trend
+#| fig-width: 8
+#| fig-height: 8
+#| fig-cap: Long-term trends in livable habitat across Rotorua Te Arawa lakes (Cast + Buoy combined)
+
+# Annual mean across Cast + Buoy CTD combined (pooled the same way as the summary figures)
+annual_livable <- livable_habitat_all |>
+  group_by(Lake, Year) |>
+  summarise(Annual_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
+
+livable_trends <- annual_livable |>
+  group_by(Lake) |>
+  group_modify(~ broom::tidy(lm(Annual_Mean ~ Year, data = .x))) |>
+  filter(term == "Year") |>
+  mutate(
+    sig    = case_when(p.value < 0.001 ~ "***", p.value < 0.01 ~ "**",
+                       p.value < 0.05 ~ "*", TRUE ~ "ns"),
+    direction = if_else(estimate > 0, "increasing", "decreasing")
+  ) |>
+  select(Lake, estimate, std.error, p.value, sig, direction)
+
+print(livable_trends)
+
+trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
+  geom_point(colour = "grey50", size = 1.5) +
+  geom_smooth(method = "lm", se = TRUE, colour = "#2171b5", fill = "#2171b5", alpha = 0.15) +
+  geom_text(
+    data = livable_trends,
+    aes(label = paste0(round(estimate, 1), "% yr⁻¹ ", sig)),
+    x = -Inf, y = Inf, hjust = -0.1, vjust = 1.4, size = 3, colour = "grey30"
+  ) +
+  facet_wrap(~ Lake) +
+  labs(x = "Year", y = "Annual mean livable habitat (%)")
+
+ggsave(file.path(fig_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 8, dpi = 300)
+
+trend_plot
+```
+
+# Figures — livable habitat (Cast + Buoy combined)
+```{r}
+#| label: fig-livable-combined
+#| fig-width: 8
+#| fig-height: 8
+
+# Time series: every cast/profile coloured by season
+livable_habitat_plot_combined <- ggplot(
+  livable_habitat_all,
+  aes(Date, Livable_Habitat_Percentage, colour = Season)
+) +
+  geom_point(alpha = 0.6) +
+  geom_line(aes(group = interaction(Season)), linewidth = 0.4, alpha = 0.6) +
+  facet_wrap(~ Lake, ncol = 4) +
+  labs(x = "Date", y = "Livable habitat (% of lake area)", colour = "Season")
+
+livable_habitat_plot_combined
+ggsave(file.path(fig_dir, "fig-livable-habitat-combined.png"), livable_habitat_plot_combined,
+       width = 8, height = 8, dpi = 300)
+
+# Yearly/season summary with overall annual mean (black line)
+livable_summary_all <- livable_habitat_all |>
+  group_by(Lake, Year, Season) |>
+  summarise(Mean_Livable_Habitat = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
+
+yearly_mean_all <- livable_habitat_all |>
+  group_by(Lake, Year) |>
+  summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
+
+livable_habitat_summary_plot_combined <- ggplot() +
+  geom_point(data = livable_summary_all,
+             aes(Year, Mean_Livable_Habitat, col = Season), size = 2) +
+  geom_line(data = livable_summary_all,
+            aes(Year, Mean_Livable_Habitat, col = Season, group = Season), linewidth = 0.8) +
+  geom_line(data = yearly_mean_all,
+            aes(Year, Yearly_Mean), col = "black", linewidth = 1) +
+  facet_wrap(~ Lake) +
+  labs(x = "Year", y = "Livable habitat (%)", col = "Season")
+
+ggsave(file.path(fig_dir, "fig-livable-habitat-summary.png"), livable_habitat_summary_plot_combined, width = 8, height = 8, dpi = 300)
+
+livable_habitat_summary_plot_combined
+```
+
+# Figures — livable depth range (Cast + Buoy combined)
+```{r}
+#| label: fig-depth-combined
+#| fig-width: 8
+#| fig-height: 11
+
+Depth_plot_combined <- depth_ranges_all |>
+  ggplot(aes(x = Date)) +
+  geom_linerange(aes(ymin = cast_shallowest, ymax = cast_deepest),
+                 colour = "black", linewidth = 1) +
+  geom_linerange(aes(ymin = shallowest_livable, ymax = deepest_livable, colour = Season),
+                 linewidth = 0.7, na.rm = TRUE) +
+  scale_y_reverse() +
+  facet_wrap(~ Lake, scales = "free_y", ncol = 2) +
+  labs(x = "Year", y = "Depth (m)")
+
+
+ggsave(file.path(fig_dir, "fig-depth-combined.png"), Depth_plot_combined, width = 11, height = 11, dpi = 300)
+       
+Depth_plot_combined
+```
+
+# Figures — livable depth as stacked area (alternative view)
+```{r}
+#| label: fig-depth-stacked-area
+#| fig-width: 10
+#| fig-height: 16
+
+# Same depth_ranges_all data as Depth_plot_combined, but reduced to two stacked
+# thicknesses (livable vs non-livable) per Date/Lake instead of absolute depth bands.
+# Trades away *where* in the water column the livable zone sits for a compact view
+# of *how much* of the water column is livable, over time.
+depth_zones_long <- depth_ranges_all |>
+  mutate(
+    total_depth          = cast_deepest - cast_shallowest,
+    livable_thickness     = pmax(dplyr::coalesce(deepest_livable, cast_shallowest) -
+                                  dplyr::coalesce(shallowest_livable, cast_shallowest), 0),
+    nonlivable_thickness = total_depth - livable_thickness
+  ) |>
+  select(Lake, Date, Season, livable_thickness, nonlivable_thickness) |>
+  tidyr::pivot_longer(c(nonlivable_thickness, livable_thickness),
+                       names_to = "Zone", values_to = "Thickness") |>
+  mutate(Zone = factor(Zone,
+                        levels = c("nonlivable_thickness", "livable_thickness"),
+                        labels = c("Non-livable", "Livable habitat")))
+
+Depth_area_plot_combined <- depth_zones_long |>
+  ggplot(aes(x = Date, y = Thickness, fill = Zone)) +
+  geom_area(position = "stack") +
+  scale_fill_manual(values = c("Non-livable" = "grey75", "Livable habitat" = "#1a9850")) +
+  scale_y_reverse() +
+  facet_wrap(~ Lake, scales = "free_y", ncol = 3) +
+  labs(x = "Year", y = "Depth (m)", fill = NULL)
+
+Depth_area_plot_combined
+ggsave(file.path(fig_dir, "fig-depth-stacked-area.png"), Depth_area_plot_combined,
+       width = 10, height = 16, dpi = 300)
+```
+
+
+# Make int into lake maps
+```{r}
+#| label: lake-maps
+#| fig-width: 8
+#| fig-height: 11
+
+# 2. HELPERS: PLOT ONE PERIOD (MONTH OR SEASON), PATCHWORK OF ALL LAKES
+
+# Always show every lake we have bathymetry for, in the fixed display order, even when
+# a given period has no cast for some of them (those just render as solid grey).
+all_map_lakes <- lake_order[lake_order %in% names(bathy_rasters)]
+
+# Lake shoreline outlines in NZTM x/y coordinates — overlaid on all pixel maps
+# so each lake is always clearly delineated regardless of colour fill.
+# all_lakes is created in the study-lakes-map chunk (EPSG:2193).
+lake_boundaries <- purrr::map_dfr(all_map_lakes, function(lk) {
+  lake_sf <- all_lakes |> dplyr::filter(lake_name == lk)
+  if (nrow(lake_sf) == 0) return(NULL)
+  coords <- sf::st_coordinates(sf::st_cast(sf::st_union(lake_sf), "MULTILINESTRING"))
+  data.frame(x = coords[, "X"], y = coords[, "Y"], L = coords[, "L2"], Lake = lk)
+})
+
+# Nearest-depth match instead of exact equality, with one cast's classification per
+# bathymetry point, then a majority vote across however many casts fall in this period
+# (1 cast for a month, usually several for a season). A single cast rarely measures
+# every exact integer depth present across the whole lake floor — especially the
+# deepest basin pixels, which is why those showed up as blank holes under exact
+# matching. Falls back to grey (NA) only if NONE of the period's casts had a
+# measurement within max_dist_m of that point's depth — i.e. genuinely unmeasured.
+match_nearest_depth_votes <- function(bathy_lake, profile_lake, cast_ids, max_dist_m = 3) {
+  if (length(cast_ids) == 0) {
+    return(bathy_lake |> mutate(Livable_Habitat = NA))
+  }
+
+  vote_matrix <- sapply(cast_ids, function(cid) {
+    cast_depths <- profile_lake |> filter(Cast_ID == cid)
+    if (nrow(cast_depths) == 0) return(rep(NA, nrow(bathy_lake)))
+    idx <- vapply(bathy_lake$Depth, function(d) {
+      diffs <- abs(cast_depths$Depth - d)
+      i <- which.min(diffs)
+      if (diffs[i] > max_dist_m) NA_integer_ else i
+    }, integer(1))
+    cast_depths$Livable_Habitat[idx]
+  })
+  if (is.null(dim(vote_matrix))) vote_matrix <- matrix(vote_matrix, ncol = length(cast_ids))
+
+  majority <- apply(vote_matrix, 1, function(row) {
+    row <- row[!is.na(row)]
+    if (length(row) == 0) return(NA)
+    mean(row) > 0.5
+  })
+
+  bathy_lake |> mutate(Livable_Habitat = majority)
+}
+
+plot_lake_period <- function(lake_name, cast_ids_this_period) {
+  bathy_lake <- bathy_points_sub |>
+    filter(Lake == lake_name) |>
+    rename(Depth = depth)
+
+  profile_lake <- profile_conditions |> filter(Lake == lake_name)
+
+  df <- match_nearest_depth_votes(bathy_lake, profile_lake, cast_ids_this_period)
+
+  ggplot(df, aes(x, y, col = Livable_Habitat)) +
+    geom_point(size = 0.6) +
+    scale_colour_manual(values = c("TRUE" = "#00BFC4", "FALSE" = "#F8766D"),
+                        na.value = "grey80") +
+    geom_path(
+      data        = lake_boundaries |> dplyr::filter(Lake == lake_name),
+      aes(x, y, group = L),
+      colour      = "black", linewidth = 0.5, inherit.aes = FALSE
+    ) +
+    coord_equal() +
+    labs(x = NULL, y = NULL, subtitle = lake_name) +
+    theme(
+      legend.position = "none",
+      axis.text = element_blank(),
+      axis.title = element_blank(),
+      axis.ticks = element_blank(),
+      axis.line = element_blank()
+    )
+}
+
+make_month_patchwork <- function(year_val, month_val) {
+  month_cast_ids <- monthly_casts |>
+    filter(Year == year_val, Month == month_val)
+
+  title_label <- paste0("Livable habitat | ", as.character(month_val), " ", year_val)
+
+  lake_plots <- lapply(all_map_lakes, function(lk) {
+    cast_ids <- month_cast_ids |> filter(Lake == lk) |> pull(Cast_ID)
+    plot_lake_period(lk, cast_ids)
+  })
+
+  wrap_plots(lake_plots, nrow = 4) +
+    plot_annotation(title = title_label)
+}
+
+# Season-level equivalent — pools ALL casts within a Lake/Season/Season_Year via
+# majority vote (see match_nearest_depth_votes above), rather than picking a single
+# representative cast like the monthly version does.
+seasonal_casts <- area_data_all_lakes |>
+  distinct(Lake, Season_Year, Season, Cast_ID) |>
+  arrange(Lake, Season_Year, Season)
+
+make_season_patchwork <- function(season_year_val, season_val) {
+  season_cast_ids <- seasonal_casts |>
+    filter(Season_Year == season_year_val, Season == season_val)
+
+  title_label <- paste0("Livable habitat | ", season_val, " ", season_year_val)
+
+  lake_plots <- lapply(all_map_lakes, function(lk) {
+    cast_ids <- season_cast_ids |> filter(Lake == lk) |> pull(Cast_ID)
+    plot_lake_period(lk, cast_ids)
+  })
+
+  wrap_plots(lake_plots, nrow = 4) +
+    plot_annotation(title = title_label)
+}
+
+
+# 3. PREVIEW: FIRST MONTH ONLY 
+
+first_month_info <- monthly_casts |>
+  arrange(Year, Month) |>
+  slice(1)
+
+first_year  <- first_month_info$Year
+first_month <- first_month_info$Month
+
+combined_first_month_plot <- make_month_patchwork(first_year, first_month)
+combined_first_month_plot
+
+# Season-level preview — same first period, but pooling every cast in that season
+first_season_info <- seasonal_casts |>
+  arrange(Season_Year, Season) |>
+  slice(2380)
+
+combined_first_season_plot <- make_season_patchwork(first_season_info$Season_Year, first_season_info$Season)
+combined_first_season_plot
+
+
+# 4. ALL Seasons → PNG FRAMES → VIDEO
+# Disabled by default — slow (renders one plot per season) and not needed for every run.
+# Set to TRUE to regenerate the frames + video.
+if (FALSE) {
+
+  # Directory to store frames
+  frames_dir <- "livable_habitat_frames"
+  if (!dir.exists(frames_dir)) dir.create(frames_dir, recursive = TRUE)
+
+  # All Year–Month combinations present in seasonal_casts (sorted)
+  ym_table <- seasonal_casts |>
+    distinct(Year, Month) |>
+    arrange(Year, Month)
+
+  frame_files <- c()
+
+  for (i in seq_len(nrow(ym_table))) {
+    yr <- ym_table$Year[i]
+    mn <- ym_table$Month[i]
+
+    p <- make_month_patchwork(yr, mn)
+    if (is.null(p)) next
+
+    # safe filename, e.g. 2004-01_Rotorua_etc.png → here just year-month
+    mn_num <- as.integer(mn)
+    file_name <- sprintf("livable_habitat_%04d-%02d.png", yr, mn_num)
+    file_path <- file.path(frames_dir, file_name)
+
+    ggsave(filename = file_path, plot = p, width = 10, height = 6, dpi = 300)
+    frame_files <- c(frame_files, file_path)
+  }
+
+  # Encode video from the PNG frames
+  # Adjust framerate if you want slower/faster animation
+  output_video <- file.path(frames_dir, "livable_habitat_video.mp4")
+  av_encode_video(frame_files, output = output_video, framerate = 2)
+
+}
+
+
+```
+
+# Per-pixel livable habitat trend maps
+```{r}
+#| label: pixel-trend-maps
+#| fig-width: 10
+#| fig-height: 14
+
+# Unlike trend_plot (one scalar trend per lake), this fits a separate linear trend per
+# bathymetry pixel — Livable (0/1) ~ Year, majority-voted across that year's casts —
+# so it shows WHERE within a lake habitat is improving or declining, not just the
+# lake-wide average. Cached to disk since it's expensive (one nearest-depth-vote pass
+# per lake per year). Delete pixel_trend_maps.rds to force a recompute.
+pixel_trend_rds <- file.path(der_data_dir, "pixel_trend_maps.rds")
+
+if (file.exists(pixel_trend_rds)) {
+
+  pixel_trends <- readRDS(pixel_trend_rds)
+
+} else {
+
+  compute_pixel_trend <- function(lake_name) {
+    bathy_lake <- bathy_points_sub |>
+      filter(Lake == lake_name) |>
+      rename(Depth = depth)
+
+    profile_lake <- profile_conditions |> filter(Lake == lake_name)
+    years <- sort(unique(profile_lake$Year))
+    if (length(years) < 3) return(NULL)  # not enough years for a meaningful trend
+
+    # Pixel x Year matrix of livable classification (majority vote within each year,
+    # reusing the same nearest-depth-vote logic as the season/month maps)
+    year_matrix <- vapply(years, function(yr) {
+      cast_ids <- profile_lake |> filter(Year == yr) |> pull(Cast_ID) |> unique()
+      match_nearest_depth_votes(bathy_lake, profile_lake, cast_ids)$Livable_Habitat
+    }, FUN.VALUE = logical(nrow(bathy_lake)))
+
+    # Per-pixel OLS slope of (Livable as 0/1) ~ Year, skipping years with no data for
+    # that specific pixel — needs at least 3 years of data to fit a trend at all.
+    y_mat   <- matrix(as.numeric(year_matrix), nrow = nrow(year_matrix))
+    n_valid <- rowSums(!is.na(y_mat))
+    slope   <- rep(NA_real_, nrow(y_mat))
+
+    for (i in which(n_valid >= 3)) {
+      yi <- y_mat[i, ]
+      ok <- !is.na(yi)
+      if (length(unique(years[ok])) < 2) next
+      slope[i] <- coef(lm(yi[ok] ~ years[ok]))[2]
+    }
+
+    bathy_lake |>
+      mutate(Trend = slope, Lake = lake_name) |>
+      filter(!is.na(Trend))
+  }
+
+  pixel_trends <- lapply(all_map_lakes, compute_pixel_trend) |> bind_rows()
+
+  saveRDS(pixel_trends, pixel_trend_rds)
+
+}
+
+# Shared colour scale across all lakes so trend intensity is directly comparable —
+# a dark red in one lake means the same thing as a dark red in another.
+# A handful of extreme outlier pixels were stretching the colour scale so far that
+# typical trend values all looked washed-out near white. Cap the scale at the 95th
+# percentile of |Trend| instead of the true max, and squish anything beyond that to
+# the most saturated colour rather than letting it go off-scale.
+trend_cap <- quantile(abs(pixel_trends$Trend), 0.95, na.rm = TRUE)
+
+plot_lake_trend <- function(lake_name) {
+  df <- pixel_trends |> filter(Lake == lake_name)
+  if (nrow(df) == 0) {
+    return(ggplot() + theme_void() + labs(subtitle = lake_name))
+  }
+  ggplot(df, aes(x, y, col = Trend)) +
+    geom_point(size = 0.6) +
+    scale_colour_gradient2(low = "#d73027", mid = "grey90", high = "#2171b5",
+                           midpoint = 0, limits = c(-trend_cap, trend_cap),
+                           oob = scales::squish) +
+    geom_path(
+      data        = lake_boundaries |> dplyr::filter(Lake == lake_name),
+      aes(x, y, group = L),
+      colour      = "black", linewidth = 0.5, inherit.aes = FALSE
+    ) +
+    coord_equal() +
+    labs(x = NULL, y = NULL, subtitle = lake_name, colour = "Trend") +
+    theme(
+      axis.text = element_blank(), axis.title = element_blank(),
+      axis.ticks = element_blank(), axis.line = element_blank()
+    )
+}
+
+trend_map_plots  <- lapply(all_map_lakes, plot_lake_trend)
+combined_trend_map <- wrap_plots(trend_map_plots, nrow = 4) +
+  plot_annotation(title = "Per-pixel trend in livable habitat (change in proportion of livable years, per year)")
+
+combined_trend_map
+ggsave(file.path(fig_dir, "fig-pixel-trend-maps.png"), combined_trend_map,
+       width = 10, height = 14, dpi = 300)
+```
+
+# Per-pixel livable habitat persistence maps
+```{r}
+#| label: pixel-persistence-maps
+#| fig-width: 10
+#| fig-height: 14
+
+# Different question to the trend map: not "is this pixel changing?" but "how reliably
+# is this pixel livable at all?" Built at the Season_Year x Season level (not collapsed
+# to year first) so the per-season breakdown isn't confounded by within-year seasonal
+# cycling — a pixel livable every winter and never in summer should NOT look the same
+# as one that's moderately livable year-round. Cached to disk; delete
+# pixel_persistence.rds to force a recompute.
+pixel_persistence_rds <- file.path(der_data_dir, "pixel_persistence.rds")
+
+if (file.exists(pixel_persistence_rds)) {
+
+  pixel_persistence <- readRDS(pixel_persistence_rds)
+
+} else {
+
+  compute_pixel_persistence <- function(lake_name) {
+    bathy_lake   <- bathy_points_sub |> filter(Lake == lake_name) |> rename(Depth = depth)
+    profile_lake <- profile_conditions |> filter(Lake == lake_name)
+    season_lake  <- seasonal_casts |> filter(Lake == lake_name)
+    periods      <- season_lake |> distinct(Season_Year, Season)
+    if (nrow(periods) < 3) return(NULL)
+
+    # Pixel x Season-period matrix of livable classification (majority vote within
+    # each individual season-year, same logic as the season maps)
+    period_matrix <- vapply(seq_len(nrow(periods)), function(i) {
+      cast_ids <- season_lake |>
+        filter(Season_Year == periods$Season_Year[i], Season == periods$Season[i]) |>
+        pull(Cast_ID)
+      match_nearest_depth_votes(bathy_lake, profile_lake, cast_ids)$Livable_Habitat
+    }, FUN.VALUE = logical(nrow(bathy_lake)))
+
+    # Pooled persistence: proportion of ALL observed periods a pixel was livable
+    pooled <- rowMeans(period_matrix, na.rm = TRUE)
+
+    # Per-season persistence: proportion of that specific season's periods (e.g. every
+    # observed summer) a pixel was livable
+    by_season <- lapply(season_order, function(s) {
+      cols <- periods$Season == s
+      if (!any(cols)) return(rep(NA_real_, nrow(bathy_lake)))
+      if (sum(cols) == 1) period_matrix[, cols] |> as.numeric()
+      else rowMeans(period_matrix[, cols, drop = FALSE], na.rm = TRUE)
+    })
+    names(by_season) <- season_order
+
+    bathy_lake |>
+      mutate(Lake = lake_name, Pooled = pooled, !!!by_season) |>
+      filter(!is.nan(Pooled))
+  }
+
+  pixel_persistence <- lapply(all_map_lakes, compute_pixel_persistence) |> bind_rows()
+
+  saveRDS(pixel_persistence, pixel_persistence_rds)
+
+}
+
+plot_lake_persistence <- function(lake_name, value_col, title_label) {
+  df <- pixel_persistence |> filter(Lake == lake_name)
+  if (nrow(df) == 0 || all(is.na(df[[value_col]]))) {
+    return(ggplot() + theme_void() + labs(subtitle = lake_name))
+  }
+  ggplot(df, aes(x, y, col = .data[[value_col]])) +
+    geom_point(size = 0.6) +
+    scale_colour_gradient(low = "grey90", high = "#00BFC4", limits = c(0, 1),
+                          na.value = "grey95") +
+    geom_path(
+      data        = lake_boundaries |> dplyr::filter(Lake == lake_name),
+      aes(x, y, group = L),
+      colour      = "black", linewidth = 0.5, inherit.aes = FALSE
+    ) +
+    coord_equal() +
+    labs(x = NULL, y = NULL, subtitle = lake_name, colour = title_label) +
+    theme(
+      axis.text = element_blank(), axis.title = element_blank(),
+      axis.ticks = element_blank(), axis.line = element_blank()
+    )
+}
+
+# Pooled — one map per lake, all seasons/years combined
+pooled_persistence_plots <- lapply(all_map_lakes, plot_lake_persistence,
+                                   value_col = "Pooled", title_label = "% livable")
+combined_pooled_persistence <- wrap_plots(pooled_persistence_plots, nrow = 4) +
+  plot_annotation(title = "Pixel persistence — proportion of all observed periods livable")
+
+combined_pooled_persistence
+ggsave(file.path(fig_dir, "fig-pixel-persistence-pooled.png"), combined_pooled_persistence,
+       width = 10, height = 14, dpi = 300)
+
+# Per-season — four separate combined maps, one per season
+season_persistence_maps <- lapply(season_order, function(s) {
+  plots <- lapply(all_map_lakes, plot_lake_persistence, value_col = s, title_label = "% livable")
+  combined <- wrap_plots(plots, nrow = 4) +
+    plot_annotation(title = paste0("Pixel persistence — ", s, " (proportion of observed ", s, "s livable)"))
+  ggsave(file.path(fig_dir, paste0("fig-pixel-persistence-", tolower(s), ".png")), combined,
+         width = 10, height = 14, dpi = 300)
+  combined
+})
+names(season_persistence_maps) <- season_order
+
+# Preview one season here; the others are saved to outputs/ but not all printed inline
+season_persistence_maps[["Summer"]]
+```
+
+
+# Session info
+```{r}
+#| label: session-info
+#| include: true
+#| code-fold: true
+sessionInfo()
+```
