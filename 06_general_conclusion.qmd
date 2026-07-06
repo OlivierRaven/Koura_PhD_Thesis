@@ -1,1 +1,20 @@
+::: {.content-visible when-format="pdf"}
+\thispagestyle{empty}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch6_cover.jpg}}}
+\null
+\newpage
+\pagecolor{thesissand}
+\vspace{1cm}
+\begin{center}
+\textit{What do these findings mean for the future of kōura habitat restoration?}
+\end{center}
+\afterpage{\pagecolor{thesiscream}}
+:::
+
+::: {.content-visible unless-format="pdf"}
+![](images/ch6_cover.jpg){fig-align="center" width="100%"}
+
+*What do these findings mean for the future of kōura habitat restoration?*
+:::
+
 # General Conclusion

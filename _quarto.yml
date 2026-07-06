@@ -6,7 +6,7 @@ project:
 book:
   title: "Restoring native freshwater crayfish habitat in invaded lake ecosystems"
   author: "Olivier V. Raven"
-  date: "today"
+  date: "2026"
   
   chapters:
   - index.qmd
@@ -35,7 +35,7 @@ format:
     code-summary: "View Code"
     toc: true
     toc-depth: 3
-    toc-location: left
+    toc-location: right
     number-sections: true
     number-depth: 1
     smooth-scroll: true

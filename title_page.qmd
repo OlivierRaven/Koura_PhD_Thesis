@@ -33,7 +33,43 @@ by\\[0.6cm]
 \newpage
 :::
 
-::: {.content-visible unless-format="pdf"}
+::: {.content-visible when-format="docx"}
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+**Restoring native freshwater crayfish habitat in invaded lake ecosystems**
+
+&nbsp;
+
+A thesis submitted in fulfilment of the requirements for the degree of
+
+**Doctor of Philosophy**
+
+Te Aka Mātuatua — School of Science
+
+The University of Waikato
+
+&nbsp;
+
+**Olivier V. Raven**
+
+&nbsp;
+
+![](images/Waik_Word_RGB_V-New.jpg){width=6cm}
+
+&nbsp;
+
+2026
+
+{{< pagebreak >}}
+
+:::
+
+::: {.content-visible when-format="html"}
 <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:82vh; text-align:center; padding:2rem 1rem;">
 
 <h1 style="font-family:'Crimson Pro',Georgia,serif; font-size:2rem; font-weight:700; max-width:560px; line-height:1.45; margin:0 0 3.5rem;">

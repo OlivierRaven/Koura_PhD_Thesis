@@ -2,7 +2,7 @@
 title-block-style: none
 ---
 
-#   {.unnumbered .unlisted}
+#  PhD Thesis {.unnumbered .unlisted}
 
 ::: {.content-visible unless-format="pdf"}
 ![](images/thesis_cover.jpg){fig-align="center" width="100%"}
