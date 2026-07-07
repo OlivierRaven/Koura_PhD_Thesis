@@ -15,12 +15,6 @@
 \end{center}
 :::
 
-::: {.content-visible when-format="html"}
-![](../images/ch2_cover.jpg){fig-align="center" width="100%"}
-
-*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
-:::
-
 ::: {.content-visible when-format="docx"}
 ![](../images/ch2_cover.jpg){fig-align="center" width=15cm}
 

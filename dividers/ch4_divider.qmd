@@ -15,12 +15,6 @@
 \end{center}
 :::
 
-::: {.content-visible when-format="html"}
-![](../images/ch4_cover.jpg){fig-align="center" width="100%"}
-
-*Does shelter structure or material composition drive kōura refuge selection?*
-:::
-
 ::: {.content-visible when-format="docx"}
 ![](../images/ch4_cover.jpg){fig-align="center" width=15cm}
 

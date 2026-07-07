@@ -15,12 +15,6 @@
 \end{center}
 :::
 
-::: {.content-visible when-format="html"}
-![](../images/ch3_cover.jpg){fig-align="center" width="100%"}
-
-*Which natural shoreline features do kōura prefer?*
-:::
-
 ::: {.content-visible when-format="docx"}
 ![](../images/ch3_cover.jpg){fig-align="center" width=15cm}
 

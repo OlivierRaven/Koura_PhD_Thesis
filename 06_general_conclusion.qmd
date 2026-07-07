@@ -14,12 +14,6 @@
 \clearpage
 :::
 
-::: {.content-visible when-format="html"}
-![](images/ch6_cover.jpg){fig-align="center" width="100%"}
-
-*What do these findings mean for the future of kōura habitat restoration?*
-:::
-
 ::: {.content-visible when-format="docx"}
 ![](images/ch6_cover.jpg){fig-align="center" width=15cm}
 
