@@ -68,6 +68,7 @@ node_modules/
 .claude/worktrees/
 
 # Cache/temp
+file[0-9a-f]*/
 *.log
 *.kv
 *.kv-wal
