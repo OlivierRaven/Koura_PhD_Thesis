@@ -12,6 +12,7 @@
 !images/thesis_cover.jpg
 !docs/images/ch*.jpg
 !docs/images/thesis_cover.jpg
+!docs/*/images/ch*.jpg
 *.jpeg
 *.JPEG
 *.mp4

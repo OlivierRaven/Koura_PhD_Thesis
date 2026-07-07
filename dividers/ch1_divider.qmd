@@ -15,8 +15,14 @@
 \end{center}
 :::
 
-::: {.content-visible unless-format="pdf"}
+::: {.content-visible when-format="html"}
 ![](../images/ch1_cover.jpg){fig-align="center" width="100%"}
+
+*How can habitat enhancement structures support the restoration of kōura populations in Aotearoa New Zealand's lakes?*
+:::
+
+::: {.content-visible when-format="docx"}
+![](../images/ch1_cover.jpg){fig-align="center" width=15cm}
 
 *How can habitat enhancement structures support the restoration of kōura populations in Aotearoa New Zealand's lakes?*
 :::

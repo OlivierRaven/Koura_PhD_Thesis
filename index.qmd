@@ -4,6 +4,10 @@ title-block-style: none
 
 #  PhD Thesis {.unnumbered .unlisted}
 
-::: {.content-visible unless-format="pdf"}
+::: {.content-visible when-format="html"}
 ![](images/thesis_cover.jpg){fig-align="center" width="100%"}
+:::
+
+::: {.content-visible when-format="docx"}
+![](images/thesis_cover.jpg){fig-align="center" width=15cm}
 :::

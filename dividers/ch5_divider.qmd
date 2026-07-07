@@ -15,8 +15,14 @@
 \end{center}
 :::
 
-::: {.content-visible unless-format="pdf"}
+::: {.content-visible when-format="html"}
 ![](../images/ch5_cover.jpg){fig-align="center" width="100%"}
+
+*Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti?*
+:::
+
+::: {.content-visible when-format="docx"}
+![](../images/ch5_cover.jpg){fig-align="center" width=15cm}
 
 *Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti?*
 :::
