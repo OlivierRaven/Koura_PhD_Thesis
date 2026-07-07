@@ -42,11 +42,9 @@ format:
     format-links: [pdf, docx]
   docx:
     reference-doc: references/reference.docx
-    filters:
-      - at: pre-quarto
-        path: filters/docx-title-page.lua
   pdf:
     documentclass: scrbook
+    classoption: ["oneside"]
     papersize: a4
     fontsize: 12pt
     linestretch: 1.2
@@ -56,7 +54,7 @@ format:
       - left=35mm
       - right=25mm
     toc: true
-    toc-depth: 3
+    toc-depth: 1
     number-sections: true
     number-depth: 1
     mainfont: "Crimson Pro"
@@ -72,3 +70,7 @@ format:
         \definecolor{thesissand}{RGB}{232, 212, 162}
         \pagecolor{thesiscream}
         \addtokomafont{disposition}{\sffamily}
+        \makeatletter
+        \renewcommand*{\chapterheadstartvskip}{\vspace*{0pt}}
+        \makeatother
+        \renewenvironment{abstract}{}{}
