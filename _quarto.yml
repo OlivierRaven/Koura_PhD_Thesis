@@ -22,6 +22,9 @@ book:
   - references.qmd
   - appendices.qmd
 
+filters:
+  - filters/strip-chapter-only.lua
+
 bibliography: references/references.bib
 csl: references/springer-basic-author-date.csl
 
