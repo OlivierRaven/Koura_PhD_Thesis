@@ -11,14 +11,18 @@
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}
 \begin{center}
-\textit{Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti?}
+Olivier V. Raven, Ian A. K. Kusabs, Robin Holmes,\\
+Francis J. Burdon \& Deniz Özkundakci\\[0.6cm]
+\textit{Freshwater Biology} --- In preparation
 \end{center}
 :::
 
 ::: {.content-visible when-format="docx"}
 ![](../images/ch5_cover.jpg){fig-align="center" width=15cm}
 
-*Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti?*
+Olivier V. Raven, Ian A. K. Kusabs, Robin Holmes, Francis J. Burdon & Deniz Özkundakci
+
+*Freshwater Biology* — In preparation
 :::
 
 ::: {.content-visible when-format="pdf"}

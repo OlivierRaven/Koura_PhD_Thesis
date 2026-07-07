@@ -11,14 +11,18 @@
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}
 \begin{center}
-\textit{Does shelter structure or material composition drive kōura refuge selection?}
+Olivier V. Raven, Robin Holmes, Ian A. K. Kusabs,\\
+Francis J. Burdon \& Deniz Özkundakci\\[0.6cm]
+\textit{Aquatic Conservation: Marine and Freshwater Ecosystems} --- Under review
 \end{center}
 :::
 
 ::: {.content-visible when-format="docx"}
 ![](../images/ch4_cover.jpg){fig-align="center" width=15cm}
 
-*Does shelter structure or material composition drive kōura refuge selection?*
+Olivier V. Raven, Robin Holmes, Ian A. K. Kusabs, Francis J. Burdon & Deniz Özkundakci
+
+*Aquatic Conservation: Marine and Freshwater Ecosystems* — Under review
 :::
 
 ::: {.content-visible when-format="pdf"}

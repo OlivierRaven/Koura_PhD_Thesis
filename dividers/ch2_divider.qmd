@@ -11,14 +11,18 @@
 ::: {.content-visible when-format="pdf"}
 \vspace{1cm}
 \begin{center}
-\textit{How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?}
+Olivier V. Raven, Calum MacNeil, Finnbar Lee, Robin Holmes,\\
+Ian A. Kusabs, Francis J. Burdon \& Deniz Özkundakci\\[0.6cm]
+\textit{Biological Invasions} --- Under review
 \end{center}
 :::
 
 ::: {.content-visible when-format="docx"}
 ![](../images/ch2_cover.jpg){fig-align="center" width=15cm}
 
-*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
+Olivier V. Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. Kusabs, Francis J. Burdon & Deniz Özkundakci
+
+*Biological Invasions* — Under review
 :::
 
 ::: {.content-visible when-format="pdf"}
