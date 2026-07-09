@@ -2,9 +2,17 @@
 title-block-style: none
 ---
 
-#  PhD Thesis {.unnumbered .unlisted}
+::: {.content-visible when-format="pdf"}
+\thispagestyle{empty}
+\nopagecolor
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/thesis_cover.jpg}}}
+\null
+\clearpage
+:::
 
 ::: {.content-visible when-format="html"}
+#  PhD Thesis {.unnumbered .unlisted}
+
 [⬇ Download PDF](Restoring-native-freshwater-crayfish-habitat-in-invaded-lake-ecosystems.pdf){.btn .btn-outline-danger .btn-sm}
 [⬇ Download Word](Restoring-native-freshwater-crayfish-habitat-in-invaded-lake-ecosystems.docx){.btn .btn-outline-primary .btn-sm}
 :::

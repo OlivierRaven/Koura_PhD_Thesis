@@ -1,6 +1,7 @@
 ::: {.content-visible when-format="pdf"}
 \clearpage
 \thispagestyle{empty}
+\nopagecolor
 \AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch6_cover.jpg}}}
 \null
 \newpage

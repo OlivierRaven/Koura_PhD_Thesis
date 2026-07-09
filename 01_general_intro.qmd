@@ -1,11 +1,12 @@
 ::: {.content-visible when-format="pdf"}
+\mainmatter
 \clearpage
 \thispagestyle{empty}
+\nopagecolor
 \AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}}}
 \null
 \newpage
-\afterpage{\pagecolor{thesiscream}}
-\clearpage
+\pagecolor{thesiscream}
 :::
 
 ::: {.content-visible when-format="docx"}
@@ -42,7 +43,7 @@ Kōura continue to be an important food source for Māori and are considered a t
 ![Kōura catches in CPUE in Lake Rotoiti between 2005 and 2025. Kōura were caught using the tau kōura. Adapted from [@Kusabs2026].](images/fig-koura-decline.png){#fig-koura-decline}
 
 ## Brown bullhead catfish: a novel predator in Aotearoa lakes
-The brown bullhead catfish (*Ameiurus nebulosus* Lesueur 1819, hereafter catfish) is native to North America but has been introduced worldwide for aquaculture and as a game fish. In Aotearoa, 140 individuals were introduced in 1877 to Lake St John (Lake Waiatarua) in the Auckland region, reportedly by mistake, as the intended species was channel catfish (*Ictalurus punctatus*) [@Barnes1996]. Although Lake St John has since been drained, catfish persisted and have spread throughout the upper North Island via accidental and deliberate releases (@fig-nz-distribution-maps). Lake Taupō was first invaded in 1985 following an illegal release [@Barnes1996]. In the Rotorua Te Arawa Lakes, a dead catfish was found at Okawa Bay in Lake Rotoiti in 2009 [@Blair2009] and sightings followed in 2014, but surveys failed to detect catfish until 2016, when multiple individuals were found at the western end of Lake Rotoiti, including Te Weta Bay where catfish were recovered during macrophyte harvesting operations [@Francis2019]. Catfish subsequently spread to Lake Rotorua in 2018 via the Ōhau Channel. Since 2016, routine monitoring and active control fishing have been carried out to reduce their impact [@Grayling2020]. 
+The brown bullhead catfish (*Ameiurus nebulosus* Lesueur 1819, hereafter catfish) is native to North America but has been introduced worldwide for aquaculture and as a game fish. In Aotearoa, 140 individuals were introduced in 1877 to Lake St John (Lake Waiatarua) in the Auckland region, reportedly by mistake, as the intended species was channel catfish (*Ictalurus punctatus* (Rafinesque, 1818)) [@Barnes1996]. Although Lake St John has since been drained, catfish persisted and have spread throughout the upper North Island via accidental and deliberate releases (@fig-nz-distribution-maps). Lake Taupō was first invaded in 1985 following an illegal release [@Barnes1996]. In the Rotorua Te Arawa Lakes, a dead catfish was found at Okawa Bay in Lake Rotoiti in 2009 [@Blair2009] and sightings followed in 2014, but surveys failed to detect catfish until 2016, when multiple individuals were found at the western end of Lake Rotoiti, including Te Weta Bay where catfish were recovered during macrophyte harvesting operations [@Francis2019]. Catfish subsequently spread to Lake Rotorua in 2018 via the Ōhau Channel. Since 2016, routine monitoring and active control fishing have been carried out to reduce their impact [@Grayling2020]. 
 
 Critically, Aotearoa lacks native Siluriformes, making catfish a novel predation threat to which native species may lack adequate behavioural or sensory adaptations [@Sih2010; @Carthey2014]. Catfish are physiologically tolerant of a wide range of conditions, including elevated temperatures and low dissolved oxygen [@Scott1973], allowing them to occupy habitats that exclude many native species [@Lee2025]. They are omnivorous benthic feeders, with individuals reaching 200-455 mm in length and living up to eight years [@Barnes1996]. Their diet overlaps with, and partly consists of, native species leading to both competition and direct predation (@fig-catfish-dissection) [@Scott1973; @Dedual2019]. Catfish are known predators of kōura, and are held responsible for the recent decline in kōura abundance in Lakes Rotorua and Rotoiti (@fig-koura-decline) [@Kusabs2026]. Habitat use varies seasonally: in lakes, catfish occupy depths down to approximately 17 m [@Dedual2002] and shift between weedy and rocky habitats depending on the season, primarily rocky habitats in winter when macrophytes die back, and both habitat types during autumn and spring [@Barnes1996; @Barnes2003]. Spawning occurs in nests excavated in mud or sand, typically in shallow areas near rocks or submerged tree trunks for protection [@Scott1973]. Nests are roughly the size of the female, who may carry between 2,000 and 13,000 eggs depending on body size [@Scott1973].
 
@@ -101,9 +102,9 @@ This thesis aimed to determine optimal strategies for restoring and enhancing k�
 | RQ | Chapter | Research question |
 |:--:|:--------|:-------------------|
 | 1 | 2 — Native vs. Novel Threats | How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura? |
-| 2 | 3 — Where do Kōura Live | Which natural shoreline features do kōura prefer? |
-| 3 | 4 — Structure over Material | Does shelter structure or material composition drive kōura refuge selection? |
-| 4 | 5 — Stone Piles Rotoiti | Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti? |
+| 2 | 3 — Where do Kōura Live?| Which natural shoreline features do kōura prefer? |
+| 3 | 4 — The Importance of Structure | Does shelter structure or material composition drive kōura refuge selection? |
+| 4 | 5 — Rock Piles as Kōura Habitat | Can habitat enhancement structures provide effective habitat for kōura in Lake Rotoiti? |
 
 : Research questions addressed in each thesis chapter. {#tbl-research-questions}
 

@@ -330,9 +330,11 @@ nzffd_catfish <- nzffd_valid |>
   filter(str_detect(tolower(taxonCommonName), "catfish")) |>
   distinct(eastingNZTM, northingNZTM, .keep_all = TRUE)
 
-# Convert to sf (NZTM EPSG:2193)
-nzffd_koura_sf   <- st_as_sf(nzffd_koura,   coords = c("eastingNZTM", "northingNZTM"), crs = 2193)
-nzffd_catfish_sf <- st_as_sf(nzffd_catfish, coords = c("eastingNZTM", "northingNZTM"), crs = 2193)
+# Convert to sf (NZTM EPSG:2193) then reproject to WGS84 to match nzffdr_nzmap and coord_sf limits
+nzffd_koura_sf   <- st_as_sf(nzffd_koura,   coords = c("eastingNZTM", "northingNZTM"), crs = 2193) |>
+  sf::st_transform(4326)
+nzffd_catfish_sf <- st_as_sf(nzffd_catfish, coords = c("eastingNZTM", "northingNZTM"), crs = 2193) |>
+  sf::st_transform(4326)
 
 nz_map <- nzffdr_nzmap
 
@@ -350,7 +352,7 @@ nz_main_ylim <- c(-47.8, -33.8)
 koura_map <- ggplot() +
   geom_sf(data = nz_map, fill = "grey92", colour = "grey60", linewidth = 0.3) +
   geom_sf(data = nzffd_koura_sf, colour = "#2171b5", size = 0.7, alpha = 0.5, shape = 16) +
-  coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim) +
+  coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim, crs = 4326) +
   labs(
     title    = "Kōura",
     subtitle = paste0(format(nrow(nzffd_koura), big.mark = ","), " survey locations")
@@ -360,7 +362,7 @@ koura_map <- ggplot() +
 catfish_map <- ggplot() +
   geom_sf(data = nz_map, fill = "grey92", colour = "grey60", linewidth = 0.3) +
   geom_sf(data = nzffd_catfish_sf, colour = "#d73027", size = 0.7, alpha = 0.5, shape = 16) +
-  coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim) +
+  coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim, crs = 4326) +
   labs(
     title    = "Brown bullhead catfish",
     subtitle = paste0(format(nrow(nzffd_catfish), big.mark = ","), " survey locations")
@@ -980,8 +982,7 @@ arrange(Year, Date, Cast_ID, Lake)
 ```
 
 
-# Data prep — buoy CTD data (cached independently of the combined prep below,
-# so changes elsewhere — e.g. thresholds — don't force a needless buoy re-fetch)
+# Data prep — buoy CTD data
 ```{r}
 #| label: buoy-fetch
 
