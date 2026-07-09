@@ -4,15 +4,32 @@ title-block-style: none
 
 ::: {.content-visible when-format="pdf"}
 \thispagestyle{empty}
-\nopagecolor
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/thesis_cover.jpg}}}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[black] (current page.north west) rectangle ([yshift=-6cm]current page.north east);
+  \fill[black] ([yshift=8cm]current page.south west) rectangle (current page.south east);
+  \begin{scope}
+    \clip ([yshift=-6cm]current page.north west)
+          rectangle ([yshift=8cm]current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-6cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/thesis_cover.jpg}};
+  \end{scope}
+  \node[color=white, text width=0.82\paperwidth, align=center,
+        font=\fontsize{23}{30}\selectfont\bfseries\sffamily]
+    at ([yshift=-3cm]current page.north)
+    {Restoring native freshwater crayfish habitat in invaded lake ecosystems};
+  \node[color=white, align=center,
+        font=\fontsize{16}{22}\selectfont\sffamily]
+    at ([yshift=4cm]current page.south)
+    {Olivier V.\ Raven \\ 2026};
+\end{tikzpicture}
+\setcounter{chapter}{0}
 \null
 \clearpage
+\thispagestyle{empty}
 :::
 
 ::: {.content-visible when-format="html"}
-#  PhD Thesis {.unnumbered .unlisted}
-
 [⬇ Download PDF](Restoring-native-freshwater-crayfish-habitat-in-invaded-lake-ecosystems.pdf){.btn .btn-outline-danger .btn-sm}
 [⬇ Download Word](Restoring-native-freshwater-crayfish-habitat-in-invaded-lake-ecosystems.docx){.btn .btn-outline-primary .btn-sm}
 :::

@@ -13,11 +13,12 @@ book:
   - title_page.qmd
   - abstract.qmd
   - acknowledgements.qmd
-  - 01_general_intro.qmd
+  - 01_general_intro/index.qmd
   - 02_koura_fear/index.qmd
   - 03_koura_shoreline_habitats/index.qmd
   - 04_koura_mesocosm/index.qmd
   - 05_stone_piles_rotoiti/index.qmd
+  - synthesis/index.qmd
   - 06_general_conclusion.qmd
   - references.qmd
   - appendices.qmd
@@ -48,17 +49,19 @@ format:
     toc-depth: 1
     reference-doc: references/reference.docx
   pdf:
+    keep-tex: true
     documentclass: scrbook
     classoption: ["oneside"]
     papersize: a4
     fontsize: 12pt
     linestretch: 1.2
     geometry:
-      - top=25mm
-      - bottom=25mm
-      - left=35mm
-      - right=25mm
+      - top=25.4mm
+      - bottom=25.4mm
+      - left=25.4mm
+      - right=25.4mm
     toc: false
+    toc-depth: 1
     number-sections: true
     number-depth: 1
     mainfont: "Crimson Pro"
@@ -70,11 +73,12 @@ format:
         \usepackage{xcolor}
         \usepackage{afterpage}
         \usepackage{eso-pic}
+        \usepackage{tikz}
         \definecolor{thesiscream}{RGB}{255, 252, 240}
         \definecolor{thesissand}{RGB}{232, 212, 162}
         \pagecolor{thesiscream}
         \addtokomafont{disposition}{\sffamily}
-        \graphicspath{{.}{02_koura_fear/}{03_koura_shoreline_habitats/}{04_koura_mesocosm/}{05_stone_piles_rotoiti/}}
+        \graphicspath{{.}{../}{../images/}{02_koura_fear/}{../02_koura_fear/}{03_koura_shoreline_habitats/}{../03_koura_shoreline_habitats/}{04_koura_mesocosm/}{../04_koura_mesocosm/}{05_stone_piles_rotoiti/}{../05_stone_piles_rotoiti/}}
         \makeatletter
         \renewcommand*{\chapterheadstartvskip}{\vspace*{0pt}}
         \@ifundefined{abstract}%

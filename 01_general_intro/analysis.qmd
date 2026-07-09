@@ -105,6 +105,13 @@ base_theme_bw <- theme_classic() +
     panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3))
 theme_set(base_theme_bw)
 
+if (knitr::is_latex_output()) {
+  theme_update(
+    plot.background  = element_rect(fill = "#FFFCF0", colour = NA),
+    panel.background = element_rect(fill = "#FFFCF0", colour = NA)
+  )
+}
+
 ```
 
 # Study lakes overview map

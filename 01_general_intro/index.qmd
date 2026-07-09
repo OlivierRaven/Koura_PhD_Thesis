@@ -1,12 +1,21 @@
 ::: {.content-visible when-format="pdf"}
-\mainmatter
-\clearpage
 \thispagestyle{empty}
-\nopagecolor
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}}}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[inner sep=0pt] at (current page.center)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}};
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.5cm]current page.north west)
+    {Chapter \thechapter};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-4cm]current page.north west)
+    {General Introduction};
+\end{tikzpicture}
 \null
-\newpage
-\pagecolor{thesiscream}
+\clearpage
 :::
 
 ::: {.content-visible when-format="docx"}
@@ -14,6 +23,17 @@
 
 {{< pagebreak >}}
 :::
+
+```{r}
+#| label: setup-ch1
+#| include: false
+if (knitr::is_latex_output()) {
+  ggplot2::theme_update(
+    plot.background  = ggplot2::element_rect(fill = "#FFFCF0", colour = NA),
+    panel.background = ggplot2::element_rect(fill = "#FFFCF0", colour = NA)
+  )
+}
+```
 
 # General Introduction
 ## Global freshwater ecosystem decline
@@ -30,7 +50,7 @@ Freshwater crayfish are decapod crustaceans that form an important component of 
 ## Kōura: Aotearoa's native freshwater crayfish
 Aotearoa New Zealand’s (hereafter Aotearoa) native biota is disproportionately made up of endemic species because of its island biogeography and isolated location [@Wallis2009]. The two endemic species of freshwater crayfish found in Aotearoa are of the genus *Paranephrops*. These freshwater crayfish are also known by the Māori name kōura, although some iwi (Māori tribal groups) use other names including kēwai, kēkēwai, and koeke. The two species are the northern kōura (*Paranephrops planifrons* White 1842) and the southern kōura (*P. zealandicus* White 1847). The northern kōura can be found throughout the North Island and on the west side of the Southern Alps on the South Island (@fig-nz-distribution-maps). The southern kōura can be found on the eastern and southern part of the South Island and on Stewart Island.
 
-![Distribution of kōura (blue left) and catfish (red right) in Aotearoa New Zealand. Source: New Zealand Freshwater Fish Database [@Stoffels2024]](images/fig-nz-distribution-maps.png){#fig-nz-distribution-maps}
+![Distribution of kōura (blue left) and catfish (red right) in Aotearoa New Zealand. Source: New Zealand Freshwater Fish Database [@Stoffels2024]](outputs/fig-nz-distribution-maps.png){#fig-nz-distribution-maps}
 
 ### Biology, ecology, and habitat use
 Kōura inhabit a range of freshwater environments including streams, rivers and lakes and have been described as ecosystem engineers and keystone species in Aotearoa [@Collier1997]. They play important roles in bioturbation, influencing sediment composition and nutrient cycling [@Usio2004]. As omnivorous scavengers, kōura consume a wide range of food resources including invertebrates (aquatic snails, chironomids, and mayflies), detritus, and algae [@Parkyn2001]. Kōura are associated with structurally complex habitats that provide physical shelter, preferring coarse gravel and rocky substrates in both streams and lakes [@Jowett2008; @Kusabs2015b]. In streams, highest abundances have been recorded on substrates with an average particle size of 130 mm [@Jowett2008; @Olsson2008]. Kōura are sensitive to water quality [@Olsson2006], avoiding areas with dissolved oxygen below 5 mg/L and temperatures above 21 °C [@Devcich1979]. Kōura are nocturnal, and during the daylight hours they retreat to deeper waters or into shelters, to hide from visual predators. At night they emerge and migrate to forage in the productive shallow zones of lakes [@Devcich1979]. Where suitable natural substrates are rare, kōura can excavate tunnels or burrows to provide cover, a behaviour documented in Lake Tikitapu, where substrate permits burrowing. Kōura have direct development with females carrying eggs and newly hatched juveniles beneath the abdomen for approximately three weeks before release, typically at depths of less than 10 m in lakes [@Parkyn2007]. Juveniles mature in two to three years depending on water temperature [@Devcich1979; @Parkyn2000].
@@ -52,7 +72,7 @@ Critically, Aotearoa lacks native Siluriformes, making catfish a novel predation
 ## Study system: the Rotorua Te Arawa Lakes
 This research was conducted in the Rotorua Te Arawa Lakes, a group of twelve volcanic lakes in the central North Island of Aotearoa (Bay of Plenty region;@fig-study-lakes-map ;@tbl-bop-lake-overview). The lakes were formed by rhyolitic volcanic activity over the past ~230,000 years and continue to experience volcanic influence, most recently through the 1886 eruption of Mount Tarawera, which deposited basalt scoria and the distinctive Rotomāhana Mud across the surrounding catchments [@Cole2014]. The lakes vary considerably in size (0.3-81 km²) and maximum depth (13.5-125 m), and span a gradient of mixing regimes and trophic states from oligotrophic (e.g. Tarawera, Rotomā) to eutrophic (e.g. Rotorua, Ōkaro; @tbl-bop-lake-overview). This diversity makes the Te Arawa Lakes a particularly informative system for studying how kōura respond to differing combinations of habitat structure, water quality, and predator presence.
 
-![Rotorua Te Arawa Lakes overview map](images/fig-study-lakes-map.png){#fig-study-lakes-map}
+![Rotorua Te Arawa Lakes overview map](outputs/fig-study-lakes-map.png){#fig-study-lakes-map}
 
 ```{r}
 #| label: tbl-bop-lake-overview
@@ -89,9 +109,9 @@ The shallow refuge available to kōura is also is also being progressively reduc
 
 Climate change is expected to intensify all of these pressures. Stronger and longer thermal stratification will expand and prolong anoxic conditions below the thermocline [@Woolway2021], while warming surface waters are projected to expand the range of suitable catfish habitat in Aotearoa [@Lee2025]. The compression of suitable kōura habitat documented here is therefore likely to accelerate, reinforcing the need to understand which habitats kōura prefer and whether structural restoration can build resilience in kōura populations.
 
-![Livable habitat (%) for kōura across eleven of the Rotorua Te Arawa Lakes from 2003 to 2026, by season. Livable habitat is defined as the proportion of the water column meeting dissolved oxygen (> 5 mg L⁻¹) and temperature (< 21 °C) thresholds suitable for kōura. Coloured lines show seasonal means; the black line shows the overall trend. Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data @Moore2026.](images/fig-livable-habitat-summary.png){#fig-livable-habitat-summary}
+![Livable habitat (%) for kōura across eleven of the Rotorua Te Arawa Lakes from 2003 to 2026, by season. Livable habitat is defined as the proportion of the water column meeting dissolved oxygen (> 5 mg L⁻¹) and temperature (< 21 °C) thresholds suitable for kōura. Coloured lines show seasonal means; the black line shows the overall trend. Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data @Moore2026.](outputs/fig-livable-habitat-summary.png){#fig-livable-habitat-summary}
 
-![Long-term trends in annual mean livable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Livable habitat is defined as the proportion of the water column meeting dissolved oxygen (> 5 mg L⁻¹) and temperature (< 21 °C) thresholds suitable for kōura. Points represent annual means; blue lines show linear regressions with 95 % confidence intervals. Slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data @Moore2026.](images/fig-livable-habitat-trends.png){#fig-livable-habitat-trends}
+![Long-term trends in annual mean livable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Livable habitat is defined as the proportion of the water column meeting dissolved oxygen (> 5 mg L⁻¹) and temperature (< 21 °C) thresholds suitable for kōura. Points represent annual means; blue lines show linear regressions with 95 % confidence intervals. Slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data @Moore2026.](outputs/fig-livable-habitat-trends.png){#fig-livable-habitat-trends}
 
 ## Knowledge gaps and thesis aims
 The previous sections established that kōura populations in the Rotorua Te Arawa Lakes are declining, that this decline is driven by interacting pressures from invasive predation, eutrophication, thermal stratification, and macrophyte expansion, and that the suitable habitat for kōura is both seasonally compressed and progressively shrinking [@Kusabs2026]. Although the broad drivers of decline are increasingly well understood, several critical gaps remain in our ability to design effective interventions. First, while catfish are implicated as a primary driver of kōura decline, the effect catfish have on kōura behaviour leading to non-consumptive effects in comparison with native predators had not been quantified. We expected that kōura would show stronger antipredator responses to the novel catfish than to native eels, consistent with generalised fear response [@Sih2023]. Second, the natural habitats that kōura prefer had been described in streams and deeper parts of lakes but which shoreline habitat features kōura prefer remained unknown. We expected that rocky substrates with high structural complexity would be the primary predictor of kōura presence, consistent with stream habitat studies [@Jowett2008; @Olsson2008]. Third, although habitat enhancement structures had been applied in freshwater systems globally to support fish and invertebrates [@Smokorowski2007; @Santos2011], few studies had tested which combinations of material and structural configuration best support crayfish specifically. We expected that configurations providing multiple crevices of varying sizes would be preferred by the widest range of kōura, including juveniles. Finally, no field deployments of habitat enhancement structures for kōura in lakes had previously been reported. Therefore, we deployed stone piles in Lake Rotoiti and expected that kōura populations at the stone piles would increase, as providing more refuge habitat would allow more kōura to avoid predators. A secondary aim of the final study was to identify potential unintended consequences of habitat enhancement, including the risk that structures may provide refuge for catfish. This thesis addresses each of these gaps in turn through four research chapters, building from behavioural mechanisms in controlled conditions, through natural habitat use, to structure design, and finally to field deployment. 

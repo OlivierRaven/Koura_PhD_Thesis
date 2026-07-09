@@ -21,4 +21,6 @@ Finally, I want to
 ::: {.content-visible when-format="pdf"}
 \clearpage
 \tableofcontents
+\clearpage
+\mainmatter
 :::

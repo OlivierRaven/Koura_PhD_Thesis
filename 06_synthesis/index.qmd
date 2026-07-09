@@ -1,0 +1,52 @@
+---
+title: "Synthesis"
+
+execute:
+  freeze: false
+  cache: false
+
+title-block-style: none
+
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+---
+
+::: {.content-visible when-format="pdf"}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \begin{scope}
+    \clip ([yshift=-7cm]current page.north west)
+          rectangle ([yshift=4.5cm]current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-7cm]current page.north)
+      {\includegraphics[width=\paperwidth]{../images/ch6_cover.jpg}};
+  \end{scope}
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.5cm]current page.north west)
+    {Chapter \thechapter};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-4cm]current page.north west)
+    {Synthesis};
+\end{tikzpicture}
+\null
+\clearpage
+:::
+
+::: {.content-visible when-format="docx"}
+{{< pagebreak >}}
+:::
+
+## Abstract {.unnumbered}
+
+Placeholder — synthesis abstract to be written.
+
+## Introduction
+
+Placeholder — synthesis introduction to be written.
+
+## 
