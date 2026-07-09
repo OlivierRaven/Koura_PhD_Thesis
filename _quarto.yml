@@ -75,5 +75,7 @@ format:
         \addtokomafont{disposition}{\sffamily}
         \makeatletter
         \renewcommand*{\chapterheadstartvskip}{\vspace*{0pt}}
+        \@ifundefined{abstract}%
+          {\newenvironment{abstract}{}{}}%
+          {\renewenvironment{abstract}{}{}}
         \makeatother
-        \renewenvironment{abstract}{}{}
