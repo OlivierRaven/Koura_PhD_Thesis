@@ -1,0 +1,132 @@
+---
+title: "Analysis Notebook"
+description: "Analysis notebook for synthesis chapter Ōkaro and deep stone piles Rotoiti"
+toc: true
+toc-depth: 3
+number-sections: true
+fig-width: 8
+fig-height: 6
+
+execute:
+  freeze: false
+  cache: false
+
+---
+
+
+# Setup
+```{r}
+#| label: setup
+#| include: false
+
+packages <- c("readr", "readxl", "tidyverse", "dplyr", "ggplot2")
+
+# Load packages if not already installed
+quiet_load <- function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    suppressWarnings(suppressMessages(install.packages(pkg, dependencies = TRUE)))}
+  suppressPackageStartupMessages(require(pkg, character.only = TRUE, quietly = TRUE))
+  invisible(TRUE)}
+
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+invisible(lapply(packages, quiet_load))
+
+setwd("06_synthesis/")
+
+exc_file_dir <- "data/raw"
+der_data_dir <- "data/derived"
+out_dir      <- "outputs"
+
+# Read sheets from raw xlsx
+df_okaro_raw    <- readxl::read_excel(exc_file_dir, okaro_raw_data.xlsx, sheet = "Monitoring_data")
+df_deep_raw     <- readxl::read_excel(exc_file_dir, deep_stonepiles_raw_data.xlsx, sheet = "Deep_vid")
+#HOBO_data_okaro <- readxl::read_excel(exc_file_dir, okaro_raw_data.xlsx, sheet = "HOBO_data")
+#HOBO_data_deep  <- readxl::read_excel(exc_file_dir, deep_stonepiles_raw_data.xlsx, sheet = "HOBO_data")
+
+# Load the okaro HOBO Data 
+DO_Logger_14_stone_pile_1_291024 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_14_reef_122_291024.csv", skip = 1)
+DO_Logger_14_stone_pile_1_131224 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_14_reef_122_131224.csv", skip = 1)
+DO_Logger_14_stone_pile_1_090225 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_14_reef_122_090225.csv", skip = 1)
+
+DO_Logger_11_stone_pile_2_291024 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_11_reef_123_291024.csv", skip = 1)
+DO_Logger_11_stone_pile_2_131224 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_11_reef_123_131224.csv", skip = 1)
+DO_Logger_11_stone_pile_2_280225 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_11_reef_123_280225.csv", skip = 1)
+
+DO_Logger_3_control_3_291024 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_3_control_124_291024.csv", skip = 1)
+DO_Logger_3_control_3_131224 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_3_control_124_131224.csv", skip = 1)
+DO_Logger_3_control_3_280225 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_3_control_124_280225.csv", skip = 1)
+
+# Combine and Rename the columns -----------------------------------------------------------
+DO_Logger_14_stone_pile_1_291024 <- DO_Logger_14_stone_pile_1_291024 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "122 Stone pile", )
+DO_Logger_14_stone_pile_1_131224 <- DO_Logger_14_stone_pile_1_131224 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "122 Stone pile")
+DO_Logger_14_stone_pile_1_090225 <- DO_Logger_14_stone_pile_1_090225 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "122 Stone pile")
+Site_1 <- bind_rows(DO_Logger_14_stone_pile_1_291024, DO_Logger_14_stone_pile_1_131224,DO_Logger_14_stone_pile_1_090225)
+# filter after 09/02/25
+Site_1 <- Site_1 %>% filter(DateTime < "2025-02-09 00:00:00")
+
+DO_Logger_11_stone_pile_2_291024 <- DO_Logger_11_stone_pile_2_291024 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "123 Stone pile")
+DO_Logger_11_stone_pile_2_131224 <- DO_Logger_11_stone_pile_2_131224 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "123 Stone pile")
+DO_Logger_11_stone_pile_2_280225 <- DO_Logger_11_stone_pile_2_280225 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "123 Stone pile")
+Site_2 <- bind_rows(DO_Logger_11_stone_pile_2_291024, DO_Logger_11_stone_pile_2_131224, DO_Logger_11_stone_pile_2_280225)
+# filter after 28/02/25
+Site_2 <- Site_2 %>% filter(DateTime < "2025-02-28 00:00:00")
+
+DO_Logger_3_control_3_291024 <- DO_Logger_3_control_3_291024 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "124 Control")
+DO_Logger_3_control_3_131224 <- DO_Logger_3_control_3_131224 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "124 Control")
+DO_Logger_3_control_3_280225 <- DO_Logger_3_control_3_280225 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "124 Control")
+Site_3 <- bind_rows(DO_Logger_3_control_3_291024,DO_Logger_3_control_3_131224, DO_Logger_3_control_3_280225)
+# filter after 28/02/25
+Site_3 <- Site_3 %>% filter(DateTime < "2025-02-28 00:00:00")
+
+# Summarise the data -----------------------------------------------------------
+Okaro_do_data <- bind_rows(Site_1, Site_2, Site_3)
+
+
+DO_Logger_2_deep <- read_csv("Data_raw/HOBO_Loggers_deep/DO_Logger_2_Deep.csv", skip = 1)
+DO_Logger_3_deep <- read_csv("Data_raw/HOBO_Loggers_deep/DO_Logger_3_Deep.csv", skip = 1)
+
+Deep_do_data
+
+
+
+# Save as csv to derived/
+write.csv(df_okaro_raw,file.path(der_data_dir, "Okaro_data.csv"),  row.names = FALSE)
+write.csv(df_deep_raw, file.path(der_data_dir, "Deep_data.csv"),  row.names = FALSE)
+
+df_okaro_raw <- read.csv(file.path(der_data_dir, "Okaro_data.csv"))
+df_deep_raw <- read.csv(file.path(der_data_dir, "Deep_data.csv"))
+
+# Set base for plots
+base_theme_bw <- theme_classic() +
+  theme(text     = element_text(family = "sans", size = 11),
+    axis.title   = element_text(face = "plain"),
+    axis.text    = element_text(face = "plain"),
+    plot.title   = element_text(face = "plain"),
+    strip.text   = element_text(face = "plain"),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3))
+theme_set(base_theme_bw)
+
+# Format of p values in text, including the correct comparison operator and
+# the italic "p" label. Set label = FALSE for values chained after a leading
+# "*p*" (e.g. "*p* < 0.001, 0.011, 0.004, respectively").
+format_pval <- function(p, label = TRUE) {
+  out <- if (p < 0.001) "< 0.001" else paste0("= ", format(round(p, 3), nsmall = 3))
+  if (label) paste0("*p* ", out) else out
+}
+
+
+
+
+
+
+
+```

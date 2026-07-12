@@ -13,6 +13,11 @@ knitr:
 ---
 
 ::: {.content-visible when-format="pdf"}
+\ifcsname c@chapter\endcsname
+\setcounter{chapter}{6}
+\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}Synthesis}
+\fi
+\providecommand{\thechapter}{6}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
   \begin{scope}
@@ -20,7 +25,7 @@ knitr:
           rectangle ([yshift=4.5cm]current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{../images/ch6_cover.jpg}};
+      {\includegraphics[width=\paperwidth]{images/ch6_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -38,15 +43,37 @@ knitr:
 :::
 
 ::: {.content-visible when-format="docx"}
+![](images/ch6_cover.jpg){fig-align="center" width=15cm}
+
+*What do these findings mean for the future of kōura habitat restoration?*
+
 {{< pagebreak >}}
 :::
 
-## Abstract {.unnumbered}
+## Stone piles Lake Ōkaro
 
-Placeholder — synthesis abstract to be written.
+### Introduction
+Lake Okaro is a small lake without a known koura population. The water quality in the lake used to be poor, but due to recent restoration efforts like wetland restoration and alum dosing, the water quality has improved over the last decade. Koura used to be in the lake but due to the poor water quality they probably disapered. Now we wanted to test if it would be possible to bring koura back to the lake. as trout are present in the lake, we wanted to make sure the koura that would be translocated would be able to fined refuge. The lake has no stone or rock substrates therefore we constructed two stone piles to provide refuge for the koura. The stone piles were constructed along the shoreline of Lake Ōkaro, Bay of Plenty, New Zealand. The stones used had a size range of 70-210 mm mean 120 mm.
 
-## Introduction
 
-Placeholder — synthesis introduction to be written.
+In this study is explored if it is possible to reintroduce a population of native freshwater crayfish known as kōura in a eutrophic small lake. 
+The lake Ōkaro is a volcanic lake with an area of 30.19 ha, a max and mean depth of 18 m and 12.5 m, respectively. The catchment is small but mostly intensive farmland. To improve water quality in the lake a wetland has been created and alim dosings are execute 2 times a year.
+The lake has very often algae blooms.
 
-## 
+2 reefs installed in T shape each reef was constructed on 12 August 2024 out of 2.5 trailer loads of rocks (100-300mm). 5 loads are 5 kuub of rocks in total used. 
+Building the reefs was done by 14 people from Te Arawa Lake Trust, Ngāti Tahu - Ngāti Whaoa, Te Mana o Ngāti Rangitihi Trust, Bay of Plenty Regional Council and The University of Waikato.
+11 September 2024 hobo DO, and temperature loggers have been placed in the lake. 2 have been buried inside the reef and one is placed outside of the reefs. 
+Monthly monitoring data has been collected since 2003 by the Bay of Plenty Regional Council and buoy data (limontrack) since 2021. 
+
+### Construction
+
+
+### Results
+
+## Deep stone piles Lake Rotoiti
+
+
+### Introduction
+On 24/11/2025 four stone piles were constructed in Lake Rotoiti, Bay of Plenty, New Zealand. Three of the stone piles were constructed in perundiqular to the shoreline. the first one was placed underneed a jetty around 1 m depth. The second one was placed in the middle of invasive machrophyte bed infront of the jetty around 3 m depth. the third one was placed at the end of the machrophytes at a depth of 7 till 9 m depth. To prevent the stones from sinking into the sediment, wooden slaps were first installed into the sediment wherafter the stones were placed ontop keeping the woodenslaps inplace. The fourth stone pile was constructed on a bedrock shelf 120 m away from the other stone piles. As these stones were placed ontop of bedrock no wooden slaps were needed. 
+
+

@@ -1,0 +1,20 @@
+---
+title: "Restoring native freshwater crayfish habitat in invaded lake ecosystems"
+author: "Olivier V. Raven"
+date: "2026"
+title-block-style: none
+---
+
+{{< include index.qmd >}}
+{{< include title_page.qmd >}}
+{{< include abstract.qmd >}}
+{{< include acknowledgements.qmd >}}
+{{< include 01_general_intro/index.qmd >}}
+{{< include 02_koura_fear/index.qmd >}}
+{{< include 03_koura_shoreline_habitats/index.qmd >}}
+{{< include 04_koura_mesocosm/index.qmd >}}
+{{< include 05_stone_piles_rotoiti/index.qmd >}}
+{{< include 06_synthesis/index.qmd >}}
+{{< include 07_general_conclusion/index.qmd >}}
+{{< include references.qmd >}}
+{{< include appendices.qmd >}}

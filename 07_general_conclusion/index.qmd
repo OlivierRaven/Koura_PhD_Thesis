@@ -1,26 +1,46 @@
 ::: {.content-visible when-format="pdf"}
+\ifcsname c@chapter\endcsname
+\setcounter{chapter}{7}
+\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}General Conclusion}
+\fi
+\providecommand{\thechapter}{7}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \begin{scope}
+    \clip ([yshift=-7cm]current page.north west)
+          rectangle (current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-7cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/ch6_cover.jpg}};
+  \end{scope}
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.5cm]current page.north west)
+    {Chapter \thechapter};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-4cm]current page.north west)
+    {General Conclusion};
+\end{tikzpicture}
+\null
 \clearpage
 \thispagestyle{empty}
-\nopagecolor
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch6_cover.jpg}}}
-\null
-\newpage
-\thispagestyle{empty}
 \pagecolor{thesissand}
-\vspace{1cm}
+\vspace*{\fill}
 \begin{center}
-\textit{What do these findings mean for the future of kōura habitat restoration?}
+\textit{What do these findings mean for the future of k\={o}ura habitat restoration?}
 \end{center}
+\vspace*{\fill}
 \afterpage{\pagecolor{thesiscream}}
 \clearpage
 :::
 
 ::: {.content-visible when-format="docx"}
-![](images/ch6_cover.jpg){fig-align="center" width=15cm}
+![](images/ch7_cover.jpg){fig-align="center" width=15cm}
 
 *What do these findings mean for the future of kōura habitat restoration?*
 
 {{< pagebreak >}}
 :::
-
-# General Conclusion

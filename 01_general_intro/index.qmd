@@ -1,4 +1,9 @@
 ::: {.content-visible when-format="pdf"}
+\ifcsname c@chapter\endcsname
+\setcounter{chapter}{1}
+\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}General Introduction}
+\fi
+\providecommand{\thechapter}{1}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
   \node[inner sep=0pt] at (current page.center)
@@ -33,9 +38,18 @@ if (knitr::is_latex_output()) {
     panel.background = ggplot2::element_rect(fill = "#FFFCF0", colour = NA)
   )
 }
+chapter_dir <- normalizePath(file.path(dirname(knitr::current_input(dir = TRUE)), "01_general_intro"))
+if (!dir.exists(chapter_dir)) chapter_dir <- normalizePath(dirname(knitr::current_input(dir = TRUE)))
+out_dir <- file.path(chapter_dir, "outputs")
+input_dir <- normalizePath(dirname(knitr::current_input(dir = TRUE)))
+if (input_dir != chapter_dir) {
+  thesis_out <- file.path(input_dir, "outputs")
+  dir.create(thesis_out, showWarnings = FALSE, recursive = TRUE)
+  file.copy(list.files(out_dir, full.names = TRUE, pattern = "\\.(png|jpg)$"), thesis_out, overwrite = TRUE)
+}
+knitr::opts_knit$set(root.dir = chapter_dir)
 ```
 
-# General Introduction
 ## Global freshwater ecosystem decline
 Ecosystems worldwide are increasingly impacted by drivers of global change, with freshwater environments amongst the most degraded [@Harrison2018]. Freshwater ecosystems like rivers, streams, and lakes experience widespread influences from land-use activities, introduced species, and climate change [@Dudgeon2006]. This degradation is particularly concerning given that freshwater systems disproportionately support biodiversity and ecosystem services relative to their global area. In lakes, the littoral zone is characterised by its exposure to sunlight, which enables photosynthesis in plants and algae, making it one of the most productive and biodiverse areas in lakes [@Geist2016; @Porst2019; @Vadeboncoeur2011]. In the shallow regions of this zone, emergent vegetation flourishes, creating essential nurseries for numerous species [@Meerhoff2021]. This vegetation significantly contributes to the energy and nutrient cycles within lake food webs. Unfortunately, lake shorelines are often heavily impacted by human activities such as hardening, the introduction of invasive species, and pollution [@Strayer2010; @Vadeboncoeur2002]. Despite their importance, the effects of eutrophication and predation by non-native species in the littoral zone remain relatively understudied [@VanderZanden2020]. Reversing this degradation requires targeted interventions, though these are often complex and resource-intensive [@Palmer2005], a challenge that has driven recent global commitments to ecosystem restoration.
 

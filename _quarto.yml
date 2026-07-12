@@ -1,27 +1,15 @@
 project:
-  type: book
+  type: default
   output-dir: docs
   post-render: deploy.R
+  render:
+    - thesis.qmd
 
-book:
-  title: "Restoring native freshwater crayfish habitat in invaded lake ecosystems"
-  author: "Olivier V. Raven"
-  date: "2026"
-  
-  chapters:
-  - index.qmd
-  - title_page.qmd
-  - abstract.qmd
-  - acknowledgements.qmd
-  - 01_general_intro/index.qmd
-  - 02_koura_fear/index.qmd
-  - 03_koura_shoreline_habitats/index.qmd
-  - 04_koura_mesocosm/index.qmd
-  - 05_stone_piles_rotoiti/index.qmd
-  - synthesis/index.qmd
-  - 06_general_conclusion.qmd
-  - references.qmd
-  - appendices.qmd
+execute:
+  freeze: false
+  cache: false
+  warning: false
+  message: false
 
 filters:
   - filters/strip-chapter-only.lua
@@ -78,7 +66,7 @@ format:
         \definecolor{thesissand}{RGB}{232, 212, 162}
         \pagecolor{thesiscream}
         \addtokomafont{disposition}{\sffamily}
-        \graphicspath{{.}{../}{../images/}{02_koura_fear/}{../02_koura_fear/}{03_koura_shoreline_habitats/}{../03_koura_shoreline_habitats/}{04_koura_mesocosm/}{../04_koura_mesocosm/}{05_stone_piles_rotoiti/}{../05_stone_piles_rotoiti/}}
+        \graphicspath{{.}{images/}{01_general_intro/images/}{02_koura_fear/images/}{03_koura_shoreline_habitats/images/}{04_koura_mesocosm/images/}{05_stone_piles_rotoiti/images/}{06_synthesis/images/}{07_general_conclusion/images/}}
         \makeatletter
         \renewcommand*{\chapterheadstartvskip}{\vspace*{0pt}}
         \@ifundefined{abstract}%

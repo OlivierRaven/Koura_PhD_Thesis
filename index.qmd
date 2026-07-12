@@ -3,6 +3,7 @@ title-block-style: none
 ---
 
 ::: {.content-visible when-format="pdf"}
+\frontmatter
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
   \fill[black] (current page.north west) rectangle ([yshift=-6cm]current page.north east);

@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+manuscript/
+images/
+data/raw/
+outputs/
+.RData
+.Rhistory
+.quarto/
+_freeze/
+docs/
