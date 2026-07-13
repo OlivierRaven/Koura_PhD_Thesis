@@ -157,6 +157,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\setcounter{tocdepth}{1}
 \usepackage{setspace}
 \onehalfspacing
 \usepackage{xcolor}
@@ -375,11 +376,12 @@ Finally, I want to
 \ifcsname c@chapter\endcsname \setcounter{chapter}{1}
 
 \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}General Introduction}
+\chaptermark{General Introduction}
 \fi
 \providecommand{\thechapter}{1}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0pt] at (current page.center)
+  \node[inner sep=0pt] at ([yshift=-3.5cm]current page.center)
     {\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}};
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -1051,7 +1053,8 @@ species involved, and the research questions addressed in this thesis.
 \ifcsname c@chapter\endcsname \setcounter{chapter}{2}
 \setcounter{section}{0}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{1}Native vs.\ Novel Threats}
+\addcontentsline{toc}{chapter}{\protect\numberline{2}Native vs.\ Novel Threats}
+\chaptermark{Native vs.\ Novel Threats}
 \fi
 \providecommand{\thechapter}{2}
 \thispagestyle{empty}
@@ -1061,7 +1064,7 @@ species involved, and the research questions addressed in this thesis.
           rectangle ([yshift=4.5cm]current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch2_cover.jpg}};
+      {\includegraphics[height=18.2cm]{images/ch2_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -1965,7 +1968,8 @@ day\_starve4 & 0.067 & 0.033 & 43 & 2.056 & 0.046 \\
 \ifcsname c@chapter\endcsname \setcounter{chapter}{3}
 \setcounter{section}{0}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{1}Where do K\={o}ura Live?}
+\addcontentsline{toc}{chapter}{\protect\numberline{3}Where do K\={o}ura Live?}
+\chaptermark{Where do K\={o}ura Live?}
 \fi
 \providecommand{\thechapter}{3}
 \thispagestyle{empty}
@@ -1975,7 +1979,7 @@ day\_starve4 & 0.067 & 0.033 & 43 & 2.056 & 0.046 \\
           rectangle ([yshift=4.5cm]current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch3_cover.jpg}};
+      {\includegraphics[height=18.2cm]{images/ch3_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -3249,7 +3253,8 @@ All lakes & Presence Trout & & 60 & 0.10 & 0.00 & 0.00 & 1.00 & 0.04 &
 \ifcsname c@chapter\endcsname \setcounter{chapter}{4}
 \setcounter{section}{0}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{1}The Importance of Structure}
+\addcontentsline{toc}{chapter}{\protect\numberline{4}The Importance of Structure}
+\chaptermark{The Importance of Structure}
 \fi
 \providecommand{\thechapter}{4}
 \thispagestyle{empty}
@@ -3259,7 +3264,7 @@ All lakes & Presence Trout & & 60 & 0.10 & 0.00 & 0.00 & 1.00 & 0.04 &
           rectangle ([yshift=4.5cm]current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch4_cover.jpg}};
+      {\includegraphics[height=\paperwidth, angle=90]{images/ch4_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -4034,7 +4039,8 @@ predictions.}
 \ifcsname c@chapter\endcsname \setcounter{chapter}{5}
 \setcounter{section}{0}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{1}Rock Piles as K\={o}ura Habitat}
+\addcontentsline{toc}{chapter}{\protect\numberline{5}Rock Piles as K\={o}ura Habitat}
+\chaptermark{Rock Piles as K\={o}ura Habitat}
 \fi
 \providecommand{\thechapter}{5}
 \thispagestyle{empty}
@@ -4044,7 +4050,7 @@ predictions.}
           rectangle ([yshift=4.5cm]current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch5_cover.jpg}};
+      {\includegraphics[height=18.2cm]{images/ch5_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -4995,7 +5001,8 @@ M3bbk & 0.872 & 0.896 & 1.00 \\
 \ifcsname c@chapter\endcsname \setcounter{chapter}{6}
 \setcounter{section}{0}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{1}Synthesis}
+\addcontentsline{toc}{chapter}{\protect\numberline{6}Synthesis}
+\chaptermark{Synthesis}
 \fi
 \providecommand{\thechapter}{6}
 \thispagestyle{empty}
@@ -5081,7 +5088,8 @@ these stones were placed ontop of bedrock no wooden slaps were needed.
 \ifcsname c@chapter\endcsname \setcounter{chapter}{7}
 \setcounter{section}{0}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{1}General Conclusion}
+\addcontentsline{toc}{chapter}{\protect\numberline{7}General Conclusion}
+\chaptermark{General Conclusion}
 \fi
 \providecommand{\thechapter}{7}
 \thispagestyle{empty}
@@ -5091,7 +5099,7 @@ these stones were placed ontop of bedrock no wooden slaps were needed.
           rectangle (current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch6_cover.jpg}};
+      {\includegraphics[width=\paperwidth]{images/ch7_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);

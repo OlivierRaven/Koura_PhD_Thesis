@@ -2,11 +2,12 @@
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{1}
 \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}General Introduction}
+\chaptermark{General Introduction}
 \fi
 \providecommand{\thechapter}{1}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0pt] at (current page.center)
+  \node[inner sep=0pt] at ([yshift=-3.5cm]current page.center)
     {\includegraphics[width=\paperwidth,height=\paperheight]{images/ch1_cover.jpg}};
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);

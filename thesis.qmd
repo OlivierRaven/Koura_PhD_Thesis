@@ -6,6 +6,18 @@ date: "2026"
 title-block-style: none
 ---
 
+```{r}
+#| label: global-setup
+#| include: false
+.bg <- if (knitr::is_latex_output()) "#FFFCF0" else "white"
+knitr::opts_chunk$set(dev.args = list(background = .bg))
+library(ggplot2)
+theme_update(
+  plot.background  = element_rect(fill = .bg, colour = NA),
+  panel.background = element_rect(fill = .bg, colour = NA)
+)
+```
+
 {{< include index.qmd >}}
 {{< include title_page.qmd >}}
 {{< include abstract.qmd >}}

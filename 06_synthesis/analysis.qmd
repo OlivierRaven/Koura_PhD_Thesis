@@ -1,6 +1,6 @@
 ---
 title: "Analysis Notebook"
-description: "Analysis notebook for synthesis chapter Ōkaro and deep stone piles Rotoiti"
+description: "Analysis notebook for synthesis chapter — Ōkaro and deep stone piles Rotoiti"
 toc: true
 toc-depth: 3
 number-sections: true
@@ -10,9 +10,7 @@ fig-height: 6
 execute:
   freeze: false
   cache: false
-
 ---
-
 
 # Setup
 ```{r}
@@ -21,120 +19,182 @@ execute:
 
 packages <- c("readr", "readxl", "tidyverse", "dplyr", "ggplot2")
 
-# Load packages if not already installed
 quiet_load <- function(pkg) {
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    suppressWarnings(suppressMessages(install.packages(pkg, dependencies = TRUE)))}
+  if (!requireNamespace(pkg, quietly = TRUE))
+    suppressWarnings(suppressMessages(install.packages(pkg, dependencies = TRUE)))
   suppressPackageStartupMessages(require(pkg, character.only = TRUE, quietly = TRUE))
-  invisible(TRUE)}
+  invisible(TRUE)
+}
 
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 invisible(lapply(packages, quiet_load))
 
-setwd("06_synthesis/")
+# Resolve chapter directory — works under knitr render, RStudio interactive, and CLI
+chapter_dir <- local({
+  f <- knitr::current_input(dir = TRUE)
+  if (!is.null(f)) {
+    p <- normalizePath(file.path(dirname(f), "06_synthesis"))
+    return(if (dir.exists(p)) p else normalizePath(dirname(f)))
+  }
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    f <- rstudioapi::getSourceEditorContext()$path
+    if (nzchar(f)) return(normalizePath(dirname(f)))
+  }
+  normalizePath(".")  # fallback: assume CWD is 06_synthesis/
+})
+knitr::opts_knit$set(root.dir = chapter_dir)
 
-exc_file_dir <- "data/raw"
-der_data_dir <- "data/derived"
-out_dir      <- "outputs"
+raw_dir  <- file.path(chapter_dir, "data", "raw")
+der_dir  <- file.path(chapter_dir, "data", "derived")
+out_dir  <- file.path(chapter_dir, "outputs")
 
-# Read sheets from raw xlsx
-df_okaro_raw    <- readxl::read_excel(exc_file_dir, okaro_raw_data.xlsx, sheet = "Monitoring_data")
-df_deep_raw     <- readxl::read_excel(exc_file_dir, deep_stonepiles_raw_data.xlsx, sheet = "Deep_vid")
-#HOBO_data_okaro <- readxl::read_excel(exc_file_dir, okaro_raw_data.xlsx, sheet = "HOBO_data")
-#HOBO_data_deep  <- readxl::read_excel(exc_file_dir, deep_stonepiles_raw_data.xlsx, sheet = "HOBO_data")
+dir.create(der_dir, showWarnings = FALSE, recursive = TRUE)
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
-# Load the okaro HOBO Data 
-DO_Logger_14_stone_pile_1_291024 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_14_reef_122_291024.csv", skip = 1)
-DO_Logger_14_stone_pile_1_131224 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_14_reef_122_131224.csv", skip = 1)
-DO_Logger_14_stone_pile_1_090225 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_14_reef_122_090225.csv", skip = 1)
+# Read raw Excel monitoring data
+df_okaro_raw <- readxl::read_excel(
+  file.path(raw_dir, "okaro_raw_data.xlsx"), sheet = "Monitoring_data"
+)
+df_deep_raw <- readxl::read_excel(
+  file.path(raw_dir, "deep_stonepiles_raw_data.xlsx"), sheet = "Deep_vid"
+)
 
-DO_Logger_11_stone_pile_2_291024 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_11_reef_123_291024.csv", skip = 1)
-DO_Logger_11_stone_pile_2_131224 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_11_reef_123_131224.csv", skip = 1)
-DO_Logger_11_stone_pile_2_280225 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_11_reef_123_280225.csv", skip = 1)
+# Save derived CSVs
+write.csv(df_okaro_raw, file.path(der_dir, "Okaro_data.csv"),  row.names = FALSE)
+write.csv(df_deep_raw,  file.path(der_dir, "Deep_data.csv"),   row.names = FALSE)
 
-DO_Logger_3_control_3_291024 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_3_control_124_291024.csv", skip = 1)
-DO_Logger_3_control_3_131224 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_3_control_124_131224.csv", skip = 1)
-DO_Logger_3_control_3_280225 <- read_csv("Data_raw/HOBO_Loggers_okaro/DO_Logger_3_control_124_280225.csv", skip = 1)
+# Helper: read one HOBO logger CSV, standardise columns and parse datetime
+read_hobo <- function(path) {
+  readr::read_csv(path, skip = 1, show_col_types = FALSE) |>
+    dplyr::select(ID = 1, DateTime = 2, DO_mg_L = 3, Temp_C = 4) |>
+    dplyr::mutate(
+      DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p",
+                             tz = "Pacific/Auckland")
+    )
+}
 
-# Combine and Rename the columns -----------------------------------------------------------
-DO_Logger_14_stone_pile_1_291024 <- DO_Logger_14_stone_pile_1_291024 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "122 Stone pile", )
-DO_Logger_14_stone_pile_1_131224 <- DO_Logger_14_stone_pile_1_131224 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "122 Stone pile")
-DO_Logger_14_stone_pile_1_090225 <- DO_Logger_14_stone_pile_1_090225 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "122 Stone pile")
-Site_1 <- bind_rows(DO_Logger_14_stone_pile_1_291024, DO_Logger_14_stone_pile_1_131224,DO_Logger_14_stone_pile_1_090225)
-# filter after 09/02/25
-Site_1 <- Site_1 %>% filter(DateTime < "2025-02-09 00:00:00")
+okaro_hobo <- file.path(raw_dir, "HOBO_loggers_okaro")
+deep_hobo  <- file.path(raw_dir, "HOBO_loggers_deep")
 
-DO_Logger_11_stone_pile_2_291024 <- DO_Logger_11_stone_pile_2_291024 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "123 Stone pile")
-DO_Logger_11_stone_pile_2_131224 <- DO_Logger_11_stone_pile_2_131224 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "123 Stone pile")
-DO_Logger_11_stone_pile_2_280225 <- DO_Logger_11_stone_pile_2_280225 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "123 Stone pile")
-Site_2 <- bind_rows(DO_Logger_11_stone_pile_2_291024, DO_Logger_11_stone_pile_2_131224, DO_Logger_11_stone_pile_2_280225)
-# filter after 28/02/25
-Site_2 <- Site_2 %>% filter(DateTime < "2025-02-28 00:00:00")
+# Ōkaro HOBO loggers
+Site_1 <- dplyr::bind_rows(
+  read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_291024.csv")),
+  read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_131224.csv")),
+  read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_090225.csv"))
+) |>
+  dplyr::mutate(Site = "1 Stone pile") |>
+  dplyr::filter(DateTime < as.POSIXct("2025-02-09", tz = "Pacific/Auckland"))
 
-DO_Logger_3_control_3_291024 <- DO_Logger_3_control_3_291024 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "124 Control")
-DO_Logger_3_control_3_131224 <- DO_Logger_3_control_3_131224 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "124 Control")
-DO_Logger_3_control_3_280225 <- DO_Logger_3_control_3_280225 %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"),Site = "124 Control")
-Site_3 <- bind_rows(DO_Logger_3_control_3_291024,DO_Logger_3_control_3_131224, DO_Logger_3_control_3_280225)
-# filter after 28/02/25
-Site_3 <- Site_3 %>% filter(DateTime < "2025-02-28 00:00:00")
+Site_2 <- dplyr::bind_rows(
+  read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_291024.csv")),
+  read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_131224.csv")),
+  read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_280225.csv"))
+) |>
+  dplyr::mutate(Site = "2 Stone pile") |>
+  dplyr::filter(DateTime < as.POSIXct("2025-02-28", tz = "Pacific/Auckland"))
 
-Okaro_do_data <- bind_rows(Site_1, Site_2, Site_3)
+Site_3 <- dplyr::bind_rows(
+  read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_291024.csv")),
+  read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_131224.csv")),
+  read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_280225.csv"))
+) |>
+  dplyr::mutate(Site = "3 Control") |>
+  dplyr::filter(DateTime < as.POSIXct("2025-02-28", tz = "Pacific/Auckland"))
 
-# Deep
-DO_Logger_2_deep <- read_csv("Data_raw/HOBO_Loggers_deep/DO_Logger_2_Deep.csv", skip = 1)
-DO_Logger_3_deep <- read_csv("Data_raw/HOBO_Loggers_deep/DO_Logger_3_Deep.csv", skip = 1)
+Okaro_do_data <- dplyr::bind_rows(Site_1, Site_2, Site_3)
 
-DO_Logger_2_deep <- DO_Logger_2_deep %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"), Logger = "2")
-DO_Logger_3_deep <- DO_Logger_3_deep %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
-  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"), Logger = "3")
+# Deep stone piles HOBO loggers (Rotoiti)
+Deep_do_data <- dplyr::bind_rows(
+  read_hobo(file.path(deep_hobo, "DO_Logger_2_Deep_reef.csv")) |> dplyr::mutate(Logger = "2"),
+  read_hobo(file.path(deep_hobo, "DO_Logger_3_Deep_reef.csv")) |> dplyr::mutate(Logger = "3")
+)
 
-Deep_do_data <- bind_rows(DO_Logger_2_deep, DO_Logger_3_deep)
-
-
-
-
-
-
-
-# Save as csv to derived/
-write.csv(df_okaro_raw,file.path(der_data_dir, "Okaro_data.csv"),  row.names = FALSE)
-write.csv(df_deep_raw, file.path(der_data_dir, "Deep_data.csv"),  row.names = FALSE)
-
-df_okaro_raw <- read.csv(file.path(der_data_dir, "Okaro_data.csv"))
-df_deep_raw <- read.csv(file.path(der_data_dir, "Deep_data.csv"))
-
-# Set base for plots
+# Base plot theme
 base_theme_bw <- theme_classic() +
-  theme(text     = element_text(family = "sans", size = 11),
+  theme(
+    text         = element_text(family = "sans", size = 11),
     axis.title   = element_text(face = "plain"),
     axis.text    = element_text(face = "plain"),
     plot.title   = element_text(face = "plain"),
     strip.text   = element_text(face = "plain"),
-    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3))
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3)
+  )
 theme_set(base_theme_bw)
 
-# Format of p values in text, including the correct comparison operator and
-# the italic "p" label. Set label = FALSE for values chained after a leading
-# "*p*" (e.g. "*p* < 0.001, 0.011, 0.004, respectively").
 format_pval <- function(p, label = TRUE) {
   out <- if (p < 0.001) "< 0.001" else paste0("= ", format(round(p, 3), nsmall = 3))
   if (label) paste0("*p* ", out) else out
 }
+```
 
+# Ōkaro stone piles — DO and temperature
+```{r}
+#| label: fig-okaro-raw-ts
+#| fig-cap: "Raw dissolved oxygen and temperature time series from Ōkaro HOBO loggers."
 
+ggplot(Okaro_do_data, aes(x = DateTime, y = DO_mg_L, colour = Site)) +
+  geom_line() +
+  labs(x = "Date", y = "DO (mg/L)", colour = "Site")
 
+ggplot(Okaro_do_data, aes(x = DateTime, y = Temp_C, colour = Site)) +
+  geom_line() +
+  labs(x = "Date", y = "Temperature (°C)", colour = "Site")
+```
 
+```{r}
+#| label: fig-okaro-daily
+#| fig-cap: "Daily mean dissolved oxygen and temperature at Ōkaro stone pile and control sites."
 
+daily_means <- Okaro_do_data |>
+  dplyr::mutate(Date = as.Date(DateTime)) |>
+  dplyr::group_by(Date, Site) |>
+  dplyr::summarise(
+    DO_mean   = mean(DO_mg_L, na.rm = TRUE),
+    Temp_mean = mean(Temp_C,  na.rm = TRUE),
+    .groups   = "drop"
+  )
 
+ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Site)) +
+  geom_line(linewidth = 0.9) +
+  labs(x = "Date", y = "DO (mg/L)", colour = "Site")
 
+ggplot(daily_means, aes(x = Date, y = Temp_mean, colour = Site)) +
+  geom_line(linewidth = 0.9) +
+  labs(x = "Date", y = "Temperature (°C)", colour = "Site")
+```
+
+# Deep stone piles — Rotoiti
+```{r}
+#| label: fig-deep-ts
+#| fig-cap: "DO and temperature from deep stone pile loggers in Lake Rotoiti."
+
+ggplot(Deep_do_data, aes(x = DateTime, y = DO_mg_L, colour = Logger)) +
+  geom_line() +
+  labs(x = "Date", y = "DO (mg/L)", colour = "Logger")
+
+ggplot(Deep_do_data, aes(x = DateTime, y = Temp_C, colour = Logger)) +
+  geom_line() +
+  labs(x = "Date", y = "Temperature (°C)", colour = "Logger")
+```
+
+```{r}
+#| label: fig-deep-daily
+#| fig-cap: "Daily mean dissolved oxygen and temperature at deep stone piles."
+
+daily_means <- Deep_do_data |>
+  dplyr::mutate(Date = as.Date(DateTime)) |>
+  dplyr::group_by(Date, Logger) |>
+  dplyr::summarise(
+    DO_mean   = mean(DO_mg_L, na.rm = TRUE),
+    Temp_mean = mean(Temp_C,  na.rm = TRUE),
+    .groups   = "drop"
+  )
+
+ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Logger)) +
+  geom_line(linewidth = 0.9) +
+  labs(x = "Date", y = "DO (mg/L)", colour = "Logger")
+
+ggplot(daily_means, aes(x = Date, y = Temp_mean, colour = Logger)) +
+  geom_line(linewidth = 0.9) +
+  labs(x = "Date", y = "Temperature (°C)", colour = "Logger")
 ```

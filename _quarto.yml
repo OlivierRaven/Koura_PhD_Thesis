@@ -39,6 +39,7 @@ format:
     reference-doc: references/reference.docx
   pdf:
     keep-tex: true
+    pdf-engine: xelatex
     documentclass: scrbook
     classoption: ["oneside"]
     papersize: a4
@@ -57,6 +58,7 @@ format:
     sansfont: "Source Sans 3"
     include-in-header:
       text: |
+        \setcounter{tocdepth}{1}
         \usepackage{setspace}
         \onehalfspacing
         \usepackage{xcolor}

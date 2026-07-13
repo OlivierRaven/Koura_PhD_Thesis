@@ -2,7 +2,8 @@
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{7}
 \setcounter{section}{0}
-\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}General Conclusion}
+\addcontentsline{toc}{chapter}{\protect\numberline{7}General Conclusion}
+\chaptermark{General Conclusion}
 \fi
 \providecommand{\thechapter}{7}
 \thispagestyle{empty}
@@ -12,7 +13,7 @@
           rectangle (current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch6_cover.jpg}};
+      {\includegraphics[width=\paperwidth]{images/ch7_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
