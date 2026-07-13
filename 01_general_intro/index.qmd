@@ -29,6 +29,10 @@
 {{< pagebreak >}}
 :::
 
+::: {.content-visible when-format="html"}
+# General Introduction {.unnumbered}
+:::
+
 ```{r}
 #| label: setup-ch1
 #| include: false

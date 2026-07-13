@@ -1,6 +1,7 @@
 ::: {.content-visible when-format="pdf"}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{7}
+\setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}General Conclusion}
 \fi
 \providecommand{\thechapter}{7}
@@ -43,4 +44,8 @@
 *What do these findings mean for the future of kōura habitat restoration?*
 
 {{< pagebreak >}}
+:::
+
+::: {.content-visible when-format="html"}
+# General Conclusion {.unnumbered}
 :::

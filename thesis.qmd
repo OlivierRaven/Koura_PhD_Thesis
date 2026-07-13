@@ -1,5 +1,6 @@
 ---
 title: "Restoring native freshwater crayfish habitat in invaded lake ecosystems"
+thesis-title: "Restoring native freshwater crayfish habitat in invaded lake ecosystems"
 author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none

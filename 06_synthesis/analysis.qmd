@@ -87,14 +87,22 @@ Site_3 <- bind_rows(DO_Logger_3_control_3_291024,DO_Logger_3_control_3_131224, D
 # filter after 28/02/25
 Site_3 <- Site_3 %>% filter(DateTime < "2025-02-28 00:00:00")
 
-# Summarise the data -----------------------------------------------------------
 Okaro_do_data <- bind_rows(Site_1, Site_2, Site_3)
 
-
+# Deep
 DO_Logger_2_deep <- read_csv("Data_raw/HOBO_Loggers_deep/DO_Logger_2_Deep.csv", skip = 1)
 DO_Logger_3_deep <- read_csv("Data_raw/HOBO_Loggers_deep/DO_Logger_3_Deep.csv", skip = 1)
 
-Deep_do_data
+DO_Logger_2_deep <- DO_Logger_2_deep %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"), Logger = "2")
+DO_Logger_3_deep <- DO_Logger_3_deep %>% select(ID = 1,DateTime = 2,DO_mg_L = 3,Temp_C = 4) %>%
+  mutate(DateTime = as.POSIXct(DateTime, format = "%m/%d/%y %I:%M:%S %p", tz = "Pacific/Auckland"), Logger = "3")
+
+Deep_do_data <- bind_rows(DO_Logger_2_deep, DO_Logger_3_deep)
+
+
+
+
 
 
 

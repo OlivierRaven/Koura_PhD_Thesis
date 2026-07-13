@@ -15,6 +15,7 @@ knitr:
 ::: {.content-visible when-format="pdf"}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{6}
+\setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}Synthesis}
 \fi
 \providecommand{\thechapter}{6}
@@ -50,6 +51,10 @@ knitr:
 {{< pagebreak >}}
 :::
 
+::: {.content-visible when-format="html"}
+# Synthesis {.unnumbered}
+:::
+
 ## Stone piles Lake Ōkaro
 
 ### Field test stones to build kōura habitat
@@ -66,6 +71,7 @@ Building the reefs was done by 14 people from Te Arawa Lake Trust, Ngāti Tahu -
 Monthly monitoring data has been collected since 2003 by the Bay of Plenty Regional Council and buoy data (limontrack) since 2021. 
 
 ### Construction
+
 
 
 ### Results
