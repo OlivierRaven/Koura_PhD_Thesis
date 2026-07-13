@@ -52,8 +52,8 @@ knitr:
 
 ## Stone piles Lake Ōkaro
 
-### Introduction
-Lake Okaro is a small lake without a known koura population. The water quality in the lake used to be poor, but due to recent restoration efforts like wetland restoration and alum dosing, the water quality has improved over the last decade. Koura used to be in the lake but due to the poor water quality they probably disapered. Now we wanted to test if it would be possible to bring koura back to the lake. as trout are present in the lake, we wanted to make sure the koura that would be translocated would be able to fined refuge. The lake has no stone or rock substrates therefore we constructed two stone piles to provide refuge for the koura. The stone piles were constructed along the shoreline of Lake Ōkaro, Bay of Plenty, New Zealand. The stones used had a size range of 70-210 mm mean 120 mm.
+### Field test stones to build kōura habitat
+Lake Okaro is a small lake without a known kōura population. The water quality in the lake used to be poor, but due to recent restoration efforts like wetland restoration and alum dosing, the water quality has improved over the last decade. Kōura used to be in the lake but due to the poor water quality they probably disapered. Now we wanted to test if it would be possible to bring kōura back to the lake. as trout are present in the lake, we wanted to make sure the kōura that would be translocated would be able to fined refuge. The lake has no stone or rock substrates therefore we constructed two stone piles to provide refuge for the kōura. The stone piles were constructed along the shoreline of Lake Ōkaro, Bay of Plenty, New Zealand. The stones used had a size range of 70-210 mm mean 120 mm.
 
 
 In this study is explored if it is possible to reintroduce a population of native freshwater crayfish known as kōura in a eutrophic small lake. 
@@ -70,10 +70,9 @@ Monthly monitoring data has been collected since 2003 by the Bay of Plenty Regio
 
 ### Results
 
+
 ## Deep stone piles Lake Rotoiti
-
-
-### Introduction
+### Stone piles expention 
 On 24/11/2025 four stone piles were constructed in Lake Rotoiti, Bay of Plenty, New Zealand. Three of the stone piles were constructed in perundiqular to the shoreline. the first one was placed underneed a jetty around 1 m depth. The second one was placed in the middle of invasive machrophyte bed infront of the jetty around 3 m depth. the third one was placed at the end of the machrophytes at a depth of 7 till 9 m depth. To prevent the stones from sinking into the sediment, wooden slaps were first installed into the sediment wherafter the stones were placed ontop keeping the woodenslaps inplace. The fourth stone pile was constructed on a bedrock shelf 120 m away from the other stone piles. As these stones were placed ontop of bedrock no wooden slaps were needed. 
 
 

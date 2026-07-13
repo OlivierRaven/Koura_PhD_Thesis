@@ -19,6 +19,7 @@ csl: references/springer-basic-author-date.csl
 
 format:
   html:
+    output-file: index.html
     theme:
       light: flatly
       dark: darkly
