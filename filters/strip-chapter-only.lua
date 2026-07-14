@@ -4,7 +4,7 @@
 -- the combined thesis but remain visible in standalone chapter renders.
 function Div(el)
   if el.classes:includes("chapter-only") then
-    if FORMAT:match("html") or FORMAT:match("docx") then
+    if FORMAT:match("latex") or FORMAT:match("docx") then
       return {}
     end
   end

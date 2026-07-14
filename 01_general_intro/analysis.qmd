@@ -89,10 +89,10 @@ suppressPackageStartupMessages(library(bathytools))
 
 raw_data_dir <- "data/raw"
 der_data_dir <- "data/derived"
-fig_dir      <- "outputs"
+out_dir      <- "outputs"
 
 dir.create(der_data_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(fig_dir,      showWarnings = FALSE, recursive = TRUE)
+dir.create(out_dir,      showWarnings = FALSE, recursive = TRUE)
 
 # Bathymetry is now fetched live from the Limnotrack API for all 12 lakes (see "DATA PREP for maps" section) rather than the local data/raw/bathy_all_lakes/*.tif files.
 
@@ -205,7 +205,7 @@ ylim_map <- c(lake_bb["ymin"] - pad, lake_bb["ymax"] + pad)
 # ── Base tile layer: download once per provider, cache as local TIFF ──────────
 .provider   <- "Esri.WorldShadedRelief"
 .zoom       <- 11
-tiles_cache <- file.path(fig_dir, paste0("basemap_", gsub("\\.", "_", .provider), ".tif"))
+tiles_cache <- file.path(out_dir, paste0("basemap_", gsub("\\.", "_", .provider), ".tif"))
 if (!file.exists(tiles_cache)) {
   aoi <- sf::st_as_sfc(lake_bb) |> sf::st_buffer(pad + 5000)
   tiles_raw <- maptiles::get_tiles(aoi, provider = .provider, zoom = .zoom, crop = TRUE)
@@ -214,7 +214,7 @@ if (!file.exists(tiles_cache)) {
 basemap <- terra::project(terra::rast(tiles_cache), "EPSG:2193")
 
 # ── Roads: load from cache if available, skip otherwise ──────────────────────
-roads_cache <- file.path(fig_dir, "roads_osm.rds")
+roads_cache <- file.path(out_dir, "roads_osm.rds")
 roads <- if (file.exists(roads_cache)) readRDS(roads_cache) else NULL
 
 # ── Label points: extract as plain x/y so ggrepel works without coord_sf stat ─
@@ -305,7 +305,7 @@ p_combined <- cowplot::ggdraw(p_main) +
   cowplot::draw_plot(p_legend, x = 0.68, y = 0.36, width = 0.30, height = 0.20)
 
 ggsave(
-  file.path(fig_dir, "fig-study-lakes-map.png"),
+  file.path(out_dir, "fig-study-lakes-map.png"),
   p_combined, width = 8, height = 8, dpi = 300, bg = "white"
 )
 
@@ -386,7 +386,7 @@ nz_distribution <- koura_map + catfish_map +
 
 nz_distribution
 
-ggsave(file.path(fig_dir, "fig-nz-distribution-maps.png"), nz_distribution,
+ggsave(file.path(out_dir, "fig-nz-distribution-maps.png"), nz_distribution,
        width = 12, height = 9, dpi = 300)
 ```
 
@@ -801,7 +801,7 @@ hypsograph_check_plot <- hypsograph_check_data |>
        ))
 
 hypsograph_check_plot
-ggsave(file.path(fig_dir, "fig-hypsograph-check.png"), hypsograph_check_plot,
+ggsave(file.path(out_dir, "fig-hypsograph-check.png"), hypsograph_check_plot,
        width = 12, height = 10, dpi = 300)
 ```
 
@@ -1355,7 +1355,7 @@ p_rotoiti_summary <- ggplot() +
   scale_linetype_manual(values = c("Historical (1975–76)" = "dashed", "Cast" = "solid", "CTD" = "dotted")) +
   labs(x = "Year", y = "Livable habitat (%)", colour = "Season", shape = "Source", linetype = "Source")
 
-ggsave(file.path(fig_dir, "fig-rotoiti-historical-combined.png"),
+ggsave(file.path(out_dir, "fig-rotoiti-historical-combined.png"),
        p_rotoiti_summary, width = 8, height = 5, dpi = 300)
 
 p_rotoiti_summary
@@ -1386,7 +1386,7 @@ p_rotoiti_trend <- ggplot(rotoiti_annual_avg, aes(Year, Annual_Mean)) +
            hjust = -0.15, vjust = 1.5, size = 3.5, colour = "grey30") +
   labs(x = "Year", y = "Annual mean livable habitat (%)")
 
-ggsave(file.path(fig_dir, "fig-rotoiti-trend.png"),
+ggsave(file.path(out_dir, "fig-rotoiti-trend.png"),
        p_rotoiti_trend, width = 6, height = 4, dpi = 300)
 
 p_rotoiti_trend
@@ -1428,7 +1428,7 @@ trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
   facet_wrap(~ Lake) +
   labs(x = "Year", y = "Annual mean livable habitat (%)")
 
-ggsave(file.path(fig_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 8, dpi = 300)
+ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 8, dpi = 300)
 
 trend_plot
 ```
@@ -1450,7 +1450,7 @@ livable_habitat_plot_combined <- ggplot(
   labs(x = "Date", y = "Livable habitat (% of lake area)", colour = "Season")
 
 livable_habitat_plot_combined
-ggsave(file.path(fig_dir, "fig-livable-habitat-combined.png"), livable_habitat_plot_combined,
+ggsave(file.path(out_dir, "fig-livable-habitat-combined.png"), livable_habitat_plot_combined,
        width = 8, height = 8, dpi = 300)
 
 # Yearly/season summary with overall annual mean (black line)
@@ -1472,7 +1472,7 @@ livable_habitat_summary_plot_combined <- ggplot() +
   facet_wrap(~ Lake) +
   labs(x = "Year", y = "Livable habitat (%)", col = "Season")
 
-ggsave(file.path(fig_dir, "fig-livable-habitat-summary.png"), livable_habitat_summary_plot_combined, width = 8, height = 8, dpi = 300)
+ggsave(file.path(out_dir, "fig-livable-habitat-summary.png"), livable_habitat_summary_plot_combined, width = 8, height = 8, dpi = 300)
 
 livable_habitat_summary_plot_combined
 ```
@@ -1494,7 +1494,7 @@ Depth_plot_combined <- depth_ranges_all |>
   labs(x = "Year", y = "Depth (m)")
 
 
-ggsave(file.path(fig_dir, "fig-depth-combined.png"), Depth_plot_combined, width = 11, height = 11, dpi = 300)
+ggsave(file.path(out_dir, "fig-depth-combined.png"), Depth_plot_combined, width = 11, height = 11, dpi = 300)
        
 Depth_plot_combined
 ```
@@ -1532,7 +1532,7 @@ Depth_area_plot_combined <- depth_zones_long |>
   labs(x = "Year", y = "Depth (m)", fill = NULL)
 
 Depth_area_plot_combined
-ggsave(file.path(fig_dir, "fig-depth-stacked-area.png"), Depth_area_plot_combined,
+ggsave(file.path(out_dir, "fig-depth-stacked-area.png"), Depth_area_plot_combined,
        width = 10, height = 16, dpi = 300)
 ```
 
@@ -1817,7 +1817,7 @@ combined_trend_map <- wrap_plots(trend_map_plots, nrow = 4) +
   plot_annotation(title = "Per-pixel trend in livable habitat (change in proportion of livable years, per year)")
 
 combined_trend_map
-ggsave(file.path(fig_dir, "fig-pixel-trend-maps.png"), combined_trend_map,
+ggsave(file.path(out_dir, "fig-pixel-trend-maps.png"), combined_trend_map,
        width = 10, height = 14, dpi = 300)
 ```
 
@@ -1910,7 +1910,7 @@ combined_pooled_persistence <- wrap_plots(pooled_persistence_plots, nrow = 4) +
   plot_annotation(title = "Pixel persistence — proportion of all observed periods livable")
 
 combined_pooled_persistence
-ggsave(file.path(fig_dir, "fig-pixel-persistence-pooled.png"), combined_pooled_persistence,
+ggsave(file.path(out_dir, "fig-pixel-persistence-pooled.png"), combined_pooled_persistence,
        width = 10, height = 14, dpi = 300)
 
 # Per-season — four separate combined maps, one per season
@@ -1918,7 +1918,7 @@ season_persistence_maps <- lapply(season_order, function(s) {
   plots <- lapply(all_map_lakes, plot_lake_persistence, value_col = s, title_label = "% livable")
   combined <- wrap_plots(plots, nrow = 4) +
     plot_annotation(title = paste0("Pixel persistence — ", s, " (proportion of observed ", s, "s livable)"))
-  ggsave(file.path(fig_dir, paste0("fig-pixel-persistence-", tolower(s), ".png")), combined,
+  ggsave(file.path(out_dir, paste0("fig-pixel-persistence-", tolower(s), ".png")), combined,
          width = 10, height = 14, dpi = 300)
   combined
 })

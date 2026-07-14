@@ -4,10 +4,6 @@
 /04_koura_mesocosm/
 /05_stone_piles_rotoiti/
 
-# Nested git repos inside synthesis/ — ignore to prevent gitlink re-registration
-/synthesis/stone_piles_okaro/
-
-
 # Large media files — allow chapter cover images and key thesis photos
 *.jpg
 *.JPG

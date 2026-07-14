@@ -17,7 +17,7 @@ execute:
 #| label: setup
 #| include: false
 
-packages <- c("readr", "readxl", "tidyverse", "dplyr", "ggplot2")
+packages <- c("readr", "readxl", "tidyverse", "dplyr", "ggplot2", "patchwork")
 
 quiet_load <- function(pkg) {
   if (!requireNamespace(pkg, quietly = TRUE))
@@ -80,24 +80,21 @@ deep_hobo  <- file.path(raw_dir, "HOBO_loggers_deep")
 Site_1 <- dplyr::bind_rows(
   read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_291024.csv")),
   read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_131224.csv")),
-  read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_090225.csv"))
-) |>
+  read_hobo(file.path(okaro_hobo, "DO_Logger_14_reef_122_090225.csv"))) |>
   dplyr::mutate(Site = "1 Stone pile") |>
   dplyr::filter(DateTime < as.POSIXct("2025-02-09", tz = "Pacific/Auckland"))
 
 Site_2 <- dplyr::bind_rows(
   read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_291024.csv")),
   read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_131224.csv")),
-  read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_280225.csv"))
-) |>
+  read_hobo(file.path(okaro_hobo, "DO_Logger_11_reef_123_280225.csv"))) |>
   dplyr::mutate(Site = "2 Stone pile") |>
   dplyr::filter(DateTime < as.POSIXct("2025-02-28", tz = "Pacific/Auckland"))
 
 Site_3 <- dplyr::bind_rows(
   read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_291024.csv")),
   read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_131224.csv")),
-  read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_280225.csv"))
-) |>
+  read_hobo(file.path(okaro_hobo, "DO_Logger_3_control_124_280225.csv"))) |>
   dplyr::mutate(Site = "3 Control") |>
   dplyr::filter(DateTime < as.POSIXct("2025-02-28", tz = "Pacific/Auckland"))
 
@@ -108,6 +105,11 @@ Deep_do_data <- dplyr::bind_rows(
   read_hobo(file.path(deep_hobo, "DO_Logger_2_Deep_reef.csv")) |> dplyr::mutate(Logger = "2"),
   read_hobo(file.path(deep_hobo, "DO_Logger_3_Deep_reef.csv")) |> dplyr::mutate(Logger = "3")
 )
+
+okaro_bathy <- (function(x) x$Ōkaro)(readRDS("C:/Users/or81/OneDrive - The University of Waikato/Documents/PhD/01_thesis_chapters/06_synthesis/data/raw/bathy_rasters.rds"))
+
+okaro_buoy <- (function(x) x[x$Lake == "Okaro", ])(readRDS("C:/Users/or81/OneDrive - The University of Waikato/Documents/PhD/01_thesis_chapters/06_synthesis/data/raw/buoy_raw_data.rds"))
+
 
 # Base plot theme
 base_theme_bw <- theme_classic() +
@@ -132,49 +134,81 @@ format_pval <- function(p, label = TRUE) {
 #| label: fig-okaro-raw-ts
 #| fig-cap: "Raw dissolved oxygen and temperature time series from Ōkaro HOBO loggers."
 
-ggplot(Okaro_do_data, aes(x = DateTime, y = DO_mg_L, colour = Site)) +
-  geom_line() +
-  labs(x = "Date", y = "DO (mg/L)", colour = "Site")
-
-ggplot(Okaro_do_data, aes(x = DateTime, y = Temp_C, colour = Site)) +
+rawplot1<-ggplot(Okaro_do_data, aes(x = DateTime, y = Temp_C, colour = Site)) +
   geom_line() +
   labs(x = "Date", y = "Temperature (°C)", colour = "Site")
+
+rawplot2<-ggplot(Okaro_do_data, aes(x = DateTime, y = DO_mg_L, colour = Site)) +
+  geom_line() +
+  labs(x = "Date", y = "DO (mg L⁻¹)", colour = "Site")
+
+okaro_raw_ts<-rawplot1/rawplot2
+okaro_raw_ts
 ```
 
 ```{r}
-#| label: fig-okaro-daily
-#| fig-cap: "Daily mean dissolved oxygen and temperature at Ōkaro stone pile and control sites."
+#| label: fig-okaro-combined
+#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and the lake buoy. Period: 2024-09-11 to 2025-02-27."
+#| fig-height: 6
 
-daily_means <- Okaro_do_data |>
+# Logger daily means
+logger_daily <- Okaro_do_data |>
   dplyr::mutate(Date = as.Date(DateTime)) |>
-  dplyr::group_by(Date, Site) |>
+  dplyr::group_by(Date, Source = Site) |>
   dplyr::summarise(
-    DO_mean   = mean(DO_mg_L, na.rm = TRUE),
-    Temp_mean = mean(Temp_C,  na.rm = TRUE),
-    .groups   = "drop"
-  )
+    Temp = mean(Temp_C,  na.rm = TRUE),
+    DO   = mean(DO_mg_L, na.rm = TRUE),
+    .groups = "drop")
 
-ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Site)) +
-  geom_line(linewidth = 0.9) +
-  labs(x = "Date", y = "DO (mg/L)", colour = "Site")
+# Buoy daily means
+buoy_daily <- okaro_buoy |>
+  dplyr::filter(
+    DptSns >= 1,
+    DateTime >= as.POSIXct("2024-09-11"),
+    DateTime <= as.POSIXct("2025-02-27")) |>
+  dplyr::mutate(Date = as.Date(DateTime)) |>
+  dplyr::group_by(Date) |>
+  dplyr::summarise(
+    Temp = mean(TmpWtr, na.rm = TRUE),
+    DO   = mean(DOconc, na.rm = TRUE),
+    .groups = "drop") |>
+  dplyr::mutate(Source = "Buoy")
 
-ggplot(daily_means, aes(x = Date, y = Temp_mean, colour = Site)) +
+okaro_combined <- dplyr::bind_rows(logger_daily, buoy_daily)
+
+p_temp <- ggplot(okaro_combined, aes(x = Date, y = Temp, colour = Source)) +
   geom_line(linewidth = 0.9) +
-  labs(x = "Date", y = "Temperature (°C)", colour = "Site")
+  labs(x = NULL, y = "Temperature (°C)", colour = NULL)
+
+p_do <- ggplot(okaro_combined, aes(x = Date, y = DO, colour = Source)) +
+  geom_line(linewidth = 0.9) +
+  labs(x = "Date", y = "DO (mg L⁻¹)", colour = NULL)
+
+okaro_combined_plot <- p_temp / p_do + patchwork::plot_layout(guides = "collect")
+okaro_combined_plot
+
+ggsave(file.path(out_dir, "fig-okaro-combined.png"), okaro_combined_plot, width = 8, height = 6, dpi = 300)
+
+
 ```
+
 
 # Deep stone piles — Rotoiti
 ```{r}
 #| label: fig-deep-ts
 #| fig-cap: "DO and temperature from deep stone pile loggers in Lake Rotoiti."
 
-ggplot(Deep_do_data, aes(x = DateTime, y = DO_mg_L, colour = Logger)) +
-  geom_line() +
-  labs(x = "Date", y = "DO (mg/L)", colour = "Logger")
-
-ggplot(Deep_do_data, aes(x = DateTime, y = Temp_C, colour = Logger)) +
+deepraw1<-ggplot(Deep_do_data, aes(x = DateTime, y = Temp_C, colour = Logger)) +
   geom_line() +
   labs(x = "Date", y = "Temperature (°C)", colour = "Logger")
+
+deepraw2<-ggplot(Deep_do_data, aes(x = DateTime, y = DO_mg_L, colour = Logger)) +
+  geom_line() +
+  labs(x = "Date", y = "DO (mg L⁻¹)", colour = "Logger")
+
+deep_raw <- deepraw1/deepraw2
+deep_raw
+
 ```
 
 ```{r}
@@ -190,11 +224,15 @@ daily_means <- Deep_do_data |>
     .groups   = "drop"
   )
 
-ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Logger)) +
-  geom_line(linewidth = 0.9) +
-  labs(x = "Date", y = "DO (mg/L)", colour = "Logger")
-
-ggplot(daily_means, aes(x = Date, y = Temp_mean, colour = Logger)) +
+deepdaily1 <- ggplot(daily_means, aes(x = Date, y = Temp_mean, colour = Logger)) +
   geom_line(linewidth = 0.9) +
   labs(x = "Date", y = "Temperature (°C)", colour = "Logger")
+
+deepdaily2 <- ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Logger)) +
+  geom_line(linewidth = 0.9) +
+  labs(x = "Date", y = "DO (mg L⁻¹)", colour = "Logger")
+
+deep_daily <- deepdaily1/deepdaily2
+deep_daily
+
 ```
