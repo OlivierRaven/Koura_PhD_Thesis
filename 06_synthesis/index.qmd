@@ -12,7 +12,7 @@ knitr:
     dev: "ragg_png"
 ---
 
-::: {.content-visible when-format="pdf"}
+```{=latex}
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -39,7 +39,7 @@ knitr:
 \end{tikzpicture}
 \null
 \clearpage
-:::
+```
 
 ::: {.content-visible when-format="docx"}
 ![](images/ch6_cover.jpg){fig-align="center" width=15cm}

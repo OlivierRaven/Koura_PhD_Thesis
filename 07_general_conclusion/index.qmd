@@ -1,4 +1,4 @@
-::: {.content-visible when-format="pdf"}
+```{=latex}
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -34,7 +34,7 @@
 \vspace*{\fill}
 \afterpage{\pagecolor{thesiscream}}
 \clearpage
-:::
+```
 
 ::: {.content-visible when-format="docx"}
 ![](images/ch7_cover.jpg){fig-align="center" width=15cm}

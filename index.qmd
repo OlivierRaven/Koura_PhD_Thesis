@@ -30,11 +30,6 @@ title-block-style: none
 \thispagestyle{empty}
 :::
 
-::: {.content-visible when-format="html"}
-[⬇ Download PDF](Restoring-native-freshwater-crayfish-habitat-in-invaded-lake-ecosystems.pdf){.btn .btn-outline-danger .btn-sm}
-[⬇ Download Word](Restoring-native-freshwater-crayfish-habitat-in-invaded-lake-ecosystems.docx){.btn .btn-outline-primary .btn-sm}
-:::
-
 ::: {.content-visible when-format="docx"}
 ![](images/thesis_cover.jpg){fig-align="center" width=15cm}
 :::
