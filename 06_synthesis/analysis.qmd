@@ -52,12 +52,9 @@ dir.create(der_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Read raw Excel monitoring data
-df_okaro_raw <- readxl::read_excel(
-  file.path(raw_dir, "okaro_raw_data.xlsx"), sheet = "Monitoring_data"
-)
-df_deep_raw <- readxl::read_excel(
-  file.path(raw_dir, "deep_stonepiles_raw_data.xlsx"), sheet = "Deep_vid"
-)
+df_okaro_raw <- readxl::read_excel(file.path(raw_dir, "okaro_raw_data.xlsx"), sheet = "Monitoring_data")
+df_okaro_Hobo_raw <- readxl::read_excel(file.path(raw_dir, "okaro_raw_data.xlsx"), sheet = "HOBO_Info")
+df_deep_raw <- readxl::read_excel(file.path(raw_dir, "deep_stonepiles_raw_data.xlsx"), sheet = "Deep_vid")
 
 # Save derived CSVs
 write.csv(df_okaro_raw, file.path(der_dir, "Okaro_data.csv"),  row.names = FALSE)
