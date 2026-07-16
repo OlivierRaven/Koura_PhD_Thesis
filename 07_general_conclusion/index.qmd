@@ -10,8 +10,15 @@
 \providecommand{\thechapter}{7}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0pt] at ([yshift=-3.5cm]current page.center)
-    {\includegraphics[width=\paperwidth,height=\paperheight]{images/ch7_cover.jpg}};
+  % Image clipped between top and bottom bars — width only, aspect ratio preserved
+  \begin{scope}
+    \clip ([yshift=-7cm]current page.north west)
+          rectangle ([yshift=3.5cm]current page.south east);
+    \node[inner sep=0pt, anchor=center]
+      at ([yshift=-3.5cm]current page.center)
+      {\includegraphics[width=\paperwidth]{images/ch7_cover.jpg}};
+  \end{scope}
+  % Top black bar
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
   \node[color=thesissand, align=left,
@@ -22,17 +29,15 @@
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=-4cm]current page.north west)
     {General Conclusion};
+  % Bottom black bar with question
+  \fill[black]
+    (current page.south west) rectangle ([yshift=3.5cm]current page.south east);
+  \node[color=thesissand, text width=0.85\paperwidth, align=center,
+        font=\fontsize{11}{14}\selectfont\itshape\sffamily, anchor=center]
+    at ([yshift=1.75cm]current page.south)
+    {What do these findings mean for the future of k\={o}ura habitat restoration?};
 \end{tikzpicture}
 \null
-\clearpage
-\thispagestyle{empty}
-\pagecolor{thesissand}
-\vspace*{\fill}
-\begin{center}
-\textit{What do these findings mean for the future of k\={o}ura habitat restoration?}
-\end{center}
-\vspace*{\fill}
-\afterpage{\pagecolor{thesiscream}}
 \clearpage
 ```
 
@@ -47,3 +52,16 @@
 ::: {.content-visible when-format="html"}
 # General Conclusion {.unnumbered}
 :::
+
+## Main findings
+
+The results showed that kōura reacted with more refuge use to the novel catfish than when exposed to native eels, complex shoreline habitats consisting of rocks and riparian vegetation were best predictors of kōura presence. When hole sizes were kept similar kōura had no preference between wood or stone material but when stability differed more stable structures are preferred also configurations that provided more complex refugia for individuals of different sizes is best suited for kōura recovery. Stone piles deployed in Lake Rotoiti attrected kōura at densities more comparable to natural rocky substrates than bare control sites, though differences over the 18-month monitoring period we not yet statistically significant. Extended monitoring is expected to reveal stronger population-level responses as kōura progresivly colonise the structures. 
+
+
+## conclusion
+Together, these findings suggest that stone pile deployment is a pormosing restoration tool that could support koura population recovery in degraded lake envioroments and in time, help restore both the ecological function and the costomary harvest practices that koura populations once sustained.
+
+
+## Takeaway measage
+
+

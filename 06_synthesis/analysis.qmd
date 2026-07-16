@@ -54,7 +54,7 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 # Read raw Excel monitoring data
 df_okaro_raw <- readxl::read_excel(file.path(raw_dir, "okaro_raw_data.xlsx"), sheet = "Monitoring_data")
 df_okaro_Hobo_raw <- readxl::read_excel(file.path(raw_dir, "okaro_raw_data.xlsx"), sheet = "HOBO_Info")
-df_deep_raw <- readxl::read_excel(file.path(raw_dir, "deep_stonepiles_raw_data.xlsx"), sheet = "Deep_vid")
+df_deep_raw <- readxl::read_excel(file.path(raw_dir, "deep_stonepiles_raw_data.xlsx"), sheet = "Deep_monitoring")
 
 # Save derived CSVs
 write.csv(df_okaro_raw, file.path(der_dir, "Okaro_data.csv"),  row.names = FALSE)
@@ -100,8 +100,11 @@ Okaro_do_data <- dplyr::bind_rows(Site_1, Site_2, Site_3)
 # Deep stone piles HOBO loggers (Rotoiti)
 Deep_do_data <- dplyr::bind_rows(
   read_hobo(file.path(deep_hobo, "DO_Logger_2_Deep_reef.csv")) |> dplyr::mutate(Logger = "2"),
-  read_hobo(file.path(deep_hobo, "DO_Logger_3_Deep_reef.csv")) |> dplyr::mutate(Logger = "3")
-)
+  read_hobo(file.path(deep_hobo, "DO_Logger_3_Deep_reef.csv")) |> dplyr::mutate(Logger = "3"))
+
+# 2025-11-24	DO logger deployment
+# 2025-11-22	12:00:00am loggers recording start time
+# 2026-01-15  Loggers 2 & 3 retrieved 
 
 okaro_bathy <- (function(x) x$Ōkaro)(readRDS("C:/Users/or81/OneDrive - The University of Waikato/Documents/PhD/01_thesis_chapters/06_synthesis/data/raw/bathy_rasters.rds"))
 
@@ -148,6 +151,14 @@ okaro_raw_ts
 #| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and the lake buoy. Period: 2024-09-11 to 2025-02-27."
 #| fig-height: 6
 
+
+# Field spot measurements (black points)
+spot_measurements <- data.frame(
+  Date = as.Date(c("2024-10-29", "2025-02-28")),
+  Temp = c(12.8, 22.6),
+  DO   = c(13.63, 4.63)
+)
+
 # Logger daily means
 logger_daily <- Okaro_do_data |>
   dplyr::mutate(Date = as.Date(DateTime)) |>
@@ -175,10 +186,14 @@ okaro_combined <- dplyr::bind_rows(logger_daily, buoy_daily)
 
 p_temp <- ggplot(okaro_combined, aes(x = Date, y = Temp, colour = Source)) +
   geom_line(linewidth = 0.9) +
+  geom_point(data = spot_measurements, aes(x = Date, y = Temp),
+             inherit.aes = FALSE, colour = "black", size = 2.5) +
   labs(x = NULL, y = "Temperature (°C)", colour = NULL)
 
 p_do <- ggplot(okaro_combined, aes(x = Date, y = DO, colour = Source)) +
   geom_line(linewidth = 0.9) +
+  geom_point(data = spot_measurements, aes(x = Date, y = DO),
+             inherit.aes = FALSE, colour = "black", size = 2.5) +
   labs(x = "Date", y = "DO (mg L⁻¹)", colour = NULL)
 
 okaro_combined_plot <- p_temp / p_do + patchwork::plot_layout(guides = "collect")
