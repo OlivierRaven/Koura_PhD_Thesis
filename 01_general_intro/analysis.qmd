@@ -87,9 +87,24 @@ suppressPackageStartupMessages(library(bathytools))
 ```{r}
 #| label: setup-paths
 
-raw_data_dir <- "data/raw"
-der_data_dir <- "data/derived"
-out_dir      <- "outputs"
+# Resolve chapter directory — works under knitr render, RStudio interactive, and CLI
+chapter_dir <- local({
+  f <- knitr::current_input(dir = TRUE)
+  if (!is.null(f)) {
+    p <- normalizePath(file.path(dirname(f), "01_general_intro"))
+    return(if (dir.exists(p)) p else normalizePath(dirname(f)))
+  }
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    f <- rstudioapi::getSourceEditorContext()$path
+    if (nzchar(f)) return(normalizePath(dirname(f)))
+  }
+  normalizePath(".")
+})
+knitr::opts_knit$set(root.dir = chapter_dir)
+
+raw_data_dir <- file.path(chapter_dir, "data", "raw")
+der_data_dir <- file.path(chapter_dir, "data", "derived")
+out_dir      <- file.path(chapter_dir, "outputs")
 
 dir.create(der_data_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(out_dir,      showWarnings = FALSE, recursive = TRUE)
@@ -154,9 +169,10 @@ all_lakes <- dplyr::mutate(all_lakes,
   lake_name = trimws(sub("\\s*[/(\\&].*$", "", lake_name)),
   # Correct missing macrons
   lake_name = dplyr::case_when(
-    grepl("^[Oo]kataina",  lake_name)                  ~ "Ōkataina",
-    grepl("^[Oo]karo$",    lake_name)                  ~ "Ōkaro",
-    grepl("^[Oo]kareka",   lake_name)                  ~ "Ōkareka",
+    grepl("^[Oo]kataina",  lake_name) ~ "Ōkataina",
+    grepl("^[Oo]karo$",    lake_name) ~ "Ōkaro",
+    grepl("kareka",        lake_name, ignore.case = TRUE) ~ "Ōkāreka",
+    grepl("^Rotomahana",   lake_name) ~ "Rotomāhana",
     grepl("^Rotoma$",      lake_name, ignore.case = TRUE) ~ "Rotomā",
     grepl("^Rotokakahi",   lake_name, ignore.case = TRUE) ~ "Rotokākahi",
     TRUE ~ lake_name
@@ -171,11 +187,11 @@ trophic_lookup <- tibble::tribble(
   "Rotoehu",        "Eutrophic",
   "Rotomā",         "Oligotrophic",
   "Ōkataina",       "Oligotrophic",
-  "Ōkareka",        "Mesotrophic",
+  "Ōkāreka",        "Mesotrophic",
   "Tikitapu",       "Oligotrophic",
   "Rotokākahi",     "Mesotrophic",
   "Tarawera",       "Oligotrophic",
-  "Rotomahana",     "Mesotrophic",
+  "Rotomāhana",     "Mesotrophic",
   "Ōkaro",          "Eutrophic",
   "Rerewhakaaitu",  "Eutrophic"
 )
@@ -494,7 +510,7 @@ if (file.exists(hypsograph_path) && file.exists(water_quality_path)) {
 # All 12 Rotorua Te Arawa lakes — fixed display/facet order
 lake_order <- c("Rotorua", "Rotoiti", "Rotoehu", "Rotomā",
                 "Ōkataina", "Ōkāreka", "Tikitapu", "Rotokākahi",
-                "Tarawera", "Rotomahana", "Ōkaro", "Rerewhakaaitu")
+                "Tarawera", "Rotomāhana", "Ōkaro", "Rerewhakaaitu")
 season_order <- c("Summer", "Autumn", "Winter", "Spring")
 
 #Fetch buoy water-quality profiler data from the Limnotrack API
@@ -518,7 +534,8 @@ get_lake_wqprofiler <- function(lake = "rotorua", type = "pro",
 recode_lake_names <- function(x) {
 dplyr::recode(x,
   "Rotoma" = "Rotomā", "Okareka" = "Ōkāreka", "Okaro" = "Ōkaro",
-  "Okataina" = "Ōkataina", "Rotokakahi" = "Rotokākahi"
+  "Okataina" = "Ōkataina", "Rotokakahi" = "Rotokākahi",
+  "Rotomahana" = "Rotomāhana"
 )
 }
 
@@ -888,6 +905,7 @@ bathy_rasters_rds <- file.path(der_data_dir, "bathy_rasters.rds")
 if (file.exists(bathy_rasters_rds)) {
 
   bathy_rasters <- readRDS(bathy_rasters_rds) |> lapply(terra::unwrap)
+  names(bathy_rasters) <- recode_lake_names(names(bathy_rasters))
 
 } else {
 
@@ -902,7 +920,7 @@ if (file.exists(bathy_rasters_rds)) {
     15312,    "Tikitapu",
     15621,    "Rotokākahi",
     54732,    "Tarawera",
-    54733,    "Rotomahana",
+    54733,    "Rotomāhana",
     14290,    "Ōkaro",
     40071,    "Rerewhakaaitu"
   )
@@ -1004,7 +1022,7 @@ if (file.exists(buoy_raw_rds)) {
   # Lake slugs match the API's naming (lowercase, no macrons); Title-cased afterwards so
   # recode_lake_names() can map them to the macron spellings used everywhere else.
   buoy_lake_slugs <- c("rotorua", "rotoiti", "rotoehu", "rotoma", "okareka", "okaro",
-                       "tikitapu", "rotokakahi", "rerewhakaaitu", "okataina", "tarawera", "rotomahana")
+                       "tikitapu", "rotokakahi", "rerewhakaaitu", "okataina", "tarawera", "rotomāhana")
 
   fetch_buoy_api <- function(lake_slug) {
     tryCatch({
@@ -1049,9 +1067,10 @@ combined_rds <- file.path(der_data_dir, "livable_combined.rds")
 if (file.exists(combined_rds)) {
 
   saved               <- readRDS(combined_rds)
-  livable_habitat_sum <- saved$livable_habitat_sum
-  livable_habitat_all <- saved$livable_habitat_all
-  depth_ranges_all    <- saved$depth_ranges_all
+  fix_lake <- function(df) dplyr::mutate(df, Lake = factor(recode_lake_names(as.character(Lake)), levels = lake_order))
+  livable_habitat_sum <- fix_lake(saved$livable_habitat_sum)
+  livable_habitat_all <- fix_lake(saved$livable_habitat_all)
+  depth_ranges_all    <- fix_lake(saved$depth_ranges_all)
 
 } else {
 
@@ -1554,9 +1573,17 @@ all_map_lakes <- lake_order[lake_order %in% names(bathy_rasters)]
 # all_lakes is created in the study-lakes-map chunk (EPSG:2193).
 lake_boundaries <- purrr::map_dfr(all_map_lakes, function(lk) {
   lake_sf <- all_lakes |> dplyr::filter(lake_name == lk)
-  if (nrow(lake_sf) == 0) return(NULL)
-  coords <- sf::st_coordinates(sf::st_cast(sf::st_union(lake_sf), "MULTILINESTRING"))
-  data.frame(x = coords[, "X"], y = coords[, "Y"], L = coords[, "L2"], Lake = lk)
+  if (nrow(lake_sf) > 0) {
+    coords <- sf::st_coordinates(sf::st_cast(sf::st_union(lake_sf), "MULTILINESTRING"))
+    # L1 = linestring/ring index within the MULTILINESTRING (L2 is always 1 — the feature index)
+    return(data.frame(x = coords[, "X"], y = coords[, "Y"], L = coords[, "L1"], Lake = lk))
+  }
+  # Fallback: lake not in shapefile — derive outline from bathy points convex hull
+  pts <- bathy_points |> dplyr::filter(Lake == lk)
+  if (nrow(pts) == 0) return(NULL)
+  hull_idx <- chull(pts$x, pts$y)
+  hull <- pts[c(hull_idx, hull_idx[1]), ]
+  data.frame(x = hull$x, y = hull$y, L = 1L, Lake = lk)
 })
 
 # Nearest-depth match instead of exact equality, with one cast's classification per
@@ -1792,7 +1819,22 @@ trend_cap <- quantile(abs(pixel_trends$Trend), 0.95, na.rm = TRUE)
 plot_lake_trend <- function(lake_name) {
   df <- pixel_trends |> filter(Lake == lake_name)
   if (nrow(df) == 0) {
-    return(ggplot() + theme_void() + labs(subtitle = lake_name))
+    # No trend data — show bathy footprint as grey with outline
+    bathy_lake <- bathy_points_sub |> dplyr::filter(Lake == lake_name)
+    bdry       <- lake_boundaries   |> dplyr::filter(Lake == lake_name)
+    p <- ggplot() +
+      coord_equal() +
+      labs(x = NULL, y = NULL, subtitle = lake_name) +
+      theme(legend.position = "none", axis.text = element_blank(),
+            axis.title = element_blank(), axis.ticks = element_blank(),
+            axis.line = element_blank())
+    if (nrow(bathy_lake) > 0)
+      p <- p + geom_point(data = bathy_lake, aes(x, y),
+                          size = 0.6, colour = "grey80", inherit.aes = FALSE)
+    if (nrow(bdry) > 0)
+      p <- p + geom_path(data = bdry, aes(x, y, group = L),
+                         colour = "black", linewidth = 0.5, inherit.aes = FALSE)
+    return(p)
   }
   ggplot(df, aes(x, y, col = Trend)) +
     geom_point(size = 0.6) +
@@ -1884,7 +1926,16 @@ if (file.exists(pixel_persistence_rds)) {
 plot_lake_persistence <- function(lake_name, value_col, title_label) {
   df <- pixel_persistence |> filter(Lake == lake_name)
   if (nrow(df) == 0 || all(is.na(df[[value_col]]))) {
-    return(ggplot() + theme_void() + labs(subtitle = lake_name))
+    bathy_lake <- bathy_points_sub |> dplyr::filter(Lake == lake_name)
+    bdry       <- lake_boundaries   |> dplyr::filter(Lake == lake_name)
+    p <- ggplot() + coord_equal() + labs(x = NULL, y = NULL, subtitle = lake_name) +
+      theme(axis.text = element_blank(), axis.title = element_blank(),
+            axis.ticks = element_blank(), axis.line = element_blank())
+    if (nrow(bathy_lake) > 0)
+      p <- p + geom_point(data = bathy_lake, aes(x, y), size = 0.6, colour = "grey80", inherit.aes = FALSE)
+    if (nrow(bdry) > 0)
+      p <- p + geom_path(data = bdry, aes(x, y, group = L), colour = "black", linewidth = 0.5, inherit.aes = FALSE)
+    return(p)
   }
   ggplot(df, aes(x, y, col = .data[[value_col]])) +
     geom_point(size = 0.6) +

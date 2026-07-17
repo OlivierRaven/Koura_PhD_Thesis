@@ -13,7 +13,8 @@ This research was made possible through funding from the Fish Futures programme,
 
 During my PhD, I became increasingly aware of the limitations of the current scientific publishing system, with paywalls restricting access, and a general lack of transparency in how research is evaluated and cited. This conviction that science should be open, accessible, and collaborative led me to found ScienceEcosystem.org, an open science platform working to lower barriers to knowledge sharing. I remain committed to developing it further in service of that goal.
 
-
+## Use of Artificial Intelligence
+Generative AI tools (Claude, Anthropic) were used during this research to assist with R code development for data analysis and visualisation, and to support editing of written sections through feedback on structure and clarity. All text was written by the author; AI assistance was limited to reorganisation and grammatical suggestions. All analytical decisions, interpretations, and conclusions are the author's own. AI-generated code was reviewed and validated against expected outputs.
 
 
 ::: {.content-visible when-format="pdf"}

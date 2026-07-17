@@ -66,6 +66,7 @@ format:
         \usepackage{afterpage}
         \usepackage{eso-pic}
         \usepackage{tikz}
+        \usepackage{pdfpages}
         \definecolor{thesiscream}{RGB}{255, 252, 240}
         \definecolor{thesissand}{RGB}{232, 212, 162}
         \pagecolor{thesiscream}

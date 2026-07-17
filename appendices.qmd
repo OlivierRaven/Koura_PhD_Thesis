@@ -1,1 +1,14 @@
 # Appendices {.unnumbered}
+
+## Co-Authorship Forms {.unnumbered}
+
+```{=latex}
+\clearpage
+\nopagecolor
+\includepdf[pages=1,pagecommand={}]{admin/Co-Authorship-Form_ch2.pdf}
+\includepdf[pages=1,pagecommand={}]{admin/Co-Authorship-Form_ch3.pdf}
+\includepdf[pages=1,pagecommand={}]{admin/Co-Authorship-Form_ch4.pdf}
+\includepdf[pages=1,pagecommand={}]{admin/Co-Authorship-Form_ch5.pdf}
+\clearpage
+\pagecolor{thesiscream}
+```
