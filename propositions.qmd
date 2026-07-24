@@ -1,0 +1,75 @@
+::: {.content-visible when-format="pdf"}
+```{=latex}
+\clearpage
+\thispagestyle{empty}
+\begin{minipage}[t][0.88\textheight][t]{\textwidth}
+
+\vspace{2cm}
+
+{\fontsize{16}{20}\selectfont\sffamily\bfseries Propositions}
+
+\vspace{0.6cm}
+{\color{thesissand}\rule{\textwidth}{1.5pt}}
+\vspace{0.8cm}
+
+\begin{enumerate}[label={\bfseries\arabic*.}]
+  \setlength{\itemsep}{1.2em}
+
+  \item Structural complexity is essential for the recovery of kōura populations — it 
+        is not just an added benefit but a fundamental requirement.\\
+        \hspace*{1em}{\small\itshape (this thesis)}
+
+  \item The fear of predators shapes prey behaviour as powerfully as predation
+        itself, yet habitat restoration rarely accounts for it.\\
+        \hspace*{1em}{\small\itshape (this thesis)}
+
+  \item Rock pile deployment is a viable and scalable tool for freshwater crayfish
+        restoration in lakes, but success depends on location and design, not just presence.\\
+        \hspace*{1em}{\small\itshape (this thesis)}
+        
+  \item Freshwater crayfish are cute animals and very important for ecosystems.
+
+  \item Scientists write, review, and edit research for free, then pay to publish
+        it and pay again to read it - the academic publishing industry is the
+        most successful business scam in modern knowledge production.
+
+  \item Scientific knowledge is a public good. It should be openly accessible, 
+        transparently evaluated, and preserved in a way that keeps it useful and verifiable 
+        — not just today, but across generations.
+
+
+
+\end{enumerate}
+
+\end{minipage}
+
+\vfill
+
+{\color{thesissand}\rule{\textwidth}{0.8pt}}
+\vspace{0.4cm}
+
+{\small\sffamily
+Propositions belonging to the thesis, entitled\\[0.3em]
+\textit{Restoring native freshwater crayfish habitat in invaded lake ecosystems}\\[0.3em]
+Olivier V. Raven\\
+The University of Waikato, 2026
+}
+\clearpage
+```
+:::
+
+::: {.content-visible when-format="html"}
+### Propositions {.unnumbered}
+
+**From this thesis**
+
+1. Structural complexity is essential for the recovery of kōura populations — it is not just an added benefit but a fundamental requirement.
+2. The fear of predators shapes prey behaviour as powerfully as predation itself, yet habitat restoration rarely accounts for it.
+3. Rock pile deployment is a viable and scalable tool for freshwater crayfish restoration in lakes, but success depends on location and design, not just presence.
+
+**On science and publishing**
+
+4. Freshwater crayfish are cute animals and very important for ecosystems.
+5. Scientists write, review, and edit research for free, then pay to publish it and pay again to read it - the academic publishing industry is the most successful business scam in modern knowledge production.
+6. Scientific knowledge is a public good. It should be openly accessible, transparently evaluated, and preserved in a way that keeps it useful and verifiable — not just today, but across generations.
+:::

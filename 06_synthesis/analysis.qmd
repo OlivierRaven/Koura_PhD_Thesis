@@ -1,6 +1,6 @@
 ---
 title: "Analysis Notebook"
-description: "Analysis notebook for synthesis chapter — Ōkaro and deep stone piles Rotoiti"
+description: "Analysis notebook for synthesis chapter — Ōkaro, deep stone piles Rotoiti, & Chapter "
 toc: true
 toc-depth: 3
 number-sections: true
@@ -201,9 +201,7 @@ okaro_combined_plot
 
 ggsave(file.path(out_dir, "fig-okaro-combined.png"), okaro_combined_plot, width = 8, height = 6, dpi = 300)
 
-
 ```
-
 
 # Deep stone piles — Rotoiti
 ```{r}
@@ -246,5 +244,154 @@ deepdaily2 <- ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Logger)) +
 
 deep_daily <- deepdaily1/deepdaily2
 deep_daily
+
+```
+
+
+# Combined monitoring — Chapter 3 shoreline habitats + Chapter 5 stone piles
+```{r}
+#| label: combined-monitoring-load
+
+root_dir <- dirname(chapter_dir)
+
+ch3_raw <- readr::read_csv(file.path(root_dir, "03_koura_shoreline_habitats", "data", "derived", "Monitoring_CPUE_data.csv"))
+ch3_fish <- readr::read_csv(file.path(root_dir, "03_koura_shoreline_habitats", "data", "derived", "Fish_data.csv"))
+
+ch5_raw <- readr::read_csv(file.path(root_dir, "05_stone_piles_rotoiti", "data", "derived", "Combined_data.csv"))
+ch5_fish <- readr::read_csv(file.path(root_dir, "05_stone_piles_rotoiti", "data", "derived", "Fish_data.csv"))
+
+
+# Bind for comparison — keep Rotoiti from ch3 separately for direct lake match
+combined_raw <- dplyr::bind_rows(
+  ch3_raw |> dplyr::mutate(chapter = "Ch3"),
+  ch5_raw |> dplyr::mutate(chapter = "Ch5"))
+
+combined_fish <- dplyr::bind_rows(
+  ch3_fish |> dplyr::mutate(chapter = "Ch3"),
+  ch5_fish |> dplyr::mutate(chapter = "Ch5"))
+```
+
+
+```{r}
+
+combined_fish <- combined_fish |>
+  dplyr::mutate(net_bait = dplyr::case_when(net_type == "Box" & chapter == "Ch3" ~ "Box + trout", net_type == "Box" & chapter == "Ch5" ~ "Box + catfish", TRUE ~ "Fyke" ))
+
+ggplot(combined_fish |> filter(species == "Kōura", !is.na(sex)),
+       aes(length_mm, weight_g, col = sex)) +
+        geom_point()+
+        geom_smooth()
+
+ggplot(combined_fish |> filter(species == "Kōura", !is.na(sex)),
+       aes(length_mm, fill = sex)) +
+  geom_histogram(position = "dodge")
+
+
+ggplot(combined_fish |> filter(species == "Kōura", !is.na(sex)),
+       aes(length_mm, fill = sex)) +
+  geom_histogram(position = "dodge") +
+  facet_grid(~ net_bait)
+
+
+```
+
+
+# nets efficiency Rotoiti
+```{r}
+# Total kōura caught per box type
+rotoiti_filter <- function(df) {
+  df |> filter(chapter == "Ch5" | (chapter == "Ch3" & as.numeric(site_id) %in% 73:84))
+}
+
+koura_summary <- combined_fish |>
+  rotoiti_filter() |>
+  filter(species == "Kōura") |>
+  group_by(net_bait) |>
+  summarise(total_koura = sum(amount, na.rm = TRUE))
+
+net_summary <- combined_fish |>
+  rotoiti_filter() |>
+  distinct(net_bait, site_id, monitoring_id, amount_nets) |>
+  group_by(net_bait) |>
+  summarise(total_nets = sum(amount_nets, na.rm = TRUE))
+
+left_join(net_summary, koura_summary, by = "net_bait") |>
+  mutate(cpue = total_koura / total_nets)
+
+
+
+
+
+
+# Sex and size comparison between net types 
+koura_data <- combined_fish |>
+  #rotoiti_filter() |>
+  filter(species == "Kōura", !is.na(sex), sex != "Unknown")
+
+# --- Sex bias: proportion male/female per net type ---
+sex_counts <- koura_data |>
+  group_by(net_bait, sex) |>
+  summarise(n = sum(amount, na.rm = TRUE), .groups = "drop")
+
+sex_counts
+
+# Chi-squared test: does sex ratio differ between net types?
+sex_matrix <- sex_counts |>
+  tidyr::pivot_wider(names_from = sex, values_from = n, values_fill = 0) |>
+  tibble::column_to_rownames("net_bait") |>
+  as.matrix()
+
+chisq.test(sex_matrix)
+
+ggplot(koura_data, aes(net_type, length_mm, fill = net_bait)) +
+  geom_boxplot() 
+
+# Wilcoxon test: does size differ between net types?
+size_trout   <- koura_data |> filter(net_bait == "Box + trout")   |> pull(length_mm)
+size_catfish <- koura_data |> filter(net_bait == "Box + catfish") |> pull(length_mm)
+
+wilcox.test(size_trout, size_catfish)
+
+
+```
+
+
+
+```{r}
+
+ggplot(koura_data, aes(date_time_out, berried)) +
+  geom_point() 
+
+
+repro <- koura_data |>
+  filter(sex == "F") |>
+  mutate(
+    date       = as.Date(date_time_out),
+    month      = lubridate::floor_date(date, "month"),
+    has_eggs   = !is.na(berried) & berried > 0,
+    has_youngs = !is.na(youngs)  & youngs  > 0
+  )
+
+# Monthly proportion of females in each reproductive stage
+monthly_repro <- repro |>
+  group_by(month) |>
+  summarise(
+    n            = n(),
+    pct_eggs     = mean(has_eggs)   * 100,
+    pct_youngs   = mean(has_youngs) * 100,
+    .groups = "drop"
+  ) |>
+  tidyr::pivot_longer(c(pct_eggs, pct_youngs),
+                      names_to  = "stage",
+                      values_to = "pct") |>
+  mutate(stage = dplyr::recode(stage,
+    pct_eggs   = "Eggs (berried)",
+    pct_youngs = "Young carries"))
+
+ggplot(monthly_repro, aes(x = month, y = pct, colour = stage)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(aes(size = n)) +
+  scale_size_continuous(range = c(2, 6), guide = "none") +
+  labs(x = NULL, y = "% of females caught", colour = NULL)
 
 ```

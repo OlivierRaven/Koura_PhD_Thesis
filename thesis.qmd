@@ -20,6 +20,7 @@ theme_update(
 
 {{< include index.qmd >}}
 {{< include title_page.qmd >}}
+{{< include propositions.qmd >}}
 {{< include abstract.qmd >}}
 {{< include acknowledgements.qmd >}}
 {{< include 01_general_intro/index.qmd >}}

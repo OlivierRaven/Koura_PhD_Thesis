@@ -1,10 +1,21 @@
 # Abstract {.unnumbered}
 
-Aotearoa New Zealand has a rich history of cultural practices, including the harvest and trade of native freshwater crayfish (*Paranephrops planifrons*, kōura) by Māori communities. Over the past two decades, kōura populations have declined by up to 91% in Lake Rotoiti (North Island, New Zealand), making traditional harvesting unviable. This decline is likely driven by multiple stressors, including impaired water quality, intensified lake stratification, and the spread of invasive fish and aquatic weeds. Since 2016, the non-native brown bullhead catfish (*Ameiurus nebulosus*) has become established in the lake and preys on kōura. These threats indicate that restoring habitat is necessary for kōura population recovery.
+Native freshwater crayfish (*Paranephrops planifrons*, hereafter kōura) are a key mahinga kai (cultural harvest) species in Aotearoa New Zealand with a rich history of harvest and trade by iwi (Māori communities). Over the past two decades however, kōura populations have declined by up to 90% in Lake Rotoiti (North Island, New Zealand), making traditional harvesting increasingly unviable. This decline is driven by multiple stressors, including impaired water quality, intensified lake stratification, and the spread of invasive fish and aquatic weeds. Since around 2016, the non-native brown bullhead catfish (*Ameiurus nebulosus*) has become established in the lake and preys on kōura, compounding upon the effects of other stressors. These threats indicate that restoring habitat is necessary for kōura population recovery.
 
-To investigate the mechanisms behind kōura decline and test potential restoration tools, four studies were conducted: a behavioural experiment examining refuge use in response to native and novel predators, a multi-lake field survey of shoreline habitat associations, a mesocosm study testing habitat structure configurations and materials, and a field deployment of stone pile habitats in Lake Rotoiti.
+I conducted four complementary studies to investigate and test potential restoration tools: a behavioural controlled laboratory experiment examining refuge use in response to native and novel predators, a multi-lake field survey of shoreline habitat associations, a mesocosm study testing habitat structure configurations and materials, and a field deployment of stone pile habitats in Lake Rotoiti.
 
-The results showed that kōura reacted with greater refuge use in the presence of the novel catfish than when exposed to native eels. Complex shoreline habitats consisting of rocks and riparian vegetation were best predictors of kōura presence. When hole sizes were held constant, kōura showed no preference between wood or stone, but more stable structures were preferred when rigidity differed, and configurations providing refugia across body sizes were best suited for recovery. Stone piles deployed in Lake Rotoiti attracted kōura at densities more comparable to natural rocky substrates than bare control sites, though differences over the 18-month monitoring period were not yet statistically significant. Extended monitoring is expected to reveal stronger population-level responses as kōura progressively colonise the structures. 
+The results showed that: 
+**Lab experiment** 
+kōura reacted with greater refuge use in the presence of the novel catfish than when exposed to the native predator, longfin eel (*Anguilla dieffenbachii*). 
 
-Together, these findings suggest that stone pile deployment is a promising restoration tool that could support kōura population recovery in degraded lake environments and in time, help restore both the ecological function and the customary harvest practices that kōura populations once sustained.
+**Field survey**
+Complex shoreline habitats consisting of rocks and riparian vegetation were best predictors of kōura presence.
+
+**Mesocosm experiment** 
+When hole sizes were held constant, kōura showed no preference between wood or stone, but more stable heavier structures were preferred, and configurations providing refugia across body sizes showed broadest appeal across size classes of kōura.
+
+**Field experiment**
+Stone piles deployed in Lake Rotoiti attracted kōura at densities more comparable to natural rocky substrates, with differences relative to bare control sites not yet reaching statistical significance after 18 months, suggesting that longer monitoring periods are needed to detect population-level responses.
+
+Together, these findings suggest that stone pile deployment is a promising restoration tool that could support kōura population recovery in degraded lake environments, and in time, help restore both the ecological function and the customary harvest practices that kōura populations once sustained.
 

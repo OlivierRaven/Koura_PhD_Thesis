@@ -3,3 +3,10 @@
 
 \usepackage[pagewise]{lineno} % for line numbers
 \linenumbers                 % enable line numbers
+
+\usepackage{lscape}          % for landscape tables on portrait pages
+
+% kableExtra loads pdflscape which sets /Rotate 90 on PDF pages, making them appear
+% horizontal in the viewer. Reset to /Rotate 0 just before each page ships so pages
+% stay portrait while table content remains rotated 90° by lscape on the page.
+\AddToHook{shipout/before}{\pdfpageattr{/Rotate 0}}

@@ -384,7 +384,7 @@ koura_map <- ggplot() +
 
 catfish_map <- ggplot() +
   geom_sf(data = nz_map, fill = "grey92", colour = "grey60", linewidth = 0.3) +
-  geom_sf(data = nzffd_catfish_sf, colour = "#d73027", size = 0.7, alpha = 0.5, shape = 16) +
+  geom_sf(data = nzffd_catfish_sf, colour = "#d73027", size = 1.5, alpha = 0.5, shape = 16) +
   coord_sf(xlim = nz_main_xlim, ylim = nz_main_ylim, crs = 4326) +
   labs(
     title    = "Brown bullhead catfish",
@@ -402,8 +402,7 @@ nz_distribution <- koura_map + catfish_map +
 
 nz_distribution
 
-ggsave(file.path(out_dir, "fig-nz-distribution-maps.png"), nz_distribution,
-       width = 12, height = 9, dpi = 300)
+ggsave(file.path(out_dir, "fig-nz-distribution-maps.png"), nz_distribution, width = 12, height = 9, dpi = 300)
 ```
 
 # Run LERNZmp (AEME)

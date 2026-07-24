@@ -13,6 +13,7 @@ execute:
 
 filters:
   - filters/strip-chapter-only.lua
+  - filters/suppress-supplementary.lua
 
 bibliography: references/references.bib
 csl: references/springer-basic-author-date.csl
@@ -67,6 +68,7 @@ format:
         \usepackage{eso-pic}
         \usepackage{tikz}
         \usepackage{pdfpages}
+        \usepackage{enumitem}
         \definecolor{thesiscream}{RGB}{255, 252, 240}
         \definecolor{thesissand}{RGB}{232, 212, 162}
         \pagecolor{thesiscream}

@@ -1,5 +1,13 @@
 # Appendices {.unnumbered}
 
+## Supplementary Information {.unnumbered}
+
+{{< include 02_koura_fear/supplementary.qmd >}}
+
+{{< include 03_koura_shoreline_habitats/supplementary.qmd >}}
+
+{{< include 05_stone_piles_rotoiti/supplementary.qmd >}}
+
 ## Co-Authorship Forms {.unnumbered}
 
 ```{=latex}
