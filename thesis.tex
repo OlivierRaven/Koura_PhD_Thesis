@@ -151,7 +151,8 @@
 \usepackage{float}
 \usepackage{colortbl}
 \usepackage{pdflscape}
-\usepackage{tabu}
+\usepackage{tabularx}
+\usepackage{xltabular}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
 \usepackage[normalem]{ulem}
@@ -3912,7 +3913,7 @@ stone pile construction and after-construction trajectory on kōura and
 catfish occupancy, abundance, and biomass, and the third section
 assessed whether stone pile sites converged toward reference sites and
 if reference sites remained stable over time. All analysis was conducted
-in R (version 4.5.2; R Core Team (2025)) using the glmmTMB and emmeans
+in R (version 4.6.1; R Core Team (2025)) using the glmmTMB and emmeans
 packages (Brooks et al. 2017; Lenth and Piaskowski 2017).
 
 Site variation before stone pile construction was assessed using paired
@@ -3980,11 +3981,12 @@ before/after period contrast.
 
 \section{Results}\label{results-3}
 
+\emph{Baseline equivalence} Pre-construction baseline model showed no
+significant difference between stone pile sites and
+
 Figure~\ref{fig-koura-trends}
 
 Figure~\ref{fig-forest-plot}
-
-\emph{Baseline equivalence}
 
 \emph{Construction impact relative to control sites}
 

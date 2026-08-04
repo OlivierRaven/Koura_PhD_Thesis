@@ -17,17 +17,14 @@ execute:
 #| label: setup
 #| include: false
 
-packages <- c("readr", "readxl", "tidyverse", "dplyr", "ggplot2", "patchwork")
-
-quiet_load <- function(pkg) {
-  if (!requireNamespace(pkg, quietly = TRUE))
-    suppressWarnings(suppressMessages(install.packages(pkg, dependencies = TRUE)))
-  suppressPackageStartupMessages(require(pkg, character.only = TRUE, quietly = TRUE))
-  invisible(TRUE)
-}
-
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-invisible(lapply(packages, quiet_load))
+suppressPackageStartupMessages({
+  library(readr)
+  library(readxl)
+  library(tidyverse)
+  library(dplyr)
+  library(ggplot2)
+  library(patchwork)
+})
 
 # Resolve chapter directory — works under knitr render, RStudio interactive, and CLI
 chapter_dir <- local({

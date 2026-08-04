@@ -54,17 +54,25 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 Sys.setenv(LERNZMP_API = "lernzmp_lakes")
 
-packages <- c("nzffdr", "sf", "broom", "rLakeAnalyzer", "patchwork", "gganimate", "terra", "pak", "tmap", "tidyverse", "readxl", "ggspatial", "cowplot", "ggrepel", "maptiles", "tidyterra", "osmdata")
-
-quiet_load <- function(pkg) {
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    suppressWarnings(suppressMessages(install.packages(pkg, dependencies = TRUE)))
-  }
-  suppressPackageStartupMessages(require(pkg, character.only = TRUE, quietly = TRUE))
-  invisible(TRUE)
-}
-
-invisible(lapply(packages, quiet_load))
+suppressPackageStartupMessages({
+  library(nzffdr)
+  library(sf)
+  library(broom)
+  library(rLakeAnalyzer)
+  library(patchwork)
+  library(gganimate)
+  library(terra)
+  library(pak)
+  library(tmap)
+  library(tidyverse)
+  library(readxl)
+  library(ggspatial)
+  library(cowplot)
+  library(ggrepel)
+  library(maptiles)
+  library(tidyterra)
+  library(osmdata)
+})
 
 if (!requireNamespace("AEME", quietly = TRUE)) {
   pak::pak("limnotrack/AEME")
