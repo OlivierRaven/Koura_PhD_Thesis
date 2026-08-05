@@ -137,6 +137,181 @@ if (knitr::is_latex_output()) {
 
 ```
 
+# Global crayfish distribution
+```{r}
+#| label: fig-crayfish-families
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "100%"
+#| fig-cap: "Global native distribution of freshwater crayfish families, following @Crandall2017. Adapted from: [@Fetzner2019]."
+
+.bg_map <- if (knitr::is_latex_output()) "#FFFCF0" else "white"
+
+world_sf <- if (requireNamespace("rnaturalearth", quietly = TRUE)) {
+  rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+} else {
+  sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) |>
+    sf::st_wrap_dateline(options = c("WRAPDATELINE=YES"))
+}
+
+make_poly <- function(mat) {
+  ring <- rbind(mat, mat[1L, ])
+  p <- sf::st_sfc(sf::st_polygon(list(ring)), crs = 4326)
+  sf::st_make_valid(p)
+}
+
+# ── Astacidae ─────────────────────────────────────────────────────────────────
+# Europe + western Russia + Turkey/Caucasus; northern cap ~65°N (Arctic Circle)
+astac_eu <- make_poly(matrix(c(
+   -9,  36,  -10, 44,   -8, 52,   -4, 57,    5, 61,   15, 64,
+   25,  65,   35, 64,   42, 62,   55, 60,   60, 54,   60, 50,
+   54,  44,   48, 40,   42, 36,   34, 36,   28, 36,   22, 37,
+   15,  37,    9, 37,    2, 36,   -5, 36
+), ncol = 2, byrow = TRUE))
+
+# Pacific Northwest North America: Pacific drainages CA → BC + inland basins
+astac_na <- make_poly(matrix(c(
+  -124, 34,  -118, 34,  -113, 37,  -110, 42,
+  -108, 48,  -112, 53,  -120, 52,  -124, 48
+), ncol = 2, byrow = TRUE))
+
+# ── Cambaridae ────────────────────────────────────────────────────────────────
+# Eastern North America + Mexico + Central America: more organic, follows
+# Rocky Mountain front west, boreal forest north, Atlantic coast east
+camb <- make_poly(matrix(c(
+  -108, 47,  -104, 51,  -100, 56,  -92, 57,
+   -82, 56,   -74, 47,   -67, 46,  -66, 42,
+   -70, 38,   -74, 34,   -80, 25,  -84, 20,
+   -87, 15,   -92, 14,   -90, 18,  -94, 20,
+  -100, 22,  -104, 28,  -108, 42
+), ncol = 2, byrow = TRUE))
+
+# ── Cambaroididae ─────────────────────────────────────────────────────────────
+# NE China + Russian Far East + Korea + Japan (blob spans Sea of Japan)
+cambaroid <- make_poly(matrix(c(
+  120, 52,  126, 56,  132, 56,  142, 57,
+  148, 48,  148, 44,  145, 43,  141, 36,
+  134, 31,  130, 31,  126, 33,  124, 37,
+  122, 40,  120, 46
+), ncol = 2, byrow = TRUE))
+
+# ── Parastacidae ─────────────────────────────────────────────────────────────
+# Australia (mainland)
+parastac_aus <- make_poly(matrix(c(
+  114, -22,  113, -32,  115, -35,  124, -34,
+  132, -32,  138, -36,  149, -39,  154, -40,
+  154, -26,  148, -18,  138, -12,  130, -12,
+  122, -18
+), ncol = 2, byrow = TRUE))
+
+# Tasmania (separate island)
+parastac_tas <- make_poly(matrix(c(
+  144, -40,  148, -40,  149, -42,  147, -44,
+  144, -43,  143, -41
+), ncol = 2, byrow = TRUE))
+
+# New Zealand — South Island
+parastac_nz_s <- make_poly(matrix(c(
+  166, -46,  170, -46,  173, -43,  172, -40,
+  169, -43,  166, -45
+), ncol = 2, byrow = TRUE))
+
+# New Zealand — North Island
+parastac_nz_n <- make_poly(matrix(c(
+  174, -41,  178, -38,  178, -36,  174, -37,
+  172, -39,  173, -41
+), ncol = 2, byrow = TRUE))
+
+# South America — thin Chile/Patagonia coastal strip (western Andes)
+parastac_chile <- make_poly(matrix(c(
+  -70, -35,  -67, -35,  -65, -44,  -66, -54,
+  -69, -56,  -73, -53,  -73, -42,  -72, -36
+), ncol = 2, byrow = TRUE))
+
+# South America — small eastern blob (S Brazil/Uruguay/NE Argentina)
+parastac_se_sa <- make_poly(matrix(c(
+  -50, -28,  -54, -27,  -58, -32,  -62, -36,
+  -58, -38,  -52, -33,  -49, -30
+), ncol = 2, byrow = TRUE))
+
+# New Guinea (Papua)
+parastac_ng <- make_poly(matrix(c(
+  131, -1,  133, -6,  138, -8,  144, -8,
+  149, -6,  149, -4,  140, -2,  132, -1
+), ncol = 2, byrow = TRUE))
+
+# Madagascar — eastern highlands only (Astacoides spp.)
+parastac_mad <- make_poly(matrix(c(
+  47, -13,  50, -15,  51, -18,  50, -23,
+  48, -25,  47, -21,  47, -15
+), ncol = 2, byrow = TRUE))
+
+distributions <- dplyr::bind_rows(
+  sf::st_sf(family = "Astacidae",     geometry = astac_eu),
+  sf::st_sf(family = "Astacidae",     geometry = astac_na),
+  sf::st_sf(family = "Cambaridae",    geometry = camb),
+  sf::st_sf(family = "Cambaroididae", geometry = cambaroid),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_aus),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_tas),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_nz_s),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_nz_n),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_chile),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_se_sa),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_ng),
+  sf::st_sf(family = "Parastacidae",  geometry = parastac_mad)
+)
+# Clip polygons to land so ocean bodies (Gulf of Mexico, Sea of Japan, etc.)
+# are not coloured. st_transform(4326) normalises the CRS spec on both objects
+# so they match; sf_use_s2(FALSE) avoids s2 duplicate-edge errors.
+sf::sf_use_s2(FALSE)
+.land <- sf::st_transform(world_sf, 4326) |>
+  sf::st_make_valid() |>
+  sf::st_union() |>
+  sf::st_make_valid()
+distributions <- sf::st_transform(distributions, 4326) |>
+  sf::st_make_valid() |>
+  sf::st_intersection(.land) |>
+  sf::st_make_valid()
+sf::sf_use_s2(TRUE)
+distributions$family <- factor(distributions$family,
+  levels = c("Astacidae", "Cambaridae", "Cambaroididae", "Parastacidae"))
+rm(.land)
+
+family_cols <- c(
+  "Astacidae"     = "#2166AC",
+  "Cambaridae"    = "#1A9641",
+  "Cambaroididae" = "#D95F02",
+  "Parastacidae"  = "#C62A6E"
+)
+
+p_crayfish_map <- ggplot() +
+  geom_sf(data = world_sf, fill = "grey92", colour = "grey50",
+          linewidth = 0.15, na.rm = TRUE) +
+  geom_sf(data = distributions, aes(fill = family),
+          alpha = 0.75, colour = "grey20", linewidth = 0.25) +
+  scale_fill_manual(
+    values = family_cols, name = NULL,
+    labels = expression(italic(Astacidae), italic(Cambaridae),
+                        italic(Cambaroididae), italic(Parastacidae))
+  ) +
+  coord_sf(crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84") +
+  theme_void(base_size = 10) +
+  theme(
+    legend.position   = c(0.13, 0.22),
+    legend.text       = element_text(size = 9),
+    legend.key.size   = unit(0.5, "cm"),
+    legend.background = element_rect(fill = alpha("white", 0.85),
+                                     colour = "grey60", linewidth = 0.3),
+    legend.margin     = margin(4, 8, 4, 8),
+    plot.background   = element_rect(fill = .bg_map, colour = NA)
+  )
+
+ggsave(file.path(out_dir, "fig-crayfish-families.png"), p_crayfish_map,
+       width = 8, height = 4.5, dpi = 300, bg = .bg_map)
+p_crayfish_map
+```
+
 # Study lakes overview map
 ```{r}
 #| label: fig-study-lakes-map

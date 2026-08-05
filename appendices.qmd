@@ -1,14 +1,29 @@
 # Appendices {.unnumbered}
 
-## Supplementary Information {.unnumbered}
+```{=latex}
+\markboth{Appendices}{Appendices}
+% Supplementary numbering: S1, S2, … reset per chapter
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+```
 
 {{< include 02_koura_fear/supplementary.qmd >}}
 
+```{=latex}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+```
+
 {{< include 03_koura_shoreline_habitats/supplementary.qmd >}}
 
-{{< include 05_stone_piles_rotoiti/supplementary.qmd >}}
+```{=latex}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+```
 
-## Co-Authorship Forms {.unnumbered}
+{{< include 05_stone_piles_rotoiti/supplementary.qmd >}}
 
 ```{=latex}
 \clearpage

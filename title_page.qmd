@@ -27,7 +27,7 @@ by\\[0.5cm]
 
 \vfill
 
-\includegraphics[width=5.5cm]{images/Waik_Word_RGB_V-New.jpg}
+\includegraphics[width=5.5cm]{images/Waikato_logo.png}
 
 \vspace{0.8cm}
 
@@ -64,7 +64,7 @@ The University of Waikato
 
 &nbsp;
 
-![](images/Waik_Word_RGB_V-New.jpg){width=6cm}
+![](images/Waikato_logo.png){width=6cm}
 
 &nbsp;
 
@@ -92,7 +92,7 @@ by<br>
 <strong>Olivier V. Raven</strong>
 </p>
 
-<img src="images/Waik_Word_RGB_V-New.jpg" style="width:210px; margin:0 0 2.5rem;">
+<img src="images/Waikato_logo.png" style="width:210px; margin:0 0 2.5rem;">
 
 <p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; margin:0;">2026</p>
 
