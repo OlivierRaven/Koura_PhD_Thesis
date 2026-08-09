@@ -10,24 +10,18 @@
 \providecommand{\thechapter}{7}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  % Image clipped between top and bottom bars — width only, aspect ratio preserved
-  \begin{scope}
-    \clip ([yshift=-7cm]current page.north west)
-          rectangle ([yshift=3.5cm]current page.south east);
-    \node[inner sep=0pt, anchor=center]
-      at ([yshift=-3.5cm]current page.center)
-      {\includegraphics[width=\paperwidth]{images/ch7_cover.jpg}};
-  \end{scope}
-  % Top black bar
+  \node[inner sep=0pt, anchor=north]
+    at ([yshift=-5.5cm]current page.north)
+    {\includegraphics[height=\dimexpr\paperheight-5.5cm\relax]{images/ch7_cover.jpg}};
   \fill[black]
-    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
+    (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
   \node[color=thesissand, align=left,
         font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
-    at ([xshift=1.5cm, yshift=-1.5cm]current page.north west)
+    at ([xshift=1.5cm, yshift=-1.3cm]current page.north west)
     {Chapter \thechapter};
   \node[color=white, text width=0.85\paperwidth, align=left,
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
-    at ([xshift=1.5cm, yshift=-4cm]current page.north west)
+    at ([xshift=1.5cm, yshift=-3.5cm]current page.north west)
     {General Conclusion};
 \end{tikzpicture}
 \null

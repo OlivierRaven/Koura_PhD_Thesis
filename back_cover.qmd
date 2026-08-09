@@ -1,0 +1,17 @@
+```{=latex}
+\clearpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[black] (current page.north west) rectangle ([yshift=-6cm]current page.north east);
+  \fill[black] ([yshift=8cm]current page.south west) rectangle (current page.south east);
+  \begin{scope}
+    \clip ([yshift=-6cm]current page.north west)
+          rectangle ([yshift=8cm]current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-6cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/thesis_back_cover.jpg}};
+  \end{scope}
+\end{tikzpicture}
+\null
+\clearpage
+```

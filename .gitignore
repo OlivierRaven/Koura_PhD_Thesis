@@ -9,8 +9,10 @@
 *.JPG
 !images/ch*.jpg
 !images/thesis_cover.jpg
+!images/thesis_back_cover.jpg
 !docs/images/ch*.jpg
 !docs/images/thesis_cover.jpg
+!docs/images/thesis_back_cover.jpg
 !docs/*/images/ch*.jpg
 *.jpeg
 *.JPEG

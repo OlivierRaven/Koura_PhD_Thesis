@@ -2,7 +2,7 @@
 ```{=latex}
 \clearpage
 \thispagestyle{empty}
-\begin{minipage}[t][0.96\textheight][t]{\textwidth}
+\begin{minipage}[t][0.96\textheight][s]{\textwidth}
 
 \vspace{0.6cm}
 
@@ -15,7 +15,7 @@
 \begin{enumerate}[label={\bfseries\arabic*.}]
   \setlength{\itemsep}{1.2em}
 
-  \item Structural complexity is essential for the recovery of kōura populations, when 
+  \item Structural complexity is essential for the recovery of kōura populations, when
         threatened by non native predator.\\
         \hspace*{1em}{\small\itshape (this thesis)}
 
@@ -26,22 +26,17 @@
   \item Rock pile deployment is a viable and scalable tool for freshwater crayfish
         restoration in lakes, but success depends on location and design, not just presence.\\
         \hspace*{1em}{\small\itshape (this thesis)}
-        
-  \item Freshwater crayfish play crucial roles in aquatic ecosystems but are often neglected.
 
-  \item Scientists write, review, and edit research for free, then pay to publish
-        it and pay again to read it, the academic publishing industry is the
-        most successful business scam in modern knowledge production.
+  \item Freshwater crayfish play crucial roles in aquatic ecosystems but are often overlooked.
 
-  \item Scientific knowledge is a public good. It should be openly accessible, 
-        transparently evaluated, and preserved in a way that keeps it useful and verifiable 
+  \item The current methods of publishing and reviewing scientific research are locked 
+        into historical practices that are no longer suitable for today's world.
+
+  \item Scientific knowledge is a public good. It should be openly accessible,
+        transparently evaluated, and preserved in a way that keeps it useful and verifiable
         not just today, but across generations.
 
-
-
 \end{enumerate}
-
-\end{minipage}
 
 \vfill
 
@@ -54,6 +49,8 @@ Propositions belonging to the thesis, entitled\\[0.3em]
 Olivier V. Raven\\
 The University of Waikato, 2026
 }
+
+\end{minipage}
 \clearpage
 ```
 :::
@@ -70,6 +67,6 @@ The University of Waikato, 2026
 **On science and publishing**
 
 4. Freshwater crayfish play crucial roles in aquatic ecosystems but are often neglected.
-5. Scientists write, review, and edit research for free, then pay to publish it and pay again to read it, the academic publishing industry is the most successful business scam in modern knowledge production.
+5. The current methods of publishing and reviewing scientific research are locked into historical practices that are no longer suitable for today's world.
 6. Scientific knowledge is a public good. It should be openly accessible, transparently evaluated, and preserved in a way that keeps it useful and verifiable not just today, but across generations.
 :::

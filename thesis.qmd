@@ -33,3 +33,4 @@ theme_update(
 {{< include 07_general_conclusion/index.qmd >}}
 {{< include references.qmd >}}
 {{< include appendices.qmd >}}
+{{< include back_cover.qmd >}}

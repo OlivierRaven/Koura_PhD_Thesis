@@ -624,9 +624,9 @@ if (file.exists(hypsograph_path) && file.exists(water_quality_path)) {
       aeme <- aemetools::get_aeme(id = lake_id, api_key = "lernzmp_lakes")
       if (lid == "LID40188") {
         shoreline    <- aemetools::get_lake_shape(id = 40188, api_key = "lernzmp_lakes")
-        contours     <- aemetools::lt_fetch(
+        contours     <- ltapi::lt_fetch(
           "lake_contours",
-          filter = aemetools::lt_filter(lernzmp_id == "LID40188")
+          filter = ltapi::lt_filter(lernzmp_id == "LID40188")
         ) |>
           dplyr::mutate(depth = depth_m)
         bathy_raster <- rasterise_bathy(shoreline = shoreline, contours = contours,
@@ -1112,7 +1112,7 @@ if (file.exists(bathy_rasters_rds)) {
   # session it silently fell back to stale/wrong data instead of erroring). Side-step it
   # entirely — fetch every lake's contours once, unfiltered, then filter locally per lake
   # with plain dplyr::filter(), which we know works correctly everywhere else in this script.
-  all_contours <- aemetools::lt_fetch("lake_contours", limit = 50000)
+  all_contours <- ltapi::lt_fetch("lake_contours", limit = 50000)
 
   # Lakes with no contour data on the API fall back to these local raster snapshots
   local_bathy_files <- c(
@@ -1236,6 +1236,78 @@ if (file.exists(buoy_raw_rds)) {
   if (nrow(CTD_buoy) == 0) stop("No buoy CTD data could be fetched for any lake")
 
   saveRDS(CTD_buoy, buoy_raw_rds)
+
+}
+```
+
+# Data prep — buoy meteorological data
+```{r}
+#| label: met-fetch
+
+met_raw_rds <- file.path(der_data_dir, "met_raw_data.rds")
+
+if (file.exists(met_raw_rds)) {
+
+  met_buoy <- readRDS(met_raw_rds)
+  message("Met data loaded from cache: ", nrow(met_buoy), " rows, lakes: ",
+          paste(unique(met_buoy$Lake), collapse = ", "))
+
+} else {
+
+  # Print schema so we know what columns are available
+  met_schema <- tryCatch(
+    ltapi::lt_schema("met_data"),
+    error = function(e) { message("Could not fetch met_data schema: ", conditionMessage(e)); NULL }
+  )
+  if (!is.null(met_schema)) {
+    message("met_data schema:")
+    print(met_schema)
+  }
+
+  # First discover ALL site_ids in the table — the 100-row probe misses sites whose
+  # data starts later in the table. Fetch only the site_id column with a high limit.
+  all_site_ids <- tryCatch({
+    ids <- ltapi::lt_fetch("met_data", select = "site_id", limit = 5000000L)
+    unique(ids$site_id)
+  }, error = function(e) { message("site_id discovery failed: ", conditionMessage(e)); character(0) })
+  message("All site_ids in met_data: ", paste(all_site_ids, collapse = ", "))
+
+  # Fetch all met data in one call then filter to BOP lakes in R.
+  # Match against discovered site_ids (may differ in case/spacing from lake names).
+  bop_lakes_title <- c("Rotorua", "Rotoiti", "Rotoehu", "Rotoma", "Okareka", "Okaro",
+                       "Tikitapu", "Rotokakahi", "Rerewhakaaitu", "Okataina", "Tarawera", "Rotomahana")
+  bop_site_ids <- all_site_ids[tolower(all_site_ids) %in% tolower(bop_lakes_title)]
+  message("BOP site_ids to fetch: ", paste(bop_site_ids, collapse = ", "))
+
+  met_all <- tryCatch(
+    ltapi::lt_fetch("met_data", limit = 5000000L),
+    error = function(e) { message("met_data fetch failed: ", conditionMessage(e)); NULL }
+  )
+
+  if (!is.null(met_all) && nrow(met_all) > 0) {
+    message("Total rows in met_data: ", nrow(met_all))
+    if ("parameter" %in% names(met_all))
+      message("Parameters: ", paste(unique(met_all$parameter), collapse = ", "))
+  }
+
+  met_buoy <- if (!is.null(met_all) && nrow(met_all) > 0)
+    dplyr::filter(met_all, site_id %in% bop_site_ids)
+  else
+    data.frame()
+
+  if (nrow(met_buoy) == 0) {
+    message("No meteorological data returned for any lake.")
+  } else {
+    met_buoy <- met_buoy |>
+      dplyr::mutate(
+        datetime = as.POSIXct(datetime, tz = "UTC"),
+        Lake     = factor(recode_lake_names(site_id), levels = lake_order)
+      )
+    message("Total met rows saved: ", nrow(met_buoy))
+    message("Lakes with met data: ", paste(unique(met_buoy$Lake), collapse = ", "))
+    message("Parameters: ", paste(unique(met_buoy$parameter), collapse = ", "))
+    saveRDS(met_buoy, met_raw_rds)
+  }
 
 }
 ```
@@ -1585,7 +1657,7 @@ p_rotoiti_trend <- ggplot(rotoiti_annual_avg, aes(Year, Annual_Mean)) +
   geom_smooth(method = "lm", se = TRUE, colour = "#2171b5", fill = "#2171b5", alpha = 0.15) +
   annotate("text", x = -Inf, y = Inf, label = rotoiti_slope_lbl,
            hjust = -0.15, vjust = 1.5, size = 3.5, colour = "grey30") +
-  labs(x = "Year", y = "Annual mean livable habitat (%)")
+  labs(x = "Year", y = "Annual mean liveable habitat (%)")
 
 ggsave(file.path(out_dir, "fig-rotoiti-trend.png"),
        p_rotoiti_trend, width = 6, height = 4, dpi = 300)
@@ -1598,7 +1670,7 @@ p_rotoiti_trend
 #| label: livable-trend
 #| fig-width: 8
 #| fig-height: 8
-#| fig-cap: Long-term trends in livable habitat across Rotorua Te Arawa lakes (Cast + Buoy combined)
+#| fig-cap: Long-term trends in liveable habitat across Rotorua Te Arawa lakes (Cast + Buoy combined)
 
 # Annual mean across Cast + Buoy CTD combined (pooled the same way as the summary figures)
 annual_livable <- livable_habitat_all |>
@@ -1627,7 +1699,7 @@ trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
     x = -Inf, y = Inf, hjust = -0.1, vjust = 1.4, size = 3, colour = "grey30"
   ) +
   facet_wrap(~ Lake) +
-  labs(x = "Year", y = "Annual mean livable habitat (%)")
+  labs(x = "Year", y = "Annual mean liveable habitat (%)")
 
 ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 8, dpi = 300)
 
@@ -1671,7 +1743,7 @@ livable_habitat_summary_plot_combined <- ggplot() +
   geom_line(data = yearly_mean_all,
             aes(Year, Yearly_Mean), col = "black", linewidth = 1) +
   facet_wrap(~ Lake) +
-  labs(x = "Year", y = "Livable habitat (%)", col = "Season")
+  labs(x = "Year", y = "Liveable habitat (%)", col = "Season")
 
 ggsave(file.path(out_dir, "fig-livable-habitat-summary.png"), livable_habitat_summary_plot_combined, width = 8, height = 8, dpi = 300)
 
