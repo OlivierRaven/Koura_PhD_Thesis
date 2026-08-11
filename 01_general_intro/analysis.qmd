@@ -33,7 +33,7 @@ DO_THRESHOLD   <- 5   # mg/L — dissolved oxygen must be >= this value
 TEMP_THRESHOLD <- 21  # °C   — temperature must be <= this value
 ```
 
-# Load packages
+## Load packages
 ```{r}
 #| label: setup
 #| include: false
@@ -91,7 +91,7 @@ suppressPackageStartupMessages(library(bathytools))
 
 ```
 
-# Set paths and load the bathymetry data
+## Set paths and load the bathymetry data
 ```{r}
 #| label: setup-paths
 
@@ -137,7 +137,8 @@ if (knitr::is_latex_output()) {
 
 ```
 
-# Global crayfish distribution
+# Maps building
+## Global crayfish distribution
 ```{r}
 #| label: fig-crayfish-families
 #| echo: false
@@ -312,7 +313,7 @@ ggsave(file.path(out_dir, "fig-crayfish-families.png"), p_crayfish_map,
 p_crayfish_map
 ```
 
-# Study lakes overview map
+## Study lakes overview map
 ```{r}
 #| label: fig-study-lakes-map
 #| echo: false
@@ -511,7 +512,7 @@ ggsave(
 p_combined
 ```
 
-# Kōura and catfish distribution maps (NZFFD)
+## Kōura and catfish distribution maps (NZFFD)
 ```{r}
 #| label: nz-distribution-maps
 #| fig-width: 12
@@ -686,14 +687,15 @@ if (file.exists(hypsograph_path) && file.exists(water_quality_path)) {
 
 ```
 
-# DATA PREP (functions)
+## DATA PREP (functions)
 ```{r}
 #---- Global settings / helpers ----
 # All 12 Rotorua Te Arawa lakes — fixed display/facet order
 lake_order <- c("Rotorua", "Rotoiti", "Rotoehu", "Rotomā",
                 "Ōkataina", "Ōkāreka", "Tikitapu", "Rotokākahi",
                 "Tarawera", "Rotomāhana", "Ōkaro", "Rerewhakaaitu")
-season_order <- c("Summer", "Autumn", "Winter", "Spring")
+season_order  <- c("Summer", "Autumn", "Winter", "Spring")
+season_colours <- c(Summer = "#D55E00", Autumn = "#E69F00", Winter = "#56B4E9", Spring = "#009E73")
 
 #Fetch buoy water-quality profiler data from the Limnotrack API
 get_lake_wqprofiler <- function(lake = "rotorua", type = "pro",
@@ -779,6 +781,7 @@ Area_depth_0 = first(.data[[area0_col]]),
 Day = first(Day),
 Month = first(Month),
 Year = first(Year),
+Season_Year = first(Season_Year),
 Season = first(Season),
 Non_livable_area = sum(.data[[arealayer_col]][!Livable_Habitat], na.rm = TRUE),
 Sum_Livable_Habitat_Area = Area_depth_0 - Non_livable_area,
@@ -806,7 +809,7 @@ calc_depth_ranges <- function(df,
       Lake = factor(Lake, levels = lake_order)
     ) |>
     add_season_nz(date_col = date_col) |>
-    group_by(Lake, Year, Season, .data[[date_col]], .data[[cast_col]]) |>
+    group_by(Lake, Season_Year, Season, .data[[date_col]], .data[[cast_col]]) |>
     summarise(
       cast_shallowest = min(.data[[depth_col]], na.rm = TRUE),
       cast_deepest    = max(.data[[depth_col]], na.rm = TRUE),
@@ -818,7 +821,7 @@ calc_depth_ranges <- function(df,
     )
 
   df1 |>
-    group_by(Lake, Year, Season) |>
+    group_by(Lake, Season_Year, Season) |>
     summarise(
       Date = as.Date(first(.data[[date_col]])),
       cast_shallowest = min(cast_shallowest, na.rm = TRUE),
@@ -838,7 +841,7 @@ calc_depth_ranges <- function(df,
 ```
 
 
-# DATA PREP (AEME profiles + hypsograph join)
+## DATA PREP (AEME profiles + hypsograph join)
 ```{r}
 hypsograph_data <- read_csv("data/derived/hypsograph_data.csv", show_col_types = FALSE)
 water_quality_data <- read_csv("data/derived/water_quality_data.csv", show_col_types = FALSE)
@@ -907,7 +910,7 @@ mutate(Lake = stringr::str_replace(Lake, "\\s*\\(.*\\)", ""))
 
 ```
 
-# Check hypsographs — verify depth profiles before building maps
+## Check hypsographs — verify depth profiles before building maps
 ```{r}
 #| label: fig-hypsograph-check
 #| fig-width: 12
@@ -1027,12 +1030,14 @@ DO_Tem_area_data$Season <- factor(DO_Tem_area_data$Season, levels = season_order
 TEMP_plot <- ggplot(DO_Tem_area_data, aes(Temp, Depth, col = Season, group = Cast_ID)) +
 geom_line() +
 geom_vline(xintercept = TEMP_THRESHOLD, linetype = "dashed") +
+scale_colour_manual(values = season_colours) +
 scale_y_reverse() +
 facet_wrap(~ Lake, scales = "free_y", ncol = 3)
 
 DO_plot <- ggplot(DO_Tem_area_data, aes(DO, Depth, col = Season, group = Cast_ID)) +
 geom_line() +
 geom_vline(xintercept = DO_THRESHOLD, linetype = "dashed") +
+scale_colour_manual(values = season_colours) +
 scale_y_reverse() +
 facet_wrap(~ Lake, scales = "free_y", ncol = 3)
 
@@ -1166,6 +1171,23 @@ if (file.exists(bathy_rasters_rds)) {
 
 bathy_points <- purrr::imap(bathy_rasters, bathy_to_points) |> bind_rows()
 
+# Remove bathy cells that fall on islands within lake boundaries (e.g. Mokoia Island in
+# Rotorua). abs() in fetch_bathy_raster strips depth sign, making island cells look like
+# shallow lake floor. Strategy: any nz_land feature whose centroid lies inside a lake
+# polygon is an in-lake island — drop bathy points that intersect it.
+{
+  bathy_pts_sf      <- sf::st_as_sf(bathy_points, coords = c("x", "y"), crs = 2193, remove = FALSE)
+  lake_union_sf     <- sf::st_union(all_lakes) |> sf::st_buffer(0)
+  nz_land_centroids <- sf::st_centroid(nz_land)
+  island_rows       <- sf::st_within(nz_land_centroids, lake_union_sf, sparse = FALSE)[, 1]
+  islands_in_lakes  <- nz_land[island_rows, ]
+  if (nrow(islands_in_lakes) > 0) {
+    on_island     <- sf::st_intersects(bathy_pts_sf, islands_in_lakes, sparse = FALSE)
+    bathy_points  <- bathy_points[rowSums(on_island) == 0, ]
+  }
+  rm(bathy_pts_sf, lake_union_sf, nz_land_centroids, island_rows, islands_in_lakes)
+}
+
 max_depth_lake <- bathy_points |>
 group_by(Lake) |>
 summarise(Max_depth = max(depth, na.rm = TRUE), .groups = "drop")
@@ -1189,7 +1211,7 @@ arrange(Year, Date, Cast_ID, Lake)
 ```
 
 
-# Data prep — buoy CTD data
+## Data prep — buoy CTD data
 ```{r}
 #| label: buoy-fetch
 
@@ -1240,7 +1262,7 @@ if (file.exists(buoy_raw_rds)) {
 }
 ```
 
-# Data prep — buoy meteorological data
+## Data prep — buoy meteorological data
 ```{r}
 #| label: met-fetch
 
@@ -1312,7 +1334,7 @@ if (file.exists(met_raw_rds)) {
 }
 ```
 
-# Data prep — livable habitat combined (Cast + Buoy CTD)
+## Data prep — livable habitat combined (Cast + Buoy CTD)
 ```{r}
 #| label: livable-combined-prep
 
@@ -1586,10 +1608,11 @@ livable_hist <- calc_livable_habitat_summary(
 ggplot(livable_hist, aes(Date, Livable_Habitat_Percentage, colour = Season)) +
   geom_point(size = 2) +
   geom_line(aes(group = Season)) +
+  scale_colour_manual(values = season_colours) +
   labs(y = "Livable habitat (%)", x = NULL)
 ```
 
-# Rotoiti — historical vs modern livable habitat
+## Rotoiti — historical vs modern livable habitat
 ```{r}
 #| label: fig-rotoiti-historical-combined
 #| fig-width: 8
@@ -1608,22 +1631,23 @@ rotoiti_combined <- dplyr::bind_rows(
   )
 
 rotoiti_seasonal <- rotoiti_combined |>
-  dplyr::group_by(Year, Season, Source) |>
+  dplyr::group_by(Season_Year, Season, Source) |>
   dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
 
 rotoiti_annual <- rotoiti_combined |>
-  dplyr::group_by(Year, Source) |>
+  dplyr::group_by(Season_Year, Source) |>
   dplyr::summarise(Annual_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
 
 # Average annual mean across sources per year (single black line)
 rotoiti_annual_avg <- rotoiti_annual |>
-  dplyr::group_by(Year) |>
+  dplyr::group_by(Season_Year) |>
   dplyr::summarise(Annual_Mean = mean(Annual_Mean, na.rm = TRUE), .groups = "drop")
 
 p_rotoiti_summary <- ggplot() +
-  geom_point(data = rotoiti_seasonal, aes(Year, Mean_Livable, colour = Season, shape = Source), size = 2.5) +
-  geom_line(data = rotoiti_seasonal, aes(Year, Mean_Livable, colour = Season, group = interaction(Season, Source), linetype = Source), linewidth = 0.7) +
-  geom_line(data = rotoiti_annual_avg, aes(Year, Annual_Mean), colour = "black", linewidth = 1) +
+  geom_point(data = rotoiti_seasonal, aes(Season_Year, Mean_Livable, colour = Season, shape = Source), size = 2.5) +
+  geom_line(data = rotoiti_seasonal, aes(Season_Year, Mean_Livable, colour = Season, group = interaction(Season, Source), linetype = Source), linewidth = 0.7) +
+  geom_line(data = rotoiti_annual_avg, aes(Season_Year, Annual_Mean), colour = "black", linewidth = 1) +
+  scale_colour_manual(values = season_colours) +
   scale_shape_manual(values  = c("Historical (1975–76)" = 17, "Cast" = 16, "CTD" = 15)) +
   scale_linetype_manual(values = c("Historical (1975–76)" = "dashed", "Cast" = "solid", "CTD" = "dotted")) +
   labs(x = "Year", y = "Livable habitat (%)", colour = "Season", shape = "Source", linetype = "Source")
@@ -1634,14 +1658,14 @@ ggsave(file.path(out_dir, "fig-rotoiti-historical-combined.png"),
 p_rotoiti_summary
 ```
 
-# Rotoiti — long-term livable habitat trend (historical + modern)
+## Rotoiti — long-term livable habitat trend (historical + modern)
 ```{r}
 #| label: fig-rotoiti-trend
 #| fig-width: 6
 #| fig-height: 4
 
-rotoiti_trend_fit  <- broom::tidy(lm(Annual_Mean ~ Year, data = rotoiti_annual_avg))
-rotoiti_slope      <- rotoiti_trend_fit |> dplyr::filter(term == "Year")
+rotoiti_trend_fit  <- broom::tidy(lm(Annual_Mean ~ Season_Year, data = rotoiti_annual_avg))
+rotoiti_slope      <- rotoiti_trend_fit |> dplyr::filter(term == "Season_Year")
 rotoiti_slope_lbl  <- paste0(
   round(rotoiti_slope$estimate, 1), "% yr⁻¹ ",
   dplyr::case_when(
@@ -1652,7 +1676,7 @@ rotoiti_slope_lbl  <- paste0(
   )
 )
 
-p_rotoiti_trend <- ggplot(rotoiti_annual_avg, aes(Year, Annual_Mean)) +
+p_rotoiti_trend <- ggplot(rotoiti_annual_avg, aes(Season_Year, Annual_Mean)) +
   geom_point(colour = "grey50", size = 2) +
   geom_smooth(method = "lm", se = TRUE, colour = "#2171b5", fill = "#2171b5", alpha = 0.15) +
   annotate("text", x = -Inf, y = Inf, label = rotoiti_slope_lbl,
@@ -1689,7 +1713,15 @@ livable_trends <- annual_livable |>
   select(Lake, estimate, std.error, p.value, sig, direction)
 
 print(livable_trends)
+```
 
+## Figures — livable habitat trends (Cast + Buoy combined)
+```{r}
+#| label: fig-livable-habitat-trends
+#| fig-width: 8
+#| fig-height: 8
+#| fig-cap: Long-term trends in liveable habitat across Rotorua Te Arawa lakes (Cast + Buoy combined)
+#| 
 trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
   geom_point(colour = "grey50", size = 1.5) +
   geom_smooth(method = "lm", se = TRUE, colour = "#2171b5", fill = "#2171b5", alpha = 0.15) +
@@ -1704,9 +1736,10 @@ trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
 ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 8, dpi = 300)
 
 trend_plot
+
 ```
 
-# Figures — livable habitat (Cast + Buoy combined)
+## Figures — livable habitat (Cast + Buoy combined)
 ```{r}
 #| label: fig-livable-combined
 #| fig-width: 8
@@ -1715,33 +1748,30 @@ trend_plot
 # Time series: every cast/profile coloured by season
 livable_habitat_plot_combined <- ggplot(
   livable_habitat_all,
-  aes(Date, Livable_Habitat_Percentage, colour = Season)
-) +
+  aes(Date, Livable_Habitat_Percentage, colour = Season)) +
   geom_point(alpha = 0.6) +
   geom_line(aes(group = interaction(Season)), linewidth = 0.4, alpha = 0.6) +
+  scale_colour_manual(values = season_colours) +
   facet_wrap(~ Lake, ncol = 4) +
   labs(x = "Date", y = "Livable habitat (% of lake area)", colour = "Season")
 
 livable_habitat_plot_combined
-ggsave(file.path(out_dir, "fig-livable-habitat-combined.png"), livable_habitat_plot_combined,
-       width = 8, height = 8, dpi = 300)
+ggsave(file.path(out_dir, "fig-livable-habitat-combined.png"), livable_habitat_plot_combined, width = 8, height = 8, dpi = 300)
 
 # Yearly/season summary with overall annual mean (black line)
 livable_summary_all <- livable_habitat_all |>
-  group_by(Lake, Year, Season) |>
+  group_by(Lake, Season_Year, Season) |>
   summarise(Mean_Livable_Habitat = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
 
 yearly_mean_all <- livable_habitat_all |>
-  group_by(Lake, Year) |>
+  group_by(Lake, Season_Year) |>
   summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
 
 livable_habitat_summary_plot_combined <- ggplot() +
-  geom_point(data = livable_summary_all,
-             aes(Year, Mean_Livable_Habitat, col = Season), size = 2) +
-  geom_line(data = livable_summary_all,
-            aes(Year, Mean_Livable_Habitat, col = Season, group = Season), linewidth = 0.8) +
-  geom_line(data = yearly_mean_all,
-            aes(Year, Yearly_Mean), col = "black", linewidth = 1) +
+  #geom_point(data = livable_summary_all, aes(Season_Year, Mean_Livable_Habitat, col = Season), size = 2) +
+  geom_line(data = livable_summary_all, aes(Season_Year, Mean_Livable_Habitat, col = Season, group = Season), linewidth = 0.8) +
+  geom_line(data = yearly_mean_all, aes(Season_Year, Yearly_Mean), col = "black", linewidth = 1) +
+  scale_colour_manual(values = season_colours) +
   facet_wrap(~ Lake) +
   labs(x = "Year", y = "Liveable habitat (%)", col = "Season")
 
@@ -1750,7 +1780,7 @@ ggsave(file.path(out_dir, "fig-livable-habitat-summary.png"), livable_habitat_su
 livable_habitat_summary_plot_combined
 ```
 
-# Figures — livable depth range (Cast + Buoy combined)
+## Figures — livable depth range (Cast + Buoy combined)
 ```{r}
 #| label: fig-depth-combined
 #| fig-width: 8
@@ -1762,6 +1792,7 @@ Depth_plot_combined <- depth_ranges_all |>
                  colour = "black", linewidth = 1) +
   geom_linerange(aes(ymin = shallowest_livable, ymax = deepest_livable, colour = Season),
                  linewidth = 0.7, na.rm = TRUE) +
+  scale_colour_manual(values = season_colours) +
   scale_y_reverse() +
   facet_wrap(~ Lake, scales = "free_y", ncol = 2) +
   labs(x = "Year", y = "Depth (m)")
@@ -1772,7 +1803,7 @@ ggsave(file.path(out_dir, "fig-depth-combined.png"), Depth_plot_combined, width 
 Depth_plot_combined
 ```
 
-# Figures — livable depth as stacked area (alternative view)
+## Figures — livable depth as stacked area (alternative view)
 ```{r}
 #| label: fig-depth-stacked-area
 #| fig-width: 10
@@ -2003,7 +2034,7 @@ if (FALSE) {
 
 ```
 
-# Per-pixel livable habitat trend maps
+## Spatial liveable habitat trend maps
 ```{r}
 #| label: pixel-trend-maps
 #| fig-width: 10
@@ -2044,11 +2075,16 @@ if (file.exists(pixel_trend_rds)) {
     n_valid <- rowSums(!is.na(y_mat))
     slope   <- rep(NA_real_, nrow(y_mat))
 
-    for (i in which(n_valid >= 3)) {
+    # Reliability criteria for binary (0/1) OLS trend:
+    #   n_valid >= 5  — fewer years gives ≤2 df, slope estimate is meaninglessly noisy
+    #   year_span >= 5 — observations must cover at least 5 calendar years so a single
+    #                    outlier year doesn't dominate the fitted slope
+    for (i in which(n_valid >= 5)) {
       yi <- y_mat[i, ]
       ok <- !is.na(yi)
-      if (length(unique(years[ok])) < 2) next
-      slope[i] <- coef(lm(yi[ok] ~ years[ok]))[2]
+      yrs_ok <- years[ok]
+      if (diff(range(yrs_ok)) < 5) next
+      slope[i] <- coef(lm(yi[ok] ~ yrs_ok))[2]
     }
 
     bathy_lake |>
@@ -2083,25 +2119,25 @@ plot_lake_trend <- function(lake_name) {
             axis.title = element_blank(), axis.ticks = element_blank(),
             axis.line = element_blank())
     if (nrow(bathy_lake) > 0)
-      p <- p + geom_point(data = bathy_lake, aes(x, y),
-                          size = 0.6, colour = "grey80", inherit.aes = FALSE)
+      p <- p + geom_raster(data = bathy_lake, aes(x, y), fill = "grey80",
+                            inherit.aes = FALSE, interpolate = TRUE)
     if (nrow(bdry) > 0)
       p <- p + geom_path(data = bdry, aes(x, y, group = L),
                          colour = "black", linewidth = 0.5, inherit.aes = FALSE)
     return(p)
   }
-  ggplot(df, aes(x, y, col = Trend)) +
-    geom_point(size = 0.6) +
-    scale_colour_gradient2(low = "#d73027", mid = "grey90", high = "#2171b5",
-                           midpoint = 0, limits = c(-trend_cap, trend_cap),
-                           oob = scales::squish) +
+  ggplot(df, aes(x, y, fill = Trend)) +
+    geom_raster(interpolate = TRUE) +
+    scale_fill_gradient2(low = "#d73027", mid = "grey90", high = "#2171b5",
+                         midpoint = 0, limits = c(-trend_cap, trend_cap),
+                         oob = scales::squish) +
     geom_path(
       data        = lake_boundaries |> dplyr::filter(Lake == lake_name),
       aes(x, y, group = L),
       colour      = "black", linewidth = 0.5, inherit.aes = FALSE
     ) +
     coord_equal() +
-    labs(x = NULL, y = NULL, subtitle = lake_name, colour = "Trend") +
+    labs(x = NULL, y = NULL, subtitle = lake_name, fill = "Trend") +
     theme(
       axis.text = element_blank(), axis.title = element_blank(),
       axis.ticks = element_blank(), axis.line = element_blank()
@@ -2110,14 +2146,14 @@ plot_lake_trend <- function(lake_name) {
 
 trend_map_plots  <- lapply(all_map_lakes, plot_lake_trend)
 combined_trend_map <- wrap_plots(trend_map_plots, nrow = 4) +
-  plot_annotation(title = "Per-pixel trend in livable habitat (change in proportion of livable years, per year)")
+  plot_annotation(title = "Spatial trend in liveable habitat (change in proportion of liveable years, per year)")
 
 combined_trend_map
 ggsave(file.path(out_dir, "fig-pixel-trend-maps.png"), combined_trend_map,
        width = 10, height = 14, dpi = 300)
 ```
 
-# Per-pixel livable habitat persistence maps
+## Spatial liveable habitat persistence maps
 ```{r}
 #| label: pixel-persistence-maps
 #| fig-width: 10
@@ -2186,22 +2222,23 @@ plot_lake_persistence <- function(lake_name, value_col, title_label) {
       theme(axis.text = element_blank(), axis.title = element_blank(),
             axis.ticks = element_blank(), axis.line = element_blank())
     if (nrow(bathy_lake) > 0)
-      p <- p + geom_point(data = bathy_lake, aes(x, y), size = 0.6, colour = "grey80", inherit.aes = FALSE)
+      p <- p + geom_raster(data = bathy_lake, aes(x, y), fill = "grey80",
+                            inherit.aes = FALSE, interpolate = TRUE)
     if (nrow(bdry) > 0)
       p <- p + geom_path(data = bdry, aes(x, y, group = L), colour = "black", linewidth = 0.5, inherit.aes = FALSE)
     return(p)
   }
-  ggplot(df, aes(x, y, col = .data[[value_col]])) +
-    geom_point(size = 0.6) +
-    scale_colour_gradient(low = "grey90", high = "#00BFC4", limits = c(0, 1),
-                          na.value = "grey95") +
+  ggplot(df, aes(x, y, fill = .data[[value_col]])) +
+    geom_raster(interpolate = TRUE) +
+    scale_fill_gradient(low = "grey90", high = "#00BFC4", limits = c(0, 1),
+                        na.value = "grey95") +
     geom_path(
       data        = lake_boundaries |> dplyr::filter(Lake == lake_name),
       aes(x, y, group = L),
       colour      = "black", linewidth = 0.5, inherit.aes = FALSE
     ) +
     coord_equal() +
-    labs(x = NULL, y = NULL, subtitle = lake_name, colour = title_label) +
+    labs(x = NULL, y = NULL, subtitle = lake_name, fill = title_label) +
     theme(
       axis.text = element_blank(), axis.title = element_blank(),
       axis.ticks = element_blank(), axis.line = element_blank()
@@ -2212,7 +2249,7 @@ plot_lake_persistence <- function(lake_name, value_col, title_label) {
 pooled_persistence_plots <- lapply(all_map_lakes, plot_lake_persistence,
                                    value_col = "Pooled", title_label = "% livable")
 combined_pooled_persistence <- wrap_plots(pooled_persistence_plots, nrow = 4) +
-  plot_annotation(title = "Pixel persistence — proportion of all observed periods livable")
+  plot_annotation(title = "Spatial liveable habitat persistence — proportion of all observed periods liveable")
 
 combined_pooled_persistence
 ggsave(file.path(out_dir, "fig-pixel-persistence-pooled.png"), combined_pooled_persistence,
@@ -2222,7 +2259,7 @@ ggsave(file.path(out_dir, "fig-pixel-persistence-pooled.png"), combined_pooled_p
 season_persistence_maps <- lapply(season_order, function(s) {
   plots <- lapply(all_map_lakes, plot_lake_persistence, value_col = s, title_label = "% livable")
   combined <- wrap_plots(plots, nrow = 4) +
-    plot_annotation(title = paste0("Pixel persistence — ", s, " (proportion of observed ", s, "s livable)"))
+    plot_annotation(title = paste0("Spatial liveable habitat persistence — ", s, " (proportion of observed ", s, "s liveable)"))
   ggsave(file.path(out_dir, paste0("fig-pixel-persistence-", tolower(s), ".png")), combined,
          width = 10, height = 14, dpi = 300)
   combined
@@ -2232,7 +2269,6 @@ names(season_persistence_maps) <- season_order
 # Preview one season here; the others are saved to outputs/ but not all printed inline
 season_persistence_maps[["Summer"]]
 ```
-
 
 # Session info
 ```{r}
