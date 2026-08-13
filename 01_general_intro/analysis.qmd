@@ -286,9 +286,22 @@ family_cols <- c(
   "Parastacidae"  = "#C62A6E"
 )
 
+# NZ-centred (lon_0=160, seam at -20°W — mid-Atlantic, clear of Africa's west
+# coast at -17°W), south-up (+axis=esu). Split world polygons at the seam so
+# Greenland (which crosses -20°W) doesn't draw horizontal artefact lines.
+# Use map_data() for the world background: the maps package pre-splits Russia
+# and other dateline-crossing polygons, eliminating horizontal artefact lines.
+# Greenland and Antarctica are excluded explicitly by region name.
+.world_bg <- ggplot2::map_data("world")
+# Iceland (-24°W to -13°W) straddles the -20°W seam → horizontal artefact line.
+# Greenland and Antarctica also excluded (seam artefact and projection distortion).
+# None have native crayfish so their absence is scientifically appropriate.
+.world_bg <- .world_bg[!.world_bg$region %in% c("Greenland", "Antarctica", "Iceland"), ]
+
 p_crayfish_map <- ggplot() +
-  geom_sf(data = world_sf, fill = "grey92", colour = "grey50",
-          linewidth = 0.15, na.rm = TRUE) +
+  geom_polygon(data = .world_bg, aes(x = long, y = lat, group = group),
+               fill = "grey92", colour = "grey50",
+               linewidth = 0.15, inherit.aes = FALSE) +
   geom_sf(data = distributions, aes(fill = family),
           alpha = 0.75, colour = "grey20", linewidth = 0.25) +
   scale_fill_manual(
@@ -296,15 +309,17 @@ p_crayfish_map <- ggplot() +
     labels = expression(italic(Astacidae), italic(Cambaridae),
                         italic(Cambaroididae), italic(Parastacidae))
   ) +
-  coord_sf(crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84") +
+  coord_sf(crs = "+proj=robin +lon_0=160 +x_0=0 +y_0=0 +datum=WGS84 +axis=esu",
+           default_crs = sf::st_crs(4326)) +
   theme_void(base_size = 10) +
   theme(
-    legend.position   = c(0.13, 0.22),
-    legend.text       = element_text(size = 9),
-    legend.key.size   = unit(0.5, "cm"),
-    legend.background = element_rect(fill = alpha("white", 0.85),
-                                     colour = "grey60", linewidth = 0.3),
-    legend.margin     = margin(4, 8, 4, 8),
+    legend.position        = c(0.97, 0.04),
+    legend.justification   = c("right", "bottom"),
+    legend.text            = element_text(size = 7.5),
+    legend.key.size        = unit(0.38, "cm"),
+    legend.background      = element_rect(fill = alpha("white", 0.85),
+                                          colour = "grey60", linewidth = 0.3),
+    legend.margin          = margin(3, 6, 3, 6),
     plot.background   = element_rect(fill = .bg_map, colour = NA)
   )
 
@@ -1064,6 +1079,7 @@ livable_habitat_sum <- calc_livable_habitat_summary(
 
 # DATA PREP for maps
 ```{r}
+#| label: data-prep-maps
 # All lakes now have bathymetry (fetched via API)
 area_data_all_lakes <- DO_Tem_area_data
 
@@ -1276,57 +1292,60 @@ if (file.exists(met_raw_rds)) {
 
 } else {
 
-  # Print schema so we know what columns are available
-  met_schema <- tryCatch(
-    ltapi::lt_schema("met_data"),
-    error = function(e) { message("Could not fetch met_data schema: ", conditionMessage(e)); NULL }
-  )
-  if (!is.null(met_schema)) {
-    message("met_data schema:")
-    print(met_schema)
-  }
+  # Fetch in yearly chunks to avoid HTTP 504 gateway timeouts that kill multi-hour requests.
+  # Each year is cached as a separate file in der_data_dir — on re-run, cached years load
+  # instantly and only missing/failed years are re-fetched. Delete met_raw_data.rds to
+  # trigger a full re-fetch (e.g. when Limnotrack back-uploads more lakes).
+  bop_site_ids  <- c("Rotorua", "Rotoiti", "Rotoehu", "Rotoma", "Okareka", "Okaro",
+                     "Tikitapu", "Rotokakahi", "Rerewhakaaitu", "Okataina", "Tarawera", "Rotomahana")
+  fetch_years   <- 2010:as.integer(format(Sys.Date(), "%Y"))
 
-  # First discover ALL site_ids in the table — the 100-row probe misses sites whose
-  # data starts later in the table. Fetch only the site_id column with a high limit.
-  all_site_ids <- tryCatch({
-    ids <- ltapi::lt_fetch("met_data", select = "site_id", limit = 5000000L)
-    unique(ids$site_id)
-  }, error = function(e) { message("site_id discovery failed: ", conditionMessage(e)); character(0) })
-  message("All site_ids in met_data: ", paste(all_site_ids, collapse = ", "))
+  year_chunks <- lapply(fetch_years, function(yr) {
+    chunk_rds <- file.path(der_data_dir, paste0("met_chunk_", yr, ".rds"))
+    if (file.exists(chunk_rds)) {
+      message("Met chunk ", yr, " loaded from cache.")
+      return(readRDS(chunk_rds))
+    }
+    message("Fetching met_data for ", yr, " ...")
+    date_from <- paste0(yr, "-01-01")
+    date_to   <- paste0(yr + 1L, "-01-01")
+    # rlang::inject() forces !! to substitute local variables before lt_filter()
+    # captures the expression via NSE — without this, lt_filter cannot see 'yr'.
+    chunk <- tryCatch(
+      rlang::inject(ltapi::lt_fetch_all(
+        table  = "met_data",
+        filter = ltapi::lt_filter(
+          site_id  %in% !!bop_site_ids,
+          qc_level == 400L,
+          datetime >= !!date_from,
+          datetime <  !!date_to
+        ),
+        order = "datetime.asc"
+      )),
+      error = function(e) { message("Chunk ", yr, " failed: ", conditionMessage(e)); NULL }
+    )
+    if (!is.null(chunk) && nrow(chunk) > 0) {
+      saveRDS(chunk, chunk_rds)
+      message("Met chunk ", yr, " saved: ", nrow(chunk), " rows.")
+    } else {
+      message("Met chunk ", yr, ": no data.")
+    }
+    chunk
+  })
 
-  # Fetch all met data in one call then filter to BOP lakes in R.
-  # Match against discovered site_ids (may differ in case/spacing from lake names).
-  bop_lakes_title <- c("Rotorua", "Rotoiti", "Rotoehu", "Rotoma", "Okareka", "Okaro",
-                       "Tikitapu", "Rotokakahi", "Rerewhakaaitu", "Okataina", "Tarawera", "Rotomahana")
-  bop_site_ids <- all_site_ids[tolower(all_site_ids) %in% tolower(bop_lakes_title)]
-  message("BOP site_ids to fetch: ", paste(bop_site_ids, collapse = ", "))
+  met_raw <- dplyr::bind_rows(Filter(Negate(is.null), year_chunks))
 
-  met_all <- tryCatch(
-    ltapi::lt_fetch("met_data", limit = 5000000L),
-    error = function(e) { message("met_data fetch failed: ", conditionMessage(e)); NULL }
-  )
-
-  if (!is.null(met_all) && nrow(met_all) > 0) {
-    message("Total rows in met_data: ", nrow(met_all))
-    if ("parameter" %in% names(met_all))
-      message("Parameters: ", paste(unique(met_all$parameter), collapse = ", "))
-  }
-
-  met_buoy <- if (!is.null(met_all) && nrow(met_all) > 0)
-    dplyr::filter(met_all, site_id %in% bop_site_ids)
-  else
-    data.frame()
-
-  if (nrow(met_buoy) == 0) {
-    message("No meteorological data returned for any lake.")
+  if (nrow(met_raw) == 0) {
+    message("No meteorological data returned.")
+    met_buoy <- data.frame()
   } else {
-    met_buoy <- met_buoy |>
+    met_buoy <- met_raw |>
       dplyr::mutate(
         datetime = as.POSIXct(datetime, tz = "UTC"),
         Lake     = factor(recode_lake_names(site_id), levels = lake_order)
       )
     message("Total met rows saved: ", nrow(met_buoy))
-    message("Lakes with met data: ", paste(unique(met_buoy$Lake), collapse = ", "))
+    message("Lakes: ",      paste(unique(met_buoy$Lake),      collapse = ", "))
     message("Parameters: ", paste(unique(met_buoy$parameter), collapse = ", "))
     saveRDS(met_buoy, met_raw_rds)
   }
@@ -1733,7 +1752,7 @@ trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
   facet_wrap(~ Lake) +
   labs(x = "Year", y = "Annual mean liveable habitat (%)")
 
-ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 8, dpi = 300)
+ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 6, height = 5, dpi = 300)
 
 trend_plot
 
@@ -1775,7 +1794,7 @@ livable_habitat_summary_plot_combined <- ggplot() +
   facet_wrap(~ Lake) +
   labs(x = "Year", y = "Liveable habitat (%)", col = "Season")
 
-ggsave(file.path(out_dir, "fig-livable-habitat-summary.png"), livable_habitat_summary_plot_combined, width = 8, height = 8, dpi = 300)
+ggsave(file.path(out_dir, "fig-livable-habitat-summary.png"), livable_habitat_summary_plot_combined, width = 7, height = 5, dpi = 300)
 
 livable_habitat_summary_plot_combined
 ```
