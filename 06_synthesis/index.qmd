@@ -100,13 +100,9 @@ What have we learnt for the future...
 When water quality and other aspacts are solved, stonepile deployment in catfish invaded lakes helps
 
 ### Community contributions 
-Residents living along the lakes could help also instead of having a retaining wall not providing habitat replace it with stones and bring the stones into the deeper parts if possible to create kōura shelters. under jettys placing stones are out of the way of boating or swimming and create perfect structure for kōura. 
+Residents living along the lakes could help also instead of having a retaining wall not providing habitat replace it with stones and bring the stones into the deeper parts if possible to create kōura shelters. under jettys placing stones are out of the way of boating or swimming and create perfect structure for kōura. (@fig-koura-structures-diy).
 
-![Kōura weels by Mark Robinson Lake Tarawera](images/koura_wheel2.png){#fig-koura-wheel width=70%}
-
-![Kōura pipes by Mark Thomson Lake Rotoiti](images/koura_pipes.png){#fig-koura-pipes width=70%}
-
-To 
+![Home made kōura habitats by local residents. Left: Kōura pipes by Mark Thomson Lake Rotoiti. Right: Kōura weels by Mark Robinson Lake Tarawera.](images/Koura_structures_diy.png){#fig-koura-structures-diy width=70%}
 
 
 ### Te Arawa and cultural dimension

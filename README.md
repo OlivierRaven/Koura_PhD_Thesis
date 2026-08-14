@@ -31,7 +31,7 @@ quarto render --to html
 quarto render --to pdf
 ```
 
-Output is written to the `_book/` folder.
+Output is written to the `docs/` folder.
 
 ## Chapter repositories
 

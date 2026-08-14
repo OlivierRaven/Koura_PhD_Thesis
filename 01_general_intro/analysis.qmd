@@ -57,6 +57,7 @@ Sys.setenv(LERNZMP_API = "lernzmp_lakes")
 suppressPackageStartupMessages({
   library(nzffdr)
   library(sf)
+  library(rnaturalearthdata)
   library(broom)
   library(rLakeAnalyzer)
   library(patchwork)
@@ -162,7 +163,7 @@ make_poly <- function(mat) {
   sf::st_make_valid(p)
 }
 
-# ── Astacidae ─────────────────────────────────────────────────────────────────
+# Astacidae 
 # Europe + western Russia + Turkey/Caucasus; northern cap ~65°N (Arctic Circle)
 astac_eu <- make_poly(matrix(c(
    -9,  36,  -10, 44,   -8, 52,   -4, 57,    5, 61,   15, 64,
@@ -177,7 +178,7 @@ astac_na <- make_poly(matrix(c(
   -108, 48,  -112, 53,  -120, 52,  -124, 48
 ), ncol = 2, byrow = TRUE))
 
-# ── Cambaridae ────────────────────────────────────────────────────────────────
+# Cambaridae 
 # Eastern North America + Mexico + Central America: more organic, follows
 # Rocky Mountain front west, boreal forest north, Atlantic coast east
 camb <- make_poly(matrix(c(
@@ -188,7 +189,7 @@ camb <- make_poly(matrix(c(
   -100, 22,  -104, 28,  -108, 42
 ), ncol = 2, byrow = TRUE))
 
-# ── Cambaroididae ─────────────────────────────────────────────────────────────
+# Cambaroididae 
 # NE China + Russian Far East + Korea + Japan (blob spans Sea of Japan)
 cambaroid <- make_poly(matrix(c(
   120, 52,  126, 56,  132, 56,  142, 57,
@@ -197,7 +198,7 @@ cambaroid <- make_poly(matrix(c(
   122, 40,  120, 46
 ), ncol = 2, byrow = TRUE))
 
-# ── Parastacidae ─────────────────────────────────────────────────────────────
+# Parastacidae 
 # Australia (mainland)
 parastac_aus <- make_poly(matrix(c(
   114, -22,  113, -32,  115, -35,  124, -34,
@@ -262,9 +263,7 @@ distributions <- dplyr::bind_rows(
   sf::st_sf(family = "Parastacidae",  geometry = parastac_ng),
   sf::st_sf(family = "Parastacidae",  geometry = parastac_mad)
 )
-# Clip polygons to land so ocean bodies (Gulf of Mexico, Sea of Japan, etc.)
-# are not coloured. st_transform(4326) normalises the CRS spec on both objects
-# so they match; sf_use_s2(FALSE) avoids s2 duplicate-edge errors.
+
 sf::sf_use_s2(FALSE)
 .land <- sf::st_transform(world_sf, 4326) |>
   sf::st_make_valid() |>
@@ -286,16 +285,9 @@ family_cols <- c(
   "Parastacidae"  = "#C62A6E"
 )
 
-# NZ-centred (lon_0=160, seam at -20°W — mid-Atlantic, clear of Africa's west
-# coast at -17°W), south-up (+axis=esu). Split world polygons at the seam so
-# Greenland (which crosses -20°W) doesn't draw horizontal artefact lines.
-# Use map_data() for the world background: the maps package pre-splits Russia
-# and other dateline-crossing polygons, eliminating horizontal artefact lines.
-# Greenland and Antarctica are excluded explicitly by region name.
+
 .world_bg <- ggplot2::map_data("world")
-# Iceland (-24°W to -13°W) straddles the -20°W seam → horizontal artefact line.
-# Greenland and Antarctica also excluded (seam artefact and projection distortion).
-# None have native crayfish so their absence is scientifically appropriate.
+
 .world_bg <- .world_bg[!.world_bg$region %in% c("Greenland", "Antarctica", "Iceland"), ]
 
 p_crayfish_map <- ggplot() +
@@ -362,11 +354,8 @@ name_col <- if ("name" %in% non_geom && any(!is.na(all_lakes[["name"]]))) {
 }
 all_lakes <- dplyr::rename(all_lakes, lake_name = dplyr::all_of(name_col))
 all_lakes <- dplyr::mutate(all_lakes,
-  # Remove "Lake " prefix
   lake_name = sub("^Lake\\s+", "", lake_name),
-  # Keep only the first name — strip " / …", " (…)", " & …" and trailing whitespace
   lake_name = trimws(sub("\\s*[/(\\&].*$", "", lake_name)),
-  # Correct missing macrons
   lake_name = dplyr::case_when(
     grepl("^[Oo]kataina",  lake_name) ~ "Ōkataina",
     grepl("^[Oo]karo$",    lake_name) ~ "Ōkaro",
@@ -378,7 +367,7 @@ all_lakes <- dplyr::mutate(all_lakes,
   )
 )
 
-# ── Trophic state per lake (sourced from LAWA / BOPRC; matches tbl-bop-lake-overview) ──
+# Trophic state per lake (sourced from LAWA / BOPRC; matches tbl-bop-lake-overview) 
 trophic_lookup <- tibble::tribble(
   ~lake_name,       ~trophic_state,
   "Rotorua",        "Eutrophic",
@@ -417,7 +406,7 @@ lake_bb  <- sf::st_bbox(all_lakes)
 xlim_map <- c(lake_bb["xmin"] - pad, lake_bb["xmax"] + pad)
 ylim_map <- c(lake_bb["ymin"] - pad, lake_bb["ymax"] + pad)
 
-# ── Base tile layer: download once per provider, cache as local TIFF ──────────
+# Base tile layer: download once per provider, cache as local TIFF 
 .provider   <- "Esri.WorldShadedRelief"
 .zoom       <- 11
 tiles_cache <- file.path(out_dir, paste0("basemap_", gsub("\\.", "_", .provider), ".tif"))
@@ -428,11 +417,11 @@ if (!file.exists(tiles_cache)) {
 }
 basemap <- terra::project(terra::rast(tiles_cache), "EPSG:2193")
 
-# ── Roads: load from cache if available, skip otherwise ──────────────────────
+# Roads: load from cache if available, skip otherwise 
 roads_cache <- file.path(out_dir, "roads_osm.rds")
 roads <- if (file.exists(roads_cache)) readRDS(roads_cache) else NULL
 
-# ── Label points: extract as plain x/y so ggrepel works without coord_sf stat ─
+# Label points: extract as plain x/y so ggrepel works without coord_sf stat ─
 lake_pts    <- suppressWarnings(sf::st_point_on_surface(all_lakes))
 lake_coords <- data.frame(
   lake_name = lake_pts$lake_name,
@@ -440,7 +429,7 @@ lake_coords <- data.frame(
   y         = sf::st_coordinates(lake_pts)[, 2]
 )
 
-# ── Main map ──────────────────────────────────────────────────────────────────
+# Main map 
 p_main <- ggplot() +
   tidyterra::geom_spatraster_rgb(data = basemap) +
   { if (!is.null(roads)) geom_sf(data = roads, color = "#c07030", linewidth = 0.35, alpha = 0.85) } +
@@ -493,7 +482,7 @@ p_main <- ggplot() +
     legend.text       = element_text(size = 8)
   )
 
-# ── Inset NZ map ─────────────────────────────────────────────────────────────
+# Inset NZ map 
 study_box <- sf::st_as_sfc(lake_bb) |> sf::st_buffer(20000)
 
 p_inset <- ggplot() +
@@ -508,9 +497,7 @@ p_inset <- ggplot() +
     panel.border     = element_rect(fill = NA, color = "black", linewidth = 0.5)
   )
 
-# ── Combine ───────────────────────────────────────────────────────────────────
-# Extract legend from a temporary copy of p_main that has the legend enabled,
-# then draw it above the inset in the bottom-right corner.
+#  Combine 
 p_legend_source <- p_main +
   theme(legend.position = c(0.5, 0.5))  # position doesn't matter — just enables it
 p_legend <- cowplot::get_legend(p_legend_source)
@@ -1738,21 +1725,33 @@ print(livable_trends)
 ```{r}
 #| label: fig-livable-habitat-trends
 #| fig-width: 8
-#| fig-height: 8
-#| fig-cap: Long-term trends in liveable habitat across Rotorua Te Arawa lakes (Cast + Buoy combined)
-#| 
-trend_plot <- ggplot(annual_livable, aes(Year, Annual_Mean)) +
-  geom_point(colour = "grey50", size = 1.5) +
-  geom_smooth(method = "lm", se = TRUE, colour = "#2171b5", fill = "#2171b5", alpha = 0.15) +
+#| fig-height: 7
+#| fig-cap: Long-term trends in seasonal and annual mean liveable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Liveable habitat is defined as the proportion of the lake bottom area meeting dissolved oxygen (> 5 mg L$^{-1}$) and temperature (< 21 °C) thresholds suitable for kōura. Points represent means; lines show linear regressions with 95 % confidence intervals. Annual slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].
+
+.seasonal_trend <- livable_habitat_all |>
+  dplyr::group_by(Lake, Season_Year, Season) |>
+  dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE),
+                   .groups = "drop")
+
+.yearly_trend <- livable_habitat_all |>
+  dplyr::group_by(Lake, Season_Year) |>
+  dplyr::summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE),
+                   .groups = "drop")
+
+trend_plot <- ggplot() +
+  geom_point(data = .seasonal_trend, aes(Season_Year, Mean_Livable, colour = Season, group = Season), alpha = 0.6) +
+  geom_smooth(data = .seasonal_trend, aes(Season_Year, Mean_Livable, colour = Season, group = Season),method = "lm", se = T, linewidth = 1) +
+  #geom_line(data = .yearly_trend,aes(Season_Year, Yearly_Mean),colour = "black", linewidth = 1) +
+  geom_smooth(data = .yearly_trend, aes(Season_Year, Yearly_Mean),colour = "black", method = "lm", se = T, linewidth = 1) +
   geom_text(
     data = livable_trends,
     aes(label = paste0(round(estimate, 1), "% yr⁻¹ ", sig)),
-    x = -Inf, y = Inf, hjust = -0.1, vjust = 1.4, size = 3, colour = "grey30"
-  ) +
+    x = -Inf, y = Inf, hjust = -0.1, vjust = 1.4, size = 3, colour = "grey30") +
+  scale_colour_manual(values = season_colours) +
   facet_wrap(~ Lake) +
-  labs(x = "Year", y = "Annual mean liveable habitat (%)")
+  labs(x = "Year", y = "Liveable habitat (%)", colour = "Season")
 
-ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 6, height = 5, dpi = 300)
+ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 7, dpi = 300)
 
 trend_plot
 

@@ -19,7 +19,14 @@
 *.prj
 *.shp
 *.shx
-*.png
 Data_mod/meteo_data.csv
 data/derived/Okaro_CTD_bouy
 data/derived/Rotoiti_CTD_bouy
+
+# Raw data (fetched from LINZ, Limnotrack, LAWA, NZFFWF at render time)
+data/raw/
+scripts/
+
+# Track named output figures and tables so they're visible on GitHub
+!outputs/fig-*.png
+!outputs/tbl-*.csv
