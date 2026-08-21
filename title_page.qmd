@@ -10,7 +10,7 @@
 \vspace*{1.5cm}
 \begin{center}
 
-{\fontsize{20}{26}\selectfont\bfseries Restoring native freshwater crayfish habitat\\[0.3cm]in invaded lake ecosystems}
+{\fontsize{20}{26}\selectfont\bfseries Enhancing native freshwater crayfish habitat\\[0.3cm]in invaded lake ecosystems}
 
 \vfill
 
@@ -46,7 +46,7 @@ by\\[0.5cm]
 
 &nbsp;
 
-**Restoring native freshwater crayfish habitat in invaded lake ecosystems**
+**Enhancing native freshwater crayfish habitat in invaded lake ecosystems**
 
 &nbsp;
 
@@ -78,7 +78,7 @@ The University of Waikato
 <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:82vh; text-align:center; padding:2rem 1rem;">
 
 <h1 style="font-family:'Crimson Pro',Georgia,serif; font-size:2rem; font-weight:700; max-width:560px; line-height:1.45; margin:0 0 3.5rem;">
-Restoring native freshwater crayfish habitat in invaded lake ecosystems
+Enhancing native freshwater crayfish habitat in invaded lake ecosystems
 </h1>
 
 <p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; line-height:2.4; margin:0 0 2.5rem;">

@@ -517,8 +517,8 @@ p_combined
 ## Kōura and catfish distribution maps (NZFFD)
 ```{r}
 #| label: nz-distribution-maps
-#| fig-width: 12
-#| fig-height: 9
+#| fig-width: 6
+#| fig-height: 4
 
 nzffdms <- read_csv("data/raw/nzffdms.csv", show_col_types = FALSE)
 nzffd_clean    <- nzffdr_clean(nzffdms)
@@ -588,7 +588,7 @@ nz_distribution <- koura_map + catfish_map +
 
 nz_distribution
 
-ggsave(file.path(out_dir, "fig-nz-distribution-maps.png"), nz_distribution, width = 12, height = 9, dpi = 300)
+ggsave(file.path(out_dir, "fig-nz-distribution-maps.png"), nz_distribution, width = 6, height = 4, dpi = 300)
 ```
 
 # Run LERNZmp (AEME)
@@ -1704,8 +1704,9 @@ p_rotoiti_trend
 
 # Annual mean across Cast + Buoy CTD combined (pooled the same way as the summary figures)
 annual_livable <- livable_habitat_all |>
-  group_by(Lake, Year) |>
-  summarise(Annual_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop")
+  group_by(Lake, Season_Year) |>
+  summarise(Annual_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+  rename(Year = Season_Year)
 
 livable_trends <- annual_livable |>
   group_by(Lake) |>
@@ -1726,7 +1727,7 @@ print(livable_trends)
 #| label: fig-livable-habitat-trends
 #| fig-width: 8
 #| fig-height: 7
-#| fig-cap: Long-term trends in seasonal and annual mean liveable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Liveable habitat is defined as the proportion of the lake bottom area meeting dissolved oxygen (> 5 mg L$^{-1}$) and temperature (< 21 °C) thresholds suitable for kōura. Points represent means; lines show linear regressions with 95 % confidence intervals. Annual slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].
+#| fig-cap: Long-term trends in seasonal and annual mean liveable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Liveable habitat is defined as the proportion of the lake bottom area meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds suitable for kōura. Points represent means; lines show linear regressions with 95 % confidence intervals. Annual slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].
 
 .seasonal_trend <- livable_habitat_all |>
   dplyr::group_by(Lake, Season_Year, Season) |>
@@ -1738,20 +1739,25 @@ print(livable_trends)
   dplyr::summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE),
                    .groups = "drop")
 
-trend_plot <- ggplot() +
-  geom_point(data = .seasonal_trend, aes(Season_Year, Mean_Livable, colour = Season, group = Season), alpha = 0.6) +
-  geom_smooth(data = .seasonal_trend, aes(Season_Year, Mean_Livable, colour = Season, group = Season),method = "lm", se = T, linewidth = 1) +
-  #geom_line(data = .yearly_trend,aes(Season_Year, Yearly_Mean),colour = "black", linewidth = 1) +
-  geom_smooth(data = .yearly_trend, aes(Season_Year, Yearly_Mean),colour = "black", method = "lm", se = T, linewidth = 1) +
-  geom_text(
-    data = livable_trends,
-    aes(label = paste0(round(estimate, 1), "% yr⁻¹ ", sig)),
-    x = -Inf, y = Inf, hjust = -0.1, vjust = 1.4, size = 3, colour = "grey30") +
-  scale_colour_manual(values = season_colours) +
-  facet_wrap(~ Lake) +
-  labs(x = "Year", y = "Liveable habitat (%)", colour = "Season")
+season_shapes <- c(Summer = 16, Autumn = 17, Winter = 15, Spring = 18)
 
-ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 8, height = 7, dpi = 300)
+trend_plot <- ggplot() +
+  geom_point(data = .seasonal_trend,
+    aes(Season_Year, Mean_Livable, colour = Season, shape = Season), size = 0.9) +
+  geom_smooth(data = .seasonal_trend,
+    aes(Season_Year, Mean_Livable, colour = Season, group = Season), method = "lm", se = TRUE, alpha = 0.2) +
+  geom_point(data = .yearly_trend,
+    aes(Season_Year, Yearly_Mean), colour = "grey30", size = 0.9) +
+  geom_smooth(data = .yearly_trend,
+    aes(Season_Year, Yearly_Mean),  method = "lm", se = TRUE, colour = "grey20", fill = "grey30", alpha = 0.2,) +
+  geom_text(data = livable_trends,  aes(label = paste0(round(estimate, 1), "% per year ", sig)), x = -Inf, y = Inf, hjust = -0.1, vjust = 1.4, size = 3, colour = "grey20") +
+  scale_colour_manual(values = season_colours) +
+  scale_shape_manual(values = season_shapes) +
+  guides(colour = guide_legend(override.aes = list(size = 3, linewidth = 1)), shape  = guide_legend(override.aes = list(size = 3)))+
+  facet_wrap(~ Lake) +
+  labs(x = "Year", y = "Liveable habitat (%)", colour = "Season", shape = "Season")
+
+ggsave(file.path(out_dir, "fig-livable-habitat-trends.png"), trend_plot, width = 7, height = 5, dpi = 300)
 
 trend_plot
 

@@ -96,9 +96,9 @@ Okaro_do_data <- dplyr::bind_rows(Site_1, Site_2, Site_3)
 
 # Deep stone piles HOBO loggers (Rotoiti)
 Deep_do_data <- dplyr::bind_rows(
-  read_hobo(file.path(deep_hobo, "DO_Logger_2_Deep_reef.csv")) |> dplyr::mutate(Logger = "2"),
-  read_hobo(file.path(deep_hobo, "DO_Logger_3_Deep_reef.csv")) |> dplyr::mutate(Logger = "3"),
-  read_hobo(file.path(deep_hobo, "DO_Logger_14_Deep_reef.csv")) |> dplyr::mutate(Logger = "14"))
+  read_hobo(file.path(deep_hobo, "DO_Logger_2_Deep_reef.csv")) |> dplyr::mutate(Site = "Jetty") |>dplyr::mutate(Logger = "2"),
+  read_hobo(file.path(deep_hobo, "DO_Logger_3_Deep_reef.csv")) |> dplyr::mutate(Site = "Macrophyte") |>dplyr::mutate(Logger = "3"),
+  read_hobo(file.path(deep_hobo, "DO_Logger_14_Deep_reef.csv")) |> dplyr::mutate(Site = "Bedrock") |>dplyr::mutate(Logger = "14"))
 
 ### Logger deployment and retrieval Deep piles
 # 2025-11-24	DO logger deployment
@@ -111,6 +111,8 @@ Deep_do_data <- dplyr::bind_rows(
 okaro_bathy <- (function(x) x$Ōkaro)(readRDS("C:/Users/or81/OneDrive - The University of Waikato/Documents/PhD/01_thesis_chapters/06_synthesis/data/raw/bathy_rasters.rds"))
 
 okaro_buoy <- (function(x) x[x$Lake == "Okaro", ])(readRDS("C:/Users/or81/OneDrive - The University of Waikato/Documents/PhD/01_thesis_chapters/06_synthesis/data/raw/buoy_raw_data.rds"))
+
+rotoiti_buoy <- (function(x) x[x$Lake == "Rotoiti", ])(readRDS("C:/Users/or81/OneDrive - The University of Waikato/Documents/PhD/01_thesis_chapters/06_synthesis/data/raw/buoy_raw_data.rds"))
 
 # Base plot theme
 base_theme_bw <- theme_classic() +
@@ -157,7 +159,7 @@ okaro_raw_ts
 
 ```{r}
 #| label: fig-okaro-combined
-#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and the lake buoy. Period: 2024-09-11 to 2025-02-27."
+#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and the lake monitoring buoy < 1m. Period: 2024-09-11 to 2025-02-27."
 #| fig-height: 6
 
 
@@ -231,7 +233,7 @@ deepraw1<-ggplot(Deep_do_data, aes(x = DateTime, y = Temp_C, colour = Logger)) +
 
 deepraw2<-ggplot(Deep_do_data, aes(x = DateTime, y = DO_mg_L, colour = Logger)) +
   geom_line() +
-  labs(x = "Date", y = "DO (mg L⁻¹)", colour = "Logger")
+  labs(x = "Date", y = "DO (mg/L)", colour = "Logger")
 
 deep_raw <- deepraw1/deepraw2
 deep_raw
@@ -240,26 +242,54 @@ deep_raw
 
 ```{r}
 #| label: fig-deep-daily
-#| fig-cap: "Daily mean dissolved oxygen and temperature at deep stone piles."
+#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at deep stone piles and the lake monitoring buoy < 1m. Period: 2025-11-22 to 2026-06-8."
 
 daily_means <- Deep_do_data |>
   dplyr::mutate(Date = as.Date(DateTime)) |>
-  dplyr::group_by(Date, Logger) |>
+  dplyr::group_by(Date, Site) |>
   dplyr::summarise(
     DO_mean   = mean(DO_mg_L, na.rm = TRUE),
     Temp_mean = mean(Temp_C,  na.rm = TRUE),
     .groups   = "drop")
 
-deepdaily1 <- ggplot(daily_means, aes(x = Date, y = Temp_mean, colour = Logger)) +
-  geom_line(linewidth = 0.9) +
-  labs(x = "Date", y = "Temperature (°C)", colour = "Logger")
+# Buoy daily means
+buoy_daily_rotoiti <- rotoiti_buoy |>
+  dplyr::filter(
+    DptSns >= 1,
+    DateTime >= as.POSIXct("2025-11-22"),
+    DateTime <= as.POSIXct("2026-06-8")) |>
+  dplyr::mutate(Date = as.Date(DateTime)) |>
+  dplyr::group_by(Date) |>
+  dplyr::summarise(
+    Temp_mean = mean(TmpWtr, na.rm = TRUE),
+    DO_mean   = mean(DOconc, na.rm = TRUE),
+    .groups = "drop") |>
+  dplyr::mutate(Logger = "Buoy")
 
-deepdaily2 <- ggplot(daily_means, aes(x = Date, y = DO_mean, colour = Logger)) +
+buoy_date_seq <- seq(min(buoy_daily_rotoiti$Date), max(buoy_daily_rotoiti$Date), by = "day")
+
+buoy_daily_rotoiti <- tibble::tibble(Date = buoy_date_seq) |>
+  dplyr::left_join(buoy_daily_rotoiti, by = "Date") |>
+  dplyr::mutate(Logger = "Buoy")|>  dplyr::mutate(Site = "Buoy")
+
+rotoiti_combined <- dplyr::bind_rows(daily_means, buoy_daily_rotoiti) |>
+  dplyr::mutate(Site = factor(Site, levels = c("Jetty", "Macrophyte", "Bedrock", "Buoy")))
+
+deepdaily1 <- ggplot(rotoiti_combined, aes(x = Date, y = Temp_mean, colour = Site)) +
   geom_line(linewidth = 0.9) +
-  labs(x = "Date", y = "DO (mg L⁻¹)", colour = "Logger")
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  labs(x = NULL, y = "Temperature (°C)", colour = "Site")
+
+deepdaily2 <- ggplot(rotoiti_combined, aes(x = Date, y = DO_mean, colour = Site)) +
+  geom_line(linewidth = 0.9) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  labs(x = "Date", y = "DO (mg/L)", colour = "Site")
 
 deep_daily <- deepdaily1/deepdaily2
 deep_daily
+
+ggsave(file.path(out_dir, "fig-deep-combined.png"), deep_daily, width = 8, height = 6, dpi = 300)
+
 
 ```
 

@@ -50,7 +50,9 @@
 .Rproj.user
 .Rhistory
 .Ruserdata
+*.R
 *.ijm
+**scripts/
 
 # Quarto generated output
 _site/
