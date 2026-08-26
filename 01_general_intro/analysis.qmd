@@ -1827,6 +1827,44 @@ ggsave(file.path(out_dir, "fig-depth-combined.png"), Depth_plot_combined, width 
 Depth_plot_combined
 ```
 
+## Figures — livable depth range (Rotoiti)
+```{r}
+#| label: fig-depth-rotoiti
+#| fig-width: 6
+#| fig-height: 5
+
+rotoiti_depth_summary <- depth_ranges_all |>
+  dplyr::filter(Lake == "Rotoiti") |>
+  dplyr::group_by(Season) |>
+  dplyr::summarise(
+    mean_shallowest = mean(shallowest_livable, na.rm = TRUE),
+    mean_deepest    = mean(deepest_livable,    na.rm = TRUE),
+    median_deepest  = median(deepest_livable,  na.rm = TRUE),
+    max_shallowest  = max(shallowest_livable,  na.rm = TRUE),
+    min_deepest     = min(deepest_livable,     na.rm = TRUE),
+    max_deepest     = max(deepest_livable,     na.rm = TRUE),
+    n               = n(),
+    .groups = "drop"
+  )
+
+print(rotoiti_depth_summary)
+
+Depth_plot_rotoiti <- depth_ranges_all |>
+  dplyr::filter(Lake == "Rotoiti") |>
+  ggplot(aes(x = Date)) +
+  geom_linerange(aes(ymin = cast_shallowest, ymax = cast_deepest),colour = "black", linewidth = 1.3) +
+  geom_linerange(aes(ymin = shallowest_livable, ymax = deepest_livable, colour = Season),linewidth = 1, na.rm = TRUE) +
+  scale_colour_manual(values = season_colours) +
+  scale_y_reverse() +
+  #facet_wrap(~ Lake, scales = "free_y", ncol = 2) +
+  labs(x = "Year", y = "Depth (m)")
+
+
+ggsave(file.path(out_dir, "fig-depth-rotoiti.png"), Depth_plot_rotoiti, width = 6, height = 3, dpi = 300)
+       
+Depth_plot_rotoiti
+```
+
 ## Figures — livable depth as stacked area (alternative view)
 ```{r}
 #| label: fig-depth-stacked-area

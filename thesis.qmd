@@ -30,7 +30,6 @@ theme_update(
 {{< include 04_koura_mesocosm/index.qmd >}}
 {{< include 05_stone_piles_rotoiti/index.qmd >}}
 {{< include 06_synthesis/index.qmd >}}
-{{< include 07_general_conclusion/index.qmd >}}
 {{< include references.qmd >}}
 {{< include appendices.qmd >}}
 {{< include back_cover.qmd >}}

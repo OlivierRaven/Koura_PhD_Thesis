@@ -45,7 +45,7 @@
 
 {\small\sffamily
 Propositions belonging to the thesis, entitled\\[0.3em]
-\textit{Restoring native freshwater crayfish habitat in invaded lake ecosystems}\\[0.3em]
+\textit{Enhancing native freshwater crayfish habitat in invaded lake ecosystems}\\[0.3em]
 Olivier V. Raven\\
 The University of Waikato, 2026
 }
