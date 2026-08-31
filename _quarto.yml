@@ -15,6 +15,9 @@ filters:
   - filters/strip-chapter-only.lua
   - filters/suppress-supplementary.lua
 
+crossref:
+  chapters: true
+
 bibliography: references/references.bib
 csl: references/springer-basic-author-date.csl
 

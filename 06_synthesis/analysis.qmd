@@ -159,7 +159,7 @@ okaro_raw_ts
 
 ```{r}
 #| label: fig-okaro-combined
-#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and the lake monitoring buoy < 1m. Period: 2024-09-11 to 2025-02-27."
+#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and the lake monitoring buoy < 1m. Period: 2024-09-11 to 2025-02-27. Buoy data erived from CTD cast collected by LimnoTrack (Moore and McBride 2026)."
 #| fig-height: 6
 
 
@@ -242,7 +242,7 @@ deep_raw
 
 ```{r}
 #| label: fig-deep-daily
-#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at deep stone piles and the lake monitoring buoy < 1m. Period: 2025-11-22 to 2026-06-8."
+#| fig-cap: "Daily mean water temperature (top) and dissolved oxygen (bottom) at deep stone piles and the lake monitoring buoy < 1m. Period: 2025-11-22 to 2026-06-8. Buoy data erived from CTD cast collected by LimnoTrack (Moore and McBride 2026)."
 
 daily_means <- Deep_do_data |>
   dplyr::mutate(Date = as.Date(DateTime)) |>

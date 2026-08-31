@@ -12,6 +12,7 @@
 {{< include 02_koura_fear/supplementary.qmd >}}
 
 ```{=latex}
+\clearpage
 \setcounter{table}{0}
 \setcounter{figure}{0}
 ```
@@ -19,6 +20,7 @@
 {{< include 03_koura_shoreline_habitats/supplementary.qmd >}}
 
 ```{=latex}
+\clearpage
 \setcounter{table}{0}
 \setcounter{figure}{0}
 ```
