@@ -1,0 +1,103 @@
+/* ── Google Fonts ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+/* ── Light mode: cream background + thesis fonts ─────────────────── */
+body {
+  background-color: #FFFCF0;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #1a1a1a;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar, .sidebar,
+.quarto-title,
+#quarto-header {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+}
+
+/* ── Widen the content column ────────────────────────────────────── */
+.quarto-container,
+#quarto-content,
+.page-columns .content {
+  max-width: 920px;
+}
+
+@media (min-width: 1200px) {
+  .page-columns {
+    grid-template-columns: 250px minmax(0, 920px) minmax(0, 250px);
+  }
+}
+
+/* ── Figure captions ─────────────────────────────────────────────── */
+.quarto-float-caption,
+figcaption,
+.caption {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.4;
+  margin-top: 0.4rem;
+}
+
+/* ── Table captions ──────────────────────────────────────────────── */
+caption {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.88rem;
+  color: #555;
+  caption-side: top;
+  text-align: left;
+  margin-bottom: 0.3rem;
+}
+
+/* ── Navbar: keep flatly blue but add font ───────────────────────── */
+.navbar {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* ── Sidebar TOC ─────────────────────────────────────────────────── */
+#quarto-sidebar,
+.sidebar {
+  background-color: #F5F1E6;
+  border-right: 1px solid #e0d8c8;
+}
+
+.sidebar-item-text,
+.sidebar-navigation .sidebar-item a {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.88rem;
+}
+
+/* ── Inline code ─────────────────────────────────────────────────── */
+code {
+  font-size: 0.9em;
+  background-color: #f0ece0;
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+
+/* ── Dark mode overrides ─────────────────────────────────────────── */
+[data-bs-theme="dark"] body,
+.quarto-dark body {
+  background-color: #1e1e1e;
+  color: #e8e0d0;
+}
+
+[data-bs-theme="dark"] #quarto-sidebar,
+[data-bs-theme="dark"] .sidebar {
+  background-color: #2a2a2a;
+  border-right: 1px solid #3a3a3a;
+}
+
+[data-bs-theme="dark"] code {
+  background-color: #2e2e2e;
+}
+
+[data-bs-theme="dark"] .quarto-float-caption,
+[data-bs-theme="dark"] figcaption,
+[data-bs-theme="dark"] .caption,
+[data-bs-theme="dark"] caption {
+  color: #aaa;
+}

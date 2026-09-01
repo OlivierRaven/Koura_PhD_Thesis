@@ -20,14 +20,14 @@ for the degree of\\[0.5cm]
 \textbf{Doctor of Philosophy}\\[0.2cm]
 Te Aka Mātuatua --- School of Science\\[0.5cm]
 at\\[0.5cm]
-\textbf{The University of Waikato}\\[1cm]
-by\\[0.5cm]
+\textbf{The University of Waikato}\\[0.3cm]
+by\\[0.3cm]
 \textbf{Olivier V. Raven}
 }
 
 \vfill
 
-\includegraphics[width=5.5cm]{images/Waikato_logo.png}
+\includegraphics[width=4.5cm]{images/Waikato_logo.png}
 
 \vspace{0.8cm}
 

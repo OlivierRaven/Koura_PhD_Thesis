@@ -286,14 +286,14 @@ for the degree of\\[0.5cm]
 \textbf{Doctor of Philosophy}\\[0.2cm]
 Te Aka Mātuatua --- School of Science\\[0.5cm]
 at\\[0.5cm]
-\textbf{The University of Waikato}\\[1cm]
-by\\[0.5cm]
+\textbf{The University of Waikato}\\[0.3cm]
+by\\[0.3cm]
 \textbf{Olivier V. Raven}
 }
 
 \vfill
 
-\includegraphics[width=5.5cm]{images/Waikato_logo.png}
+\includegraphics[width=4.5cm]{images/Waikato_logo.png}
 
 \vspace{0.8cm}
 
@@ -506,6 +506,8 @@ interpretations, and conclusions are the author's own.
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{1}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{1}General Introduction}
 \chaptermark{General Introduction}
@@ -732,7 +734,7 @@ keystone species in Aotearoa (Collier et al. 1997; Usio and Townsend
 provide physical shelter, preferring coarse gravel and rocky substrates
 in both streams and lakes (Jowett et al. 2008; Kusabs et al. 2015b). In
 streams, the highest abundances have been recorded on substrates with an
-average particle size of 130 mm (Jowett et al. 2008; Olsson 2008). Kōura
+average particle size of 130 mm (Olsson 2008; Jowett et al. 2008). Kōura
 avoid areas where dissolved oxygen levels drop below 5 mg/L and
 temperatures exceed 21 °C (Devcich 1979). Where suitable natural
 substrates are rare, kōura can excavate tunnels or burrows to provide
@@ -928,25 +930,34 @@ quality, and predator presence.
 
 \caption{\label{fig-study-lakes-map}Rotorua Te Arawa Lakes overview map.
 Colours represent the trophic state of each lake. Data sourced from:
-(Land, Air, Water Aotearoa (LAWA) 2025).}
+(LAWA 2025).}
 
 \end{figure}%
 
-\begingroup\fontsize{9}{11}\selectfont
+\begingroup\fontsize{7}{9}\selectfont
 
 \begin{longtable}[t]{lrrrrrrrll}
 
 \caption{\label{tbl-bop-lake-overview}Physical and limnological
 characteristics of the twelve Rotorua Te Arawa Lakes. Data sourced from:
-Land, Air, Water Aotearoa (LAWA) (2025). Lakes Rotorua and Rotoiti have
-established catfish populations and Lakes Ōkaro and Rotomāhana have no
-kōura populations.}
+LAWA (2025). Lakes Rotorua and Rotoiti have established catfish
+populations and Lakes Ōkaro and Rotomāhana have no kōura populations.}
 
 \tabularnewline
 
 \toprule
 Lake name & Surface area (km²) & Perimeter length (km) & Catchment area (km²) & Mean depth (m) & Max depth (m) & Depth ratio & Elevation (m) & Mixing regime & Trophic state\\
 \midrule
+\endfirsthead
+\multicolumn{10}{@{}l}{\textit{(continued)}}\\
+\toprule
+Lake name & Surface area (km²) & Perimeter length (km) & Catchment area (km²) & Mean depth (m) & Max depth (m) & Depth ratio & Elevation (m) & Mixing regime & Trophic state\\
+\midrule
+\endhead
+
+\endfoot
+\bottomrule
+\endlastfoot
 Rotorua & 81.0 & 45 & 508.0 & 11.0 & 45.0 & 0.24 & 280 & Polymictic & Eutrophic\\
 Rotoiti & 34.0 & 61 & 123.7 & 31.5 & 124.0 & 0.25 & 279 & Monomictic & Mesotrophic\\
 Rotoehu & 8.0 & 40 & 49.2 & 8.0 & 13.5 & 0.59 & 295 & Polymictic & Eutrophic\\
@@ -960,8 +971,7 @@ Tarawera & 41.0 & 48 & 143.1 & 50.0 & 87.5 & 0.57 & 305 & Monomictic & Oligotrop
 Rotomāhana & 9.0 & 27 & 83.3 & 60.0 & 125.0 & 0.48 & 340 & Monomictic & Mesotrophic\\
 \addlinespace
 Ōkaro & 0.3 & 2 & 3.9 & 12.5 & 18.0 & 0.69 & 280 & Monomictic & Eutrophic\\
-Rerewhakaaitu & 5.0 & 25 & 37.0 & 7.0 & 15.8 & 0.44 & NA & Polymictic & Eutrophic\\
-\bottomrule
+Rerewhakaaitu & 5.0 & 25 & 37.0 & 7.0 & 15.8 & 0.44 & NA & Polymictic & Eutrophic\\*
 
 \end{longtable}
 
@@ -978,19 +988,20 @@ significance of the lakes to Te Arawa iwi and hapū.
 Each lake supports a mix of native and introduced species. Alongside
 kōura and catfish discussed above, native taxa include the freshwater
 mussel kākahi (\emph{Echyridella menziesii}), kōaro (\emph{Galaxias
-brevipinnis}), bullies (toitoi; \emph{Gobiomorphus cotidianus}), and
-common smelt (\emph{Retropinna retropinna}). Introduced species include
-brown and rainbow trout (\emph{Salmo trutta}, \emph{Oncorhynchus
-mykiss}), mosquitofish (\emph{Gambusia affinis}), and goldfish
-(morihana; \emph{Carassius auratus}). The lakes also support a mix of
-native macrophytes and several invasive species that have transformed
-the littoral zone in many lakes (Burton 2017)
-(Figure~\ref{fig-rotoiti-weeds}). Current lake management prioritises
-improving water quality and controlling invasive species. This includes
-alum dosing (aluminium sulphate) in Lakes Rotorua and Ōkaro to reduce
-phosphorus loading, mechanical and chemical control of invasive
-macrophytes, and the community-led ``Catfish Killas'' programme, which
-aims to reduce catfish abundance from the lakes.
+brevipinnis}), bullies (toitoi; \emph{Gobiomorphus cotidianus}), longfin
+eel (tuna; \emph{Anguilla dieffenbachii}), and common smelt
+(\emph{Retropinna retropinna}). Introduced species include brown and
+rainbow trout (\emph{Salmo trutta}, \emph{Oncorhynchus mykiss}),
+mosquitofish (\emph{Gambusia affinis}), and goldfish (morihana;
+\emph{Carassius auratus}). The lakes also support a mix of native
+macrophytes and several invasive species that have transformed the
+littoral zone in many lakes (Figure~\ref{fig-rotoiti-weeds}) (Burton
+2017). Current lake management prioritises improving water quality and
+controlling invasive species. This includes alum dosing (aluminium
+sulphate) in Lakes Rotorua and Ōkaro to reduce phosphorus loading,
+mechanical and chemical control of invasive macrophytes, and the
+community-led ``Catfish Killas'' programme, which aims to reduce catfish
+abundance from the lakes.
 
 \begin{figure}
 
@@ -1025,13 +1036,13 @@ zone (Kusabs et al. 2026), placing kōura in the depth range where
 catfish predation pressure is greatest (Blanchfield et al. 2026). The
 result is a seasonal compression of available habitat, where suitable
 depths shrink to precisely the zone where predation risk is highest
-(Kusabs et al. 2026).
+(Kusabs et al. 2026). This means that for
 
 The importance of an oxygenated deep refuge is illustrated by Lake Taupō
 (maximum depth 186 m), where catfish and kōura demonstrate a more stable
 co-existence because deep waters remain oxygenated below the thermocline
 year-round (Verburg and Albert 2019), providing continuous suitable
-habitat for kōura (Kusabs et al. 2026). In Lake Rotoiti, this deep
+habitat for kōura (Kusabs and Taiaroa 2015). In Lake Rotoiti, this deep
 refuge becomes anoxic and unavailable for kōura (Kusabs et al. 2026).
 
 The shallow refuge available to kōura is also being progressively
@@ -1060,13 +1071,16 @@ conditions below the thermocline (Woolway et al. 2021), while warming
 surface waters are projected to expand the range of suitable catfish
 habitat in Aotearoa (Lee et al. 2025). The compression of suitable kōura
 habitat documented here is therefore likely to accelerate, reinforcing
-the need to understand which habitats kōura prefer and whether
-structural restoration can build resilience in kōura populations. This
-rationale is supported by evidence from other systems supporting
-crayfish: in lakes where muddy substrates provide limited refugia,
-adding rocky substrate has been shown to relax refugia limitation and
-increase noble crayfish (\emph{Astacus astacus}) population density
-(Johnsen and Taugbøl 2008).
+the need to understand which habitats kōura prefer and whether habitat
+enhancement can build resilience in kōura populations. This rationale is
+supported by evidence from other systems supporting crayfish: in lakes
+where muddy substrates provide limited refugia, adding rocky substrate
+has been shown to relax refugia limitation and increase noble crayfish
+(\emph{Astacus astacus}) population density (Johnsen and Taugbøl 2008).
+Structural addition can only deliver this benefit when water quality
+falls within species tolerance, as when dissolved oxygen or temperature
+exceeds physiological limits, species cannot persist regardless of
+refuge quality.
 
 \begin{figure}
 
@@ -1140,8 +1154,8 @@ kōura prefer remained unknown. I therefore monitored kōura presence at
 60 shoreline sites across five of the Rotorua Te Arawa Lakes, recording
 habitat features and fish species. I expected that rocky substrates with
 high structural complexity would be the primary predictor of kōura
-presence, consistent with stream habitat studies (Jowett et al. 2008;
-Olsson 2008).
+presence, consistent with stream habitat studies (Olsson 2008; Jowett et
+al. 2008).
 
 Third, although the deployment of habitat enhancement structures had
 been applied in freshwater systems globally to support fish and
@@ -1234,25 +1248,27 @@ we tested different configurations of wood and stone structures in
 mesocosm experiments to determine kōura shelter preferences. With an
 optimal design identified, \textbf{Chapter 5} deployed five stone pile
 structures along the shoreline in Lake Rotoiti and monitored kōura
-colonisation and abundance development over 18 months. In
-\textbf{Chapter 6} two further case studies are synthesised: a pilot
-stone pile deployment in Lake Ōkaro where water quality and kōura
-reintroduction were monitored, and a deeper-water deployment across a
-depth gradient in Lake Rotoiti, where Remotely Operated Vehicle (ROV)
-surveys were used to assess kōura use of the structures beyond wading
-depth. Finally, the \textbf{General Conclusion} presents an overview of
-the findings and considers how structural habitat restoration can
-contribute to building resilience in declining freshwater crayfish
-populations more broadly. As each of the four chapters are written as
-stand-alone manuscripts, some overlap of background information and
-methods is unavoidable. However, the general introduction provides a
-comprehensive overview of the study system, the species involved, and
-the research questions addressed in this thesis.
+colonisation and abundance development over 18 months. \textbf{Chapter
+6} synthesises the findings across all four research chapters,
+incorporating two pilot case studies: a stone pile deployment in Lake
+Ōkaro where water quality and kōura reintroduction were monitored, and a
+deeper-water deployment across a depth gradient in Lake Rotoiti assessed
+using Remotely Operated Vehicle (ROV) surveys. The chapter concludes
+with an overview of the findings and considers how structural habitat
+enhancement can contribute to building resilience in declining
+freshwater crayfish populations more broadly. As each of the four
+research chapters are written as stand-alone manuscripts, some overlap
+of background information and methods is unavoidable. However, the
+general introduction provides a comprehensive overview of the study
+system, the species involved, and the research questions addressed in
+this thesis.
 
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{2}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{2}Native vs.\ Novel Threats}
 \chaptermark{Native vs.\ Novel Threats}
@@ -2023,6 +2039,8 @@ of Waikato) for assisting with catfish and eel collection.
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{3}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{3}Where do K\={o}ura Live?}
 \chaptermark{Where do K\={o}ura Live?}
@@ -2237,16 +2255,15 @@ output (Figure~\ref{fig-site-map}).
 \begin{landscape}
 \begingroup\fontsize{8}{10}\selectfont
 
-\begin{longtable}[t]{>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}>{\raggedleft\arraybackslash}p{0.9cm}}
 
 \caption{\label{tbl-lake-overview}Physical, morphometric, and trophic
 characteristics of the five Rotorua Te Arawa Lakes surveyed, including
 sampling dates and number of littoral sites sampled per lake. Lake
 surface area, perimeter length, catchment area, depth, elevation, mixing
-regime, and trophic state for 2024 are derived from the Land, Air, Water
-Aotearoa (LAWA) (2025) database. Shoreline composition percentages are
-calculated from useable shoreline only, excluding geothermal and cliff
-sections.}
+regime, and trophic state for 2024 are derived from the LAWA (2025)
+database. Shoreline composition percentages are calculated from useable
+shoreline only, excluding geothermal and cliff sections.}
 
 \tabularnewline
 
@@ -2959,6 +2976,8 @@ of this manuscript.
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{4}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{4}The Importance of Structure}
 \chaptermark{The Importance of Structure}
@@ -3709,6 +3728,8 @@ Grant (Ngāti Pikiao).
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{5}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{5}Rock Piles as K\={o}ura Habitat}
 \chaptermark{Rock Piles as K\={o}ura Habitat}
@@ -4374,19 +4395,20 @@ eradication from a lake of this size is probably not achievable with
 currently available methods, and targeted removal in high-density areas
 reduces local pressure but cannot eliminate the lake-wide population
 (Dedual 2019). Emerging biotechnologies such as gene drives and
-host-specific biological control agents may offer future options (Kopf
-et al. 2019; Teem et al. 2020; \textbf{Thresher2013?}), but these remain
-experimental. Thermal stratification will intensify as the climate
-continues to warm (Woolway et al. 2021), further compressing kōura and
-expanding suitable conditions for catfish (Lee et al. 2025). When the
-primary stressors cannot be removed, habitat addition becomes one of the
-few available management tools, and refugia become most valuable under
-these conditions (Selwood and Zimmer 2020). While freshwater management
-increasingly recognises that multiple stressors interact simultaneously
-(Spears et al. 2021; Orr et al. 2024), practical responses still tend to
-focus on removing individual stressors. This study therefore tested
-whether structural habitat addition can buffer the combined effects of
-predation and thermal compression without removing either stressor.
+host-specific biological control agents may offer future options
+(Thresher et al. 2014; Kopf et al. 2019; Teem et al. 2020), but these
+remain experimental. Thermal stratification will intensify as the
+climate continues to warm (Woolway et al. 2021), further compressing
+kōura and expanding suitable conditions for catfish (Lee et al. 2025).
+When the primary stressors cannot be removed, habitat addition becomes
+one of the few available management tools, and refugia become most
+valuable under these conditions (Selwood and Zimmer 2020). While
+freshwater management increasingly recognises that multiple stressors
+interact simultaneously (Spears et al. 2021; Orr et al. 2024), practical
+responses still tend to focus on removing individual stressors. This
+study therefore tested whether structural habitat addition can buffer
+the combined effects of predation and thermal compression without
+removing either stressor.
 
 The stone piles in this study were placed along the shoreline as
 isolated structures, separated from each other and from deeper water by
@@ -4523,15 +4545,15 @@ Wood cover (\%)
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-1 & Stone\_pile & Rocky & 5.20 & 0.12 & 4.76 & 0 & 10 & 0 \\
+1 & Stone pile & Rocky & 5.20 & 0.12 & 4.76 & 0 & 10 & 0 \\
 2 & Control & Rocky & 4.40 & 0.11 & 4.79 & 70 & 0 & 0 \\
-3 & Stone\_pile & Sandy & 3.00 & 0.01 & 1.71 & 100 & 0 & 0 \\
+3 & Stone pile & Sandy & 3.00 & 0.01 & 1.71 & 100 & 0 & 0 \\
 4 & Control & Sandy & 3.00 & 0.01 & 1.74 & 80 & 5 & 0 \\
-5 & Stone\_pile & Sandy & 2.40 & 0.01 & 0.61 & 10 & 0 & 0 \\
+5 & Stone pile & Sandy & 2.40 & 0.01 & 0.61 & 10 & 0 & 0 \\
 6 & Control & Sandy & 3.00 & 0.01 & 0.55 & 0 & 0 & 0 \\
-7 & Stone\_pile & Sandy & 3.00 & 0.06 & 2.50 & 100 & 0 & 0 \\
+7 & Stone pile & Sandy & 3.00 & 0.06 & 2.50 & 100 & 0 & 0 \\
 8 & Control & Sandy & 3.00 & 0.05 & 2.22 & 30 & 0 & 0 \\
-9 & Stone\_pile & Sandy & 3.35 & 0.08 & 3.59 & 0 & 0 & 3 \\
+9 & Stone pile & Sandy & 3.35 & 0.08 & 3.59 & 0 & 0 & 3 \\
 10 & Control & Rocky & 5.00 & 0.09 & 3.74 & 20 & 0 & 0 \\
 11 & Reference & Rocky & 6.60 & 0.16 & 4.47 & 0 & 0 & 0 \\
 12 & Reference & Rocky & 6.20 & 0.12 & 4.17 & 100 & 100 & 0 \\
@@ -4554,7 +4576,7 @@ Wood cover (\%)
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/Rotoiti_monitoring_sites.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{images/Rotoiti_monitoring_sites.png}
 
 }
 
@@ -4569,20 +4591,19 @@ maps show the placement of each of the sites.}
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-forest-plot.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-forest-plot.png}
 
 }
 
 \caption{\label{fig-forest-plot}Effect sizes (β ± 95\% CI) for the key
-term of interest across all models (kōura and catfish; baseline, BACI,
-trajectory, and convergence comparisons). Filled points indicate
-significant effects (p \textless{} 0.05). Each panel has its own x-axis
-scale --- β magnitudes are not directly comparable across panels because
-each comparison tests a different contrast (step-change, per-round
-slope, or simple group difference), and occupancy is on the log-odds
-scale while abundance and biomass models use the Tweedie log link.
-Models with degenerate confidence intervals (non-positive-definite
-Hessian) are excluded.}
+term of interest across all models, separated by species (columns) and
+comparison type (rows). Filled points indicate significant effects (p
+\textless{} 0.05); open points are non-significant. Each row has its own
+x-axis scale --- effect magnitudes are not directly comparable across
+rows because each comparison tests a different contrast (step-change,
+per-round slope, or simple group difference), and occupancy is on the
+log-odds scale while abundance and biomass models use the Tweedie log
+link. Models with degenerate confidence intervals are excluded.}
 
 \end{figure}%
 
@@ -4590,7 +4611,7 @@ Hessian) are excluded.}
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-cpue-trends.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-cpue-trends.png}
 
 }
 
@@ -4609,10 +4630,12 @@ from post-construction monitoring (After).}
 
 }
 
-\caption{\label{fig-occ-warm-contrasts}Posterior BACI and
-after-treatment contrasts in kōura occupancy from the warm-season model.
-Points show posterior means with 95 \% credible intervals; contrasts
-overlapping zero indicate no detectable difference.}
+\caption{\label{fig-occ-warm-contrasts}Posterior contrasts in kōura
+occupancy from the warm-season model. (A) BACI contrast (stone pile
+minus control, before vs after construction). (B) After-treatment
+contrasts between all site-type pairs. Points show posterior means with
+95 \% credible intervals; contrasts overlapping zero indicate no
+detectable difference.}
 
 \end{figure}%
 
@@ -4652,6 +4675,8 @@ Winter 2026 (right) shows cover of stone surfaces by filamentous algae.}
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{6}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{6}Synthesis}
 \chaptermark{Synthesis}
@@ -4709,6 +4734,23 @@ compounding stressors, most prominently catfish predation, thermal
 stratification, and invasive macrophytes, which togeheter operate at
 both the local habitat scale and the broader lake scale.
 
+Chapter 2 supported the generalised fear hypothesis: koura resond with
+heightened refuge use to catfish compared to the native eel, meaning
+fear-induced behavioural suppression operates even in the absence of
+direct predation. An animal spending more time in refuge is an animal
+spending less time foraging, leading to slower growth and reduced
+reproductive output. This is the core mechanism behind the landscape of
+fear (Laundré et al. 2001), where predators do not need to eat every
+prey individual to suppress a population, but their presence alone is
+sufficient to reshape how prey use space and time, and those behavioural
+changes carry demographic consequences. In the context of the Rotorua Te
+Arawa Lakes, this means that catfish suppress kōura populations through
+two channels simultaneously. Direct predation removes individuals and
+fear-induced behavioural change reduces the reproductive capacity of
+those that survive. Population recovery under these conditions is likely
+to be slow even if predation rates are reduced, because the behaviour
+suppression persists as long as catfish are present.
+
 Chapter 3 showed a comparison between five lakes, where oligotrophic
 lakes with no catfish had the highest overall kōura catches, while
 eutrophic lakes with catfish, and anoxic stratification yielded
@@ -4717,26 +4759,6 @@ complex rocky shorelines were associated with more kōura abundance while
 excessive macrophyte cover revealed lower kōura densities, confirming
 that some stressors operate at lake scale while others matter at the
 habitat scale.
-
-Chapter 2 showed that kōura react with heightened refuge use when
-exposed to non-native catfish compared to the native eel. This is
-consistent with the response expected of a prey species encountering a
-novel predator, one of which it has no evolutionary history and
-therefore no calibrated sense of risk (Sih et al. 2023). This leads to
-maximum caution, kōura increase their chance of survival, but at a cost.
-An animal spending more time in refuge is an animal spending less time
-foraging, leading to slower growth and reduced reproductive outputs.
-This is the core mechanism behind the landscape of fear (Laundré et al.
-2001), where predators do not need to eat every prey individual to
-suppress a population, but their presence alone is sufficient to reshape
-how prey use space and time, and those behavioural changes carry
-demographic consequences. In the context of the Rotorua Te Arawa Lakes,
-this means that catfish suppress kōura populations through two channels
-simultaneously. Direct predation removes individuals and fear-induced
-behavioural change reduces the reproductive capacity of those that
-survive. Population recovery under these conditions is likely to be slow
-even if predation rates are reduced, because the behaviour suppression
-persists as long as catfish are present.
 
 Habitat enhancement represents an important intervention under these
 conditions. The mesocosm trials (Chapter 4) showed that kōura
@@ -4763,7 +4785,12 @@ breaks down and kōura can redistribute to deeper habitats. Climate
 projections suggest this dynamic will intensify as surface waters get
 warmer, stratification strengthens, and anoxic events become more
 frequent and prolonged, making conditions more favourable for catfish
-({Jane et al.} 2021; Woolway et al. 2021; Lee et al. 2025).
+({Jane et al.} 2021; Woolway et al. 2021; Lee et al. 2025). Chapter 1
+documents the decline in liveable habitat for kōura over the last 20
+years across eleven of the lakes, with for example, a statistically
+significant annual trend of −0.4\%/yr in Lake Ōkāreka, confirming that
+the thermal compression window is narrowing under current conditions,
+not just future ones.
 
 \section{Case study - field trial stones piles Lake
 Ōkaro}\label{case-study---field-trial-stones-piles-lake-ux14dkaro}
@@ -4775,22 +4802,21 @@ kōura tolerance thresholds. Lake Ōkaro is one of the smaller Rotorua Te
 Arawa volcanic lakes with an area of 30 ha, a max depth of 18 m and a
 mean depth of 12 m. Water quality in the lake has been very poor with
 trophic state flipping between hypereutrophic and eutrophic and frequent
-algal blooms (Paul et al. 2008; LAWA (Land, Air, Water Aotearoa) 2024).
-To improve water quality in the lake, in 2007 a wetland has been
-constructed to remove nitrogen and sediments from the main inflows into
-the lake (Hudson et al. 2009) and alum dosings (aluminium sulfate) are
-carried out as in lake phosphorous treatment (Paul et al. 2008). Kōura
-have not been observed in Lake Ōkaro in monitoring surveys from 1981 to
-2007 (Parkyn and Kusabs 2007) and monitoring in 2016 and 2017 still were
-not able to observe kōura in the lake even as water quality had improved
-(Kusabs 2017). Water quality has now improved sufficiently that kōura is
-considered feasible but natural recolonisation has not happened yet,
-therefore reintroduction might be possible. Lake Ōkaro is stocked with
-trout for angling and as a predator of kōura, stone piles would provide
-additional refuge to trial habita enhancement alongside the existing
-trout stocking. The lake has no stone or rocky substrates therefore the
-construction of two stone piles would provide initial refuge for the
-introduced kōura in the lake.
+algal blooms (Paul et al. 2008; LAWA 2024). To improve water quality in
+the lake, in 2007 a wetland has been constructed to remove nitrogen and
+sediments from the main inflows into the lake (Hudson et al. 2009) and
+alum dosings (aluminium sulfate) are carried out as in lake phosphorous
+treatment (Paul et al. 2008). Kōura have not been observed in Lake Ōkaro
+in monitoring surveys from 1981 to 2007 (Parkyn and Kusabs 2007) and
+monitoring in 2016 and 2017 still were not able to observe kōura in the
+lake even as water quality had improved (Kusabs 2017). Water quality has
+now improved sufficiently that kōura is considered feasible but natural
+recolonisation has not happened yet, therefore reintroduction might be
+possible. Lake Ōkaro is stocked with trout for angling and as a predator
+of kōura, stone piles would provide additional refuge to trial habitat
+enhancement alongside the existing trout stocking. The lake has no stone
+or rocky substrates therefore the construction of two stone piles would
+provide initial refuge for the introduced kōura in the lake.
 
 Stone pile construction was carried out collaboratively with Te Arawa
 Lakes Trust, Tūhourangi, Ngāti Tahu-Ngāti Whaoa, Te Mana o Ngāti
@@ -4844,7 +4870,7 @@ the lake monitoring buoy \textless{} 1m. Period: 2024-09-11 to
 \end{figure}%
 
 Construction by hand proved to be a simple and low-cost method for
-building shallow shorelines structures. the smaller stone size used in
+building shallow shorelines structures. The smaller stone size used in
 Ōkaro (range 70-210 mm; mean 120 mm) required more handling effort and
 provided limited crevice space for larger kōura. For the Rotoiti
 deployment, slightly larger stones (85-315 mm; mean 173 mm) were
@@ -4855,9 +4881,7 @@ The Ōkaro trial demonstrated that habitat enhancement cannot succeed
 ahead of water quality recovery. The anoxic event that followed stone
 pile deployment confirmed that structural complexity provides no benefit
 when dissolved oxygen drops below kōura tolerance, kōura cannot use a
-refuge they cannot survive in. This reinforces the sequencing argument
-made later in this chapter: habitat provision must follow, not precede,
-the establishment of survivable conditions.
+refuge they cannot survive in.
 
 \section{Case study - deep stone piles Lake
 Rotoiti}\label{case-study---deep-stone-piles-lake-rotoiti}
@@ -4944,9 +4968,13 @@ habitable depth window as it shifts seasonally between thermal and
 oxygen constraints. Stone piles at depth therefore address not only
 structural habitat availability but also the habitat compression dynamic
 identified as a key stressor in the Rotorua Te Arawa Lakes. The observed
-suppression of macrophytes suggests an additional co-benefit,
-potentially creating connectivity between shallow and deep refuges in
-overgrown littoral zones, though this warrants further investigation.
+suppression of macrophytes suggests an additional co-benefit: by
+preventing macrophyte growth, stone piles also prevent the buildup of
+organic matter that would otherwise die off, sink to depth, and
+intensify deep-water deoxygenation through a pathway distinct from
+thermal stratification. Stone piles could also potentially create
+connectivity between shallow and deep refuges in overgrown littoral
+zones, though this warrants further investigation.
 
 \section{Kōura monitoring approaches}\label{koura-monitoring-approaches}
 
@@ -5167,9 +5195,9 @@ catfish-invaded lakes.
 
 \section{Conclusion}\label{conclusion-1}
 
-Kōura populations in the Rotorua Te Arawa Lakes are declining, and this
-thesis set out to determine whether habitat enhancement could offer a
-practical mean of supporting them.
+Kōura populations in the Rotorua Te Arawa Lakes have declined by up to
+76-91 \% since 2003, and this thesis set out to determine whether
+habitat enhancement could offer a practical mean of supporting them.
 
 The findings confirm that kōura decline is driven by multiple stressors
 acting together rather than in isolation. Non-consumptive, fear induced
@@ -5221,16 +5249,16 @@ insights on ecologically relevant concentrations and updates to
 methodology. PLOS One 20:e0340001.
 \url{https://doi.org/10.1371/journal.pone.0340001}
 
-\bibitem[\citeproctext]{ref-Adams2014}
-Adams SB (2014) Crayfish use of trash versus natural cover in incised,
-sand-bed streams. Environmental Management 53:382--392.
-\url{https://doi.org/10.1007/s00267-013-0197-3}
-
 \bibitem[\citeproctext]{ref-Adams2007}
 Adams SB (2007) Direct and indirect effects of channel catfish
 ({\emph{Ictalurus punctatus}}) on native crayfishes ({Cambaridae}) in
 experimental tanks. The American Midland Naturalist 158:85--96.
 \url{https://doi.org/10.1674/0003-0031(2007)158\%5B85:daieoc\%5D2.0.co;2}
+
+\bibitem[\citeproctext]{ref-Adams2014}
+Adams SB (2014) Crayfish use of trash versus natural cover in incised,
+sand-bed streams. Environmental Management 53:382--392.
+\url{https://doi.org/10.1007/s00267-013-0197-3}
 
 \bibitem[\citeproctext]{ref-Albertson2018}
 Albertson LK, Daniels MD (2018) Crayfish ecosystem engineering effects
@@ -5305,7 +5333,7 @@ eels. Freshwater Biology 29:89--97.
 \url{https://doi.org/10.1111/j.1365-2427.1993.tb00747.x}
 
 \bibitem[\citeproctext]{ref-Blanchfield2026}
-Blanchfield PJ, Rodrigues TH, MacNeil C, et al (2026) Invading brown
+Blanchfield PJ, Rodrigues TH, MacNeil C, et al (2026) Invadingbrown
 bullhead catfish (ameiurus nebulosus) show thermal niche rigidity and
 benthic niche plasticity: Implications for management. Biological
 Invasions. \url{https://doi.org/10.1007/s10530-026-03877-5}
@@ -5452,8 +5480,8 @@ Conservation Science and Practice 4:e12787.
 
 \bibitem[\citeproctext]{ref-Cooke2023}
 Cooke SJ, Piczak ML, Vermaire JC, Kirkwood AE (2023) On the troubling
-use of plastic {``habitat''} structures for fish in freshwater
-ecosystems -- or -- when restoration is just littering. FACETS 8:1--19.
+use of plastic 'habitat' structures for fish in freshwater ecosystems
+--- or --- when restoration is just littering. FACETS 8:1--19.
 \url{https://doi.org/10.1139/facets-2022-0210}
 
 \bibitem[\citeproctext]{ref-Crandall2008}
@@ -5478,7 +5506,7 @@ Society 23:224--236.
 Danilović M, Maguire I, Füreder L (2022) Overlooked keystone species in
 conservation plans of fluvial ecosystems in {Southeast Europe}: A review
 of native freshwater crayfish species. Knowledge \& Management of
-Aquatic Ecosystems 423:21. \url{https://doi.org/10.1051/kmae/2022016}
+Aquatic Ecosystems 21. \url{https://doi.org/10.1051/kmae/2022016}
 
 \bibitem[\citeproctext]{ref-Dawkins1979}
 Dawkins R, Krebs JR (1979) Arms races between and within species.
@@ -5493,8 +5521,8 @@ behavior of the invasive freshwater crayfish cherax destructor (clark,
 
 \bibitem[\citeproctext]{ref-Dedual2002}
 Dedual M (2002) Vertical distribution and movements of brown bullhead
-({\emph{Ameiurus nebulosus}} {Lesueur} 1819) in {Motuoapa Bay}, southern
-{Lake Taupo}, {New Zealand}. Hydrobiologia 483:129--135.
+(\emph{ameiurus nebulosus} {Lesueur} 1819) in {Motuoapa Bay, southern
+Lake Taupo, New Zealand}. Hydrobiologia 483:129--135.
 \url{https://doi.org/10.1007/978-94-017-0771-8_15}
 
 \bibitem[\citeproctext]{ref-Dedual2019}
@@ -5503,9 +5531,9 @@ Bullhead} catfish (\emph{ameiurus nebulosus} {Lesueur} 1815) in {New
 Zealand} and overseas. Bay of Plenty Regional Council
 
 \bibitem[\citeproctext]{ref-Devcich1979}
-Devcich AA (1979) An ecological study of {\emph{Paranephrops
-planifrons}} {White} ({Decapoda} : {Parastacidae}) in {Lake Rotoiti},
-{North Island}. PhD thesis, University of Waikato
+Devcich AA (1979) An ecological study of \emph{paranephrops planifrons}
+{White} ({Decapoda: Parastacidae}) in {Lake Rotoiti, North Island}. PhD
+thesis, University of Waikato
 
 \bibitem[\citeproctext]{ref-Dickson2023}
 Dickson J, Franken O, Watson MS, et al (2023) Who lives in a pear tree
@@ -5535,7 +5563,7 @@ the outcome of shelter competition in crayfish20. Ethology 126:584--592.
 Dudgeon D, Arthington AH, Gessner MO, et al (2006) Freshwater
 biodiversity: Importance, threats, status and conservation challenges.
 Biological Reviews 81:163--182.
-\url{https://doi.org/10.1017/s1464793105006950}
+\url{https://doi.org/10.1017/S1464793105006950}
 
 \bibitem[\citeproctext]{ref-Dumelle2023}
 Dumelle M, Kincaid T, Olsen AR, Weber M (2023) Spsurvey: Spatial
@@ -5577,7 +5605,7 @@ Conservation 24:38--49. \url{https://doi.org/10.1017/S0376892997000088}
 
 \bibitem[\citeproctext]{ref-Figler2005}
 Figler MH, Blank GS, Peeke HVS (2005) Shelter competition between
-resident male red swamp crayfish {\emph{Procambarus clarkii}} (girard)
+resident male red swamp crayfish {\emph{Procambarus clarkii}} ({Girard})
 and conspecific intruders varying by sex and reproductive status. Marine
 and Freshwater Behaviour and Physiology 38:237--248.
 \url{https://doi.org/10.1080/10236240500376477}
@@ -5650,10 +5678,9 @@ Chemical recognition of fish predators by the invasive crayfish
 \url{https://doi.org/10.1111/j.1365-2427.2011.02595.x}
 
 \bibitem[\citeproctext]{ref-Grayling2020}
-Grayling S (2020)
-\href{https://atlas.boprc.govt.nz/api/v1/edms/document/A3651696/content}{{Bay
-of Plenty} regional pest management plan 2011-2016 annual report for
-2019/2020}. Bay of Plenty Regional Council
+Grayling S (2020) {Bay of Plenty Regional Pest Management Plan}
+2011--2016 {Annual Report} for 2019/2020. Bay of Plenty Regional
+Council, Whakatāne, New Zealand
 
 \bibitem[\citeproctext]{ref-Greenaway1985}
 Greenaway P (1985) Calcium balance and moulting in the {Crustacea}.
@@ -5661,8 +5688,8 @@ Biological Reviews 60:425--454
 
 \bibitem[\citeproctext]{ref-Hamilton2005}
 Hamilton D, McBride C, Uraoka T (2005) {Lake Rotoiti} fieldwork and
-modelling to support considerations of {Ohau} channel diversion from
-{Lake Rotoiti}. NIWA \& University of Waikato
+modeling to support considerations of {Ohau} channel diversion from
+{Lake Rotoiti}. NIWA \& University of Waikato, Hamilton, New Zealand
 
 \bibitem[\citeproctext]{ref-Hammond2006}
 Hammond KS, Hollows JW, Townsend CR, Lokman PM (2006) Effects of
@@ -5822,7 +5849,7 @@ detectable over kilometres underwater. Scientific Reports 10:
 \url{https://doi.org/10.1038/s41598-020-64830-7}
 
 \bibitem[\citeproctext]{ref-Johnsen2008}
-Johnsen SI, Taugbøl T (2008) Add stones, get crayfish -- is it that
+Johnsen SI, Taugbøl T (2008) Add stones, get crayfish - is it that
 simple? Freshwater Crayfish 16:47--50
 
 \bibitem[\citeproctext]{ref-Johnson2014}
@@ -5839,8 +5866,8 @@ dynamics}. In: Biology and ecology of crayfish. CRC Press, pp 261--296
 
 \bibitem[\citeproctext]{ref-Jowett2008}
 Jowett IG, Parkyn SM, Richardson J (2008) Habitat characteristics of
-crayfish ({\emph{Paranephrops planifrons}}) in {New Zealand} streams
-using generalised additive models ({GAMs}). Hydrobiologia 596:353--365.
+crayfish (\emph{paranephrops planifrons}) in {New Zealand} streams using
+generalised additive models ({GAMs}). Hydrobiologia 596:353--365.
 \url{https://doi.org/10.1007/s10750-007-9108-z}
 
 \bibitem[\citeproctext]{ref-Jowett1990}
@@ -5901,30 +5928,29 @@ Marine and Freshwater Research 52:603--625.
 
 \bibitem[\citeproctext]{ref-Kusabs2015a}
 Kusabs IA, Hicks BJ, Quinn JM, Hamilton DP (2015a) Sustainable
-management of freshwater crayfish (kōura, {\emph{Paranephrops
-planifrons}}) in {Te Arawa} ({Rotorua}) lakes, {North Island}, {New
-Zealand}. Fisheries Research 168:35--46.
-\url{https://doi.org/10.1016/j.fishres.2015.03.015}
+management of freshwater crayfish (kōura, paranephrops planifrons) in te
+arawa (rotorua) lakes, north island, new zealand. Fisheries Research
+168:35--46. \url{https://doi.org/10.1016/j.fishres.2015.03.015}
 
 \bibitem[\citeproctext]{ref-Kusabs2026}
 Kusabs IAK, Duggan IC, Bruere AC, et al (2026) Invasive catfish linked
 to the decline of freshwater crayfish in two {Aotearoa New Zealand}
-lakes. Biological Invasions 28:
+lakes. Biological Invasions 28:143.
 \url{https://doi.org/10.1007/s10530-026-03852-0}
 
 \bibitem[\citeproctext]{ref-Kusabs2009}
 Kusabs IA, Quinn JM (2009) Use of a traditional {Māori} harvesting
-method, the tau k{ō}ura, for monitoring k{ō}ura (freshwater crayfish,
-{\emph{Paranephrops planifrons}}) in {Lake Rotoiti}, {North Island, New
+method, the tau kōura, for monitoring kōura (freshwater crayfish,
+\emph{paranephrops planifrons}) in {Lake Rotoiti, North Island, New
 Zealand}. New Zealand Journal of Marine and Freshwater Research
 43:713--722. \url{https://doi.org/10.1080/00288330909510036}
 
 \bibitem[\citeproctext]{ref-Kusabs2015b}
 Kusabs IA, Quinn JM, Hamilton DP (2015b) Effects of benthic substrate,
-nutrient enrichment and predatory fish on freshwater crayfish (koura,
-{\emph{Paranephrops planifrons}}) population characteristics in seven
-{Te Arawa} ({Rotorua}) lakes, {North Island}, {New Zealand}. Marine and
-Freshwater Research 66:631--643. \url{https://doi.org/10.1071/mf14148}
+nutrient enrichment and predatory fish on freshwater crayfish (kōura,
+\emph{paranephrops planifrons}) population characteristics in seven {Te
+Arawa (Rotorua)} lakes, {North Island, New Zealand}. Marine and
+Freshwater Research 66:631. \url{https://doi.org/10.1071/MF14148}
 
 \bibitem[\citeproctext]{ref-Kusabs2015c}
 Kusabs I, Taiaroa R (2015)
@@ -5936,18 +5962,17 @@ Tūwharetoa Māori Trust Board
 Kutner MH, Nachtsheim CJ, Neter J, Li W (2005) Applied linear
 statistical models, 5th edn. McGraw-Hill Irwin
 
-\bibitem[\citeproctext]{ref-LAWA2025}
-Land, Air, Water Aotearoa (LAWA) (2025) Lakes data for the {Bay of
-Plenty} region
-
 \bibitem[\citeproctext]{ref-Laundre2001}
 Laundré JW, Hernández L, Altendorf KB (2001) Wolves, elk, and bison:
 Reestablishing the {``landscape of fear''} in {Yellowstone National
 Park}, {U.S.A.} Canadian Journal of Zoology 79:1401--1409.
 \url{https://doi.org/10.1139/z01-094}
 
+\bibitem[\citeproctext]{ref-LAWA2025}
+LAWA (2025) Lakes data for the {Bay of Plenty} region
+
 \bibitem[\citeproctext]{ref-LAWA2024}
-LAWA (Land, Air, Water Aotearoa) (2024) Lake okaro
+LAWA (2024) Lake okaro
 
 \bibitem[\citeproctext]{ref-Lee2025}
 Lee F, Kusabs IAK, Perry GLW, MacNeil C (2025) Identifying refugia from
@@ -6142,10 +6167,10 @@ growth: Leaf detritus versus invertebrate food sources at two diurnally
 varying temperatures. Freshwater Crayfish 13:371--382
 
 \bibitem[\citeproctext]{ref-Parkyn2004}
-Parkyn SM, Collier KJ (2004) Interaction of {Press} and {Pulse}
-disturbance on crayfish populations: Flood impacts in pasture and forest
-streams. Hydrobiologia 527:113--124.
-\url{https://doi.org/10.1023/b:hydr.0000043189.91134.94}
+Parkyn SM, Collier KJ (2004) Interaction of press and pulse disturbance
+on crayfish populations: Flood impacts in pasture and forest streams.
+Hydrobiologia 527:113--124.
+\url{https://doi.org/10.1023/B:HYDR.0000043189.91134.94}
 
 \bibitem[\citeproctext]{ref-Parkyn2001}
 Parkyn SM, Collier KJ, Hicks BJ (2001) {New Zealand} stream crayfish:
@@ -6154,7 +6179,8 @@ Functional omnivores but trophic predators? Freshwater Biology
 
 \bibitem[\citeproctext]{ref-Parkyn2007}
 Parkyn SM, Kusabs IA (2007) Taonga and mahinga kai species of the {Te
-Arawa} lakes: A review of current knowledge-koura. NIWA, Hamilton
+Arawa} lakes: A review of current knowledge --- kōura. NIWA, Hamilton,
+New Zealand
 
 \bibitem[\citeproctext]{ref-Parkyn2009}
 Parkyn SM, Meleason MA, Davies-Colley RJ (2009) Wood enhances crayfish
@@ -6271,7 +6297,7 @@ crayfish in freshwater and terrestrial habitats. Freshwater Crayfish
 
 \bibitem[\citeproctext]{ref-Richman2015}
 Richman NI, Böhm M, Adams SB, et al (2015) Multiple drivers of decline
-in the global status of freshwater crayfish ({Decapoda}: {Astacidea}).
+in the global status of freshwater crayfish ({Decapoda: Astacidea}).
 Philosophical Transactions of the Royal Society B: Biological Sciences
 370:20140060. \url{https://doi.org/10.1098/rstb.2014.0060}
 
@@ -6344,12 +6370,12 @@ review of the evidence. Biological Conservation 245:108502.
 \url{https://doi.org/10.1016/j.biocon.2020.108502}
 
 \bibitem[\citeproctext]{ref-Shave1994}
-Shave CR, Townsend CR, Crowl TA (1994) Anti-predator behaviours of a
+Shave CathyR, Townsend CR, Crowl TA (1994) Anti-predator behaviours of a
 freshwater crayfish ({\emph{Paranephrops zealandicus}}) to a native and
 an introduced predator. New Zealand Journal of Ecology 18:1--10
 
 \bibitem[\citeproctext]{ref-Sheriff2020}
-Sheriff MJ, Peacor SD, Hawlena D, Thaker M (2020) Non‐consumptive
+Sheriff MJ, Peacor SD, Hawlena D, Thaker M (2020) Non-consumptive
 predator effects on prey population size: A dearth of evidence. Journal
 of Animal Ecology 89:1302--1316.
 \url{https://doi.org/10.1111/1365-2656.13213}
@@ -6360,7 +6386,7 @@ data in {CPUE} analysis. Fisheries Research 93:154--162.
 \url{https://doi.org/10.1016/j.fishres.2008.03.006}
 
 \bibitem[\citeproctext]{ref-Sih2010}
-Sih A, Bolnick DI, Luttbeg B, et al (2010) Predator-prey naïveté,
+Sih A, Bolnick DI, Luttbeg B, et al (2010) Predator--prey naïveté,
 antipredator behavior, and the ecology of predator invasions. Oikos
 119:610--621. \url{https://doi.org/10.1111/j.1600-0706.2009.18039.x}
 
@@ -6485,6 +6511,12 @@ Testa S, Collier KJ, Death RG (2011) Macroinvertebrate response to
 stream restoration by large wood addition. Ecohydrology 4:800--810.
 \url{https://doi.org/10.1002/eco.146}
 
+\bibitem[\citeproctext]{ref-Thresher2014}
+Thresher RE, Hayes K, Bax NJ, et al (2014) Genetic control of invasive
+fish: Technological options and its role in integrated pest management.
+Biological Invasions 16:1201--1216.
+\url{https://doi.org/10.1007/s10530-013-0477-0}
+
 \bibitem[\citeproctext]{ref-UNGeneralAssembly2019}
 UN. General Assembly (2019) {United Nations Decade} on {Ecosystem
 Restoration} (2021--2030): Resolution adopted by the {General Assembly}
@@ -6548,7 +6580,7 @@ Hamilton, New Zealand
 
 \bibitem[\citeproctext]{ref-Vincent1984}
 Vincent WF, Gibbs MM, Dryden SJ (1984) Accelerated eutrophication in a
-{New Zealand} lake: {Lake Rotoiti}, central {North Island}. New Zealand
+{New Zealand} lake: {Lake Rotoiti, central North Island}. New Zealand
 Journal of Marine and Freshwater Research 18:431--440.
 \url{https://doi.org/10.1080/00288330.1984.9516064}
 
@@ -6574,8 +6606,8 @@ warm-temperate, monomictic lake in {New Zealand}. Hydrobiologia
 652:57--70. \url{https://doi.org/10.1007/s10750-010-0318-4}
 
 \bibitem[\citeproctext]{ref-Wetzel2001}
-Wetzel RG (2001) Limnology: Lake and river ecosystems, 3rd edn. Academic
-Press, San Diego, CA
+Wetzel RG (2001) Limnology: Lake and river ecosystems. Gulf Professional
+Publishing
 
 \bibitem[\citeproctext]{ref-White2003}
 White J, Irvine K (2003) The use of littoral mesohabitats and their
@@ -6606,8 +6638,8 @@ ratios. Ecosphere 11:e03188. \url{https://doi.org/10.1002/ecs2.3188}
 
 \bibitem[\citeproctext]{ref-Woolway2021}
 Woolway RI, Sharma S, Weyhenmeyer GA, et al (2021) Phenological shifts
-in lake stratification under climate change. Nature Communications 12:
-\url{https://doi.org/10.1038/s41467-021-22657-4}
+in lake stratification under climate change. Nature Communications
+12:2318. \url{https://doi.org/10.1038/s41467-021-22657-4}
 
 \bibitem[\citeproctext]{ref-Wright2010}
 Wright TF, Eberhard JR, Hobson EA, et al (2010) Behavioral flexibility
