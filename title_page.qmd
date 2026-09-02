@@ -15,7 +15,7 @@
 \vfill
 
 {\fontsize{11}{19}\selectfont
-A thesis submitted in fulfilment of the requirements\\[0.3cm]
+A thesis submitted in partial fulfilment of the requirements\\[0.3cm]
 for the degree of\\[0.5cm]
 \textbf{Doctor of Philosophy}\\[0.2cm]
 Te Aka Mātuatua --- School of Science\\[0.5cm]
@@ -50,7 +50,7 @@ by\\[0.3cm]
 
 &nbsp;
 
-A thesis submitted in fulfilment of the requirements for the degree of
+A thesis submitted in partial fulfilment of the requirements for the degree of
 
 **Doctor of Philosophy**
 
@@ -82,7 +82,7 @@ Enhancing native freshwater crayfish habitat in invaded lake ecosystems
 </h1>
 
 <p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; line-height:2.4; margin:0 0 2.5rem;">
-A thesis submitted in fulfilment of the requirements<br>
+A thesis submitted in partial fulfilment of the requirements<br>
 for the degree of<br>
 <strong>Doctor of Philosophy</strong><br>
 Te Aka Mātuatua — School of Science<br>

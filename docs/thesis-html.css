@@ -1,0 +1,215 @@
+/* ── Google Fonts ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+/* ── Light mode: cream background + thesis fonts ─────────────────── */
+body {
+  background-color: #FFFCF0;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #1a1a1a;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar, .sidebar,
+.quarto-title,
+#quarto-header {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+}
+
+/* ── Content width: let Quarto's centering work, just nudge body text ── */
+.quarto-container {
+  max-width: 1400px;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+/* ── Figure captions ─────────────────────────────────────────────── */
+.quarto-float-caption,
+figcaption,
+.caption {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.4;
+  margin-top: 0.4rem;
+}
+
+/* ── Table captions ──────────────────────────────────────────────── */
+caption {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.88rem;
+  color: #555;
+  caption-side: top;
+  text-align: left;
+  margin-bottom: 0.3rem;
+}
+
+/* ── Navbar: keep flatly blue but add font ───────────────────────── */
+.navbar {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* ── Sidebar TOC ─────────────────────────────────────────────────── */
+#quarto-sidebar,
+.sidebar {
+  background-color: #F5F1E6;
+  border-right: 1px solid #e0d8c8;
+}
+
+.sidebar-item-text,
+.sidebar-navigation .sidebar-item a {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.88rem;
+}
+
+/* ── Inline code ─────────────────────────────────────────────────── */
+code {
+  font-size: 0.9em;
+  background-color: #f0ece0;
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+
+/* ── Dark mode overrides ─────────────────────────────────────────── */
+[data-bs-theme="dark"] body,
+.quarto-dark body {
+  background-color: #1e1e1e;
+  color: #e8e0d0;
+}
+
+[data-bs-theme="dark"] #quarto-sidebar,
+[data-bs-theme="dark"] .sidebar {
+  background-color: #2a2a2a;
+  border-right: 1px solid #3a3a3a;
+}
+
+[data-bs-theme="dark"] code {
+  background-color: #2e2e2e;
+}
+
+[data-bs-theme="dark"] .quarto-float-caption,
+[data-bs-theme="dark"] figcaption,
+[data-bs-theme="dark"] .caption,
+[data-bs-theme="dark"] caption {
+  color: #aaa;
+}
+
+/* ── Landing page hero ───────────────────────────────────────────────── */
+.thesis-hero {
+  position: relative;
+  width: 100%;
+  min-height: min(100vh, 680px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 64px;
+  overflow: hidden;
+  background: #0c2430;
+  margin-bottom: 2.5rem;
+}
+.thesis-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.45;
+}
+.thesis-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12,36,48,0.05) 0%, rgba(12,36,48,0.88) 100%);
+}
+.thesis-hero-body {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 800px;
+}
+.thesis-hero-eyebrow {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4a9eb5;
+  margin-bottom: 14px;
+}
+.thesis-hero-title {
+  font-family: 'Crimson Pro', Georgia, serif !important;
+  font-style: italic !important;
+  font-size: clamp(1.75rem, 4vw, 3rem) !important;
+  font-weight: 400 !important;
+  color: #FFFCF0 !important;
+  line-height: 1.22 !important;
+  text-wrap: balance;
+  margin-bottom: 20px !important;
+  border: none !important;
+}
+.thesis-hero-rule {
+  width: 44px;
+  height: 1px;
+  background: #4a9eb5;
+  margin: 0 auto 18px;
+  opacity: 0.65;
+}
+.thesis-hero-author {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(255,252,240,0.82);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.thesis-hero-year {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255,252,240,0.42);
+  letter-spacing: 0.09em;
+}
+
+/* ── Chapter hero banner ─────────────────────────────────────────────── */
+.ch-hero-wrap {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+  background: #0c2430;
+  margin-bottom: 0.25rem;
+}
+.ch-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 0.62;
+}
+.ch-hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--bs-body-bg, #FFFCF0));
+  pointer-events: none;
+}
+.ch-eyebrow {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4a9eb5;
+  margin-top: 0.6rem;
+  margin-bottom: 0;
+}

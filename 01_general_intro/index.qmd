@@ -332,11 +332,16 @@ lake_data <- data.frame(
   check.names = FALSE
 )
 
-tbl <- knitr::kable(lake_data, booktabs = TRUE, longtable = TRUE)
 if (knitr::is_latex_output()) {
-  tbl |> kableExtra::kable_styling(font_size = 7, latex_options = "repeat_header")
+  knitr::kable(lake_data, booktabs = TRUE) |>
+    kableExtra::kable_styling(font_size = 7, latex_options = c("striped"),
+                              stripe_color = "gray!8") |>
+    kableExtra::landscape()
+} else if (isTRUE(getOption("thesis.is.html"))) {
+  DT::datatable(lake_data, rownames = FALSE, filter = "top",
+                options = list(pageLength = 12, dom = 'frtip', scrollX = TRUE))
 } else {
-  tbl
+  knitr::kable(lake_data)
 }
 
 ```
