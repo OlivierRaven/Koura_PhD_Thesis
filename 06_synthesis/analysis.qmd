@@ -151,7 +151,7 @@ rawplot1<-ggplot(Okaro_do_data, aes(x = DateTime, y = Temp_C, colour = Site)) +
 
 rawplot2<-ggplot(Okaro_do_data, aes(x = DateTime, y = DO_mg_L, colour = Site)) +
   geom_line() +
-  labs(x = "Date", y = "DO (mg L⁻¹)", colour = "Site")
+  labs(x = "Date", y = "DO (mg/L)", colour = "Site")
 
 okaro_raw_ts<-rawplot1/rawplot2
 okaro_raw_ts
@@ -205,7 +205,7 @@ p_do <- ggplot(okaro_combined, aes(x = Date, y = DO, colour = Source)) +
   geom_line(linewidth = 0.9) +
   geom_point(data = spot_measurements, aes(x = Date, y = DO),
              inherit.aes = FALSE, colour = "black", size = 2.5) +
-  labs(x = "Date", y = "DO (mg L⁻¹)", colour = NULL)
+  labs(x = "Date", y = "DO (mg/L)", colour = NULL)
 
 okaro_combined_plot <- p_temp / p_do + patchwork::plot_layout(guides = "collect")
 okaro_combined_plot

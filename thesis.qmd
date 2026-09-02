@@ -4,7 +4,6 @@ thesis-title: "Enhancing native freshwater crayfish habitat in invaded lake ecos
 author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none
-prefer-html: true
 ---
 
 ```{r}
@@ -17,6 +16,7 @@ theme_update(
   plot.background  = element_rect(fill = .bg, colour = NA),
   panel.background = element_rect(fill = .bg, colour = NA)
 )
+options(thesis.is.html = knitr::is_html_output())
 ```
 
 {{< include index.qmd >}}

@@ -33,3 +33,29 @@ title-block-style: none
 ::: {.content-visible when-format="docx"}
 ![](images/thesis_cover.jpg){fig-align="center" width=15cm}
 :::
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: thesis-landing-hero
+#| echo: false
+#| output: asis
+#| eval: !expr knitr::is_html_output()
+.img <- "images/thesis_cover.jpg"
+if (file.exists(.img)) {
+  cat(sprintf(
+    '<div class="thesis-hero">
+  <img class="thesis-hero-img" src="%s" alt="">
+  <div class="thesis-hero-overlay"></div>
+  <div class="thesis-hero-body">
+    <span class="thesis-hero-eyebrow">PhD Thesis &middot; University of Waikato &middot; 2026</span>
+    <h1 class="thesis-hero-title">Enhancing native freshwater crayfish habitat in invaded lake ecosystems</h1>
+    <div class="thesis-hero-rule"></div>
+    <span class="thesis-hero-author">Olivier V. Raven</span>
+    <span class="thesis-hero-year">2026</span>
+  </div>
+</div>',
+    knitr::image_uri(.img)
+  ))
+}
+```
+:::

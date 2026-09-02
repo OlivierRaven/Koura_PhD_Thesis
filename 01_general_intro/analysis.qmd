@@ -429,6 +429,18 @@ lake_coords <- data.frame(
   y         = sf::st_coordinates(lake_pts)[, 2]
 )
 
+# Per-lake label nudges (NZTM metres) — push small/crowded lake names off the polygon
+.nudges <- tibble::tribble(
+  ~lake_name,       ~nudge_x,  ~nudge_y,
+  "Ōkaro",          -1500,      1000,   # tiny lake; just nudge slightly left & above
+  "Tikitapu",        -2000,     1000,   # nudge right & down — away from Rotokākahi
+  "Rotokākahi",     3000,        -500,  # pull left, away from Tikitapu
+  "Rerewhakaaitu",  -3000,     -2500    # pull down toward own lake, clear of Rotomāhana
+)
+lake_coords <- dplyr::left_join(lake_coords, .nudges, by = "lake_name") |>
+  dplyr::mutate(nudge_x = dplyr::coalesce(nudge_x, 0),
+                nudge_y = dplyr::coalesce(nudge_y, 0))
+
 # Main map 
 p_main <- ggplot() +
   tidyterra::geom_spatraster_rgb(data = basemap) +
@@ -441,26 +453,29 @@ p_main <- ggplot() +
     na.value = "grey70",
     guide    = guide_legend(
       title.position = "top",
-      keywidth       = unit(0.7, "cm"),
-      keyheight      = unit(0.5, "cm"),
+      keywidth       = unit(1.0, "cm"),
+      keyheight      = unit(0.65, "cm"),
       override.aes   = list(alpha = 1, color = NA)
     )
   ) +
   ggrepel::geom_label_repel(
     data             = lake_coords,
     aes(x = x, y = y, label = lake_name),
-    size             = 3,
+    nudge_x          = lake_coords$nudge_x,
+    nudge_y          = lake_coords$nudge_y,
+    size             = 5,
     fontface         = "bold",
     fill             = alpha("white", 0.88),
     color            = "black",
-    label.size       = 0.12,
-    label.padding    = unit(0.15, "lines"),
+    label.size       = 0.15,
+    label.padding    = unit(0.18, "lines"),
     label.r          = unit(0.08, "lines"),
-    segment.color    = "black",
-    segment.size     = 0.3,
-    min.segment.length = 0.2,
-    box.padding      = 0.45,
-    force            = 3.5,
+    segment.color    = "grey30",
+    segment.size     = 0.35,
+    min.segment.length = 0.15,
+    box.padding      = 0.5,
+    force            = 2.0,
+    force_pull       = 0.5,
     max.overlaps     = Inf,
     seed             = 42
   ) +
@@ -468,7 +483,7 @@ p_main <- ggplot() +
   ggspatial::annotation_north_arrow(
     location = "tr",
     style    = ggspatial::north_arrow_orienteering(text_size = 7),
-    height   = unit(0.9, "cm"), width = unit(0.9, "cm")
+    height   = unit(1, "cm"), width = unit(1, "cm")
   ) +
   coord_sf(xlim = xlim_map, ylim = ylim_map, crs = sf::st_crs(all_lakes),
            expand = FALSE) +
@@ -478,8 +493,8 @@ p_main <- ggplot() +
     panel.border      = element_rect(fill = NA, color = "black", linewidth = 0.5),
     legend.position   = "none",
     legend.background = element_rect(fill = alpha("white", 0.85), color = "grey60", linewidth = 0.3),
-    legend.title      = element_text(size = 9, face = "bold"),
-    legend.text       = element_text(size = 8)
+    legend.title      = element_text(size = 15, face = "bold"),
+    legend.text       = element_text(size = 13)
   )
 
 # Inset NZ map 

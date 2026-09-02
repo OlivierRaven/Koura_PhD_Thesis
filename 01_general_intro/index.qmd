@@ -38,6 +38,17 @@ Chapter 1 General Introduction
 :::
 
 ::: {.content-visible when-format="html"}
+```{r}
+#| label: ch1-hero
+#| echo: false
+#| output: asis
+#| eval: !expr knitr::is_html_output()
+.d <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+.i <- file.path(.d, "images/ch1_cover.jpg")
+if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-img" src="%s" alt=""><div class="ch-hero-fade"></div></div>', knitr::image_uri(.i)))
+```
+[Chapter 1]{.ch-eyebrow}
+
 # General Introduction {.unnumbered}
 :::
 
@@ -116,7 +127,189 @@ Critically, Aotearoa lacks native Siluriformes, meaning kōura and other native 
 ## Study system: the Rotorua Te Arawa Lakes
 This research was conducted in the Rotorua Te Arawa Lakes, a group of twelve volcanic lakes in the central North Island of Aotearoa (Bay of Plenty region; @fig-study-lakes-map; @tbl-bop-lake-overview). The lakes were formed by rhyolitic volcanic activity over the past ~230,000 years and continue to experience volcanic influence, most recently through the 1886 eruption of Mount Tarawera, which deposited basalt scoria and the distinctive Rotomāhana Mud across the surrounding catchments [@Cole2014]. The lakes vary considerably in size (0.3–81 km²) and maximum depth (13.5–125 m), and span a gradient of mixing regimes and trophic states from oligotrophic (e.g. Tarawera, Rotomā) to eutrophic (e.g. Rotorua, Ōkaro; @tbl-bop-lake-overview). This diversity makes the Te Arawa Lakes a particularly informative system for studying how kōura respond to differing combinations of habitat structure, water quality, and predator presence.
 
+::: {.content-visible unless-format="html"}
 ![Rotorua Te Arawa Lakes overview map. Colours represent the trophic state of each lake. Data sourced from: [@LAWA2025]. ](outputs/fig-study-lakes-map.png){#fig-study-lakes-map width=65%}
+:::
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: fig-study-lakes-map
+#| echo: false
+#| eval: !expr knitr::is_html_output()
+#| fig-cap: "Rotorua Te Arawa Lakes trophic state map. Colours show trophic state per year (2008–2022) derived from LAWA TLI data — use the year slider to explore change over time. Click a lake for TLI details. Data sourced from: [@LAWA2025]."
+
+ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+
+# ── LAWA TLI data: average across monitoring sites per lake per year ──
+lawa_raw <- readr::read_csv(
+  file.path(ch1_dir, "data/raw/lawa-TLI.csv"),
+  show_col_types = FALSE
+)
+
+# Map verbose LAWA lake names → clean lake_name matching gpkg
+lake_match <- tibble::tribble(
+  ~pattern,               ~lake_name,
+  "Rotomahana",           "Rotomāhana",
+  "Rotoma(?!hana)",       "Rotomā",
+  "Rotokakahi",           "Rotokākahi",
+  "Rotoiti",              "Rotoiti",
+  "Rotoehu",              "Rotoehu",
+  "Rotorua",              "Rotorua",
+  "Okataina|kataina",     "Ōkataina",
+  "Okareka|kareka",       "Ōkāreka",
+  "Tikitapu",             "Tikitapu",
+  "Tarawera",             "Tarawera",
+  "Okaro(?!ka)",          "Ōkaro",
+  "Rerewhakaaitu",        "Rerewhakaaitu"
+)
+
+match_lake <- function(nm) {
+  for (i in seq_len(nrow(lake_match))) {
+    if (grepl(lake_match$pattern[i], nm, ignore.case = TRUE, perl = TRUE))
+      return(lake_match$lake_name[i])
+  }
+  NA_character_
+}
+
+lawa_tli <- lawa_raw |>
+  dplyr::mutate(lake_name = sapply(lake, match_lake)) |>
+  dplyr::filter(!is.na(lake_name), !is.na(TLI)) |>
+  dplyr::group_by(lake_name, year = `Hydrological Year`) |>
+  dplyr::summarise(TLI_mean = mean(TLI, na.rm = TRUE), .groups = "drop") |>
+  dplyr::mutate(
+    trophic_state = dplyr::case_when(
+      TLI_mean < 3 ~ "Oligotrophic",
+      TLI_mean < 4 ~ "Mesotrophic",
+      TRUE         ~ "Eutrophic"
+    ),
+    trophic_state = factor(trophic_state, levels = c("Oligotrophic", "Mesotrophic", "Eutrophic"))
+  )
+
+trophic_colors <- c(
+  "Oligotrophic" = "#7ab648",
+  "Mesotrophic"  = "#e9ec0c",
+  "Eutrophic"    = "#e26715"
+)
+
+# ── Lake polygons ──────────────────────────────────────────────────────
+all_lakes <- sf::st_read(
+  file.path(ch1_dir, "data/raw/gis_layers/Lakes/12_lakes.gpkg"), quiet = TRUE
+) |>
+  sf::st_make_valid() |>
+  sf::st_transform(4326)
+
+non_geom <- names(all_lakes)[!sapply(all_lakes, inherits, what = "sfc")]
+name_col <- if ("name" %in% non_geom && any(!is.na(all_lakes[["name"]]))) "name" else "name_ascii"
+all_lakes <- dplyr::rename(all_lakes, lake_name = dplyr::all_of(name_col)) |>
+  dplyr::mutate(
+    lake_name = sub("^Lake\\s+", "", lake_name),
+    lake_name = trimws(sub("\\s*[/(\\&].*$", "", lake_name)),
+    lake_name = dplyr::case_when(
+      grepl("^[Oo]kataina",  lake_name) ~ "Ōkataina",
+      grepl("^[Oo]karo$",    lake_name) ~ "Ōkaro",
+      grepl("kareka",        lake_name, ignore.case = TRUE) ~ "Ōkāreka",
+      grepl("^Rotomahana",   lake_name) ~ "Rotomāhana",
+      grepl("^Rotoma$",      lake_name, ignore.case = TRUE) ~ "Rotomā",
+      grepl("^Rotokakahi",   lake_name, ignore.case = TRUE) ~ "Rotokākahi",
+      TRUE ~ lake_name
+    )
+  )
+
+pal <- leaflet::colorFactor(
+  palette  = unname(trophic_colors),
+  levels   = names(trophic_colors),
+  na.color = "grey70"
+)
+
+years <- sort(unique(lawa_tli$year))
+
+# ── Build map: one polygon layer group per year ────────────────────────
+map <- leaflet::leaflet() |>
+  leaflet::addProviderTiles("Esri.WorldGrayCanvas")
+
+for (yr in years) {
+  tli_yr <- lawa_tli |>
+    dplyr::filter(year == yr) |>
+    dplyr::select(lake_name, trophic_state, TLI_mean)
+
+  lakes_yr <- all_lakes |>
+    dplyr::left_join(tli_yr, by = "lake_name")
+
+  map <- map |>
+    leaflet::addPolygons(
+      data        = lakes_yr,
+      fillColor   = ~pal(trophic_state),
+      fillOpacity = 0.85,
+      color       = "#2a2a2a",
+      weight      = 1,
+      label       = ~lake_name,
+      popup       = ~paste0(
+        "<b>", lake_name, "</b>",
+        ifelse(!is.na(trophic_state),
+               paste0("<br>Year: ", yr,
+                      "<br>Trophic state: ", as.character(trophic_state),
+                      "<br>TLI: ", round(TLI_mean, 2)),
+               paste0("<br>Year: ", yr, "<br>No monitoring data"))
+      ),
+      group = as.character(yr)
+    )
+}
+
+# ── Legend + year-slider JS ────────────────────────────────────────────
+map |>
+  leaflet::addLegend(
+    position = "bottomright",
+    pal      = pal,
+    values   = c("Oligotrophic", "Mesotrophic", "Eutrophic"),
+    title    = "Trophic state",
+    opacity  = 0.85
+  ) |>
+  htmlwidgets::onRender(paste0('
+    function(el, x) {
+      var years = ', jsonlite::toJSON(years), ';
+      var map = this;
+
+      // Show latest year, hide the rest initially
+      years.forEach(function(yr, i) {
+        if (i < years.length - 1) map.layerManager.hideGroup(String(yr));
+      });
+
+      // Build slider control using Leaflet\'s Control API
+      var ctrl = L.control({position: "bottomleft"});
+      ctrl.onAdd = function() {
+        var div = L.DomUtil.create("div");
+        div.style.cssText = "background:white;padding:10px 14px;border-radius:6px;"
+          + "box-shadow:0 2px 6px rgba(0,0,0,.3);min-width:260px;";
+        L.DomEvent.disableScrollPropagation(div);
+        L.DomEvent.disableClickPropagation(div);
+        div.innerHTML =
+          \'<div style="font-weight:bold;font-size:13px;margin-bottom:6px;text-align:center">\' +
+          \'Trophic state — Year: <span id="lawa-yr-lbl" style="color:#e26715">\' +
+          years[years.length-1] + \'</span></div>\' +
+          \'<input id="lawa-yr-slider" type="range" min="0" max="\' + (years.length-1) +
+          \'" value="\' + (years.length-1) + \'" style="width:100%;cursor:pointer">\' +
+          \'<div style="display:flex;justify-content:space-between;font-size:10px;color:#666">\' +
+          \'<span>\' + years[0] + \'</span><span>\' + years[years.length-1] + \'</span></div>\';
+        return div;
+      };
+      ctrl.addTo(map);
+
+      document.getElementById("lawa-yr-slider").addEventListener("input", function() {
+        var selected = years[parseInt(this.value)];
+        document.getElementById("lawa-yr-lbl").textContent = selected;
+        years.forEach(function(yr) {
+          if (yr === selected) {
+            map.layerManager.showGroup(String(yr));
+          } else {
+            map.layerManager.hideGroup(String(yr));
+          }
+        });
+      });
+    }
+  '))
+```
+:::
+
 
 ```{r}
 #| label: tbl-bop-lake-overview
@@ -165,9 +358,178 @@ The shallow refuge available to kōura is also being progressively reduced as la
 
 Climate change is expected to intensify all of these pressures. Stronger and longer thermal stratification will expand and prolong anoxic conditions below the thermocline [@Woolway2021], while warming surface waters are projected to expand the range of suitable catfish habitat in Aotearoa [@Lee2025]. The compression of suitable kōura habitat documented here is therefore likely to accelerate, reinforcing the need to understand which habitats kōura prefer and whether habitat enhancement can build resilience in kōura populations. This rationale is supported by evidence from other systems supporting crayfish: in lakes where muddy substrates provide limited refugia, adding rocky substrate has been shown to relax refugia limitation and increase noble crayfish (*Astacus astacus*) population density [@Johnsen2008]. Structural addition can only deliver this benefit when water quality falls within species tolerance, as when dissolved oxygen or temperature exceeds physiological limits, species cannot persist regardless of refuge quality. 
 
+::: {.content-visible unless-format="html"}
 ![Liveable habitat (%) for kōura across eleven of the Rotorua Te Arawa Lakes from 2003 to 2026, by season. Liveable habitat is defined as the proportion of the water column meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds suitable for kōura. Coloured lines show seasonal means; the black line shows the overall trend. Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].](outputs/fig-livable-habitat-summary.png){#fig-livable-habitat-summary width=100%}
+:::
 
+::: {.content-visible when-format="html"}
+```{r}
+#| label: fig-livable-habitat-summary
+#| echo: false
+#| eval: !expr knitr::is_html_output()
+#| fig-cap: "Liveable habitat (%) for kōura across eleven of the Rotorua Te Arawa Lakes from 2003 to 2026, by season. Hover a line to see exact values. Liveable habitat is the proportion of lake bottom area meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds. Data: BOPRC CTD casts + LimnoTrack buoy [@Moore2026]."
+
+ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+lc  <- readRDS(file.path(ch1_dir, "data/derived/livable_combined.rds"))
+lha <- lc$livable_habitat_all
+
+season_colours <- c(Summer = "#D55E00", Autumn = "#E69F00", Winter = "#56B4E9", Spring = "#009E73")
+
+livable_sum <- lha |>
+  dplyr::group_by(Lake, Season_Year, Season) |>
+  dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+  dplyr::mutate(tooltip = paste0(Lake, "\n", Season, " ", Season_Year,
+                                  "\n", round(Mean_Livable, 1), "%"))
+
+yearly_mean <- lha |>
+  dplyr::group_by(Lake, Season_Year) |>
+  dplyr::summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+  dplyr::mutate(tooltip = paste0(Lake, "\nAnnual mean ", Season_Year,
+                                  "\n", round(Yearly_Mean, 1), "%"))
+
+p_sum <- ggplot2::ggplot() +
+  ggplot2::geom_line(data = livable_sum,
+    ggplot2::aes(Season_Year, Mean_Livable, colour = Season, group = Season, text = tooltip),
+    linewidth = 0.8) +
+  ggplot2::geom_line(data = yearly_mean,
+    ggplot2::aes(Season_Year, Yearly_Mean, group = 1, text = tooltip),
+    colour = "black", linewidth = 1) +
+  ggplot2::scale_colour_manual(values = season_colours) +
+  ggplot2::facet_wrap(~ Lake) +
+  ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season") +
+  ggplot2::theme_minimal(base_size = 11)
+
+plotly::ggplotly(p_sum, tooltip = "text") |>
+  plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+```
+:::
+
+::: {.content-visible unless-format="html"}
 ![Long-term trends in seasonal and annual mean liveable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Liveable habitat is defined as the proportion of the lake bottom area meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds suitable for kōura. Points represent means; lines show linear regressions with 95 % confidence intervals. Annual slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].](outputs/fig-livable-habitat-trends.png){#fig-livable-habitat-trends width=100%}
+:::
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: fig-livable-habitat-trends
+#| echo: false
+#| eval: !expr knitr::is_html_output()
+#| fig-cap: "Long-term trends in seasonal liveable habitat for kōura across eleven Rotorua Te Arawa Lakes. Hover points for lake, season, year and value. Lines are linear regressions with 95% confidence intervals. Data: BOPRC CTD casts + LimnoTrack buoy [@Moore2026]."
+
+season_colours <- c(Summer = "#D55E00", Autumn = "#E69F00", Winter = "#56B4E9", Spring = "#009E73")
+
+seasonal_trend <- lha |>
+  dplyr::group_by(Lake, Season_Year, Season) |>
+  dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+  dplyr::mutate(tooltip = paste0(Lake, "\n", Season, " ", Season_Year,
+                                  "\n", round(Mean_Livable, 1), "%"))
+
+p_trend <- ggplot2::ggplot(seasonal_trend,
+    ggplot2::aes(Season_Year, Mean_Livable, colour = Season, shape = Season,
+                 group = Season, text = tooltip)) +
+  ggplot2::geom_point(size = 1.2, alpha = 0.8) +
+  ggplot2::geom_smooth(method = "lm", se = TRUE, alpha = 0.15, linewidth = 0.7,
+                        show.legend = FALSE) +
+  ggplot2::scale_colour_manual(values = season_colours) +
+  ggplot2::facet_wrap(~ Lake) +
+  ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season", shape = "Season") +
+  ggplot2::theme_minimal(base_size = 11)
+
+plotly::ggplotly(p_trend, tooltip = "text") |>
+  plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+```
+:::
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: fig-pixel-habitat-map
+#| echo: false
+#| eval: !expr knitr::is_html_output()
+#| fig-cap: "Spatial liveable habitat across the Rotorua Te Arawa Lakes. Use the layer control (top right) to switch between the long-term trend (red = declining, blue = improving) and seasonal persistence (proportion of observed periods each location was liveable). Zoom and pan to explore individual lakes."
+
+ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+
+pixel_trends <- readRDS(file.path(ch1_dir, "data/derived/pixel_trend_maps.rds"))
+pixel_pers   <- readRDS(file.path(ch1_dir, "data/derived/pixel_persistence.rds"))
+
+pixel_all <- dplyr::full_join(
+  pixel_trends |> dplyr::select(x, y, Lake, Trend),
+  pixel_pers   |> dplyr::select(x, y, Lake, Summer, Autumn, Winter, Spring),
+  by = c("x", "y", "Lake")
+)
+
+coords_wgs84 <- pixel_all |>
+  dplyr::select(x, y) |>
+  as.matrix() |>
+  sf::st_multipoint() |>
+  sf::st_sfc(crs = 2193) |>
+  sf::st_transform(4326) |>
+  sf::st_coordinates()
+
+pixel_all$lon <- coords_wgs84[, 1]
+pixel_all$lat <- coords_wgs84[, 2]
+
+make_raster <- function(df, value_col, res = 0.001) {
+  df_v <- df[!is.na(df[[value_col]]), c("lon", "lat", value_col)]
+  if (nrow(df_v) == 0) return(NULL)
+  v <- terra::vect(df_v, geom = c("lon", "lat"), crs = "EPSG:4326")
+  r <- terra::rast(terra::ext(v) + res, resolution = res, crs = "EPSG:4326")
+  terra::rasterize(v, r, field = value_col, fun = "mean")
+}
+
+trend_cap <- quantile(abs(pixel_all$Trend), 0.95, na.rm = TRUE)
+
+pal_trend <- leaflet::colorNumeric(
+  palette  = grDevices::colorRampPalette(c("#d73027", "grey90", "#2171b5"))(200),
+  domain   = c(-trend_cap, trend_cap),
+  na.color = "transparent"
+)
+pal_pers <- leaflet::colorNumeric(
+  palette  = grDevices::colorRampPalette(c("grey90", "#2171b5"))(100),
+  domain   = c(0, 1),
+  na.color = "transparent"
+)
+
+map <- leaflet::leaflet() |>
+  leaflet::addProviderTiles("Esri.WorldGrayCanvas")
+
+lakes <- unique(pixel_all$Lake)
+
+for (lake in lakes) {
+  df_l <- pixel_all |> dplyr::filter(Lake == lake)
+
+  r_trend <- make_raster(df_l, "Trend")
+  if (!is.null(r_trend))
+    map <- leaflet::addRasterImage(map, r_trend,
+      colors = pal_trend, opacity = 0.85, group = "Trend (long-term change)")
+
+  for (s in c("Summer", "Autumn", "Winter", "Spring")) {
+    r_s <- make_raster(df_l, s)
+    if (!is.null(r_s))
+      map <- leaflet::addRasterImage(map, r_s,
+        colors = pal_pers, opacity = 0.85, group = s)
+  }
+}
+
+map |>
+  leaflet::addLayersControl(
+    baseGroups = c("Trend (long-term change)", "Summer", "Autumn", "Winter", "Spring"),
+    options    = leaflet::layersControlOptions(collapsed = FALSE)
+  ) |>
+  leaflet::addLegend(
+    position = "bottomleft", pal = pal_trend,
+    values   = c(-trend_cap, trend_cap),
+    title    = "Trend (prop/yr)",
+    opacity  = 0.85, group = "Trend (long-term change)"
+  ) |>
+  leaflet::addLegend(
+    position = "bottomright", pal = pal_pers,
+    values   = c(0, 1),
+    title    = "Prop. periods liveable",
+    opacity  = 0.85, labFormat = leaflet::labelFormat(suffix = "")
+  )
+```
+:::
+
 
 ## Knowledge gaps and thesis aims
 The previous sections established that kōura populations in the Rotorua Te Arawa Lakes are declining because of multiple interacting pressures, such as invasive predation, eutrophication, thermal stratification, and macrophyte expansion. It was also shown that their suitable habitat is both seasonally compressed and progressively shrinking [@Kusabs2026]. Although the broad drivers of decline are increasingly well understood, several critical knowledge gaps limit our ability to design effective interventions, particularly around how kōura interact behaviourally with catfish as a novel predator, and around the role of habitat structure and refugia in mediating those predator-prey interactions, questions relevant to freshwater prey species facing novel predators globally.

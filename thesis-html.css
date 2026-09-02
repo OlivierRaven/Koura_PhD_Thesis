@@ -17,17 +17,11 @@ h1, h2, h3, h4, h5, h6,
   font-family: 'Source Sans 3', system-ui, sans-serif;
 }
 
-/* ── Widen the content column ────────────────────────────────────── */
-.quarto-container,
-#quarto-content,
-.page-columns .content {
-  max-width: 920px;
-}
-
-@media (min-width: 1200px) {
-  .page-columns {
-    grid-template-columns: 250px minmax(0, 920px) minmax(0, 250px);
-  }
+/* ── Content width: let Quarto's centering work, just nudge body text ── */
+.quarto-container {
+  max-width: 1400px;
+  margin-left:  auto;
+  margin-right: auto;
 }
 
 /* ── Figure captions ─────────────────────────────────────────────── */
@@ -100,4 +94,122 @@ code {
 [data-bs-theme="dark"] .caption,
 [data-bs-theme="dark"] caption {
   color: #aaa;
+}
+
+/* ── Landing page hero ───────────────────────────────────────────────── */
+.thesis-hero {
+  position: relative;
+  width: 100%;
+  min-height: min(100vh, 680px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 64px;
+  overflow: hidden;
+  background: #0c2430;
+  margin-bottom: 2.5rem;
+}
+.thesis-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.45;
+}
+.thesis-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12,36,48,0.05) 0%, rgba(12,36,48,0.88) 100%);
+}
+.thesis-hero-body {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 800px;
+}
+.thesis-hero-eyebrow {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4a9eb5;
+  margin-bottom: 14px;
+}
+.thesis-hero-title {
+  font-family: 'Crimson Pro', Georgia, serif !important;
+  font-style: italic !important;
+  font-size: clamp(1.75rem, 4vw, 3rem) !important;
+  font-weight: 400 !important;
+  color: #FFFCF0 !important;
+  line-height: 1.22 !important;
+  text-wrap: balance;
+  margin-bottom: 20px !important;
+  border: none !important;
+}
+.thesis-hero-rule {
+  width: 44px;
+  height: 1px;
+  background: #4a9eb5;
+  margin: 0 auto 18px;
+  opacity: 0.65;
+}
+.thesis-hero-author {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(255,252,240,0.82);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.thesis-hero-year {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255,252,240,0.42);
+  letter-spacing: 0.09em;
+}
+
+/* ── Chapter hero banner ─────────────────────────────────────────────── */
+.ch-hero-wrap {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+  background: #0c2430;
+  margin-bottom: 0.25rem;
+}
+.ch-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 0.62;
+}
+.ch-hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--bs-body-bg, #FFFCF0));
+  pointer-events: none;
+}
+.ch-eyebrow {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4a9eb5;
+  margin-top: 0.6rem;
+  margin-bottom: 0;
 }

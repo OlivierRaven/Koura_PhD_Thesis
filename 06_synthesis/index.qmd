@@ -52,6 +52,17 @@ Chapter 6 Synthesis
 :::
 
 ::: {.content-visible when-format="html"}
+```{r}
+#| label: ch6-hero
+#| echo: false
+#| output: asis
+#| eval: !expr knitr::is_html_output()
+.d <- if (dir.exists("06_synthesis")) "06_synthesis" else "."
+.i <- file.path(.d, "images/ch6_cover.jpg")
+if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-img" src="%s" alt=""><div class="ch-hero-fade"></div></div>', knitr::image_uri(.i)))
+```
+[Chapter 6]{.ch-eyebrow}
+
 # Synthesis {.unnumbered}
 :::
 
