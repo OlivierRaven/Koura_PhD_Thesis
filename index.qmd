@@ -15,10 +15,10 @@ title-block-style: none
       at ([yshift=-6cm]current page.north)
       {\includegraphics[width=\paperwidth]{images/thesis_cover.jpg}};
   \end{scope}
-  \node[color=white, text width=0.82\paperwidth, align=center,
-        font=\fontsize{23}{30}\selectfont\bfseries\sffamily]
+  \node[color=white, text width=0.92\paperwidth, align=center,
+        font=\fontsize{28}{36}\selectfont\bfseries\sffamily]
     at ([yshift=-3cm]current page.north)
-    {Enhancing native freshwater crayfish habitat in invaded lake ecosystems};
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 Enhancing native freshwater crayfish habitat in invaded lake ecosystems};
   \node[color=white, align=center,
         font=\fontsize{16}{22}\selectfont\sffamily]
     at ([yshift=4cm]current page.south)

@@ -251,10 +251,10 @@
       at ([yshift=-6cm]current page.north)
       {\includegraphics[width=\paperwidth]{images/thesis_cover.jpg}};
   \end{scope}
-  \node[color=white, text width=0.82\paperwidth, align=center,
-        font=\fontsize{23}{30}\selectfont\bfseries\sffamily]
+  \node[color=white, text width=0.92\paperwidth, align=center,
+        font=\fontsize{28}{36}\selectfont\bfseries\sffamily]
     at ([yshift=-3cm]current page.north)
-    {Enhancing native freshwater crayfish habitat in invaded lake ecosystems};
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 Enhancing native freshwater crayfish habitat in invaded lake ecosystems};
   \node[color=white, align=center,
         font=\fontsize{16}{22}\selectfont\sffamily]
     at ([yshift=4cm]current page.south)
@@ -4566,14 +4566,23 @@ maps show the placement of each of the sites.}
 
 \caption{\label{fig-forest-plot}Effect sizes (\(\beta\) ± 95\% CI) for
 the key term of interest across all models, separated by species
-(columns) and comparison type (rows). Filled points indicate significant
-effects (\emph{p} \textless{} 0.05); open points are non-significant.
-Each row has its own x-axis scale --- effect magnitudes are not directly
-comparable across rows because each comparison tests a different
-contrast (step-change, per-round slope, or simple group difference), and
-occupancy is on the log-odds scale while abundance and biomass models
-use the Tweedie log link. Models with degenerate confidence intervals
-are excluded.}
+(columns) and research question (rows). Filled points = significant
+(\emph{p} \textless{} 0.05); open points = non-significant.
+\textbf{Before: stone pile vs control} --- baseline group difference
+(stone pile minus control) before construction. \textbf{Before:
+reference 1 vs reference 2} --- baseline comparability between the two
+reference groups. \textbf{Before-After: BACI} --- the BACI interaction:
+did stone pile sites change more than control sites from before to after
+construction? \textbf{After: trajectory} --- per-round slope difference
+between stone pile and control sites in the post-construction period.
+\textbf{Convergence toward reference} --- per-round slope difference
+between stone pile and reference sites post-construction.
+\textbf{Reference stability} --- per-round slope at reference sites,
+testing whether reference conditions were stable. Each row uses its own
+x-axis scale; effect magnitudes are not comparable across rows as each
+tests a different contrast (step-change, per-round slope, or simple
+group difference), and occupancy is on the log-odds scale while
+abundance and biomass use the Tweedie log link.}
 
 \end{figure}%
 
@@ -6802,7 +6811,7 @@ models.}
 
 \end{figure}%
 
-\begin{landscape}\begingroup\fontsize{8}{10}\selectfont
+\begingroup\fontsize{8}{10}\selectfont
 
 \begin{longtable}[t]{lllrrrrrrr}
 
@@ -6951,7 +6960,6 @@ All lakes & Presence Trout &  & 60 & 0.10 & 0.00 & 0.00 & 1.00 & 0.04 & 0.21\\*
 \end{longtable}
 
 \endgroup{}
-\end{landscape}
 
 \clearpage
 \setcounter{table}{0}

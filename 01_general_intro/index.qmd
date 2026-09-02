@@ -269,9 +269,18 @@ map |>
       var years = ', jsonlite::toJSON(years), ';
       var map = this;
 
+      // Helper: show or hide all layers in a named group
+      function setGroupVisible(grp, visible) {
+        var tbl = map.layerManager._byGroup[String(grp)];
+        if (!tbl) return;
+        Object.keys(tbl).forEach(function(stamp) {
+          visible ? map.addLayer(tbl[stamp]) : map.removeLayer(tbl[stamp]);
+        });
+      }
+
       // Show latest year, hide the rest initially
       years.forEach(function(yr, i) {
-        if (i < years.length - 1) map.layerManager.hideGroup(String(yr));
+        if (i < years.length - 1) setGroupVisible(yr, false);
       });
 
       // Build slider control using Leaflet\'s Control API
@@ -298,11 +307,7 @@ map |>
         var selected = years[parseInt(this.value)];
         document.getElementById("lawa-yr-lbl").textContent = selected;
         years.forEach(function(yr) {
-          if (yr === selected) {
-            map.layerManager.showGroup(String(yr));
-          } else {
-            map.layerManager.hideGroup(String(yr));
-          }
+          setGroupVisible(yr, yr === selected);
         });
       });
     }
