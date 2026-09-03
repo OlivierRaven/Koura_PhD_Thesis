@@ -17,12 +17,8 @@ h1, h2, h3, h4, h5, h6,
   font-family: 'Source Sans 3', system-ui, sans-serif;
 }
 
-/* ── Content width: let Quarto's centering work, just nudge body text ── */
-.quarto-container {
-  max-width: 1400px;
-  margin-left:  auto;
-  margin-right: auto;
-}
+/* ── Content width: let Quarto/Bootstrap handle the container ──────── */
+/* (no override — Flatly theme handles column width and TOC sidebar) */
 
 /* ── Figure captions ─────────────────────────────────────────────── */
 .quarto-float-caption,
@@ -58,10 +54,25 @@ caption {
   border-right: 1px solid #e0d8c8;
 }
 
+/* Right-margin TOC: sticky so it travels with the reader */
+#quarto-margin-sidebar,
+.margin-sidebar {
+  position: sticky;
+  top: 1.5rem;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
 .sidebar-item-text,
 .sidebar-navigation .sidebar-item a {
   font-family: 'Source Sans 3', system-ui, sans-serif;
   font-size: 0.88rem;
+}
+
+[data-bs-theme="dark"] #quarto-margin-sidebar,
+[data-bs-theme="dark"] .margin-sidebar {
+  scrollbar-color: #444 transparent;
 }
 
 /* ── Inline code ─────────────────────────────────────────────────── */
@@ -183,24 +194,49 @@ code {
   height: 500px;
   overflow: hidden;
   background: #0c2430;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0;
 }
 .ch-hero-img {
   width: 100%;
-  height: 100%;
+  height: 115%;           /* taller than container so parallax shift stays filled */
   object-fit: cover;
   object-position: center;
   display: block;
-  opacity: 0.62;
+  opacity: 0.78;
+  /* Parallax: image drifts up as section enters view, down as it exits */
+  animation: ch-parallax linear both;
+  animation-timeline: view(100vh);
+  animation-range: entry exit;
 }
+@keyframes ch-parallax {
+  from { transform: translateY(-8%); }
+  to   { transform: translateY(8%);  }
+}
+/* Same effect on the landing hero image */
+.thesis-hero-img {
+  animation: ch-parallax linear both;
+  animation-timeline: view(100vh);
+  animation-range: entry exit;
+}
+/* Dark gradient at bottom so overlaid text is always legible */
 .ch-hero-fade {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, transparent, var(--bs-body-bg, #FFFCF0));
+  height: 260px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(12,36,48,0.92) 100%);
   pointer-events: none;
+}
+
+/* ── Eyebrow label and chapter title overlaid on image bottom ─── */
+/* The <p> wrapping the eyebrow span comes right after the hero div */
+.ch-hero-wrap + p {
+  position: relative;
+  z-index: 2;
+  margin-top: -5rem;
+  margin-bottom: 0;
+  padding: 0 2.5rem;
 }
 .ch-eyebrow {
   display: block;
@@ -210,6 +246,20 @@ code {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #4a9eb5;
-  margin-top: 0.6rem;
-  margin-bottom: 0;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  margin-bottom: 0.15rem;
+}
+/* Chapter title heading immediately after the eyebrow paragraph */
+.ch-hero-wrap + p + h1,
+.ch-hero-wrap + p + h2 {
+  position: relative;
+  z-index: 2;
+  color: #fff !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.55);
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem) !important;
+  font-weight: 700 !important;
+  padding: 0 2.5rem 2.5rem;
+  margin-top: 0.2rem !important;
+  border: none !important;
+  background: transparent;
 }
