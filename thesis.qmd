@@ -4,6 +4,7 @@ thesis-title: "Enhancing native freshwater crayfish habitat in invaded lake ecos
 author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none
+citation: false
 ---
 
 ```{r}
