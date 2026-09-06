@@ -45,9 +45,8 @@ Chapter 1 General Introduction
 #| eval: !expr knitr::is_html_output()
 .d <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
 .i <- file.path(.d, "images/ch1_cover.jpg")
-if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-img" src="%s" alt=""><div class="ch-hero-fade"></div></div>', knitr::image_uri(.i)))
+if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-img" src="%s" alt=""><div class="ch-hero-fade"></div><div class="ch-hero-text"><span class="ch-eyebrow">Chapter 1</span><span class="ch-hero-title">General Introduction</span></div></div>', knitr::image_uri(.i)))
 ```
-[Chapter 1]{.ch-eyebrow}
 
 # General Introduction {.unnumbered}
 :::
@@ -94,12 +93,40 @@ Freshwater crayfish are decapod crustaceans that form an important component of 
 
 Despite their significant ecological role, 32 % of crayfish species worldwide are threatened with extinction [@Richman2015] due to numerous threats, including habitat degradation, pollution, invasive species, and overexploitation. Among these invasive species, are a particularly pervasive and difficult to manage threat, as non-native fish and crayfish can, prey on native species, compete for habitat, and spread diseases [@Danilovic2022]. For example, in Europe native crayfish such as *Astacus astacus*, *Austropotamobius pallipes*, and *A. torrentium* are threatened by the crayfish plague pathogen (*Aphanomyces astaci*, an oomycete), which is carried asymptomatically by many North American crayfish species [@Holdich2009]. These combined pressures mean that conservation of native crayfish requires not only an understanding of the threats they face, but also of the habitats they depend on, a challenge particularly acute for endemic species in geographically isolated systems such as those of Aotearoa New Zealand.
 
+::: {.content-visible unless-format="html"}
 ![Global native distribution of freshwater crayfish families, following @Crandall2017. Adapted from: [@Fetzner2019].](images/fig-crayfish-families.png){#fig-crayfish-families width=65%}
+:::
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: fig-crayfish-families
+#| echo: false
+#| eval: !expr knitr::is_html_output()
+#| fig-cap: "Global native distribution of freshwater crayfish families, following @Crandall2017. Click a region for family details and a link to the World Crayfish Register. Use the search box to find species directly."
+ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+.rds <- file.path(ch1_dir, "data/derived/widget_crayfish_map.rds")
+if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive map not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
+```
+:::
 
 ## Kōura: Aotearoa's native freshwater crayfish
 Aotearoa New Zealand’s (hereafter Aotearoa) native biota is disproportionately made up of endemic species because of its island biogeography and isolated location [@Wallis2009]. The two endemic species of freshwater crayfish found in Aotearoa are of the genus *Paranephrops*. These freshwater crayfish are also known by the Māori name kōura, although some iwi (Māori tribal groups) use other names including kēwai, kēkēwai, and koeke [@Kusabs2018]. The two species are the northern kōura (*Paranephrops planifrons* White, 1842) and the southern kōura (*P. zealandicus* [White, 1847]). The northern kōura can be found throughout the North Island and on the west side of the Southern Alps on the South Island (@fig-nz-distribution-maps). The southern kōura can be found on the eastern and southern part of the South Island and on Stewart Island.
 
+::: {.content-visible unless-format="html"}
 ![Distribution of kōura (blue, left) and brown bullhead catfish (*Ameiurus nebulosus*, red, right), an introduced predator discussed in the following section, in Aotearoa New Zealand. Source: New Zealand Freshwater Fish Database [@Stoffels2024].](outputs/fig-nz-distribution-maps.png){#fig-nz-distribution-maps width=65%}
+:::
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: fig-nz-distribution-maps
+#| echo: false
+#| eval: !expr knitr::is_html_output()
+#| fig-cap: "Distribution of kōura and brown bullhead catfish (*Ameiurus nebulosus*) survey locations in Aotearoa New Zealand. Source: New Zealand Freshwater Fish Database [@Stoffels2024]. Toggle species layers using the controls. Click clusters to zoom in; click individual markers for site details."
+ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+.rds <- file.path(ch1_dir, "data/derived/widget_nzffd_map.rds")
+if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive map not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
+```
+:::
 
 ### Biology, ecology, and habitat use
 Kōura inhabit a range of freshwater environments including streams, rivers and lakes and have been described as ecosystem engineers and keystone species in Aotearoa [@Collier1997; @Usio2004]. They are associated with structurally complex habitats that provide physical shelter, preferring coarse gravel and rocky substrates in both streams and lakes [@Jowett2008; @Kusabs2015b]. In streams, the highest abundances have been recorded on substrates with an average particle size of 130 mm [@Jowett2008; @Olsson2008]. Kōura avoid areas where dissolved oxygen levels drop below 5 mg/L and temperatures exceed 21 °C [@Devcich1979]. Where suitable natural substrates are rare, kōura can excavate tunnels or burrows to provide cover, a behaviour documented in Lake Tikitapu, where the bottom sediment substrate permits burrowing (Pers. Comm. Ian Kusabs).
@@ -137,183 +164,12 @@ This research was conducted in the Rotorua Te Arawa Lakes, a group of twelve vol
 #| echo: false
 #| eval: !expr knitr::is_html_output()
 #| fig-cap: "Rotorua Te Arawa Lakes trophic state map. Colours show trophic state per year (2008–2022) derived from LAWA TLI data — use the year slider to explore change over time. Click a lake for TLI details. Data sourced from: [@LAWA2025]."
-
 ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
-
-# ── LAWA TLI data: average across monitoring sites per lake per year ──
-lawa_raw <- readr::read_csv(
-  file.path(ch1_dir, "data/raw/lawa-TLI.csv"),
-  show_col_types = FALSE
-)
-
-# Map verbose LAWA lake names → clean lake_name matching gpkg
-lake_match <- tibble::tribble(
-  ~pattern,               ~lake_name,
-  "Rotomahana",           "Rotomāhana",
-  "Rotoma(?!hana)",       "Rotomā",
-  "Rotokakahi",           "Rotokākahi",
-  "Rotoiti",              "Rotoiti",
-  "Rotoehu",              "Rotoehu",
-  "Rotorua",              "Rotorua",
-  "Okataina|kataina",     "Ōkataina",
-  "Okareka|kareka",       "Ōkāreka",
-  "Tikitapu",             "Tikitapu",
-  "Tarawera",             "Tarawera",
-  "Okaro(?!ka)",          "Ōkaro",
-  "Rerewhakaaitu",        "Rerewhakaaitu"
-)
-
-match_lake <- function(nm) {
-  for (i in seq_len(nrow(lake_match))) {
-    if (grepl(lake_match$pattern[i], nm, ignore.case = TRUE, perl = TRUE))
-      return(lake_match$lake_name[i])
-  }
-  NA_character_
-}
-
-lawa_tli <- lawa_raw |>
-  dplyr::mutate(lake_name = sapply(lake, match_lake)) |>
-  dplyr::filter(!is.na(lake_name), !is.na(TLI)) |>
-  dplyr::group_by(lake_name, year = `Hydrological Year`) |>
-  dplyr::summarise(TLI_mean = mean(TLI, na.rm = TRUE), .groups = "drop") |>
-  dplyr::mutate(
-    trophic_state = dplyr::case_when(
-      TLI_mean < 3 ~ "Oligotrophic",
-      TLI_mean < 4 ~ "Mesotrophic",
-      TRUE         ~ "Eutrophic"
-    ),
-    trophic_state = factor(trophic_state, levels = c("Oligotrophic", "Mesotrophic", "Eutrophic"))
-  )
-
-trophic_colors <- c(
-  "Oligotrophic" = "#7ab648",
-  "Mesotrophic"  = "#e9ec0c",
-  "Eutrophic"    = "#e26715"
-)
-
-# ── Lake polygons ──────────────────────────────────────────────────────
-all_lakes <- sf::st_read(
-  file.path(ch1_dir, "data/raw/gis_layers/Lakes/12_lakes.gpkg"), quiet = TRUE
-) |>
-  sf::st_make_valid() |>
-  sf::st_transform(4326)
-
-non_geom <- names(all_lakes)[!sapply(all_lakes, inherits, what = "sfc")]
-name_col <- if ("name" %in% non_geom && any(!is.na(all_lakes[["name"]]))) "name" else "name_ascii"
-all_lakes <- dplyr::rename(all_lakes, lake_name = dplyr::all_of(name_col)) |>
-  dplyr::mutate(
-    lake_name = sub("^Lake\\s+", "", lake_name),
-    lake_name = trimws(sub("\\s*[/(\\&].*$", "", lake_name)),
-    lake_name = dplyr::case_when(
-      grepl("^[Oo]kataina",  lake_name) ~ "Ōkataina",
-      grepl("^[Oo]karo$",    lake_name) ~ "Ōkaro",
-      grepl("kareka",        lake_name, ignore.case = TRUE) ~ "Ōkāreka",
-      grepl("^Rotomahana",   lake_name) ~ "Rotomāhana",
-      grepl("^Rotoma$",      lake_name, ignore.case = TRUE) ~ "Rotomā",
-      grepl("^Rotokakahi",   lake_name, ignore.case = TRUE) ~ "Rotokākahi",
-      TRUE ~ lake_name
-    )
-  )
-
-pal <- leaflet::colorFactor(
-  palette  = unname(trophic_colors),
-  levels   = names(trophic_colors),
-  na.color = "grey70"
-)
-
-years <- sort(unique(lawa_tli$year))
-
-# ── Build map: one polygon layer group per year ────────────────────────
-map <- leaflet::leaflet() |>
-  leaflet::addProviderTiles("Esri.WorldGrayCanvas")
-
-for (yr in years) {
-  tli_yr <- lawa_tli |>
-    dplyr::filter(year == yr) |>
-    dplyr::select(lake_name, trophic_state, TLI_mean)
-
-  lakes_yr <- all_lakes |>
-    dplyr::left_join(tli_yr, by = "lake_name")
-
-  map <- map |>
-    leaflet::addPolygons(
-      data        = lakes_yr,
-      fillColor   = ~pal(trophic_state),
-      fillOpacity = 0.85,
-      color       = "#2a2a2a",
-      weight      = 1,
-      label       = ~lake_name,
-      popup       = ~paste0(
-        "<b>", lake_name, "</b>",
-        ifelse(!is.na(trophic_state),
-               paste0("<br>Year: ", yr,
-                      "<br>Trophic state: ", as.character(trophic_state),
-                      "<br>TLI: ", round(TLI_mean, 2)),
-               paste0("<br>Year: ", yr, "<br>No monitoring data"))
-      ),
-      group = as.character(yr)
-    )
-}
-
-# ── Legend + year-slider JS ────────────────────────────────────────────
-map |>
-  leaflet::addLegend(
-    position = "bottomright",
-    pal      = pal,
-    values   = c("Oligotrophic", "Mesotrophic", "Eutrophic"),
-    title    = "Trophic state",
-    opacity  = 0.85
-  ) |>
-  htmlwidgets::onRender(paste0('
-    function(el, x) {
-      var years = ', jsonlite::toJSON(years), ';
-      var map = this;
-
-      // Helper: show or hide all layers in a named group
-      function setGroupVisible(grp, visible) {
-        var tbl = map.layerManager._byGroup[String(grp)];
-        if (!tbl) return;
-        Object.keys(tbl).forEach(function(stamp) {
-          visible ? map.addLayer(tbl[stamp]) : map.removeLayer(tbl[stamp]);
-        });
-      }
-
-      // Show latest year, hide the rest initially
-      years.forEach(function(yr, i) {
-        if (i < years.length - 1) setGroupVisible(yr, false);
-      });
-
-      // Build slider control using Leaflet\'s Control API
-      var ctrl = L.control({position: "bottomleft"});
-      ctrl.onAdd = function() {
-        var div = L.DomUtil.create("div");
-        div.style.cssText = "background:white;padding:10px 14px;border-radius:6px;"
-          + "box-shadow:0 2px 6px rgba(0,0,0,.3);min-width:260px;";
-        L.DomEvent.disableScrollPropagation(div);
-        L.DomEvent.disableClickPropagation(div);
-        div.innerHTML =
-          \'<div style="font-weight:bold;font-size:13px;margin-bottom:6px;text-align:center">\' +
-          \'Trophic state — Year: <span id="lawa-yr-lbl" style="color:#e26715">\' +
-          years[years.length-1] + \'</span></div>\' +
-          \'<input id="lawa-yr-slider" type="range" min="0" max="\' + (years.length-1) +
-          \'" value="\' + (years.length-1) + \'" style="width:100%;cursor:pointer">\' +
-          \'<div style="display:flex;justify-content:space-between;font-size:10px;color:#666">\' +
-          \'<span>\' + years[0] + \'</span><span>\' + years[years.length-1] + \'</span></div>\';
-        return div;
-      };
-      ctrl.addTo(map);
-
-      document.getElementById("lawa-yr-slider").addEventListener("input", function() {
-        var selected = years[parseInt(this.value)];
-        document.getElementById("lawa-yr-lbl").textContent = selected;
-        years.forEach(function(yr) {
-          setGroupVisible(yr, yr === selected);
-        });
-      });
-    }
-  '))
+.rds <- file.path(ch1_dir, "data/derived/widget_tli_map.rds")
+if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive map not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
 ```
 :::
+
 
 
 ```{r}
@@ -342,7 +198,7 @@ if (knitr::is_latex_output()) {
     kableExtra::kable_styling(font_size = 7, latex_options = c("striped"),
                               stripe_color = "gray!8") |>
     kableExtra::landscape()
-} else if (isTRUE(getOption("thesis.is.html"))) {
+} else if (isTRUE(getOption("thesis.is.html")) && knitr::is_html_output()) {
   DT::datatable(lake_data, rownames = FALSE, filter = "top",
                 options = list(pageLength = 12, dom = 'frtip', scrollX = TRUE))
 } else {
@@ -378,39 +234,9 @@ Climate change is expected to intensify all of these pressures. Stronger and lon
 #| echo: false
 #| eval: !expr knitr::is_html_output()
 #| fig-cap: "Liveable habitat (%) for kōura across eleven of the Rotorua Te Arawa Lakes from 2003 to 2026, by season. Hover a line to see exact values. Liveable habitat is the proportion of lake bottom area meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds. Data: BOPRC CTD casts + LimnoTrack buoy [@Moore2026]."
-
 ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
-lc  <- readRDS(file.path(ch1_dir, "data/derived/livable_combined.rds"))
-lha <- lc$livable_habitat_all
-
-season_colours <- c(Summer = "#D55E00", Autumn = "#E69F00", Winter = "#56B4E9", Spring = "#009E73")
-
-livable_sum <- lha |>
-  dplyr::group_by(Lake, Season_Year, Season) |>
-  dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
-  dplyr::mutate(tooltip = paste0(Lake, "\n", Season, " ", Season_Year,
-                                  "\n", round(Mean_Livable, 1), "%"))
-
-yearly_mean <- lha |>
-  dplyr::group_by(Lake, Season_Year) |>
-  dplyr::summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
-  dplyr::mutate(tooltip = paste0(Lake, "\nAnnual mean ", Season_Year,
-                                  "\n", round(Yearly_Mean, 1), "%"))
-
-p_sum <- ggplot2::ggplot() +
-  ggplot2::geom_line(data = livable_sum,
-    ggplot2::aes(Season_Year, Mean_Livable, colour = Season, group = Season, text = tooltip),
-    linewidth = 0.8) +
-  ggplot2::geom_line(data = yearly_mean,
-    ggplot2::aes(Season_Year, Yearly_Mean, group = 1, text = tooltip),
-    colour = "black", linewidth = 1) +
-  ggplot2::scale_colour_manual(values = season_colours) +
-  ggplot2::facet_wrap(~ Lake) +
-  ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season") +
-  ggplot2::theme_minimal(base_size = 11)
-
-plotly::ggplotly(p_sum, tooltip = "text") |>
-  plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+.rds <- file.path(ch1_dir, "data/derived/widget_livable_summary.rds")
+if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive plot not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
 ```
 :::
 
@@ -424,28 +250,9 @@ plotly::ggplotly(p_sum, tooltip = "text") |>
 #| echo: false
 #| eval: !expr knitr::is_html_output()
 #| fig-cap: "Long-term trends in seasonal liveable habitat for kōura across eleven Rotorua Te Arawa Lakes. Hover points for lake, season, year and value. Lines are linear regressions with 95% confidence intervals. Data: BOPRC CTD casts + LimnoTrack buoy [@Moore2026]."
-
-season_colours <- c(Summer = "#D55E00", Autumn = "#E69F00", Winter = "#56B4E9", Spring = "#009E73")
-
-seasonal_trend <- lha |>
-  dplyr::group_by(Lake, Season_Year, Season) |>
-  dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
-  dplyr::mutate(tooltip = paste0(Lake, "\n", Season, " ", Season_Year,
-                                  "\n", round(Mean_Livable, 1), "%"))
-
-p_trend <- ggplot2::ggplot(seasonal_trend,
-    ggplot2::aes(Season_Year, Mean_Livable, colour = Season, shape = Season,
-                 group = Season, text = tooltip)) +
-  ggplot2::geom_point(size = 1.2, alpha = 0.8) +
-  ggplot2::geom_smooth(method = "lm", se = TRUE, alpha = 0.15, linewidth = 0.7,
-                        show.legend = FALSE) +
-  ggplot2::scale_colour_manual(values = season_colours) +
-  ggplot2::facet_wrap(~ Lake) +
-  ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season", shape = "Season") +
-  ggplot2::theme_minimal(base_size = 11)
-
-plotly::ggplotly(p_trend, tooltip = "text") |>
-  plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
+.rds <- file.path(ch1_dir, "data/derived/widget_livable_trends.rds")
+if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive plot not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
 ```
 :::
 
@@ -455,88 +262,9 @@ plotly::ggplotly(p_trend, tooltip = "text") |>
 #| echo: false
 #| eval: !expr knitr::is_html_output()
 #| fig-cap: "Spatial liveable habitat across the Rotorua Te Arawa Lakes. Use the layer control (top right) to switch between the long-term trend (red = declining, blue = improving) and seasonal persistence (proportion of observed periods each location was liveable). Zoom and pan to explore individual lakes."
-
 ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
-
-pixel_trends <- readRDS(file.path(ch1_dir, "data/derived/pixel_trend_maps.rds"))
-pixel_pers   <- readRDS(file.path(ch1_dir, "data/derived/pixel_persistence.rds"))
-
-pixel_all <- dplyr::full_join(
-  pixel_trends |> dplyr::select(x, y, Lake, Trend),
-  pixel_pers   |> dplyr::select(x, y, Lake, Summer, Autumn, Winter, Spring),
-  by = c("x", "y", "Lake")
-)
-
-coords_wgs84 <- pixel_all |>
-  dplyr::select(x, y) |>
-  as.matrix() |>
-  sf::st_multipoint() |>
-  sf::st_sfc(crs = 2193) |>
-  sf::st_transform(4326) |>
-  sf::st_coordinates()
-
-pixel_all$lon <- coords_wgs84[, 1]
-pixel_all$lat <- coords_wgs84[, 2]
-
-make_raster <- function(df, value_col, res = 0.001) {
-  df_v <- df[!is.na(df[[value_col]]), c("lon", "lat", value_col)]
-  if (nrow(df_v) == 0) return(NULL)
-  v <- terra::vect(df_v, geom = c("lon", "lat"), crs = "EPSG:4326")
-  r <- terra::rast(terra::ext(v) + res, resolution = res, crs = "EPSG:4326")
-  terra::rasterize(v, r, field = value_col, fun = "mean")
-}
-
-trend_cap <- quantile(abs(pixel_all$Trend), 0.95, na.rm = TRUE)
-
-pal_trend <- leaflet::colorNumeric(
-  palette  = grDevices::colorRampPalette(c("#d73027", "grey90", "#2171b5"))(200),
-  domain   = c(-trend_cap, trend_cap),
-  na.color = "transparent"
-)
-pal_pers <- leaflet::colorNumeric(
-  palette  = grDevices::colorRampPalette(c("grey90", "#2171b5"))(100),
-  domain   = c(0, 1),
-  na.color = "transparent"
-)
-
-map <- leaflet::leaflet() |>
-  leaflet::addProviderTiles("Esri.WorldGrayCanvas")
-
-lakes <- unique(pixel_all$Lake)
-
-for (lake in lakes) {
-  df_l <- pixel_all |> dplyr::filter(Lake == lake)
-
-  r_trend <- make_raster(df_l, "Trend")
-  if (!is.null(r_trend))
-    map <- leaflet::addRasterImage(map, r_trend,
-      colors = pal_trend, opacity = 0.85, group = "Trend (long-term change)")
-
-  for (s in c("Summer", "Autumn", "Winter", "Spring")) {
-    r_s <- make_raster(df_l, s)
-    if (!is.null(r_s))
-      map <- leaflet::addRasterImage(map, r_s,
-        colors = pal_pers, opacity = 0.85, group = s)
-  }
-}
-
-map |>
-  leaflet::addLayersControl(
-    baseGroups = c("Trend (long-term change)", "Summer", "Autumn", "Winter", "Spring"),
-    options    = leaflet::layersControlOptions(collapsed = FALSE)
-  ) |>
-  leaflet::addLegend(
-    position = "bottomleft", pal = pal_trend,
-    values   = c(-trend_cap, trend_cap),
-    title    = "Trend (prop/yr)",
-    opacity  = 0.85, group = "Trend (long-term change)"
-  ) |>
-  leaflet::addLegend(
-    position = "bottomright", pal = pal_pers,
-    values   = c(0, 1),
-    title    = "Prop. periods liveable",
-    opacity  = 0.85, labFormat = leaflet::labelFormat(suffix = "")
-  )
+.rds <- file.path(ch1_dir, "data/derived/widget_pixel_map.rds")
+if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive map not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
 ```
 :::
 

@@ -36,6 +36,7 @@
 *.xls
 *.pptx
 *.docx
+!docs/thesis.docx
 *.gpkg
 *.hobo
 *.boris

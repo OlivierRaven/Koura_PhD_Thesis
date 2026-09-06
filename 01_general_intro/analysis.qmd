@@ -105,7 +105,7 @@ chapter_dir <- local({
   }
   if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
     f <- rstudioapi::getSourceEditorContext()$path
-    if (nzchar(f)) return(normalizePath(dirname(f)))
+    if (length(f) > 0 && nzchar(f)) return(normalizePath(dirname(f)))
   }
   normalizePath(".")
 })
@@ -2345,6 +2345,437 @@ names(season_persistence_maps) <- season_order
 
 # Preview one season here; the others are saved to outputs/ but not all printed inline
 season_persistence_maps[["Summer"]]
+```
+
+# Interactive widgets (saved as RDS for HTML thesis)
+
+```{r}
+#| label: widget-nzffd-map
+#| include: false
+widget_nzffd_rds <- file.path(der_data_dir, "widget_nzffd_map.rds")
+if (!file.exists(widget_nzffd_rds)) {
+  nzffd_map_w <- leaflet::leaflet() |>
+    leaflet::addProviderTiles("CartoDB.Positron") |>
+    leaflet::addCircleMarkers(
+      data        = nzffd_koura_sf,
+      radius      = 5, color = "#2171b5", fillColor = "#2171b5",
+      fillOpacity = 0.55, weight = 0.5, opacity = 0.8,
+      popup       = ~paste0("<b>", waterBody, "</b><br>", catchmentName),
+      clusterOptions = leaflet::markerClusterOptions(
+        maxClusterRadius = 40,
+        iconCreateFunction = htmlwidgets::JS("function(cluster) {
+          return new L.DivIcon({ html: '<div style=\"background:#2171b5;color:#fff;border-radius:50%;width:34px;height:34px;line-height:34px;text-align:center;font-size:12px;opacity:0.85\">' + cluster.getChildCount() + '</div>', className: '' });
+        }")
+      ),
+      group = "Kōura"
+    ) |>
+    leaflet::addCircleMarkers(
+      data        = nzffd_catfish_sf,
+      radius      = 6, color = "#d73027", fillColor = "#d73027",
+      fillOpacity = 0.7, weight = 0.5, opacity = 0.9,
+      popup       = ~paste0("<b>", waterBody, "</b><br>", catchmentName),
+      clusterOptions = leaflet::markerClusterOptions(
+        maxClusterRadius = 40,
+        iconCreateFunction = htmlwidgets::JS("function(cluster) {
+          return new L.DivIcon({ html: '<div style=\"background:#d73027;color:#fff;border-radius:50%;width:34px;height:34px;line-height:34px;text-align:center;font-size:12px;opacity:0.85\">' + cluster.getChildCount() + '</div>', className: '' });
+        }")
+      ),
+      group = "Brown bullhead catfish"
+    ) |>
+    leaflet::addLayersControl(
+      overlayGroups = c("Kōura", "Brown bullhead catfish"),
+      options = leaflet::layersControlOptions(collapsed = FALSE)
+    ) |>
+    leaflet::addLegend(
+      position = "bottomright",
+      colors   = c("#2171b5", "#d73027"),
+      labels   = c("Kōura (7,872 locations)", "Brown bullhead catfish (444 locations)"),
+      title    = "Species",
+      opacity  = 0.85
+    )
+  saveRDS(nzffd_map_w, widget_nzffd_rds)
+}
+```
+
+## Interactive global crayfish distribution map
+```{r}
+#| label: widget-crayfish-map
+#| include: false
+
+widget_crayfish_rds <- file.path(der_data_dir, "widget_crayfish_map.rds")
+if (!file.exists(widget_crayfish_rds)) {
+  family_cols_w <- c(
+    "Astacidae"     = "#2166AC",
+    "Cambaridae"    = "#1A9641",
+    "Cambaroididae" = "#D95F02",
+    "Parastacidae"  = "#C62A6E"
+  )
+
+  family_info_w <- list(
+    Astacidae     = list(region = "Europe, western Asia, and Pacific Northwest North America",
+                         genera = "Astacus, Pacifastacus, Austropotamobius"),
+    Cambaridae    = list(region = "Eastern North America and Central America",
+                         genera = "Procambarus, Orconectes, Cambarus"),
+    Cambaroididae = list(region = "East Asia (China, Korea, Japan, Russian Far East)",
+                         genera = "Cambaroides"),
+    Parastacidae  = list(region = "Southern Hemisphere — Australasia, South America, Madagascar",
+                         genera = "Cherax, Paranephrops, Astacopsis, Engaeus")
+  )
+
+  make_popup_w <- function(fam) {
+    info <- family_info_w[[fam]]
+    paste0(
+      "<b><i>", fam, "</i></b><br>",
+      info$region, "<br>",
+      "<small>Example genera: <i>", info$genera, "</i></small><br><br>",
+      "<a href='https://world.crayfish.ro/?q=", utils::URLencode(fam, reserved = TRUE),
+      "' target='_blank' style='color:#1a6fc4'>",
+      "Search on World Crayfish Register &#8599;</a>"
+    )
+  }
+
+  sf::sf_use_s2(FALSE)
+  dist_dissolved_w <- distributions |>
+    sf::st_make_valid() |>
+    dplyr::group_by(family) |>
+    dplyr::summarise(geometry = sf::st_union(geometry), .groups = "drop") |>
+    sf::st_make_valid()
+  sf::sf_use_s2(TRUE)
+  dist_dissolved_w$popup_html <- sapply(as.character(dist_dissolved_w$family), make_popup_w)
+
+  search_html <- paste0(
+    '<div style="background:white;padding:7px 9px;border-radius:4px;',
+    'box-shadow:0 1px 5px rgba(0,0,0,0.35);font-family:sans-serif">',
+    '<div style="font-size:11px;color:#555;margin-bottom:5px;font-weight:600">',
+    'Search World Crayfish Register</div>',
+    '<div style="display:flex;gap:4px;align-items:center">',
+    '<input id="wcr-q" type="text" placeholder="e.g. Astacidae, Cherax" ',
+    'style="width:185px;padding:4px 7px;border:1px solid #ccc;border-radius:3px;font-size:12px" ',
+    'onkeydown="if(event.key===\'Enter\'){var q=this.value.trim();',
+    'if(q)window.open(\'https://world.crayfish.ro/?q=\'+encodeURIComponent(q),\'_blank\')}">',
+    '<button onclick="var q=document.getElementById(\'wcr-q\').value.trim();',
+    'if(q)window.open(\'https://world.crayfish.ro/?q=\'+encodeURIComponent(q),\'_blank\')" ',
+    'title="Search" style="padding:4px 9px;cursor:pointer;border-radius:3px;',
+    'border:1px solid #ccc;background:#f5f5f5;font-size:13px">&#128269;</button>',
+    '</div></div>'
+  )
+
+  crayfish_map_w <- leaflet::leaflet(
+    options = leaflet::leafletOptions(worldCopyJump = FALSE, minZoom = 1)
+  ) |>
+    leaflet::addProviderTiles("CartoDB.Positron") |>
+    leaflet::addPolygons(
+      data = dplyr::filter(dist_dissolved_w, family == "Astacidae"),
+      fillColor = family_cols_w["Astacidae"], fillOpacity = 0.65,
+      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Astacidae"
+    ) |>
+    leaflet::addPolygons(
+      data = dplyr::filter(dist_dissolved_w, family == "Cambaridae"),
+      fillColor = family_cols_w["Cambaridae"], fillOpacity = 0.65,
+      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Cambaridae"
+    ) |>
+    leaflet::addPolygons(
+      data = dplyr::filter(dist_dissolved_w, family == "Cambaroididae"),
+      fillColor = family_cols_w["Cambaroididae"], fillOpacity = 0.65,
+      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Cambaroididae"
+    ) |>
+    leaflet::addPolygons(
+      data = dplyr::filter(dist_dissolved_w, family == "Parastacidae"),
+      fillColor = family_cols_w["Parastacidae"], fillOpacity = 0.65,
+      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Parastacidae"
+    ) |>
+    leaflet::addLayersControl(
+      overlayGroups = c("Astacidae", "Cambaridae", "Cambaroididae", "Parastacidae"),
+      options       = leaflet::layersControlOptions(collapsed = FALSE)
+    ) |>
+    leaflet::addLegend(
+      position  = "bottomright",
+      colors    = unname(family_cols_w),
+      labels    = paste0("<i>", names(family_cols_w), "</i>"),
+      title     = "Crayfish family",
+      opacity   = 0.8
+    ) |>
+    leaflet::addControl(html = search_html, position = "topright")
+
+  saveRDS(crayfish_map_w, widget_crayfish_rds)
+}
+```
+
+
+## TLI leaflet map
+```{r}
+#| label: widget-tli-map
+#| include: false
+
+widget_tli_rds <- file.path(der_data_dir, "widget_tli_map.rds")
+
+if (!file.exists(widget_tli_rds)) {
+  lawa_raw_w <- readr::read_csv(
+    file.path(base_dir, "data/raw/lawa-TLI.csv"),
+    show_col_types = FALSE
+  )
+  lake_match_w <- tibble::tribble(
+    ~pattern,               ~lake_name,
+    "Rotomahana",           "Rotomāhana",
+    "Rotoma(?!hana)",       "Rotomā",
+    "Rotokakahi",           "Rotokākahi",
+    "Rotoiti",              "Rotoiti",
+    "Rotoehu",              "Rotoehu",
+    "Rotorua",              "Rotorua",
+    "Okataina|kataina",     "Ōkataina",
+    "Okareka|kareka",       "Ōkāreka",
+    "Tikitapu",             "Tikitapu",
+    "Tarawera",             "Tarawera",
+    "Okaro(?!ka)",          "Ōkaro",
+    "Rerewhakaaitu",        "Rerewhakaaitu"
+  )
+  match_lake_w <- function(nm) {
+    for (i in seq_len(nrow(lake_match_w)))
+      if (grepl(lake_match_w$pattern[i], nm, ignore.case = TRUE, perl = TRUE))
+        return(lake_match_w$lake_name[i])
+    NA_character_
+  }
+  lawa_tli_w <- lawa_raw_w |>
+    dplyr::mutate(lake_name = sapply(lake, match_lake_w)) |>
+    dplyr::filter(!is.na(lake_name), !is.na(TLI)) |>
+    dplyr::group_by(lake_name, year = `Hydrological Year`) |>
+    dplyr::summarise(TLI_mean = mean(TLI, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(
+      trophic_state = dplyr::case_when(
+        TLI_mean < 3 ~ "Oligotrophic",
+        TLI_mean < 4 ~ "Mesotrophic",
+        TRUE         ~ "Eutrophic"
+      ),
+      trophic_state = factor(trophic_state, levels = c("Oligotrophic", "Mesotrophic", "Eutrophic"))
+    )
+  trophic_colors_w <- c(Oligotrophic = "#7ab648", Mesotrophic = "#e9ec0c", Eutrophic = "#e26715")
+  all_lakes_wgs <- all_lakes |> sf::st_transform(4326)
+  pal_w   <- leaflet::colorFactor(unname(trophic_colors_w), names(trophic_colors_w), na.color = "grey70")
+  years_w <- sort(unique(lawa_tli_w$year))
+  tli_map <- leaflet::leaflet() |> leaflet::addProviderTiles("Esri.WorldGrayCanvas")
+  for (yr in years_w) {
+    tli_yr   <- dplyr::filter(lawa_tli_w, year == yr) |> dplyr::select(lake_name, trophic_state, TLI_mean)
+    lakes_yr <- dplyr::left_join(all_lakes_wgs, tli_yr, by = "lake_name")
+    fill_cols_yr <- pal_w(as.character(lakes_yr$trophic_state))
+    popup_yr <- ifelse(
+      !is.na(lakes_yr$trophic_state),
+      paste0("<b>", lakes_yr$lake_name, "</b><br>Year: ", yr,
+             "<br>Trophic state: ", as.character(lakes_yr$trophic_state),
+             "<br>TLI: ", round(lakes_yr$TLI_mean, 2)),
+      paste0("<b>", lakes_yr$lake_name, "</b><br>Year: ", yr, "<br>No monitoring data")
+    )
+    tli_map  <- leaflet::addPolygons(tli_map, data = lakes_yr,
+      fillColor = fill_cols_yr, fillOpacity = 0.85,
+      color = "#2a2a2a", weight = 1, label = ~lake_name,
+      popup = popup_yr,
+      group = as.character(yr))
+  }
+  tli_map <- tli_map |>
+    leaflet::addLegend("bottomright", pal = pal_w,
+      values = c("Oligotrophic", "Mesotrophic", "Eutrophic"),
+      title = "Trophic state", opacity = 0.85) |>
+    htmlwidgets::onRender(paste0('
+      function(el, x) {
+        var years = ', jsonlite::toJSON(years_w), ';
+        var map = this;
+        function setGroupVisible(grp, visible) {
+          var tbl = map.layerManager._byGroup[String(grp)];
+          if (!tbl) return;
+          Object.keys(tbl).forEach(function(stamp) {
+            visible ? map.addLayer(tbl[stamp]) : map.removeLayer(tbl[stamp]);
+          });
+        }
+        years.forEach(function(yr, i) { if (i < years.length - 1) setGroupVisible(yr, false); });
+        var ctrl = L.control({position: "bottomleft"});
+        ctrl.onAdd = function() {
+          var div = L.DomUtil.create("div");
+          div.style.cssText = "background:white;padding:10px 14px;border-radius:6px;"
+            + "box-shadow:0 2px 6px rgba(0,0,0,.3);min-width:260px;";
+          L.DomEvent.disableScrollPropagation(div);
+          L.DomEvent.disableClickPropagation(div);
+          div.innerHTML =
+            \'<div style="font-weight:bold;font-size:13px;margin-bottom:6px;text-align:center">\' +
+            \'Trophic state — Year: <span id="lawa-yr-lbl" style="color:#e26715">\' +
+            years[years.length-1] + \'</span></div>\' +
+            \'<input id="lawa-yr-slider" type="range" min="0" max="\' + (years.length-1) +
+            \'" value="\' + (years.length-1) + \'" style="width:100%;cursor:pointer">\' +
+            \'<div style="display:flex;justify-content:space-between;font-size:10px;color:#666">\' +
+            \'<span>\' + years[0] + \'</span><span>\' + years[years.length-1] + \'</span></div>\';
+          return div;
+        };
+        ctrl.addTo(map);
+        document.getElementById("lawa-yr-slider").addEventListener("input", function() {
+          var selected = years[parseInt(this.value)];
+          document.getElementById("lawa-yr-lbl").textContent = selected;
+          years.forEach(function(yr) { setGroupVisible(yr, yr === selected); });
+        });
+      }
+    '))
+  saveRDS(tli_map, widget_tli_rds)
+  message("Saved widget_tli_map.rds")
+}
+```
+
+## Livable habitat plotly widgets
+```{r}
+#| label: widget-livable-plots
+#| include: false
+
+widget_lsummary_rds <- file.path(der_data_dir, "widget_livable_summary.rds")
+widget_ltrends_rds  <- file.path(der_data_dir, "widget_livable_trends.rds")
+
+if (!file.exists(widget_lsummary_rds) || !file.exists(widget_ltrends_rds)) {
+  lha_w           <- livable_habitat_all
+  season_cols_w   <- c(Summer = "#D55E00", Autumn = "#E69F00", Winter = "#56B4E9", Spring = "#009E73")
+
+  livable_sum_w <- lha_w |>
+    dplyr::group_by(Lake, Season_Year, Season) |>
+    dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(tooltip = paste0(Lake, "\n", Season, " ", Season_Year, "\n", round(Mean_Livable, 1), "%"))
+  yearly_mean_w <- lha_w |>
+    dplyr::group_by(Lake, Season_Year) |>
+    dplyr::summarise(Yearly_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(tooltip = paste0(Lake, "\nAnnual mean ", Season_Year, "\n", round(Yearly_Mean, 1), "%"))
+
+  p_sum_w <- ggplot2::ggplot() +
+    ggplot2::geom_line(data = livable_sum_w,
+      ggplot2::aes(Season_Year, Mean_Livable, colour = Season, group = Season, text = tooltip),
+      linewidth = 0.8) +
+    ggplot2::geom_line(data = yearly_mean_w,
+      ggplot2::aes(Season_Year, Yearly_Mean, group = 1, text = tooltip),
+      colour = "black", linewidth = 1) +
+    ggplot2::scale_colour_manual(values = season_cols_w) +
+    ggplot2::facet_wrap(~ Lake) +
+    ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season") +
+    ggplot2::theme_minimal(base_size = 11)
+  w_summary <- plotly::ggplotly(p_sum_w, tooltip = "text") |>
+    plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+  saveRDS(w_summary, widget_lsummary_rds)
+  message("Saved widget_livable_summary.rds")
+
+  seasonal_trend_w <- lha_w |>
+    dplyr::group_by(Lake, Season_Year, Season) |>
+    dplyr::summarise(Mean_Livable = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(tooltip = paste0(Lake, "\n", Season, " ", Season_Year, "\n", round(Mean_Livable, 1), "%"))
+
+  # Annual means for the black overlay line
+  annual_lha_w <- lha_w |>
+    dplyr::group_by(Lake, Season_Year) |>
+    dplyr::summarise(Annual_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(tooltip = paste0(Lake, "\nAnnual mean ", Season_Year, "\n", round(Annual_Mean, 1), "%"))
+
+  # Per-lake trend annotations
+  trends_annot_w <- annual_lha_w |>
+    dplyr::group_by(Lake) |>
+    dplyr::group_modify(~ broom::tidy(lm(Annual_Mean ~ Season_Year, data = .x))) |>
+    dplyr::filter(term == "Season_Year") |>
+    dplyr::mutate(
+      sig = dplyr::case_when(
+        p.value < 0.001 ~ "***", p.value < 0.01 ~ "**",
+        p.value < 0.05 ~ "*", TRUE ~ "ns"),
+      lbl = paste0(round(estimate, 1), "% per year ", sig)
+    )
+
+  x_ann_w <- min(seasonal_trend_w$Season_Year, na.rm = TRUE)
+  y_ann_w <- max(seasonal_trend_w$Mean_Livable,  na.rm = TRUE) * 1.005
+
+  p_trend_w <- ggplot2::ggplot() +
+    ggplot2::geom_point(
+      data = seasonal_trend_w,
+      ggplot2::aes(Season_Year, Mean_Livable, colour = Season, shape = Season,
+                   group = Season, text = tooltip),
+      size = 1.2, alpha = 0.8) +
+    ggplot2::geom_smooth(
+      data = seasonal_trend_w,
+      ggplot2::aes(Season_Year, Mean_Livable, colour = Season, group = Season),
+      method = "lm", se = TRUE, alpha = 0.15, linewidth = 0.7, show.legend = FALSE) +
+    ggplot2::geom_point(
+      data = annual_lha_w,
+      ggplot2::aes(Season_Year, Annual_Mean, text = tooltip),
+      colour = "grey20", size = 1.0, shape = 16) +
+    ggplot2::geom_smooth(
+      data = annual_lha_w,
+      ggplot2::aes(Season_Year, Annual_Mean, group = 1),
+      method = "lm", se = TRUE, colour = "#111111", fill = "grey40",
+      alpha = 0.15, linewidth = 0.9, show.legend = FALSE) +
+    ggplot2::geom_text(
+      data = trends_annot_w,
+      ggplot2::aes(label = lbl),
+      x = x_ann_w, y = y_ann_w,
+      hjust = 0, vjust = 1, size = 2.4, colour = "grey20") +
+    ggplot2::scale_colour_manual(values = season_cols_w) +
+    ggplot2::scale_shape_manual(values = c(Summer = 16, Autumn = 17, Winter = 15, Spring = 18)) +
+    ggplot2::facet_wrap(~ Lake) +
+    ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season", shape = "Season") +
+    ggplot2::theme_minimal(base_size = 11)
+  w_trends <- plotly::ggplotly(p_trend_w, tooltip = "text") |>
+    plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+  saveRDS(w_trends, widget_ltrends_rds)
+  message("Saved widget_livable_trends.rds")
+}
+```
+
+## Pixel habitat leaflet map
+```{r}
+#| label: widget-pixel-map
+#| include: false
+
+widget_pixel_rds <- file.path(der_data_dir, "widget_pixel_map.rds")
+
+if (!file.exists(widget_pixel_rds)) {
+  pt_w <- readRDS(pixel_trend_rds)
+  pp_w <- readRDS(pixel_persistence_rds)
+  px_w <- dplyr::full_join(
+    pt_w |> dplyr::select(x, y, Lake, Trend),
+    pp_w |> dplyr::select(x, y, Lake, Summer, Autumn, Winter, Spring),
+    by = c("x", "y", "Lake")
+  )
+  coords_w <- px_w |> dplyr::select(x, y) |> as.matrix() |>
+    sf::st_multipoint() |> sf::st_sfc(crs = 2193) |>
+    sf::st_transform(4326) |> sf::st_coordinates()
+  px_w$lon <- coords_w[, 1]; px_w$lat <- coords_w[, 2]
+
+  make_rast_w <- function(df, col, res = 0.001) {
+    dv <- df[!is.na(df[[col]]), c("lon", "lat", col)]
+    if (nrow(dv) == 0) return(NULL)
+    v <- terra::vect(dv, geom = c("lon", "lat"), crs = "EPSG:4326")
+    r <- terra::rast(terra::ext(v) + res, resolution = res, crs = "EPSG:4326")
+    terra::rasterize(v, r, field = col, fun = "mean")
+  }
+
+  tc_w      <- quantile(abs(px_w$Trend), 0.95, na.rm = TRUE)
+  pal_tr_w  <- leaflet::colorNumeric(
+    grDevices::colorRampPalette(c("#d73027", "grey90", "#2171b5"))(200),
+    domain = c(-tc_w, tc_w), na.color = "transparent")
+  pal_pe_w  <- leaflet::colorNumeric(
+    grDevices::colorRampPalette(c("grey90", "#2171b5"))(100),
+    domain = c(0, 1), na.color = "transparent")
+
+  pm_w <- leaflet::leaflet() |> leaflet::addProviderTiles("Esri.WorldGrayCanvas")
+  for (lk in unique(px_w$Lake)) {
+    dl <- px_w |> dplyr::filter(Lake == lk)
+    rt <- make_rast_w(dl, "Trend")
+    if (!is.null(rt))
+      pm_w <- leaflet::addRasterImage(pm_w, rt, colors = pal_tr_w, opacity = 0.85,
+                                      group = "Trend (long-term change)")
+    for (s in c("Summer", "Autumn", "Winter", "Spring")) {
+      rs <- make_rast_w(dl, s)
+      if (!is.null(rs))
+        pm_w <- leaflet::addRasterImage(pm_w, rs, colors = pal_pe_w, opacity = 0.85, group = s)
+    }
+  }
+  pm_w <- pm_w |>
+    leaflet::addLayersControl(
+      baseGroups = c("Trend (long-term change)", "Summer", "Autumn", "Winter", "Spring"),
+      options = leaflet::layersControlOptions(collapsed = FALSE)) |>
+    leaflet::addLegend("bottomleft", pal = pal_tr_w, values = c(-tc_w, tc_w),
+      title = "Trend (prop/yr)", opacity = 0.85, group = "Trend (long-term change)") |>
+    leaflet::addLegend("bottomright", pal = pal_pe_w, values = c(0, 1),
+      title = "Prop. periods liveable", opacity = 0.85,
+      labFormat = leaflet::labelFormat(suffix = ""))
+  saveRDS(pm_w, widget_pixel_rds)
+  message("Saved widget_pixel_map.rds")
+}
 ```
 
 # Session info

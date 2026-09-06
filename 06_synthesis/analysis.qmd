@@ -35,7 +35,7 @@ chapter_dir <- local({
   }
   if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
     f <- rstudioapi::getSourceEditorContext()$path
-    if (nzchar(f)) return(normalizePath(dirname(f)))
+    if (length(f) > 0 && nzchar(f)) return(normalizePath(dirname(f)))
   }
   normalizePath(".")  # fallback: assume CWD is 06_synthesis/
 })

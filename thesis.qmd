@@ -1,6 +1,6 @@
 ---
-title: "Enhancing native freshwater crayfish habitat in invaded lake ecosystems"
-thesis-title: "Enhancing native freshwater crayfish habitat in invaded lake ecosystems"
+title: "Enhancing Native Freshwater Crayfish Habitat in Invaded Lake Ecosystems"
+thesis-title: "Enhancing Native Freshwater Crayfish Habitat in Invaded Lake Ecosystems"
 author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none

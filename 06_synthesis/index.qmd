@@ -6,6 +6,7 @@ execute:
   cache: false
 
 title-block-style: none
+citation: false
 
 knitr:
   opts_chunk:
@@ -57,10 +58,10 @@ Chapter 6 Synthesis
 #| echo: false
 #| output: asis
 #| eval: !expr knitr::is_html_output()
-.i <- file.path(dirname(knitr::current_input(dir = TRUE)), "06_synthesis", "images", "ch6_cover.jpg")
-if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-img" src="%s" alt=""><div class="ch-hero-fade"></div></div>', knitr::image_uri(.i)))
+.i <- file.path(dirname(knitr::current_input(dir = TRUE)), "images", "ch6_cover.jpg")
+if (!file.exists(.i)) .i <- file.path(dirname(knitr::current_input(dir = TRUE)), "06_synthesis", "images", "ch6_cover.jpg")
+if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-img" src="%s" alt=""><div class="ch-hero-fade"></div><div class="ch-hero-text"><span class="ch-eyebrow">Chapter 6</span><span class="ch-hero-title">Synthesis</span></div></div>', knitr::image_uri(.i)))
 ```
-[Chapter 6]{.ch-eyebrow}
 
 # Synthesis {.unnumbered}
 :::
