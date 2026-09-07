@@ -2355,7 +2355,7 @@ season_persistence_maps[["Summer"]]
 widget_nzffd_rds <- file.path(der_data_dir, "widget_nzffd_map.rds")
 if (!file.exists(widget_nzffd_rds)) {
   nzffd_map_w <- leaflet::leaflet() |>
-    leaflet::addProviderTiles("CartoDB.Positron") |>
+    leaflet::addTiles(options = leaflet::tileOptions(opacity = 0.5)) |>
     leaflet::addCircleMarkers(
       data        = nzffd_koura_sf,
       radius      = 5, color = "#2171b5", fillColor = "#2171b5",
@@ -2404,11 +2404,12 @@ if (!file.exists(widget_nzffd_rds)) {
 
 widget_crayfish_rds <- file.path(der_data_dir, "widget_crayfish_map.rds")
 if (!file.exists(widget_crayfish_rds)) {
-  family_cols_w <- c(
-    "Astacidae"     = "#2166AC",
-    "Cambaridae"    = "#1A9641",
-    "Cambaroididae" = "#D95F02",
-    "Parastacidae"  = "#C62A6E"
+  # Explicit hex strings — named vectors confuse leaflet's color resolver
+  fam_col <- list(
+    Astacidae     = "#2166AC",
+    Cambaridae    = "#1A9641",
+    Cambaroididae = "#D95F02",
+    Parastacidae  = "#C62A6E"
   )
 
   family_info_w <- list(
@@ -2443,59 +2444,111 @@ if (!file.exists(widget_crayfish_rds)) {
   sf::sf_use_s2(TRUE)
   dist_dissolved_w$popup_html <- sapply(as.character(dist_dissolved_w$family), make_popup_w)
 
-  search_html <- paste0(
-    '<div style="background:white;padding:7px 9px;border-radius:4px;',
-    'box-shadow:0 1px 5px rgba(0,0,0,0.35);font-family:sans-serif">',
-    '<div style="font-size:11px;color:#555;margin-bottom:5px;font-weight:600">',
-    'Search World Crayfish Register</div>',
-    '<div style="display:flex;gap:4px;align-items:center">',
-    '<input id="wcr-q" type="text" placeholder="e.g. Astacidae, Cherax" ',
-    'style="width:185px;padding:4px 7px;border:1px solid #ccc;border-radius:3px;font-size:12px" ',
-    'onkeydown="if(event.key===\'Enter\'){var q=this.value.trim();',
-    'if(q)window.open(\'https://world.crayfish.ro/?q=\'+encodeURIComponent(q),\'_blank\')}">',
-    '<button onclick="var q=document.getElementById(\'wcr-q\').value.trim();',
-    'if(q)window.open(\'https://world.crayfish.ro/?q=\'+encodeURIComponent(q),\'_blank\')" ',
-    'title="Search" style="padding:4px 9px;cursor:pointer;border-radius:3px;',
-    'border:1px solid #ccc;background:#f5f5f5;font-size:13px">&#128269;</button>',
-    '</div></div>'
-  )
-
   crayfish_map_w <- leaflet::leaflet(
     options = leaflet::leafletOptions(worldCopyJump = FALSE, minZoom = 1)
   ) |>
-    leaflet::addProviderTiles("CartoDB.Positron") |>
+    # OpenStreetMap — always free, no API key required
+    leaflet::addTiles(options = leaflet::tileOptions(opacity = 0.5)) |>
     leaflet::addPolygons(
       data = dplyr::filter(dist_dissolved_w, family == "Astacidae"),
-      fillColor = family_cols_w["Astacidae"], fillOpacity = 0.65,
-      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Astacidae"
+      fillColor = fam_col$Astacidae, fillOpacity = 0.7,
+      color = "#444", weight = 0.6, popup = ~popup_html, group = "Astacidae"
     ) |>
     leaflet::addPolygons(
       data = dplyr::filter(dist_dissolved_w, family == "Cambaridae"),
-      fillColor = family_cols_w["Cambaridae"], fillOpacity = 0.65,
-      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Cambaridae"
+      fillColor = fam_col$Cambaridae, fillOpacity = 0.7,
+      color = "#444", weight = 0.6, popup = ~popup_html, group = "Cambaridae"
     ) |>
     leaflet::addPolygons(
       data = dplyr::filter(dist_dissolved_w, family == "Cambaroididae"),
-      fillColor = family_cols_w["Cambaroididae"], fillOpacity = 0.65,
-      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Cambaroididae"
+      fillColor = fam_col$Cambaroididae, fillOpacity = 0.7,
+      color = "#444", weight = 0.6, popup = ~popup_html, group = "Cambaroididae"
     ) |>
     leaflet::addPolygons(
       data = dplyr::filter(dist_dissolved_w, family == "Parastacidae"),
-      fillColor = family_cols_w["Parastacidae"], fillOpacity = 0.65,
-      color = "grey30", weight = 0.8, popup = ~popup_html, group = "Parastacidae"
+      fillColor = fam_col$Parastacidae, fillOpacity = 0.7,
+      color = "#444", weight = 0.6, popup = ~popup_html, group = "Parastacidae"
     ) |>
     leaflet::addLayersControl(
       overlayGroups = c("Astacidae", "Cambaridae", "Cambaroididae", "Parastacidae"),
       options       = leaflet::layersControlOptions(collapsed = FALSE)
     ) |>
     leaflet::addLegend(
-      position  = "bottomright",
-      colors    = unname(family_cols_w),
-      labels    = paste0("<i>", names(family_cols_w), "</i>"),
+      position  = "bottomleft",
+      colors    = unlist(fam_col),
+      labels    = paste0("<i>", names(fam_col), "</i>"),
       title     = "Crayfish family",
-      opacity   = 0.8
+      opacity   = 0.85
     ) |>
-    leaflet::addControl(html = search_html, position = "topright")
+    htmlwidgets::onRender('
+      function(el, x) {
+        var map = this;
+        var families = ["Astacidae", "Cambaridae", "Cambaroididae", "Parastacidae"];
+
+        function setGroupVisible(grp, show) {
+          var tbl = map.layerManager._byGroup[grp];
+          if (!tbl) return;
+          Object.keys(tbl).forEach(function(k) {
+            show ? map.addLayer(tbl[k]) : map.removeLayer(tbl[k]);
+          });
+        }
+
+        // Build search + filter control
+        var ctrl = L.control({ position: "topright" });
+        ctrl.onAdd = function() {
+          var div = L.DomUtil.create("div");
+          div.style.cssText = "background:white;padding:8px 10px;border-radius:5px;" +
+            "box-shadow:0 1px 6px rgba(0,0,0,.35);font-family:sans-serif;min-width:260px";
+          div.innerHTML =
+            "<div style=\'font-size:11px;color:#444;font-weight:700;margin-bottom:5px\'>" +
+              "Filter families / search species" +
+            "</div>" +
+            "<div style=\'display:flex;gap:5px;align-items:center\'>" +
+              "<input id=\'cf-q\' type=\'text\' placeholder=\'Type family or species name…\' " +
+                "style=\'flex:1;padding:4px 7px;border:1px solid #ccc;border-radius:3px;font-size:12px\'>" +
+              "<button id=\'cf-btn\' title=\'Open World Crayfish Register\' " +
+                "style=\'padding:4px 9px;cursor:pointer;border-radius:3px;border:1px solid #ccc;" +
+                "background:#f0f0f0;font-size:13px\'>&#128269;</button>" +
+            "</div>" +
+            "<div style=\'font-size:10px;color:#888;margin-top:4px\'>" +
+              "Matches a family name → filters map &nbsp;|&nbsp; anything else → opens WCR" +
+            "</div>";
+          L.DomEvent.disableClickPropagation(div);
+          L.DomEvent.disableScrollPropagation(div);
+
+          var inp = div.querySelector("#cf-q");
+          var btn = div.querySelector("#cf-btn");
+
+          inp.addEventListener("input", function() {
+            var q = this.value.toLowerCase().trim();
+            families.forEach(function(fam) {
+              setGroupVisible(fam, !q || fam.toLowerCase().startsWith(q));
+            });
+          });
+
+          function doSearch() {
+            var q = inp.value.trim();
+            if (!q) return;
+            var matchFam = families.filter(function(f) {
+              return f.toLowerCase().startsWith(q.toLowerCase());
+            });
+            if (matchFam.length > 0) {
+              // already handled by input event — just clear non-matching
+              families.forEach(function(fam) {
+                setGroupVisible(fam, fam.toLowerCase().startsWith(q.toLowerCase()));
+              });
+            } else {
+              window.open("https://world.crayfish.ro/?q=" + encodeURIComponent(q), "_blank");
+            }
+          }
+
+          btn.addEventListener("click", doSearch);
+          inp.addEventListener("keydown", function(e) { if (e.key === "Enter") doSearch(); });
+          return div;
+        };
+        ctrl.addTo(map);
+      }
+    ')
 
   saveRDS(crayfish_map_w, widget_crayfish_rds)
 }
@@ -2548,15 +2601,22 @@ if (!file.exists(widget_tli_rds)) {
       ),
       trophic_state = factor(trophic_state, levels = c("Oligotrophic", "Mesotrophic", "Eutrophic"))
     )
-  trophic_colors_w <- c(Oligotrophic = "#7ab648", Mesotrophic = "#e9ec0c", Eutrophic = "#e26715")
+  # Plain hex lookup — avoids named-vector CSS bug in leaflet
+  trophic_hex_w <- function(state) {
+    dplyr::case_when(
+      state == "Oligotrophic" ~ "#7ab648",
+      state == "Mesotrophic"  ~ "#e9ec0c",
+      state == "Eutrophic"    ~ "#e26715",
+      TRUE                    ~ "#b0b0b0"
+    )
+  }
   all_lakes_wgs <- all_lakes |> sf::st_transform(4326)
-  pal_w   <- leaflet::colorFactor(unname(trophic_colors_w), names(trophic_colors_w), na.color = "grey70")
   years_w <- sort(unique(lawa_tli_w$year))
   tli_map <- leaflet::leaflet() |> leaflet::addProviderTiles("Esri.WorldGrayCanvas")
   for (yr in years_w) {
     tli_yr   <- dplyr::filter(lawa_tli_w, year == yr) |> dplyr::select(lake_name, trophic_state, TLI_mean)
     lakes_yr <- dplyr::left_join(all_lakes_wgs, tli_yr, by = "lake_name")
-    fill_cols_yr <- pal_w(as.character(lakes_yr$trophic_state))
+    fill_cols_yr <- trophic_hex_w(as.character(lakes_yr$trophic_state))
     popup_yr <- ifelse(
       !is.na(lakes_yr$trophic_state),
       paste0("<b>", lakes_yr$lake_name, "</b><br>Year: ", yr,
@@ -2571,9 +2631,10 @@ if (!file.exists(widget_tli_rds)) {
       group = as.character(yr))
   }
   tli_map <- tli_map |>
-    leaflet::addLegend("bottomright", pal = pal_w,
-      values = c("Oligotrophic", "Mesotrophic", "Eutrophic"),
-      title = "Trophic state", opacity = 0.85) |>
+    leaflet::addLegend("bottomright",
+      colors  = c("#7ab648", "#e9ec0c", "#e26715"),
+      labels  = c("Oligotrophic", "Mesotrophic", "Eutrophic"),
+      title   = "Trophic state", opacity = 0.85) |>
     htmlwidgets::onRender(paste0('
       function(el, x) {
         var years = ', jsonlite::toJSON(years_w), ';
@@ -2710,6 +2771,24 @@ if (!file.exists(widget_lsummary_rds) || !file.exists(widget_ltrends_rds)) {
     ggplot2::theme_minimal(base_size = 11)
   w_trends <- plotly::ggplotly(p_trend_w, tooltip = "text") |>
     plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+
+  # ggplotly creates one trace per (Season, facet) → deduplicate to 4 legend entries
+  seen_seasons <- character(0)
+  for (i in seq_along(w_trends$x$data)) {
+    tr_name <- w_trends$x$data[[i]]$name
+    if (grepl("^\\(", tr_name)) {
+      season <- sub("^\\(([^,]+),.*\\)$", "\\1", tr_name)
+      w_trends$x$data[[i]]$legendgroup <- season
+      w_trends$x$data[[i]]$name        <- season
+      if (season %in% seen_seasons) {
+        w_trends$x$data[[i]]$showlegend <- FALSE
+      } else {
+        w_trends$x$data[[i]]$showlegend <- TRUE
+        seen_seasons <- c(seen_seasons, season)
+      }
+    }
+  }
+
   saveRDS(w_trends, widget_ltrends_rds)
   message("Saved widget_livable_trends.rds")
 }
