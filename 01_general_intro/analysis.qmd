@@ -2476,79 +2476,10 @@ if (!file.exists(widget_crayfish_rds)) {
     leaflet::addLegend(
       position  = "bottomleft",
       colors    = unlist(fam_col),
-      labels    = paste0("<i>", names(fam_col), "</i>"),
+      labels    = names(fam_col),
       title     = "Crayfish family",
       opacity   = 0.85
-    ) |>
-    htmlwidgets::onRender('
-      function(el, x) {
-        var map = this;
-        var families = ["Astacidae", "Cambaridae", "Cambaroididae", "Parastacidae"];
-
-        function setGroupVisible(grp, show) {
-          var tbl = map.layerManager._byGroup[grp];
-          if (!tbl) return;
-          Object.keys(tbl).forEach(function(k) {
-            show ? map.addLayer(tbl[k]) : map.removeLayer(tbl[k]);
-          });
-        }
-
-        // Build search + filter control
-        var ctrl = L.control({ position: "topright" });
-        ctrl.onAdd = function() {
-          var div = L.DomUtil.create("div");
-          div.style.cssText = "background:white;padding:8px 10px;border-radius:5px;" +
-            "box-shadow:0 1px 6px rgba(0,0,0,.35);font-family:sans-serif;min-width:260px";
-          div.innerHTML =
-            "<div style=\'font-size:11px;color:#444;font-weight:700;margin-bottom:5px\'>" +
-              "Filter families / search species" +
-            "</div>" +
-            "<div style=\'display:flex;gap:5px;align-items:center\'>" +
-              "<input id=\'cf-q\' type=\'text\' placeholder=\'Type family or species name…\' " +
-                "style=\'flex:1;padding:4px 7px;border:1px solid #ccc;border-radius:3px;font-size:12px\'>" +
-              "<button id=\'cf-btn\' title=\'Open World Crayfish Register\' " +
-                "style=\'padding:4px 9px;cursor:pointer;border-radius:3px;border:1px solid #ccc;" +
-                "background:#f0f0f0;font-size:13px\'>&#128269;</button>" +
-            "</div>" +
-            "<div style=\'font-size:10px;color:#888;margin-top:4px\'>" +
-              "Matches a family name → filters map &nbsp;|&nbsp; anything else → opens WCR" +
-            "</div>";
-          L.DomEvent.disableClickPropagation(div);
-          L.DomEvent.disableScrollPropagation(div);
-
-          var inp = div.querySelector("#cf-q");
-          var btn = div.querySelector("#cf-btn");
-
-          inp.addEventListener("input", function() {
-            var q = this.value.toLowerCase().trim();
-            families.forEach(function(fam) {
-              setGroupVisible(fam, !q || fam.toLowerCase().startsWith(q));
-            });
-          });
-
-          function doSearch() {
-            var q = inp.value.trim();
-            if (!q) return;
-            var matchFam = families.filter(function(f) {
-              return f.toLowerCase().startsWith(q.toLowerCase());
-            });
-            if (matchFam.length > 0) {
-              // already handled by input event — just clear non-matching
-              families.forEach(function(fam) {
-                setGroupVisible(fam, fam.toLowerCase().startsWith(q.toLowerCase()));
-              });
-            } else {
-              window.open("https://world.crayfish.ro/?q=" + encodeURIComponent(q), "_blank");
-            }
-          }
-
-          btn.addEventListener("click", doSearch);
-          inp.addEventListener("keydown", function(e) { if (e.key === "Enter") doSearch(); });
-          return div;
-        };
-        ctrl.addTo(map);
-      }
-    ')
+    )
 
   saveRDS(crayfish_map_w, widget_crayfish_rds)
 }
@@ -2710,7 +2641,10 @@ if (!file.exists(widget_lsummary_rds) || !file.exists(widget_ltrends_rds)) {
     ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season") +
     ggplot2::theme_minimal(base_size = 11)
   w_summary <- plotly::ggplotly(p_sum_w, tooltip = "text") |>
-    plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+    plotly::layout(
+      height = 650,
+      legend = list(orientation = "h", x = 0, y = -0.06)
+    )
   saveRDS(w_summary, widget_lsummary_rds)
   message("Saved widget_livable_summary.rds")
 
@@ -2770,7 +2704,17 @@ if (!file.exists(widget_lsummary_rds) || !file.exists(widget_ltrends_rds)) {
     ggplot2::labs(x = "Year", y = "Liveable habitat (%)", colour = "Season", shape = "Season") +
     ggplot2::theme_minimal(base_size = 11)
   w_trends <- plotly::ggplotly(p_trend_w, tooltip = "text") |>
-    plotly::layout(legend = list(orientation = "h", x = 0, y = -0.08))
+    plotly::layout(
+      height = 720,
+      legend = list(orientation = "h", x = 0, y = -0.05)
+    )
+
+  # Boost font size of geom_text trend annotations (tiny after ggplotly conversion)
+  if (!is.null(w_trends$x$layout$annotations)) {
+    for (i in seq_along(w_trends$x$layout$annotations)) {
+      w_trends$x$layout$annotations[[i]]$font$size <- 10
+    }
+  }
 
   # ggplotly creates one trace per (Season, facet) → deduplicate to 4 legend entries
   seen_seasons <- character(0)
