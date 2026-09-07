@@ -29,6 +29,14 @@
 
 ```{=latex}
 \clearpage
+\setcounter{table}{0}
+\setcounter{figure}{0}
+```
+
+{{< include 06_synthesis/supplementary.qmd >}}
+
+```{=latex}
+\clearpage
 \nopagecolor
 \includepdf[pages=1,pagecommand={}]{admin/Co-Authorship-Form_ch2.pdf}
 \includepdf[pages=1,pagecommand={}]{admin/Co-Authorship-Form_ch3.pdf}

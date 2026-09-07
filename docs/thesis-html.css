@@ -262,7 +262,20 @@ code {
 }
 
 /* ── Chapter page-heading: visually hidden but kept in DOM for TOC ──── */
-.ch-page-heading {
+/* Quarto applies heading classes to the <section> wrapper, so we must    */
+/* explicitly undo any hiding on the section and only hide the <h1> inside */
+section.ch-page-heading {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  margin: revert !important;
+  padding: revert !important;
+}
+
+section.ch-page-heading > h1,
+section.ch-page-heading > h2 {
   position: absolute;
   width: 1px;
   height: 1px;
