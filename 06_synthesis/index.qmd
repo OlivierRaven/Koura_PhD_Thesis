@@ -69,6 +69,10 @@ if (file.exists(.i)) cat(sprintf('<div class="ch-hero-wrap"><img class="ch-hero-
 ## Introduction
 The chapters preceding this synthesis established the ecological and practical basis for using stone piles as a kōura habitat enhancement tool. Behavioural experiments (Chapter 2) confirmed that kōura respond with heightened refuge use to novel predators than native ones. Field observations (Chapter 3) identified the habitat features that support kōura along lake shorelines, and mesocosm trials (Chapter 4) showed that structure stability and complexity matter more than material when kōura select shelter. Chapter 5 deployed stone piles along the shoreline of Lake Rotoiti and monitored kōura response over 18 months in a BACI design. Kōura colonised the structures rapidly, with occupancy and abundance consistently trending positive at stone pile sites relative to controls, though this effect did not reach statistical significance. Catfish showed no evidence of being attracted to the stone piles. This chapter (Chapter 6) synthesises the findings across all four chapters and presents two pilot studies that extend the work in early and future directions. The first trialled the construction logistics and kōura reintroduction in Lake Ōkaro where it was found that water quality needs to meet kōura demands before reintroduction is feasible. The second extended stone pile deployment up to nine meters deep and found that kōura use stone piles across the littoral zone and that stone piles are able to suppress invasive macrophytes. Together with the main chapters, these case studies broaden the application of the kōura restoration approach developed in this thesis for future deployment and monitoring.
 
+(@sec-supp-okaro)
+
+(@sec-supp-rotoiti-deep)
+
 ## Three stressors working together
 Kōura decline in the Rotorua Te Arawa Lakes is driven by multiple compounding stressors, most prominently catfish predation, thermal stratification, and invasive macrophytes, which togeheter operate at both the local habitat scale and the broader lake scale.
 

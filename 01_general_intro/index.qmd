@@ -228,6 +228,10 @@ Climate change is expected to intensify all of these pressures. Stronger and lon
 ![Liveable habitat (%) for kōura across eleven of the Rotorua Te Arawa Lakes from 2003 to 2026, by season. Liveable habitat is defined as the proportion of the water column meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds suitable for kōura. Coloured lines show seasonal means; the black line shows the overall trend. Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].](outputs/fig-livable-habitat-summary.png){#fig-livable-habitat-summary width=100%}
 :::
 
+::: {.content-visible unless-format="html"}
+![Long-term trends in seasonal and annual mean liveable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Liveable habitat is defined as the proportion of the lake bottom area meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds suitable for kōura. Points represent means; lines show linear regressions with 95 % confidence intervals. Annual slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].](outputs/fig-livable-habitat-trends.png){#fig-livable-habitat-trends width=90% fig-pos="htbp"}
+:::
+
 ::: {.content-visible when-format="html"}
 ```{r}
 #| label: fig-livable-habitat-summary
@@ -238,10 +242,6 @@ ch1_dir <- if (dir.exists("01_general_intro")) "01_general_intro" else "."
 .rds <- file.path(ch1_dir, "data/derived/widget_livable_summary.rds")
 if (file.exists(.rds)) readRDS(.rds) else htmltools::tags$p(htmltools::tags$em("Interactive plot not yet built — render analysis.qmd first."), style = "color:#888;padding:1em")
 ```
-:::
-
-::: {.content-visible unless-format="html"}
-![Long-term trends in seasonal and annual mean liveable habitat for kōura across eleven of the Rotorua Te Arawa Lakes. Liveable habitat is defined as the proportion of the lake bottom area meeting dissolved oxygen (> 5 mg/L) and temperature (< 21 °C) thresholds suitable for kōura. Points represent means; lines show linear regressions with 95 % confidence intervals. Annual slopes are reported as percentage change per year (significance: *** p < 0.001, ns = not significant). Derived from CTD cast data collected by BOPRC monthly monitoring and monitoring buoy data LimnoTrack [@Moore2026].](outputs/fig-livable-habitat-trends.png){#fig-livable-habitat-trends width=100% fig-pos="htbp"}
 :::
 
 ::: {.content-visible when-format="html"}

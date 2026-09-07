@@ -2526,18 +2526,22 @@ if (!file.exists(widget_tli_rds)) {
     dplyr::summarise(TLI_mean = mean(TLI, na.rm = TRUE), .groups = "drop") |>
     dplyr::mutate(
       trophic_state = dplyr::case_when(
+        TLI_mean < 2 ~ "Microtrophic",
         TLI_mean < 3 ~ "Oligotrophic",
         TLI_mean < 4 ~ "Mesotrophic",
+        TLI_mean > 5 ~ "Supertrophic",
         TRUE         ~ "Eutrophic"
       ),
-      trophic_state = factor(trophic_state, levels = c("Oligotrophic", "Mesotrophic", "Eutrophic"))
+      trophic_state = factor(trophic_state, levels = c("Microtrophic","Oligotrophic", "Mesotrophic", "Eutrophic","Supertrophic"))
     )
   # Plain hex lookup — avoids named-vector CSS bug in leaflet
   trophic_hex_w <- function(state) {
     dplyr::case_when(
+      state == "Microtrophic" ~ "#5fc6e6",
       state == "Oligotrophic" ~ "#7ab648",
       state == "Mesotrophic"  ~ "#e9ec0c",
       state == "Eutrophic"    ~ "#e26715",
+      state == "Supertrophic" ~ "#ee0d0d",
       TRUE                    ~ "#b0b0b0"
     )
   }
@@ -2563,8 +2567,8 @@ if (!file.exists(widget_tli_rds)) {
   }
   tli_map <- tli_map |>
     leaflet::addLegend("bottomright",
-      colors  = c("#7ab648", "#e9ec0c", "#e26715"),
-      labels  = c("Oligotrophic", "Mesotrophic", "Eutrophic"),
+      colors  = c("#5fc6e6","#7ab648", "#e9ec0c", "#e26715", "#ee0d0d"),
+      labels  = c("Microtrophic", "Oligotrophic", "Mesotrophic", "Eutrophic","Supertrophic"),
       title   = "Trophic state", opacity = 0.85) |>
     htmlwidgets::onRender(paste0('
       function(el, x) {
@@ -2696,8 +2700,8 @@ if (!file.exists(widget_lsummary_rds) || !file.exists(widget_ltrends_rds)) {
     ggplot2::geom_text(
       data = trends_annot_w,
       ggplot2::aes(label = lbl),
-      x = x_ann_w, y = y_ann_w,
-      hjust = 0, vjust = 1, size = 2.4, colour = "grey20") +
+      x = -Inf, y = Inf,
+      hjust = -0.05, vjust = 1.5, size = 2.4, colour = "grey20") +
     ggplot2::scale_colour_manual(values = season_cols_w) +
     ggplot2::scale_shape_manual(values = c(Summer = 16, Autumn = 17, Winter = 15, Spring = 18)) +
     ggplot2::facet_wrap(~ Lake) +
