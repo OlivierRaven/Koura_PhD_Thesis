@@ -2551,7 +2551,7 @@ if (!file.exists(widget_tli_rds)) {
   for (yr in years_w) {
     tli_yr   <- dplyr::filter(lawa_tli_w, year == yr) |> dplyr::select(lake_name, trophic_state, TLI_mean)
     lakes_yr <- dplyr::left_join(all_lakes_wgs, tli_yr, by = "lake_name")
-    fill_cols_yr <- trophic_hex_w(as.character(lakes_yr$trophic_state))
+    fill_cols_yr <- unname(trophic_hex_w(as.character(lakes_yr$trophic_state)))
     popup_yr <- ifelse(
       !is.na(lakes_yr$trophic_state),
       paste0("<b>", lakes_yr$lake_name, "</b><br>Year: ", yr,
