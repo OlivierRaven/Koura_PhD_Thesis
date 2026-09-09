@@ -2534,35 +2534,37 @@ if (!file.exists(widget_tli_rds)) {
       ),
       trophic_state = factor(trophic_state, levels = c("Microtrophic","Oligotrophic", "Mesotrophic", "Eutrophic","Supertrophic"))
     )
-  # Plain hex lookup — avoids named-vector CSS bug in leaflet
-  trophic_hex_w <- function(state) {
-    dplyr::case_when(
-      state == "Microtrophic" ~ "#5fc6e6",
-      state == "Oligotrophic" ~ "#7ab648",
-      state == "Mesotrophic"  ~ "#e9ec0c",
-      state == "Eutrophic"    ~ "#e26715",
-      state == "Supertrophic" ~ "#ee0d0d",
-      TRUE                    ~ "#b0b0b0"
-    )
-  }
+  # colorFactor returns unnamed vectors — avoids named-vector CSS bug in leaflet
+  trophic_colors_w <- c(
+    Microtrophic = "#5fc6e6", Oligotrophic = "#7ab648",
+    Mesotrophic  = "#e9ec0c", Eutrophic    = "#e26715",
+    Supertrophic = "#ee0d0d"
+  )
+  pal_w <- leaflet::colorFactor(
+    unname(trophic_colors_w), names(trophic_colors_w), na.color = "#b0b0b0"
+  )
   all_lakes_wgs <- all_lakes |> sf::st_transform(4326)
   years_w <- sort(unique(lawa_tli_w$year))
   tli_map <- leaflet::leaflet() |> leaflet::addProviderTiles("Esri.WorldGrayCanvas")
   for (yr in years_w) {
     tli_yr   <- dplyr::filter(lawa_tli_w, year == yr) |> dplyr::select(lake_name, trophic_state, TLI_mean)
-    lakes_yr <- dplyr::left_join(all_lakes_wgs, tli_yr, by = "lake_name")
-    fill_cols_yr <- unname(trophic_hex_w(as.character(lakes_yr$trophic_state)))
-    popup_yr <- ifelse(
-      !is.na(lakes_yr$trophic_state),
-      paste0("<b>", lakes_yr$lake_name, "</b><br>Year: ", yr,
-             "<br>Trophic state: ", as.character(lakes_yr$trophic_state),
-             "<br>TLI: ", round(lakes_yr$TLI_mean, 2)),
-      paste0("<b>", lakes_yr$lake_name, "</b><br>Year: ", yr, "<br>No monitoring data")
+    lakes_yr <- dplyr::select(all_lakes_wgs, lake_name) |>
+      dplyr::left_join(tli_yr, by = "lake_name")
+    # Compute colors in base R — leaflet formula evaluator can't see sf columns
+    state_chr <- as.character(lakes_yr[["trophic_state"]])
+    col_idx <- match(state_chr, names(trophic_colors_w))
+    lakes_yr[["fill_col"]] <- ifelse(is.na(col_idx), "#b0b0b0", unname(trophic_colors_w)[col_idx])
+    lakes_yr[["popup_txt"]] <- ifelse(
+      !is.na(lakes_yr[["trophic_state"]]),
+      paste0("<b>", lakes_yr[["lake_name"]], "</b><br>Year: ", yr,
+             "<br>Trophic state: ", state_chr,
+             "<br>TLI: ", round(lakes_yr[["TLI_mean"]], 2)),
+      paste0("<b>", lakes_yr[["lake_name"]], "</b><br>Year: ", yr, "<br>No monitoring data")
     )
     tli_map  <- leaflet::addPolygons(tli_map, data = lakes_yr,
-      fillColor = fill_cols_yr, fillOpacity = 0.85,
+      fillColor = ~fill_col, fillOpacity = 0.85,
       color = "#2a2a2a", weight = 1, label = ~lake_name,
-      popup = popup_yr,
+      popup = ~popup_txt,
       group = as.character(yr))
   }
   tli_map <- tli_map |>
