@@ -77,6 +77,19 @@ format:
         \definecolor{thesiscream}{RGB}{255, 252, 240}
         \definecolor{thesissand}{RGB}{232, 212, 162}
         \pagecolor{thesiscream}
+        \AtBeginDocument{%
+          \renewenvironment{CSLReferences}[2]
+           {\begin{list}{}{%
+            \setlength{\itemindent}{0pt}
+            \setlength{\leftmargin}{0pt}
+            \setlength{\parsep}{0pt}
+            \ifodd #1
+             \setlength{\leftmargin}{\cslhangindent}
+             \setlength{\itemindent}{-1\cslhangindent}
+            \fi
+            \setlength{\itemsep}{0.3\baselineskip}}}
+           {\end{list}}%
+        }
         \addtokomafont{disposition}{\sffamily}
         \graphicspath{{.}{images/}{01_general_intro/images/}{02_koura_fear/images/}{03_koura_shoreline_habitats/images/}{04_koura_mesocosm/images/}{05_stone_piles_rotoiti/images/}{06_synthesis/images/}{07_general_conclusion/images/}}
         \makeatletter

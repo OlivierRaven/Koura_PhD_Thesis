@@ -2537,8 +2537,8 @@ if (!file.exists(widget_tli_rds)) {
   # colorFactor returns unnamed vectors — avoids named-vector CSS bug in leaflet
   trophic_colors_w <- c(
     Microtrophic = "#5fc6e6", Oligotrophic = "#7ab648",
-    Mesotrophic  = "#e9ec0c", Eutrophic    = "#e26715",
-    Supertrophic = "#ee0d0d"
+    Mesotrophic  = "#e9ec0c", Eutrophic    = "#eb823c",
+    Supertrophic = "#ff0000"
   )
   pal_w <- leaflet::colorFactor(
     unname(trophic_colors_w), names(trophic_colors_w), na.color = "#b0b0b0"
@@ -2569,7 +2569,7 @@ if (!file.exists(widget_tli_rds)) {
   }
   tli_map <- tli_map |>
     leaflet::addLegend("bottomright",
-      colors  = c("#5fc6e6","#7ab648", "#e9ec0c", "#e26715", "#ee0d0d"),
+      colors  = c("#5fc6e6","#7ab648", "#e9ec0c", "#eb823c", "#ff0000"),
       labels  = c("Microtrophic", "Oligotrophic", "Mesotrophic", "Eutrophic","Supertrophic"),
       title   = "Trophic state", opacity = 0.85) |>
     htmlwidgets::onRender(paste0('

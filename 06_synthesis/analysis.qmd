@@ -364,7 +364,42 @@ net_summary <- combined_fish |>
 left_join(net_summary, koura_summary, by = "net_bait") |>
   mutate(cpue = total_koura / total_nets)
 
+# Per-event CPUE with bootstrapped 95% CI
+# Each row = one monitoring event × net type; zeros preserved via left_join
+event_cpue <- combined_fish |>
+  rotoiti_filter() |>
+  distinct(net_bait, site_id, monitoring_id, amount_nets) |>
+  left_join(
+    combined_fish |>
+      rotoiti_filter() |>
+      filter(species == "Kōura") |>
+      group_by(net_bait, site_id, monitoring_id) |>
+      summarise(koura = sum(amount, na.rm = TRUE), .groups = "drop"),
+    by = c("net_bait", "site_id", "monitoring_id")
+  ) |>
+  mutate(
+    koura = tidyr::replace_na(koura, 0),
+    cpue  = koura / amount_nets
+  )
 
+set.seed(42)
+cpue_ci <- event_cpue |>
+  group_by(net_bait) |>
+  summarise(
+    n         = n(),
+    mean_cpue = mean(cpue, na.rm = TRUE),
+    ci_lo     = {
+      x <- cpue[!is.na(cpue)]
+      quantile(replicate(9999, mean(sample(x, replace = TRUE))), 0.025)
+    },
+    ci_hi     = {
+      x <- cpue[!is.na(cpue)]
+      quantile(replicate(9999, mean(sample(x, replace = TRUE))), 0.975)
+    },
+    .groups = "drop"
+  )
+
+print(cpue_ci)
 
 
 

@@ -170,6 +170,19 @@
 \definecolor{thesiscream}{RGB}{255, 252, 240}
 \definecolor{thesissand}{RGB}{232, 212, 162}
 \pagecolor{thesiscream}
+\AtBeginDocument{%
+  \renewenvironment{CSLReferences}[2]
+   {\begin{list}{}{%
+    \setlength{\itemindent}{0pt}
+    \setlength{\leftmargin}{0pt}
+    \setlength{\parsep}{0pt}
+    \ifodd #1
+     \setlength{\leftmargin}{\cslhangindent}
+     \setlength{\itemindent}{-1\cslhangindent}
+    \fi
+    \setlength{\itemsep}{0.3\baselineskip}}}
+   {\end{list}}%
+}
 \addtokomafont{disposition}{\sffamily}
 \graphicspath{{.}{images/}{01_general_intro/images/}{02_koura_fear/images/}{03_koura_shoreline_habitats/images/}{04_koura_mesocosm/images/}{05_stone_piles_rotoiti/images/}{06_synthesis/images/}{07_general_conclusion/images/}}
 \makeatletter
@@ -254,7 +267,7 @@
   \node[color=white, text width=0.92\paperwidth, align=center,
         font=\fontsize{28}{36}\selectfont\bfseries\sffamily]
     at ([yshift=-3cm]current page.north)
-    {\hyphenpenalty=10000\exhyphenpenalty=10000 Enhancing Native Freshwater Crayfish Habitat in Invaded Lake Ecosystems};
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems};
   \node[color=white, align=center,
         font=\fontsize{16}{22}\selectfont\sffamily]
     at ([yshift=4cm]current page.south)
@@ -276,7 +289,7 @@
 \vspace*{1.5cm}
 \begin{center}
 
-{\fontsize{20}{26}\selectfont\bfseries Enhancing Native Freshwater Crayfish\\[0.3cm]Habitat in Invaded Lake Ecosystems}
+{\fontsize{20}{26}\selectfont\bfseries Enhancing K\={o}ura (Native Freshwater Crayfish)\\[0.3cm]Habitat in Invaded Lake Ecosystems}
 
 \vfill
 
@@ -319,7 +332,7 @@ by\\[0.3cm]
   \setlength{\itemsep}{1.2em}
 
   \item Structural complexity is essential for the recovery of kōura populations, when
-        threatened by non native predator.\\
+        threatened by non-native predator.\\
         \hspace*{1em}{\small\itshape (this thesis)}
 
   \item The fear of predators shapes prey behaviour as powerfully as predation
@@ -348,7 +361,7 @@ by\\[0.3cm]
 
 {\small\sffamily
 Propositions belonging to the thesis, entitled\\[0.3em]
-\textit{Enhancing Native Freshwater Crayfish Habitat in Invaded Lake Ecosystems}\\[0.3em]
+\textit{Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems}\\[0.3em]
 Olivier V. Raven\\
 The University of Waikato, 2026
 }
@@ -363,17 +376,17 @@ Native freshwater crayfish (\emph{Paranephrops planifrons}, kōura) are a
 taonga (culturally treasured) species in Aotearoa New Zealand with a
 rich history of harvest and trade by iwi (Māori communities). Over the
 past two decades, however, kōura populations have declined by up to 90
-\% in Lake Rotoiti (North Island), making traditional harvesting
-unviable. This decline is driven by degraded water quality, intensified
+\% in Lake Rotoiti (North Island), making traditional harvesting less
+viable. This decline is driven by degraded water quality, intensified
 lake stratification, and the spread of invasive fish and macrophytes.
 Since around 2016, the non-native brown bullhead catfish (\emph{Ameiurus
 nebulosus}) has become established in the lake and preys on kōura,
 compounding the effects of other stressors. The decline in kōura,
 coupled with multiple threats, indicates that intervention is necessary
 for kōura population recovery. I hypothesised that habitat complexity
-moderates predator-prey interactions, and that habitat enhancement
+moderate's predator-prey interactions, and that habitat enhancement
 interventions increasing rocky refuge availability would positively
-impact kōura by reducing predation risk
+impact kōura by reducing predation risk.
 
 I conducted four complementary studies to investigate potential habitat
 enhancement tools: a behavioural controlled laboratory experiment
@@ -388,18 +401,20 @@ than when exposed to the native predator, longfin eel (\emph{Anguilla
 dieffenbachii}), highlighting the importance of refuge for kōura in the
 presence of catfish.
 
-The \textbf{(2) field survey} confirmed that complex shoreline habitats
-consisting of rocks and riparian vegetation were the strongest
+The \textbf{(2) field survey} assessed habitat conditions in five lakes
+using a structured study design and showed that complex shoreline
+habitats consisting of rocks and riparian vegetation were the strongest
 predictors of kōura presence across five lakes, consistent with the
-well-documented preference of kōura for rocky substrates in river
+well-documented preference of kōura for rocky substrates in stream
 systems.
 
-The \textbf{(3) mesocosm experiment} evaluated the preference of kōura
-for materials that could be used to enhance their habitat. When hole
-sizes in habitat elements were held constant, kōura showed no preference
-between wood or stone, but more stable, heavier structures were
-preferred, and habitat configurations providing refuge heterogeneity
-showed broadest appeal across different size classes of kōura.
+The \textbf{(3) mesocosm experiment} evaluated kōura preference for
+different materials that could be used to enhance habitat by providing
+artificial refuges. When hole sizes in habitat elements were held
+constant, kōura showed no preference between wood and stone, but more
+stable, heavier structures were preferred, and habitat configurations
+providing refuge heterogeneity had the broadest appeal across different
+kōura size classes.
 
 To evaluate the effects of adding rocky habitat in the littoral zones, I
 conducted a \textbf{(4) field experiment} by placing stone piles at five
@@ -414,11 +429,11 @@ are needed to detect population-level responses.
 
 Collectively, these findings suggest that habitat complexity is a
 critical, actionable lever for kōura conservation, and that stone pile
-deployment offers a scalable, low-cost tool for restoring populations in
-degraded lake littoral zones. Beyond ecological value, these results
-provide practical evidence for restoration efforts that support kōura
-recovery, helping restore the traditional practices they have sustained
-for generations.
+deployment offers a scalable, low-cost approach for restoring
+populations in degraded lake littoral zones. Beyond their ecological
+value, these results provide practical evidence to support restoration
+efforts that promote kōura recovery, helping restore traditional
+customary harvesting practices.
 
 \chapter*{Acknowledgements}\label{acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
@@ -446,7 +461,7 @@ Lee, for their collaboration and insights. This research would not have
 been possible without the support and collaboration of Te Arawa Lakes
 Trust and Te Komiti Whakahaere. I am especially grateful to Nicki
 Douglas, Soweeta Fort-D'ath, William Anaru (Te Arawa Lakes Trust), and
-Tihini Grant (Ngāti Pikiao)
+Tihini Grant (Ngāti Pikiao).
 
 My sincere thanks also extend to the Tāheke Opatia Marae, Te Takinga
 Marae, and landowners, Meryl Levon, Piripi Curtis, David McIlraith, Piki
@@ -468,9 +483,14 @@ Services Ltd), Joe Butterworth (JFB Enviro Ltd.), Cory O'Neill (Te Arawa
 Lakes Trust), Alex Simes (Te Arawa Lakes Trust), Martin Sarkezi (UoW),
 Mael Marguet (UoW), Ethan Morgan (UoW), Logan Kallam (UoW), Savio Dsouza
 (UoW), and Matt Prentice (UoW), whose assistance with fieldwork, data
-collection, and logistical support was indispensable. Special thanks to
-Dion and Josh for their friendship and help in constructing wood splits
-and blocks.
+collection, and logistical support was indispensable.
+
+Special thanks to my friends and flatmates Dion and Josh for their
+friendship. I am also very grateful to Rens, who made my time in New
+Zealand richer with his stories, and who I will carry with me. Un
+agradecimiento muy especial a mi amor, Lisbeth, por estar a mi lado
+incluso desde tan lejos. Tot slot wil ik graag mijn ouders, broertjes,
+omi, opa bedanken voor hun support en sorry voor het zo verweg zijn.
 
 During my PhD, I became increasingly aware of the limitations of the
 current scientific publishing system, with paywalls restricting access,
@@ -539,6 +559,10 @@ interpretations, and conclusions are the author's own.
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=-4cm]current page.north west)
     {General Introduction};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=1.2cm]current page.south east)
+    {K\={o}ura (\textit{Paranephrops planifrons}) caught during monitoring in the Rotorua Te Arawa Lakes.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -559,7 +583,7 @@ and contaminants over time (Bhateria and Jain 2016).
 
 Within lakes, the shallow littoral zone which is the productive
 interface between the terrestrial and aquatic system where stressors
-coverage most acutely (Strayer and Findlay 2010). Exposure to sunlight,
+converge most acutely (Strayer and Findlay 2010). Exposure to sunlight,
 enables photosynthesis in plants and algae, making the littoral zone one
 of the most productive and biodiverse areas in lakes (Vadeboncoeur et
 al. 2011; Geist and Hawkins 2016; Porst et al. 2019). In its shallow
@@ -581,7 +605,7 @@ Vadeboncoeur 2020). Reversing this degradation requires targeted
 interventions, which are often complex and resource-intensive (Palmer et
 al. 2005). This challenge has nonetheless driven recent global
 commitments to ecosystem restoration, including the reduction of
-nutrient inputs through buffer zones at lakes inlets and the
+nutrient inputs through buffer zones at lake inlets and the
 rehabilitation of landscape connectivity (Meerhoff et al. 2022).
 
 \section{Ecosystem and habitat
@@ -609,7 +633,7 @@ involved, but commonly include replanting native vegetation, removing
 barriers like dams, or adding complexity to a habitat that has become
 simplified or degraded (Banks-Leite et al. 2020; Loch et al. 2020). The
 deliberate addition of hard substrate, such as boulders, large wood,
-gravel, or habitat unites, is one of the more direct and widely applied
+gravel, or habitat units, is one of the more direct and widely applied
 forms of habitat restoration, since many species depend on physical
 complexity for shelter, feeding or reproduction (Geist and Hawkins
 2016).
@@ -672,7 +696,7 @@ Statzner et al. 2003; Creed and Reed 2004), making them important
 ecosystem engineers and keystone species (Crandall and Buhay 2008; Jones
 et al. 2016).
 
-Despite their significant ecological role, 32 \% of crayfish species
+Despite their significant ecological role, 32\% of crayfish species
 worldwide are threatened with extinction (Richman et al. 2015) due to
 numerous threats, including habitat degradation, pollution, invasive
 species, and overexploitation. Among these invasive species, are a
@@ -741,22 +765,22 @@ Aotearoa New Zealand. Source: New Zealand Freshwater Fish Database
 use}\label{biology-ecology-and-habitat-use}
 
 Kōura inhabit a range of freshwater environments including streams,
-rivers and lakes and have been described as ecosystem engineers and
-keystone species in Aotearoa (Collier et al. 1997; Usio and Townsend
-2004). They are associated with structurally complex habitats that
-provide physical shelter, preferring coarse gravel and rocky substrates
-in both streams and lakes (Jowett et al. 2008; Kusabs et al. 2015b). In
-streams, the highest abundances have been recorded on substrates with an
-average particle size of 130 mm (Olsson 2008; Jowett et al. 2008). Kōura
-avoid areas where dissolved oxygen levels drop below 5 mg/L and
-temperatures exceed 21 °C (Devcich 1979). Where suitable natural
-substrates are rare, kōura can excavate tunnels or burrows to provide
-cover, a behaviour documented in Lake Tikitapu, where the bottom
-sediment substrate permits burrowing (Pers. Comm. Ian Kusabs).
+rivers, wetlands, and lakes and have been described as ecosystem
+engineers and keystone species in Aotearoa (Collier et al. 1997; Usio
+and Townsend 2004). They are associated with structurally complex
+habitats that provide physical shelter, preferring coarse gravel and
+rocky substrates in both streams and lakes (Jowett et al. 2008; Kusabs
+et al. 2015b). In streams, the highest abundances have been recorded on
+substrates with an average particle size of 130 mm (Olsson 2008; Jowett
+et al. 2008). Kōura avoid areas where dissolved oxygen levels drop below
+5 mg/L and temperatures exceed 21 °C (Devcich 1979). Where suitable
+natural substrates are rare, kōura can excavate tunnels or burrows to
+provide cover, a behaviour documented in Lake Tikitapu, where the bottom
+sediment substrate permits burrowing (Pers. Comm. Nick Ling).
 
 Kōura are nocturnal, retreating to deeper waters or physical shelters
 during the daylight hours to avoid predators, and emerging at night to
-forage, with some populations known to move in to the productive shallow
+forage, with some populations known to move into the productive shallow
 zones of lakes (Devcich 1979). Kōura have direct development, meaning
 juveniles hatch as miniature adults with no free-living larval stage.
 Females carry eggs and newly hatched juveniles beneath the abdomen for
@@ -801,8 +825,12 @@ these pressures and accelerating the decline (Kusabs et al. 2026).
 
 }
 
-\caption{\label{fig-tau-koura}Two versions of the tau kōura as it can be
-used for harvesting kōura in a lake. © Copyright Ian Kusabs.}
+\caption{\label{fig-tau-koura}Diagrams of (A) the tau kōura, a
+traditional Māori method for harvesting kōura after Hiroa (1921).
+Pekapeka (drop line), punga (anchor), pōito (float), tāuhu (surface
+line), tumu (post) whakaweku (fern bundles); (B) Schematic diagram of
+the modern-day tau kōura. The depth and length of tau are indicative and
+can be varied depending on lake bathymetry. From Kusabs et al. (2015b).}
 
 \end{figure}%
 
@@ -817,7 +845,7 @@ used for harvesting kōura in a lake. © Copyright Ian Kusabs.}
 \caption{\label{fig-koura-decline}Kōura catches in CPUE in Lake Rotoiti
 at the Ōkere inlet between 2005 and 2024. Kōura were caught using the
 tau kōura. The dashed vertical line indicates first confirmed catfish
-detection in Lake Rotoiti (2016). Adapted from (Kusabs et al. 2026).}
+detection in Lake Rotoiti (2016). Adapted from Kusabs et al. (2026).}
 
 \end{figure}%
 
@@ -985,9 +1013,9 @@ Rerewhakaaitu & 5.0 & 25 & 37.0 & 7.0 & 15.8 & 0.44 & NA & Polymictic & Eutrophi
 The lake beds are owned by the Te Arawa Lakes Trust (TALT), with the
 exception of Lake Rotokākahi, which remains under the guardianship of
 Tuhourangi and Ngāti Tumatawera iwi. TALT, in collaboration with Te
-Komiti Whakahaere, oversees the harvest of ngā taonga in the Te Arawa
-Lakes under a mahere whakahaere (Fisheries Management Plan; Te Arawa
-Lakes Trust (2015)), reflecting the deep cultural and ecological
+Komiti Whakahaere, oversees the management of the taonga species in the
+Te Arawa Lakes under a mahere whakahaere (Fisheries Management Plan; Te
+Arawa Lakes Trust (2015)), reflecting the deep cultural and ecological
 significance of the lakes to Te Arawa iwi and hapū.
 
 Each lake supports a mix of native and introduced species. Alongside
@@ -1003,10 +1031,10 @@ macrophytes and several invasive species that have transformed the
 littoral zone in many lakes (Figure~\ref{fig-rotoiti-weeds}) (Burton
 2017). Current lake management prioritises improving water quality and
 controlling invasive species. This includes alum dosing (aluminium
-sulphate) in Lakes Rotorua and Ōkaro to reduce phosphorus loading,
-mechanical and chemical control of invasive macrophytes, and the
-community-led ``Catfish Killas'' programme, which aims to reduce catfish
-abundance from the lakes.
+sulphate) in Lakes Rotorua, Rotoehu, and Ōkaro to reduce phosphorus
+loading, mechanical and chemical control of invasive macrophytes, and
+the community-led ``Catfish Killas'' programme, which aims to reduce
+catfish abundance from the lakes.
 
 \begin{figure}
 
@@ -1016,8 +1044,8 @@ abundance from the lakes.
 
 }
 
-\caption{\label{fig-rotoiti-weeds}Photo of some of the native and
-non-native macrophyte species found in Lake Rotoiti.}
+\caption{\label{fig-rotoiti-weeds}Photo of native and non-native
+macrophyte species found in Lake Rotoiti.}
 
 \end{figure}%
 
@@ -1036,12 +1064,14 @@ to thrive, both must remain accessible and habitable.
 In stratified lakes during summer and autumn, thermal stratification can
 create anoxic conditions below the thermocline. Since kōura avoid
 dissolved oxygen concentrations below 5 mg/L (Devcich 1979), this
-displace kōura from their daytime deep refuge into the shallow littoral
+displaces kōura from their daytime deep refuge into the shallow littoral
 zone (Kusabs et al. 2026), placing kōura in the depth range where
 catfish predation pressure is greatest (Blanchfield et al. 2026). The
 result is a seasonal compression of available habitat, where suitable
 depths shrink to precisely the zone where predation risk is highest
-(Kusabs et al. 2026). This means that for
+(Kusabs et al. 2026). This means that for kōura in catfish-invaded
+lakes, the period of greatest thermal stratification is also the period
+of greatest predation pressure.
 
 The importance of an oxygenated deep refuge is illustrated by Lake Taupō
 (maximum depth 186 m), where catfish and kōura demonstrate a more stable
@@ -1058,11 +1088,21 @@ littoral zone and reduce access to foraging habitat (Kusabs and Quinn
 2009). When these macrophyte beds collapse, the subsequent decomposition
 further intensifies oxygen depletion in deeper waters (Vincent et al.
 1984; Hamilton et al. 2005). The cumulative effect of these stressors
-can be visualised by estimating the proportion of each lake's bottom
-area that remains ``liveable'' --- meaning sufficiently oxygenated and
-within thermal optimum for kōura. Across eleven of the Rotorua Te Arawa
-Lakes, liveable habitat varies strongly with season, with sharp summer
-declines in eutrophic and shallow lakes such as Rotorua, Rotoiti, Ōkaro,
+can be quantified by estimating the proportion of each lake's bottom
+area that remains ``liveable'' --- defined here as depth layers where
+dissolved oxygen exceeds 5 mg/L and water temperature remains below
+21°C, the known physiological limits for kōura (Devcich 1979). For each
+CTD depth profile, each depth layer was classified as liveable or not,
+and lake bathymetric data (hypsographs) were used to convert those depth
+layers into bottom area, giving a liveable habitat percentage for each
+profile. Monthly CTD cast data from Bay of Plenty Regional Council
+(BOPRC) monitoring and continuous buoy profiles from LimnoTrack (Moore
+and McBride 2026) were combined across eleven of the twelve Rotorua Te
+Arawa Lakes (2003--2026). Annual and seasonal trends in liveable habitat
+were estimated per lake using ordinary least-squares linear regression.
+Across the lakes, liveable habitat varies strongly with season with
+sharp summer declines in eutrophic, mesotrophic and shallow lakes such
+as Rotorua, Rotoiti, Rotoehu, Rotokākahi, Rerewhakaaitu, Ōkāreka, Ōkaro,
 and Rotomāhana, while deeper oligotrophic lakes such as Rotomā,
 Tarawera, and Tikitapu remain relatively stable year-round
 (Figure~\ref{fig-livable-habitat-summary}). Over the past
@@ -1207,21 +1247,21 @@ general conclusion (Table~\ref{tbl-research-questions}).
 chapter.}\label{tbl-research-questions}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\centering
-RQ
+\textbf{RQ}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Chapter
+\textbf{Chapter}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Research question
+\textbf{Research question}
 \end{minipage} \\
 \midrule\noalign{}
 \endfirsthead
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\centering
-RQ
+\textbf{RQ}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Chapter
+\textbf{Chapter}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Research question
+\textbf{Research question}
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
@@ -1301,7 +1341,7 @@ this thesis.
   \node[color=white, text width=0.85\paperwidth, align=left,
         font=\fontsize{10}{13}\selectfont\itshape\sffamily, anchor=north west]
     at ([xshift=1.5cm, yshift=-5.0cm]current page.north west)
-    {Fear of the new: a predatory invader provokes stronger non-consumptive effects on a keystone native prey than a native predator};
+    {Fear of the new: a native crayfish shows stronger refuge-seeking behaviour toward an invasive catfish than a native eel};
   \fill[black]
     (current page.south west) rectangle ([yshift=4.5cm]current page.south east);
   \node[color=white, text width=0.85\paperwidth, align=left,
@@ -1311,7 +1351,11 @@ this thesis.
   \node[color=thesissand, text width=0.85\paperwidth, align=left,
         font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
-    {Biological Invasions --- Under review};
+    {Biological Invasions --- Revising for resubmission};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=5cm]current page.south east)
+    {Experimental aquarium with a catfish (\textit{Ameiurus nebulosus}) separated from a k\={o}ura refuge by a mesh divider.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -1331,17 +1375,16 @@ are preyed upon by multiple predators including native longfin eel
 (\emph{Anguilla dieffenbachii}) and invasive brown bullhead catfish
 (\emph{Ameiurus nebulosus}). Under laboratory conditions, we tested
 whether visual and chemical cues from these two predators induced
-different refuge-seeking and feeding behaviour responses by kōura.
-Predator presence produced in the dark a NCE on refuge use, with kōura
-exposed to catfish showing significantly greater refuge-seeking
-behaviour than those exposed to eels. This result is consistent with the
-generalisation theory triggered by unfamiliar predator cues rather than
-classic prey naivety. Our study indicates catfish incursions may provoke
-a greater NCE on kōura behaviours than resident eels. As catfish range
-expansion continues, these NCEs may represent an ecologically
-significant and underappreciated threat to kōura populations,
-compounding the direct predation pressure already documented for this
-invader.
+different refuge-seeking and feeding behaviour responses by kōura. In
+dark conditions, kōura exposed to catfish showed significantly greater
+refuge-seeking behaviour than those exposed to eels. This result is
+consistent with the generalisation theory triggered by unfamiliar
+predator cues rather than classic prey naivety. Our study indicates
+catfish incursions may provoke a greater NCE on kōura behaviours than
+resident eels. As catfish range expansion continues, these NCEs may
+represent an ecologically significant and underappreciated threat to
+kōura populations, compounding the direct predation pressure already
+documented for this invader.
 
 \section{Introduction}\label{introduction}
 
@@ -1536,8 +1579,8 @@ other side was either a single catfish (C), eel (E) or a control with no
 fish. The mesh divider allowed visual and chemical cues while preventing
 direct physical contact between tank occupants. (b) Experiments were
 repeated in light and dark (red light), with photographs showing a
-catfish in the light regime (left) and and an eel in the dark regime
-(red light) (right) separated from kōura by mesh dividers.}
+catfish in the light regime (left) and an eel in the dark regime (red
+light) (right) separated from kōura by mesh dividers.}
 
 \end{figure}%
 
@@ -1649,7 +1692,7 @@ The proportion of time kōura spent in refuge varied across treatments,
 experimental periods, and light conditions
 (Figure~\ref{fig-emmeans-stratified}). Stratified analyses revealed that
 treatment effects on refuge use differed between light and dark
-conditions. Under dark condition, kōura exposed to catfish used refuge
+conditions. Under dark conditions, kōura exposed to catfish used refuge
 significantly more than those exposed to eels (\emph{p} = 0.004;
 Table~\ref{tbl-emmeans-stratified}), however the control treatment in
 the dark was not significant with either the catfish or the eel
@@ -1800,14 +1843,14 @@ eel, control) and starvation periods (0, 3, and 4 days).}
 Prey modify their behaviour in response to predation risk, creating a
 `landscape of fear' that affects foraging, movement, and habitat use
 independently of actual predation events (Laundré et al. 2001). Our
-study adds to a growing body of literature (i.e., (Sniegula et al.
-2025)) showing invasive predators can generate stronger NCEs on native
-prey than native predators, with potentially far-reaching consequences
-on invaded ecosystems. The results in our experiments suggest the
-introduction of a novel predator may change the prey's fear landscape in
-ways that a native predator does not. Kōura are a keystone species that
-act as ecosystem engineers in Aotearoa freshwaters, meaning that
-predator-induced changed in kōura behaviour may indirectly affect
+study shows that kōura respond asymmetrically to native versus invasive
+predator cues, with greater refuge use in catfish treatments than eel
+treatments under dark conditions, with potentially far-reaching
+consequences on invaded ecosystems. The results in our experiments
+suggest the introduction of a novel predator may change the prey's fear
+landscape in ways that a native predator does not. Kōura are a keystone
+species that act as ecosystem engineers in Aotearoa freshwaters, meaning
+that predator-induced changes in kōura behaviour may indirectly affect
 ecosystem-level properties (e.g., resources or other species) through
 non-consumptive pathways (Peacor and Werner 2001). Such indirect effects
 represent a form of behavioural trophic cascade (Schmitz et al. 1997),
@@ -1865,7 +1908,7 @@ resulted in significantly greater refuge use than eel exposure. Control
 refuge use was intermediate between the two predator treatments, though
 the reasons for this pattern are unclear from the current data. The
 contrasting responses of kōura to catfish and eels indicates
-biologically meaningful differences in NCE between exposure to a novel
+biologically meaningful differences in behavioural responses to a novel
 and native predator.
 
 Unlike the response when exposed to catfish, kōura reduced their refuge
@@ -1947,10 +1990,10 @@ opportunistic foragers which are necessarily adapted to going for
 prolonged periods without feeding (Hazlett 2003). The length of time
 since feeding can influence foraging behaviour, with previous studies
 indicating that crayfish will be more active foragers after being
-starved for at least three days (Hazlett 2003). In the current study,
-the longest starvation period was four days and at this point there was
-a clear discrepancy between the control feeding rate and the much lower
-feeding rates in the two fish treatments. Allowing for ethics and
+starved for at least three days (Hazlett 2003). At day 4, control
+feeding rates were numerically higher than the two fish treatments,
+though this difference was not statistically significant and the
+direction of the trend reversed at day 3. Allowing for ethics and
 welfare concerns, if we had extended the starvation period, this may
 have elicited a stronger and prolonged response. Additionally, the
 stress of confinement in an artificial setting may itself have altered
@@ -1970,43 +2013,43 @@ behaviour.
 As ecosystems become increasingly novel under global change, the
 reliability of historical predator--prey cues may decline, amplifying
 behavioural mismatches (Sih et al. 2011). The present study provides
-experimental evidence that invasive brown bullhead catfish have the
-potential to exert stronger NCEs on kōura, an endemic freshwater
-crayfish when compared to their native predator, the longfin eel. The
-heightened refuge-seeking response to catfish likely reflects a
-generalised antipredator response triggered by unfamiliar chemical and
-visual cues, consistent with a fear generalisation framework. In
-contrast, the reduced response to eels suggests that familiarity with
-native predators enables kōura to make more proportionate risk
-assessments, although their behaviour may have also been an antipredator
-strategy. Future studies should particularly include kōura from
-eel-inhabited waterways, which would determine whether populations with
-a recent coevolutionary history with native eels display similar
-proportionate responses, thereby confirming whether the patterns
-observed here reflect broader adaptive differences across kōura
-populations with distinct predatory histories. Additionally, comparative
-studies of kōura sourced from catfish-invaded versus catfish-free
-catchments would be worthwhile to assess whether repeated exposure over
-multiple generations has resulted in rapid evolution or behavioural
-plasticity in antipredator responses, and whether catfish-experienced
-kōura show more calibrated responses to catfish presence than naïve
-kōura. Such evolutionary dynamics could have important implications for
-predicting kōura persistence in catfish-invaded systems (Sih et al.
-2010). From a management perspective, translocation of kōura from
-catfish-experienced source populations into catchments facing imminent
-catfish invasion may represent a more feasible strategy for seeding
-populations with individuals capable of more adaptive responses.
-Although we found no significant NCE of fish exudates on feeding
-behaviour, our study suggests further investigations of non-visual
-predator cues on kōura foraging behaviour is warranted. Because kōura
-are a keystone species that ecosystem engineer, even a small increase in
-refuge use driven by catfish presence could have cascading effects on
-sediment dynamics, decomposition, and nutrient cycling in invaded lakes.
-As brown bullhead catfish continue to spread across Aotearoa's rivers
-and lakes, management strategies aimed at protecting kōura should
-account for the behavioural cost of catfish NCEs alongside direct
-predation pressure as an underappreciated and ecologically significant
-dimension to this invasion.
+experimental evidence of asymmetric behavioural responses in kōura to
+catfish versus native eels, with greater refuge use under catfish
+exposure in dark conditions. The heightened refuge-seeking response to
+catfish likely reflects a generalised antipredator response triggered by
+unfamiliar chemical and visual cues, consistent with a fear
+generalisation framework. In contrast, the reduced response to eels
+suggests that familiarity with native predators enables kōura to make
+more proportionate risk assessments, although their behaviour may have
+also been an antipredator strategy. Future studies should particularly
+include kōura from eel-inhabited waterways, which would determine
+whether populations with a recent coevolutionary history with native
+eels display similar proportionate responses, thereby confirming whether
+the patterns observed here reflect broader adaptive differences across
+kōura populations with distinct predatory histories. Additionally,
+comparative studies of kōura sourced from catfish-invaded versus
+catfish-free catchments would be worthwhile to assess whether repeated
+exposure over multiple generations has resulted in rapid evolution or
+behavioural plasticity in antipredator responses, and whether
+catfish-experienced kōura show more calibrated responses to catfish
+presence than naïve kōura. Such evolutionary dynamics could have
+important implications for predicting kōura persistence in
+catfish-invaded systems (Sih et al. 2010). From a management
+perspective, translocation of kōura from catfish-experienced source
+populations into catchments facing imminent catfish invasion may
+represent a more feasible strategy for seeding populations with
+individuals capable of more adaptive responses. Although we found no
+significant NCE of fish exudates on feeding behaviour, our study
+suggests further investigations of non-visual predator cues on kōura
+foraging behaviour is warranted. Because kōura are a keystone species
+that act as ecosystem engineer, even a small increase in refuge use
+driven by catfish presence could have cascading effects on sediment
+dynamics, decomposition, and nutrient cycling in invaded lakes. As brown
+bullhead catfish continue to spread across Aotearoa's rivers and lakes,
+management strategies aimed at protecting kōura should account for the
+behavioural cost of catfish NCEs alongside direct predation pressure as
+an underappreciated and ecologically significant dimension to this
+invasion.
 
 \section{Acknowledgements}\label{acknowledgements-1}
 
@@ -2060,6 +2103,10 @@ of Waikato) for assisting with catfish and eel collection.
         font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
     {Hydrobiologia (2026) --- https://doi.org/10.1007/s10750-026-06302-z};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=5cm]current page.south east)
+    {Rocky shoreline with native riparian vegetation, Lake Rotoiti.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -2190,9 +2237,9 @@ ecologically important species.
 
 Study sites were selected in five lakes located in the Rotorua Te Arawa
 Lakes area in the North Island of Aotearoa. The Lakes Rotorua, Rotoiti,
-Rotoehu, Rotomā, and Ōkāreka are located on a warm- temperate volcanic
+Rotoehu, Rotomā, and Ōkāreka are located on a warm-temperate volcanic
 plateau (280-355 m) where winters are mild and year-round temperatures
-typically varies from 4°C to 24°C. The lakes span a wide range of
+typically vary from 4°C to 24°C. The lakes span a wide range of
 morphometric and trophic conditions from shallow polymictic eutrophic
 systems (Rotoehu, maximum depth 14 m) to deep stratified oligotrophic
 lakes (Rotomā, maximum depth 83 m). Shorelines are characterised by a
@@ -2732,11 +2779,11 @@ function as physical refugia, providing shelter from predators (White
 and Irvine 2003; Haschenburger and Roest 2009; Kusabs et al. 2015b). The
 relationship between substrate size and benthic invertebrates is not
 linear (Quinn and Hickey 1990), where larger pore spaces between coarse
-particles may favour adult kōura, smaller interstitial spaces within
-mixed substrates may provide refugia for juveniles, suggesting that
-heterogenous substrates support kōura across life stages. However, mixed
-substrates containing both coarse and fine particles can reduce pore
-space availability as smaller particles infill void spaces between
+particles may favour adult kōura, while smaller interstitial spaces
+within mixed substrates may provide refugia for juveniles, suggesting
+that heterogeneous substrates support kōura across life stages. However,
+mixed substrates containing both coarse and fine particles can reduce
+pore space availability as smaller particles infill void spaces between
 larger ones (Haschenburger and Roest 2009), meaning that dominance of
 coarse substrate rather than substrate heterogeneity is the more
 relevant driver of refugia availability for adults. Additionally coarse
@@ -2932,7 +2979,7 @@ broad-scale drivers are difficult to manage directly, local habitat
 conditions represent a tractable management lever. The strong
 association between kōura occurrence and coarse substrate availability
 suggests that an absence of interstitial refuge availability may act as
-a limiting factor freshwater crayfish populations in these systems.
+a limiting factor for freshwater crayfish populations in these systems.
 Accordingly, management actions that prioritise the protection and
 enhancement of coarse littoral substrates and riparian vegetation,
 including the targeted placement of rocks in areas already used by
@@ -2997,6 +3044,10 @@ of this manuscript.
         font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
     {Aquatic Conservation: Marine and Freshwater Ecosystems --- Under review};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=5cm]current page.south east)
+    {Mesocosm tank with stone and wood shelter configurations used in k\={o}ura refuge selection trials.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -3546,7 +3597,7 @@ predictions.}
 material}\label{structure-matters-more-than-material}
 
 The consistent finding across all experiments that structural stability
-and cavities complexity determined preference, regardless of whether the
+and cavity complexity determined preference, regardless of whether the
 comparison involved material type, configuration or group size, suggests
 that kōura, like many refuge-dependent crustaceans (Zimmer-Faust and
 Spanier 1987; Beck 1995; Streissl and Hödl 2002; Pirtle et al. 2012),
@@ -3608,7 +3659,7 @@ conspecific chemical cues attract individuals to share refugia and find
 refugia significantly faster, reducing predation exposure (Zimmer-Faust
 and Spanier 1987; Childress and Herrnkind 2001). Whether kōura exhibit
 similar gregarious tendencies remains understudied, but the preference
-shift observed in this study, might suggest that social context alters
+shift observed in this study might suggest that social context alters
 shelter preferences.
 
 \subsection{Body size and competitive
@@ -3674,7 +3725,7 @@ existing habitat surveys suggest that kōura are associated with coarser
 substrates (Olsson et al. 2006; Jowett et al. 2008; Kusabs et al.
 2015b), and cobbles have previously been used in stream and lake
 restoration (Huolila et al. 1997; Johnsen and Taugbøl 2008). For in-lake
-deployment stone pile structures are likely to be the most practical
+deployment, stone pile structures are likely to be the most practical
 configuration, due to their elevated structure, stone piles are less
 likely to be buried into soft substrates than flat individual rocks
 (Garron et al. 2024). Field validation in lake environments remains an
@@ -3738,7 +3789,7 @@ Grant (Ngāti Pikiao).
   \node[color=white, text width=0.85\paperwidth, align=left,
         font=\fontsize{10}{13}\selectfont\itshape\sffamily, anchor=north west]
     at ([xshift=1.5cm, yshift=-5.0cm]current page.north west)
-    {Habitat enhancement for a native freshwater crayfish threatened by an invasive predator: a field trial of stone pile structures in an Aotearoa New Zealand lake};
+    {Stone pile refuges in an Aotearoa New Zealand lake: early benefits for threatened crayfish but not its invasive predator};
   \fill[black]
     (current page.south west) rectangle ([yshift=4.5cm]current page.south east);
   \node[color=white, text width=0.85\paperwidth, align=left,
@@ -3749,6 +3800,10 @@ Grant (Ngāti Pikiao).
         font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
     {Journal of Applied Ecology--- In preparation};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=5cm]current page.south east)
+    {Stone pile construction at Lake Rotoiti.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -3763,31 +3818,33 @@ Grant (Ngāti Pikiao).
   Kōura (\emph{Paranephrops planifrons}), Aotearoa New Zealand's endemic
   freshwater crayfish, have declined by up to 96 \% in Lake Rotoiti (Te
   Arawa Lakes, Rotorua), driven by predation from the invasive brown
-  bullhead catfish (\emph{Ameiurus nebulosus}), thermal stratification,
-  and invasive macrophytes that compress suitable habitat into the
-  shallow littoral zone. Because these stressors cannot be removed at
-  the lake scale, adding structural refuge may be one of few practical
-  management options.
+  bullhead catfish (\emph{Ameiurus nebulosus}) and thermal
+  stratification that compress suitable habitat into the shallow
+  littoral zone. Because these stressors cannot be removed at the lake
+  scale, adding structural refuge may be one of few practical management
+  options.
 \item
   We tested whether stone pile structures deployed in the littoral zone
   of Lake Rotoiti could provide structural refuge for kōura from
-  predation. Kōura and catfish were monitored at five stone piles, five
-  control, and five paired natural rocky reference sites for 18 months
-  using a quasi before-after control-impact (quasi-BACI) design, with
-  kōura occupancy modelled using a Bayesian framework that incorporated
-  detection probabilities from baited traps and fyke nets.
+  predation. Kōura and catfish were monitored at 20 locations (five
+  stone piles, five control, and five paired natural rocky reference
+  sites) for 18 months using a quasi before-after control-impact
+  (quasi-BACI) design, with kōura occupancy modelled using a Bayesian
+  framework that incorporated detection probabilities from baited traps
+  and fyke nets.
 \item
   Stone pile construction produced no statistically significant change
   in kōura abundance, biomass, or occupancy relative to controls, but
-  effects consistently trended positive across models; a
-  simulation-based power analysis showed the study was underpowered to
-  detect the observed effect size, given high pre-construction occupancy
-  (81--89 \%) at all site types and only five site pairs.
+  effects consistently trended positive across models. Kōura use of
+  stone piles was strongly seasonal: catch rates at stone pile and
+  control sites fell in winter as kōura withdrew to deeper water, while
+  reference sites remained stable. Catfish showed no comparable
+  attraction to stone piles in any season or model.
 \item
-  Kōura use of stone piles was strongly seasonal: catch rates at stone
-  pile and control sites fell in winter as kōura withdrew to deeper
-  water, while reference sites remained stable. Catfish showed no
-  comparable attraction to stone piles in any season or model.
+  A simulation-based power analysis revealed a promising, developing
+  trend, despite showing the study was underpowered to detect the
+  observed effect size, given high pre-construction kōura occupancy
+  (81--89 \%) at all site types and only five site pairs monitored.
 \item
   \emph{Synthesis and applications}. Stone piles show early, consistent
   evidence of benefiting a threatened native crayfish without benefiting
@@ -3822,9 +3879,9 @@ region of the North Island of Aotearoa New Zealand (hereafter Aotearoa),
 have declined by up to 96 \% over the past two decades (Kusabs et al.
 2026). This collapse has virtually ended customary harvest practices for
 Te Arawa iwi (Māori tribal group) who are hunga tiaki (traditional
-custodians) of the lake (Kusabs et al. 2015a). The decline in kōura
-numbers is driven by multiple interacting stressors that compound over
-time in different parts of the lake (Lee et al. 2025; Kusabs et al.
+custodians) of the lake (Kusabs et al. 2015a, 2026). The decline in
+kōura numbers is driven by multiple interacting stressors that compound
+over time in different parts of the lake (Lee et al. 2025; Kusabs et al.
 2026). The invasive brown bullhead catfish (\emph{Ameiurus nebulosus}
 Lesueur, 1819, hereafter catfish), confirmed in Lake Rotoiti in 2016
 (Francis 2019; Grayling 2020), preys directly on kōura and suppresses
@@ -3840,16 +3897,17 @@ moving out of both at night to forage in the productive littoral zone
 Taupō, where kōura persist at a depth even in the presence of catfish
 because the lake remains oxygenated below the thermocline (Kusabs and
 Taiaroa 2015; Verburg and Albert 2019). In Lake Rotoiti, this deep
-refuge becomes anoxic during summer stratification and unavailable for
-kōura, compressing the zone of liveable habitat into the shallow
-littoral margins (Kusabs et al. 2026), precisely where catfish are most
-active (Dedual 2002; Blanchfield et al. 2026). Dense beds of invasive
+refuge becomes anoxic during summer stratification, compressing the zone
+of liveable habitat for kōura into the shallow littoral margins (Kusabs
+et al. 2026), precisely where catfish are most active during summer
+(Dedual 2002; Blanchfield et al. 2026). Dense beds of invasive
 macrophytes further restrict kōura movement through this compressed zone
 and intensify oxygen depletion during die-off events (Vincent et al.
-1984; Hamilton et al. 2005; Kusabs and Quinn 2009). Catfish pressure and
-thermal stratification are expected to only strengthen with predicted
-climate scenarios (Woolway et al. 2021; Lee et al. 2025), making kōura
-habitat compression and predation pressure progressively more severe.
+1984; Hamilton et al. 2005; Kusabs and Quinn 2009). The dual pressures
+of catfish predation and thermal stratification are expected to only
+strengthen with predicted climate scenarios (Woolway et al. 2021; Lee et
+al. 2025), making kōura habitat compression and predation pressure
+progressively more severe.
 
 The compression of suitable habitat and subsequent concentration of
 kōura into the littoral zone makes the quality of nearshore lacustrine
@@ -3932,6 +3990,68 @@ the shore. Stone pile design was informed by mesocosm experiments
 demonstrating kōura preference for enclosed stone structures
 (unpublished data). Stone piles were positioned approximately 4.3 m from
 shore at a mean depth of 0.49 m and with a mean area of 4.1 m².
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{images/Rotoiti_monitoring_sites.png}
+
+}
+
+\caption{\label{fig-sites}Map of Lake Rotoiti in Bay of Plenty region of
+New Zealand. The monitoring sites are coloured by site type: stone pile
+sites red, control site yellow, and reference sites blue. Ten close-up
+maps show the placement of each of the sites.}
+
+\end{figure}%
+
+\begingroup\fontsize{8}{10}\selectfont
+
+\begin{longtable}[t]{rllrrrrrr}
+
+\caption{\label{tbl-site-overview}Physical characteristics of stone
+pile, control, and reference monitoring sites at baseline. Sites 1--10
+are stone pile (odd) and paired control (even) sites; sites 11--20 are
+reference sites. Substrate index is a weighted composite of substrate
+particle sizes (higher values indicate coarser substrate more suitable
+for kōura). Slope is the gradient to the 20 m depth contour. Fetch is
+maximum effective fetch. Vegetation values are visually estimated
+percentage cover.}
+
+\tabularnewline
+
+\toprule
+Site & Type & Habitat & Substrate index & Slope (m/m) & Fetch (km) & Riparian veg. (\%) & Overhang (\%) & Wood cover (\%)\\
+\midrule
+\cellcolor{gray!8}{1} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.20} & \cellcolor{gray!8}{0.12} & \cellcolor{gray!8}{4.76} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{10} & \cellcolor{gray!8}{0}\\
+2 & Control & Rocky & 4.40 & 0.11 & 4.79 & 70 & 0 & 0\\
+\cellcolor{gray!8}{3} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.00} & \cellcolor{gray!8}{0.01} & \cellcolor{gray!8}{1.71} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
+4 & Control & Sandy & 3.00 & 0.01 & 1.74 & 80 & 5 & 0\\
+\cellcolor{gray!8}{5} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{2.40} & \cellcolor{gray!8}{0.01} & \cellcolor{gray!8}{0.61} & \cellcolor{gray!8}{10} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
+\addlinespace
+6 & Control & Sandy & 3.00 & 0.01 & 0.55 & 0 & 0 & 0\\
+\cellcolor{gray!8}{7} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.00} & \cellcolor{gray!8}{0.06} & \cellcolor{gray!8}{2.50} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
+8 & Control & Sandy & 3.00 & 0.05 & 2.22 & 30 & 0 & 0\\
+\cellcolor{gray!8}{9} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.35} & \cellcolor{gray!8}{0.08} & \cellcolor{gray!8}{3.59} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{3}\\
+10 & Control & Rocky & 5.00 & 0.09 & 3.74 & 20 & 0 & 0\\
+\addlinespace
+\cellcolor{gray!8}{11} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{6.60} & \cellcolor{gray!8}{0.16} & \cellcolor{gray!8}{4.47} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
+12 & Reference & Rocky & 6.20 & 0.12 & 4.17 & 100 & 100 & 0\\
+\cellcolor{gray!8}{13} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.60} & \cellcolor{gray!8}{0.09} & \cellcolor{gray!8}{1.71} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{0}\\
+14 & Reference & Sandy & 3.50 & 0.11 & 1.65 & 100 & 100 & 0\\
+\cellcolor{gray!8}{15} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.20} & \cellcolor{gray!8}{0.03} & \cellcolor{gray!8}{1.44} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{6}\\
+\addlinespace
+16 & Reference & Rocky & 5.20 & 0.04 & 1.40 & 100 & 100 & 2\\
+\cellcolor{gray!8}{17} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.00} & \cellcolor{gray!8}{0.05} & \cellcolor{gray!8}{3.47} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{30}\\
+18 & Reference & Rocky & 6.20 & 0.05 & 3.46 & 100 & 100 & 7\\
+\cellcolor{gray!8}{19} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.70} & \cellcolor{gray!8}{0.11} & \cellcolor{gray!8}{2.63} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{4}\\
+20 & Reference & Rocky & 5.70 & 0.13 & 2.87 & 100 & 100 & 0\\
+\bottomrule
+
+\end{longtable}
+
+\endgroup{}
 
 \subsection{Monitoring}\label{monitoring}
 
@@ -4048,8 +4168,8 @@ for numerical stability.
 The second component of the analysis tested construction impact relative
 to control sites using a quasi-before-after, control-impact (quasi-BACI)
 design (Underwood 1994), and separately tested after-construction
-trajectory of kōura and catfish populations. The design is quasi BACI
-because only a single pre-construction monitoring round was available.
+trajectory of kōura and catfish populations. The design is quasi-BACI
+because only a single pre-construction monitoring round was possible.
 The quasi-BACI design compared one pre-construction monitoring round
 with six post-construction monitoring rounds using generalised linear
 mixed effects models (GLMMs) to test the effect of stone pile
@@ -4099,6 +4219,9 @@ formula with season as an additive covariate. All models were run with
 four chains of 4000 iterations (1500 warmup) and convergence was
 assessed using R̂ values (threshold \textless{} 1.01) and bulk effective
 sample sizes (threshold \textgreater{} 400) (Vehtari et al. 2021).
+Divergent transitions were rare in all models (≤ 9 of 10,000 post-warmup
+draws) and considered negligible given the otherwise strong convergence
+diagnostics.
 
 A simulation-based power analysis was conducted to quantify the sample
 size required for statistical detection of the BACI effect under the
@@ -4128,6 +4251,27 @@ post-construction period, though this difference did not reach
 statistical significance. Results across all models and response
 variables are summarised in Figure~\ref{fig-forest-plot} and
 {Table~\ref{tbl-models-summary-full-supp}}.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-forest-plot.png}
+
+}
+
+\caption{\label{fig-forest-plot}Effect sizes (\(\beta\) ± 95\% CI) for
+the key term of interest across all models, separated by species
+(columns) and comparison type (rows). Filled points indicate significant
+effects (\emph{p} \textless{} 0.05); open points are non-significant.
+Each row has its own x-axis scale, effect magnitudes are not directly
+comparable across rows because each comparison tests a different
+contrast (step-change, per-round slope, or simple group difference), and
+occupancy is on the log-odds scale while abundance and biomass models
+use the Tweedie log link. Models with degenerate confidence intervals
+are excluded.}
+
+\end{figure}%
 
 \subsection{Baseline equivalence}\label{baseline-equivalence}
 
@@ -4164,418 +4308,6 @@ divergence in catfish abundance, biomass, or occupancy relative to
 control sites across any model or time period
 (Figure~\ref{fig-forest-plot}).
 
-Kōura occupancy was high across all site types before construction,
-81--89 \% in summer ({Table~\ref{tbl-psi-warm-supp}}). After
-construction, occupancy increased marginally at all sites, 89--94 \% in
-summer, thereby limiting our ability to detect a treatment effect. The
-BACI contrast to compare how much stone pile sites changed relative to
-control sites was slightly positive, but the credible intervals spanned
-zero with wide uncertainty (Figure~\ref{fig-occ-warm-contrasts}),
-indicating no detectable additional increase at stone pile sites.
-However, this result likely reflects a measured ceiling rather than
-biological response. After-treatment contrast showed no significant
-difference between site types, but the direction of the effect was
-consistent with early habitat use: stone pile sites showed a positive
-contrast relative to control sites, while control sites showed a
-negative contrast relative to reference sites, and stone pile sites were
-near zero relative to reference sites
-(Figure~\ref{fig-occ-warm-contrasts}).
-
-The non-significant BACI results should be interpreted in the context of
-statistical power. For occupancy, power was near zero across all
-simulated scenarios (maximum 8\%), reflecting the ceiling effect leaving
-no statistical room for a BACI signal
-({Figure~\ref{fig-power-curves-combined}}). Post-construction power
-analysis showed that achieving 80 \% power with the current five site
-pairs would require an effect size of approximately 1.8 log-units,
-almost 6 times the current observed effect
-(Figure~\ref{fig-trajectory-projection}). If the estimated positive
-trajectory of +0.24 log-units per seasonal round continues, the effect
-size may reach this detection threshold within approximately 6
-additional monitoring rounds (\textasciitilde1.5 years).
-
-\subsection{Convergence toward reference sites and reference
-stability}\label{convergence-toward-reference-sites-and-reference-stability}
-
-Stone pile sites maintained a consistently lower kōura abundance than
-reference sites throughout the post-construction period, with no
-significant change in this gap over time (\(\beta\) = -0.09, \emph{p} =
-0.429; {Figure~\ref{fig-convergence-plot}}). Kōura abundance declined
-across monitoring rounds at both stone pile and reference sites
-(\(\beta\) = -0.09, \emph{p} = 0.107). The Winter 2026 monitoring round
-showed a pronounced decline at stone pile sites (CPUE ≈ 0.7) while
-reference sites maintained substantially higher abundance (CPUE ≈ 1.7;
-Figure~\ref{fig-cpue-trends}), a within-round contrast not captured by
-the linear trajectory model. Water temperature at Winter 2026 was
-approximately 1.5°C lower than Winter 2025 but consistent across site
-types, ruling out temperature as a site-specific driver. Visual
-inspection of stone pile surfaces during Winter 2026 monitoring revealed
-substantially greater filamentous algal accumulation compared to earlier
-rounds ({Figure~\ref{fig-stone-piles}}). Catfish abundance and biomass
-showed no significant convergence or divergence between stone pile and
-reference sites over time (Figure~\ref{fig-forest-plot}).
-
-\section{Discussion}\label{discussion-3}
-
-Stone pile structures were deployed in the littoral zone of Lake Rotoiti
-to test whether physical refuge could reduce predation pressure on kōura
-by invasive catfish. Thermal stratification and invasive macrophytes
-already compress suitable kōura habitat into the shallow littoral zone,
-and with catfish eradication probably unachievable at the lake scale,
-habitat-based interventions represent one of the few management options
-currently available to support this declining endemic crayfish.
-
-\subsection{Short-term construction
-effect}\label{short-term-construction-effect}
-
-Kōura catch rates were highly variable across all site types throughout
-the monitoring period, with wide confidence intervals, likely reflecting
-genuine biological variability in kōura distribution. This variability
-may reflect seasonal activity patterns, detection probability changes
-across monitoring rounds, and natural heterogeneity in littoral zone
-use, rather than stable site associations. Despite this variability, the
-Bayesian occupancy model revealed a consistent positive directional
-trend, with stone pile sites showing higher occupancy than control
-sites, and occupancy comparable to natural rocky reference sites across
-both summer and autumn monitoring rounds. Whether this reflects active
-refuge-seeking driven by catfish predation pressure or gradual
-colonisation and population expansion into newly available habitats
-cannot be determined from the current data, but the direction of the
-response was consistent with the purpose of the structures, yet no
-statistically significant effect was detected within the 18-month
-monitoring period.
-
-The absence of a significant effect is most likely explained by a
-combination of monitoring duration, statistical power, and system
-dynamics rather than ineffectiveness of the structures. Habitat
-establishment for freshwater crayfish can be inherently slow. Johnsen
-and Taugbøl (2008) reported that crayfish abundance at a stone addition
-site took 13 years to reach reference levels, and monitoring periods
-shorter than two years are often insufficient to detect significant
-responses to habitat modification (Testa et al. 2011; Ruhí et al. 2012;
-Pilotto et al. 2018). Following reconstruction of the Lake Rotorua
-lakefront, which is located in close proximity to our study site, kōura
-showed no meaningful recolonisation after 28 months (Kusabs 2023). They
-attributed slow recolonisation to persistent catfish predation pressure
-and distance from source population, consistent with time scales
-observed here. The power analysis indicates that five site pairs are
-insufficient to reliably detect effects of the magnitude observed here
-within 18 months, establishing a minimum design threshold: future stone
-pile monitoring programmes should plan for at least three years of
-monitoring and expect potential of high pre-construction occupancy,
-leaving little statistical room for a measurable treatment effect. The
-simultaneous elevation of kōura CPUE across all site types in Autumn
-2025 further complicated detection of an early treatment effect in the
-BACI contrast.
-
-Beyond study design, features of the system itself may also explain the
-weak response. Kōura abundance is highest in lakes without catfish
-(Raven et al. 2026b), suggesting predation pressure may suppress kōura
-populations well below the carrying capacity of existing habitat. If so,
-structural habitat availability may not currently be the primary
-limiting factor, and a weak or delayed response to habitat addition
-would be expected. Additionally, if kōura are already at carrying
-capacity of existing rocky habitat, stone piles add new capacity that
-will only be filled gradually as the population expands, which is
-unlikely to be detectable within 18 months. In either case, a delayed
-rather than absent population response would be expected. Isolated stone
-pile structures may also be difficult for kōura to locate, as distance
-between isolated habitat patches is a key determinant of colonisation
-success (Hanski 1998).
-
-\subsection{Winter 2026}\label{winter-2026}
-
-Kōura CPUE at stone pile and control sites fell sharply in Winter 2026,
-returning to levels close to the pre-deployment baseline from Summer
-2025, while reference sites maintained substantially higher abundance.
-This result at the control and stone pile sites is consistent with known
-seasonal migration behaviour across lake depth profiles and kōura
-activity rates during cooler water temperatures (Devcich 1979). When
-lake thermal stratification breaks down in winter, the hypolimnion
-re-oxygenates and deep-water habitat becomes accessible, allowing kōura
-to redistribute along the depth gradient (Devcich 1979). Kōura activity
-declines at low water temperatures (Devcich 1979), reducing the
-probability of trap entry independently of true abundance. Water
-temperature in Winter 2026 was 1.5 °C lower than Winter 2025, though
-this difference was consistent across all site types and therefore
-cannot explain why reference sites were substantially more resilient to
-the winter decline than the stone pile sites.
-
-Natural rocky reference sites in this study represent the ecological
-target for stone pile deployment. Reference sites had established kōura
-populations, connectivity to deeper waters, and extensive refuge
-habitat, allowing kōura to maintain littoral presence through winter or
-return rapidly from deeper refuges as conditions fluctuated. Stone pile
-sites are isolated structures with less connectivity to deep and
-extensive refuge habitat, meaning kōura that withdrew in winter had no
-quick pathway back to the structures. This difference likely explains
-why stone pile sites maintained consistently lower kōura abundance than
-reference sites throughout the monitoring period, with no significant
-convergence toward reference levels. However, kōura occupancy at stone
-pile sites was comparable to that at reference sites after construction,
-suggesting that kōura found and used the structures at similar frequency
-to natural rocky habitat but at lower densities. This distinction
-between occupancy and abundance likely reflects the early stage of
-colonisation and the small structural footprint of stone piles relative
-to the extensive natural rocky habitat at reference sites. These
-differences are expected to narrow as biofilm succession matures and
-kōura accumulate at the structures over time.
-
-Extensive growth of filamentous algae was observed on the stone pile
-structures in Winter 2026 ({Figure~\ref{fig-stone-piles}}) but did not
-occur to the same degree in Winter 2025. Filamentous algal growth on
-hard substrates is characteristic of winter conditions in thermally
-stratified lakes, as seasonal mixing increases nutrient availability in
-the water column (Wetzel 2001), while reduced water temperature
-suppresses invertebrate grazing activity (Bonacina et al. 2023),
-allowing algal mats to accumulate on available hard surfaces. The stone
-pile surfaces, freshly quarried and free from biofilm at deployment,
-provided clean substrate for early colonisers, and by Winter 2026 a
-diverse assemblage had established, including cyanobacteria, green
-algae, \emph{Sinelobus stanfordi} (Richardson, 1901), Tardigrada,
-Oribatida, Chironomidae, Rhabdocoela, Oligochaeta, and ciliates
-(\emph{Paramecium} spp. and \emph{Vorticella} spp.). Rather than
-representing degradation of habitat quality, this succession is a
-natural trajectory, as temperatures rise in spring and summer, grazer
-activity increases, stratification reduces nutrient loading (Wetzel
-2001; Bonacina et al. 2023), and algal mat cover is expected to decline,
-making the stone piles more accessible for kōura refuge.
-
-Despite the near-zero trap catches in Winter 2026, night spotlighting at
-two stone pile sites in August 2026 recorded one large kōura inside the
-structure at site 3 and three small individuals in and around the
-structure at site 5, confirming that kōura had not abandoned the stone
-piles. Low-detection by nets in winter may therefore reflect kōura
-sheltering within internal crevices rather than true absence, as nets
-require active kōura movement to be effective. Taken together, the
-Winter 2026 data suggest that stone pile use by kōura is inherently
-seasonal, as these structures are most valuable during summer and autumn
-when thermal stratification compresses suitable habitat into the
-littoral zone and catfish predation pressure peaks, while in winter
-kōura redistribute to deeper water regardless of structure type. This
-seasonality defines when stone pile structures are most needed.
-
-\subsection{Catfish}\label{catfish}
-
-Catfish showed their seasonal patterns in littoral zone use, but these
-were unrelated to stone pile presence. Stone pile construction produced
-no evidence of catfish attraction or accumulation. Even if catfish were
-to use stone piles to some degree, the ecological significance of this
-would be limited given the extensive availability of existing suitable
-habitat for catfish in Lake Rotoiti, particularly invasive macrophyte
-beds (Barnes and Hicks 2003). The single-site increase in catfish CPUE
-during Summer 2026 was mirrored by an increase at reference sites and
-was consistent with lake-wide seasonal redistribution into warm littoral
-waters rather than any stone-pile-specific event (Blanchfield et al.
-2026). Overall catfish catches remained low throughout the study
-relative to targeted removal netting in Te Weta Bay, where highest
-catfish densities are concentrated (Francis 2019). In autumn, catfish
-shift to mid-water movement across the lake basin remaining above 15 m
-depth (Blanchfield et al. 2026), reducing predation pressure on kōura in
-the littoral zone.
-
-\subsection{Implications for restoration design and
-monitoring}\label{implications-for-restoration-design-and-monitoring}
-
-Rocky environments have been identified as natural multi-threat refugia,
-capable of simultaneously buffering predation, thermal extremes, and
-invasive species pressure across a wide range of taxa and ecosystems
-(Selwood and Zimmer 2020). In Lake Rotoiti, the two primary stressors
-driving kōura decline cannot be managed at lake scale. Catfish
-eradication from a lake of this size is probably not achievable with
-currently available methods, and targeted removal in high-density areas
-reduces local pressure but cannot eliminate the lake-wide population
-(Dedual 2019). Emerging biotechnologies such as gene drives and
-host-specific biological control agents may offer future options
-(Thresher et al. 2014; Kopf et al. 2019; Teem et al. 2020), but these
-remain experimental. Thermal stratification will intensify as the
-climate continues to warm (Woolway et al. 2021), further compressing
-kōura and expanding suitable conditions for catfish (Lee et al. 2025).
-When the primary stressors cannot be removed, habitat addition becomes
-one of the few available management tools, and refugia become most
-valuable under these conditions (Selwood and Zimmer 2020). While
-freshwater management increasingly recognises that multiple stressors
-interact simultaneously (Spears et al. 2021; Orr et al. 2024), practical
-responses still tend to focus on removing individual stressors. This
-study therefore tested whether structural habitat addition can buffer
-the combined effects of predation and thermal compression without
-removing either stressor.
-
-The stone piles in this study were placed along the shoreline as
-isolated structures, separated from each other and from deeper water by
-soft sandy substrate. Isolated habitat patches support fewer species and
-are more vulnerable to local extinction than connected habitats (Hanski
-1998). Placing stone pile structures perpendicular to the shoreline,
-running through macrophyte beds and into deeper water, could create
-corridors connecting the shallow littoral zone with deeper refugia and
-potentially allow kōura to move more freely between depth ranges as
-conditions change just like on reference sites. This design has not been
-tested but represents a promising direction for future deployments and
-could additionally suppress macrophyte growth along the corridor.
-
-The dense filamentous algal growth observed on the stone pile surfaces
-in Winter 2026 raises the question of where stone piles will be most
-effective over time. In sheltered bays, stone piles are protected from
-wave damage, but algal growth and sediment accumulation could
-progressively reduce crevice accessibility and refugia value. In more
-wave- or current-exposed locations, natural scouring could limit
-fouling, but conditions may be too disturbed to provide effective
-shelter for kōura (Parkyn and Collier 2004). This placement trade-off
-warrants direct investigation in future deployments. Standardised
-photography of consistent stone faces each monitoring visit would allow
-fouling development to be tracked alongside changes in kōura use.
-
-The five stone pile structures deployed in this study cannot be expected
-to drive population-level recovery across a lake of this size. Even if
-each structure functions as an effective refuge for kōura,
-population-level recovery requires habitat enhancement at a spatial
-scale well beyond the current deployment. The spatial and temporal
-scales of ecosystem responses are typically greater than the scale of
-the interventions used to produce them (Minns et al. 1996), and scaling
-from individual stone pile deployment to habitat addition at
-population-relevant extents is a central challenge in restoration
-ecology (Ngwenya et al. 2025). The temporal dimension of this mismatch
-is equally important as continued monitoring for at least three years is
-recommended, as the minimum at which the current observed trajectory
-would become statistically detectable, and to determine whether the
-Winter 2026 decline was a one-time event. It is expected that kōura
-abundance at stone pile sites will continue to build over subsequent
-spring and summer seasons.
-
-Beyond the ecological findings, this study established a practical
-foundation for scaling habitat enhancement in these lakes. The necessary
-approvals, consents, and construction methodology for deploying stone
-piles or rocky structures have now been documented and tested, providing
-a repeatable framework ready for wider application. This study also
-provided evidence that the structures are unlikely to provide meaningful
-additional benefit to catfish, addressing a key management concern
-before any wider deployment. Together, these outcomes give lake managers
-with a practical, tested option for future large-scale deployment.
-
-As thermal stratification and catfish distribution expands under
-continued warming (Woolway et al. 2021; Lee et al. 2025), the band of
-suitable habitat available to kōura will likely continue to narrow. In
-this context, the value of structural refugia is expected to increase
-over time rather than diminish. Stone pile deployment alone cannot
-reverse the trajectory of kōura decline in Lake Rotoiti, but it directly
-addresses the current bottleneck, the shortage of structural refuge in a
-lake where soft sediment is dominant on the shorelines and the two
-primary stressors cannot be controlled at the lake scale. Establishing
-refugia before populations decline further may be more effective than
-waiting until the effect of the stressors becomes more severe and kōura
-source populations fall below critical densities for recolonisation
-(Morelli et al. 2016; Kusabs et al. 2026).
-
-The consistent positive directional trend in occupancy, the rapid
-seasonal use of the structures documented here, and the developing
-community on the stone pile surfaces all suggest the foundations for a
-population-level response by kōura are being established. Furthermore,
-stone-pile construction provided no evidence of attracting or
-concentrating catfish. Whether these responses ultimately translate into
-detectable population-level effects will require continued long-term
-monitoring.
-
-\section{Acknowledgements}\label{acknowledgements-4}
-
-We thank Te Arawa Lakes Trust and Te Komiti Whakahaere for the
-opportunity to study kōura - a taonga (treasured) species. We are
-grateful to Soweeta Fort-D'ath and William Anaru (Te Arawa Lakes Trust),
-and Tihini Grant (Ngāti Pikiao). Tāheke Opatia Marae, Te Takinga Marae,
-and landowners, Piripi Curtis, David McIlraith, Piki Thomas, Haddon
-Lock, Barnett Vercoe, Richard Vercoe, and Caroline Newton, for granting
-access to monitoring sites and facilitating fieldwork in Lake Rotoiti.
-We thank Andy Bruere, Alex Simes, Cory O'Neill, Joe Butterworth, Martin
-Sarkezi, Mael Marguet, Savio Dsouza, Ethan Morgan, Logan Kallam, Calum
-MacNeil, and Matt Prentice for assisting with fieldwork and data
-collection.
-
-\section{Tables}\label{tables}
-
-\begingroup\fontsize{8}{10}\selectfont
-
-\begin{longtable}[t]{rllrrrrrr}
-
-\caption{\label{tbl-site-overview}Physical characteristics of stone
-pile, control, and reference monitoring sites at baseline. Sites 1--10
-are stone pile (odd) and paired control (even) sites; sites 11--20 are
-reference sites. Substrate index is a weighted composite of substrate
-particle sizes (higher values indicate coarser substrate more suitable
-for kōura). Slope is the gradient to the 20 m depth contour. Fetch is
-maximum effective fetch. Vegetation values are visually estimated
-percentage cover.}
-
-\tabularnewline
-
-\toprule
-Site & Type & Habitat & Substrate index & Slope (m/m) & Fetch (km) & Riparian veg. (\%) & Overhang (\%) & Wood cover (\%)\\
-\midrule
-\cellcolor{gray!8}{1} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.20} & \cellcolor{gray!8}{0.12} & \cellcolor{gray!8}{4.76} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{10} & \cellcolor{gray!8}{0}\\
-2 & Control & Rocky & 4.40 & 0.11 & 4.79 & 70 & 0 & 0\\
-\cellcolor{gray!8}{3} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.00} & \cellcolor{gray!8}{0.01} & \cellcolor{gray!8}{1.71} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
-4 & Control & Sandy & 3.00 & 0.01 & 1.74 & 80 & 5 & 0\\
-\cellcolor{gray!8}{5} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{2.40} & \cellcolor{gray!8}{0.01} & \cellcolor{gray!8}{0.61} & \cellcolor{gray!8}{10} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
-\addlinespace
-6 & Control & Sandy & 3.00 & 0.01 & 0.55 & 0 & 0 & 0\\
-\cellcolor{gray!8}{7} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.00} & \cellcolor{gray!8}{0.06} & \cellcolor{gray!8}{2.50} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
-8 & Control & Sandy & 3.00 & 0.05 & 2.22 & 30 & 0 & 0\\
-\cellcolor{gray!8}{9} & \cellcolor{gray!8}{Stone pile} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.35} & \cellcolor{gray!8}{0.08} & \cellcolor{gray!8}{3.59} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{3}\\
-10 & Control & Rocky & 5.00 & 0.09 & 3.74 & 20 & 0 & 0\\
-\addlinespace
-\cellcolor{gray!8}{11} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{6.60} & \cellcolor{gray!8}{0.16} & \cellcolor{gray!8}{4.47} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0} & \cellcolor{gray!8}{0}\\
-12 & Reference & Rocky & 6.20 & 0.12 & 4.17 & 100 & 100 & 0\\
-\cellcolor{gray!8}{13} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Sandy} & \cellcolor{gray!8}{3.60} & \cellcolor{gray!8}{0.09} & \cellcolor{gray!8}{1.71} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{0}\\
-14 & Reference & Sandy & 3.50 & 0.11 & 1.65 & 100 & 100 & 0\\
-\cellcolor{gray!8}{15} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.20} & \cellcolor{gray!8}{0.03} & \cellcolor{gray!8}{1.44} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{6}\\
-\addlinespace
-16 & Reference & Rocky & 5.20 & 0.04 & 1.40 & 100 & 100 & 2\\
-\cellcolor{gray!8}{17} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.00} & \cellcolor{gray!8}{0.05} & \cellcolor{gray!8}{3.47} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{30}\\
-18 & Reference & Rocky & 6.20 & 0.05 & 3.46 & 100 & 100 & 7\\
-\cellcolor{gray!8}{19} & \cellcolor{gray!8}{Reference} & \cellcolor{gray!8}{Rocky} & \cellcolor{gray!8}{5.70} & \cellcolor{gray!8}{0.11} & \cellcolor{gray!8}{2.63} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{100} & \cellcolor{gray!8}{4}\\
-20 & Reference & Rocky & 5.70 & 0.13 & 2.87 & 100 & 100 & 0\\
-\bottomrule
-
-\end{longtable}
-
-\endgroup{}
-
-\section{Figures}\label{figures}
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{images/Rotoiti_monitoring_sites.png}
-
-}
-
-\caption{\label{fig-sites}Map of Lake Rotoiti in Bay of Plenty region of
-New Zealand. The monitoring sites are coloured by site type: stone pile
-sites red, control site yellow, and reference sites blue. Ten close-up
-maps show the placement of each of the sites.}
-
-\end{figure}%
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-forest-plot.png}
-
-}
-
-\caption{\label{fig-forest-plot}Effect sizes (\(\beta\) ± 95\% CI) for
-the key term of interest across all models, separated by species
-(columns) and comparison type (rows). Filled points indicate significant
-effects (\emph{p} \textless{} 0.05); open points are non-significant.
-Each row has its own x-axis scale, effect magnitudes are not directly
-comparable across rows because each comparison tests a different
-contrast (step-change, per-round slope, or simple group difference), and
-occupancy is on the log-odds scale while abundance and biomass models
-use the Tweedie log link. Models with degenerate confidence intervals
-are excluded.}
-
-\end{figure}%
-
 \begin{figure}
 
 \centering{
@@ -4607,6 +4339,23 @@ from post-construction monitoring (After).}
 
 \end{figure}%
 
+Kōura occupancy was high across all site types before construction,
+81--89 \% in summer ({Table~\ref{tbl-psi-warm-supp}}). After
+construction, occupancy increased marginally at all sites, 89--94 \% in
+summer, thereby limiting our ability to detect a treatment effect. The
+BACI contrast to compare how much stone pile sites changed relative to
+control sites was slightly positive, but the credible intervals spanned
+zero with wide uncertainty (Figure~\ref{fig-occ-warm-contrasts}),
+indicating no detectable additional increase at stone pile sites.
+However, this result likely reflects a measured ceiling rather than
+biological response. After-treatment contrast showed no significant
+difference between site types, but the direction of the effect was
+consistent with early habitat use: stone pile sites showed a positive
+contrast relative to control sites, while control sites showed a
+negative contrast relative to reference sites, and stone pile sites were
+near zero relative to reference sites
+(Figure~\ref{fig-occ-warm-contrasts}).
+
 \begin{figure}
 
 \centering{
@@ -4624,6 +4373,19 @@ difference.}
 
 \end{figure}%
 
+The non-significant BACI results should be interpreted in the context of
+statistical power. For occupancy, power was near zero across all
+simulated scenarios (maximum 8\%), reflecting the ceiling effect leaving
+no statistical room for a BACI signal
+({Figure~\ref{fig-power-curves-combined}}). Post-construction power
+analysis showed that achieving 80 \% power with the current five site
+pairs would require an effect size of approximately 1.8 log-units,
+almost 6 times the current observed effect
+(Figure~\ref{fig-trajectory-projection}). If the estimated positive
+trajectory of +0.24 log-units per seasonal round continues, the effect
+size may reach this detection threshold within approximately 6
+additional monitoring rounds (\textasciitilde1.5 years).
+
 \begin{figure}
 
 \centering{
@@ -4639,6 +4401,305 @@ shaded ribbon shows 95\% uncertainty interval. Dashed horizontal line
 marks the detection threshold for 80 \% power with five site pairs.}
 
 \end{figure}%
+
+\subsection{Convergence toward reference sites and reference
+stability}\label{convergence-toward-reference-sites-and-reference-stability}
+
+Stone pile sites maintained a consistently lower kōura abundance than
+reference sites throughout the post-construction period, with no
+significant change in this gap over time (\(\beta\) = -0.09, \emph{p} =
+0.429; {Figure~\ref{fig-convergence-plot}}). Kōura abundance declined
+across monitoring rounds at both stone pile and reference sites
+(\(\beta\) = -0.09, \emph{p} = 0.107). The Winter 2026 monitoring round
+showed a pronounced decline at stone pile sites (CPUE ≈ 0.7) while
+reference sites maintained substantially higher abundance (CPUE ≈ 1.7;
+Figure~\ref{fig-cpue-trends}), a within-round contrast not captured by
+the linear trajectory model. Water temperature at Winter 2026 was
+approximately 1.5°C lower than Winter 2025 but consistent across site
+types, ruling out temperature as a site-specific driver. Visual
+inspection of stone pile surfaces during Winter 2026 monitoring revealed
+substantially greater filamentous algal accumulation compared to earlier
+rounds ({Figure~\ref{fig-stone-piles}}). Catfish abundance and biomass
+showed no significant convergence or divergence between stone pile and
+reference sites over time (Figure~\ref{fig-forest-plot}).
+
+\section{Discussion}\label{discussion-3}
+
+Stone pile structures were deployed in the littoral zone of Lake Rotoiti
+to test whether physical refuge could reduce predation pressure on kōura
+by invasive catfish. Stone piles produced no statistically significant
+increase in kōura abundance, biomass, or occupancy relative to paired
+control sites, but the direction of effect was consistently positive
+across every response variable and model, and occupancy at stone pile
+sites converged with occupancy at natural rocky reference sites by the
+first post-construction summer. Catfish showed no comparable response to
+stone pile presence in any model, at any site type, or in any season,
+indicating that stone piles selectively benefit kōura without providing
+equivalent refuge or foraging opportunity for this invasive predator. A
+pronounced decline in kōura catch rates at stone pile and control sites
+in Winter 2026, evidently driven by seasonal redistribution to deeper
+water rather than habitat abandonment, showed that structural refuge
+value is itself seasonal and concentrated in the warmer months when
+catfish predation pressure and habitat compression peak. Together, these
+results and a formal power analysis indicate that the absence of
+statistical significance most plausibly reflects limited study duration
+and sample size rather than genuine ineffectiveness of the intervention.
+
+\subsection{Construction effect and statistical
+power}\label{construction-effect-and-statistical-power}
+
+Kōura catch rates were highly variable across all site types throughout
+the monitoring period, with wide confidence intervals, likely reflecting
+genuine biological variability in kōura distribution. This variability
+may reflect seasonal activity patterns, detection probability changes
+across monitoring rounds, and natural heterogeneity in littoral zone
+use, rather than stable site associations. Despite this variability, the
+Bayesian occupancy model revealed a consistent positive directional
+trend, with stone pile sites showing higher occupancy than control
+sites, and occupancy comparable to natural rocky reference sites across
+both summer and autumn monitoring rounds. Whether this reflects active
+refuge-seeking driven by catfish predation pressure or gradual
+colonisation and population expansion into newly available habitats
+cannot be determined from the current data, but the direction of the
+response was consistent with the purpose of the structures, yet no
+statistically significant effect was detected within the 18-month
+monitoring period.
+
+The absence of a significant effect is most likely explained by a
+combination of monitoring duration, statistical power, and system
+dynamics rather than ineffectiveness of the structures. Habitat
+establishment for freshwater crayfish can be inherently slow. Johnsen
+and Taugbøl (2008) reported that crayfish abundance at a stone addition
+site took 13 years to reach reference levels, and monitoring periods
+shorter than two years are often insufficient to detect significant
+responses to habitat modification (Testa et al. 2011; Ruhí et al. 2012;
+Pilotto et al. 2018). Following reconstruction of the Lake Rotorua
+lakefront, which is connected to Lake Rotoiti, kōura showed no
+meaningful recolonisation after 28 months (Kusabs 2023). They attributed
+slow recolonisation to persistent catfish predation pressure and
+distance from source population, consistent with time scales observed
+here. The power analysis indicates that five site pairs are insufficient
+to reliably detect effects of the magnitude observed here within 18
+months, establishing a minimum design threshold: future stone pile
+monitoring programmes should plan for at least three years of monitoring
+and expect high pre-construction occupancy, leaving little statistical
+room for a measurable treatment effect. The simultaneous elevation of
+kōura CPUE across all site types in Autumn 2025 further complicated
+detection of an early treatment effect in the BACI contrast.
+
+Features of the system itself may also contribute to the weak response.
+Kōura abundance is highest in lakes without catfish (Raven et al.
+2026b), suggesting predation pressure may suppress kōura populations
+well below the carrying capacity of existing habitat. If so, structural
+habitat availability may not currently be the primary limiting factor,
+and a weak or delayed response to habitat addition would be expected.
+Equally, if kōura are already at carrying capacity of existing rocky
+habitat, stone piles add new capacity that will only be filled gradually
+as the population expands, which is unlikely to be detectable within 18
+months. In either case, a delayed rather than absent population response
+would be expected. Isolated stone pile structures may also be difficult
+for kōura to locate, since distance between isolated habitat patches is
+a key determinant of colonisation success (Hanski 1998). Each of these
+explanations point toward a delayed, rather than absent, population
+response, and continued monitoring would be the appropriate next step
+rather than a reassessment of the intervention itself.
+
+\subsection{Seasonal dynamics: the Winter 2026
+decline}\label{seasonal-dynamics-the-winter-2026-decline}
+
+Kōura CPUE at stone pile and control sites fell sharply in Winter 2026,
+returning to levels close to the pre-deployment baseline from Summer
+2025, while reference sites maintained substantially higher abundance.
+This pattern is consistent with known seasonal migration behaviour
+across lake depth profiles and kōura activity rates during cooler water
+temperatures (Devcich 1979). When lake thermal stratification breaks
+down in winter, the hypolimnion re-oxygenates and deep-water habitat
+becomes accessible, allowing kōura to redistribute along the depth
+gradient (Devcich 1979). Reduced activity at low water temperatures
+independently lowers the probability of trap capture (Devcich 1979), and
+although Winter 2026 was 1.5 °C lower than Winter 2025, this difference
+was consistent across all site types and therefore cannot explain why
+reference sites were substantially more resilient to the winter decline
+than the stone pile sites.
+
+Natural rocky reference sites in this study represent the ecological
+target for stone pile deployment. Reference sites had established kōura
+populations, connectivity to deeper waters, and extensive refuge
+habitat, allowing kōura to maintain littoral presence through winter or
+return rapidly from deeper refuges as conditions fluctuated. Stone pile
+sites are isolated structures with less connectivity to deep and
+extensive refuge habitat, meaning kōura that withdrew in winter had no
+quick pathway back to the structures. This difference likely explains
+why stone pile sites maintained consistently lower kōura abundance than
+reference sites throughout the monitoring period, with no significant
+convergence toward reference levels. However, kōura occupancy at stone
+pile sites was comparable to that at reference sites after construction,
+suggesting that kōura found and used the structures at similar frequency
+to natural rocky habitat but at lower densities. This distinction
+between occupancy and abundance likely reflects the early stage of
+colonisation and the small structural footprint of stone piles relative
+to the extensive natural rocky habitat at reference sites. These
+differences are expected to narrow as biofilm succession matures and
+kōura accumulate at the structures over time.
+
+Extensive filamentous algae growth was observed on the stone pile
+structures in Winter 2026 but not to the same degree in Winter 2025
+({Figure~\ref{fig-stone-piles}}), consistent with the seasonal pattern
+typical for thermally stratified lakes, where winter mixing raises
+nutrient availability while cooler water suppresses invertebrate
+grazing, allowing algal mats to accumulate on hard surfaces (Wetzel
+2001; Bonacina et al. 2023). The freshly quarried piles were free from
+biofilm at deployment and by Winter 2026 supported a diverse meiofaunal
+assemblage, indicating active succession rather than habitat
+degradation; algal cover would be expected to decline as grazer activity
+resumes in spring and summer. Despite the near-zero trap catches in
+Winter 2026, night spotlighting at two stone pile sites in August 2026
+directly observed kōura sheltering within the structures, confirming
+that low winter catch rates reflect reduced detectability rather than
+abandonment. Together, these results indicate that stone pile refuge
+value is inherently seasonal --- greatest in summer and autumn, when
+thermal stratification compresses habitat into the littoral zone and
+catfish predation peaks, and lowest in winter, when kōura redistribute
+to deeper water regardless of structure type.
+
+\subsection{Catfish: no evidence of attraction to stone
+piles}\label{catfish-no-evidence-of-attraction-to-stone-piles}
+
+Catfish showed their seasonal patterns in littoral zone use, but these
+were unrelated to stone pile presence. Stone pile construction produced
+no evidence of catfish attraction or accumulation. Even if catfish were
+to use stone piles to some degree, the ecological significance of this
+would be limited given the extensive availability of existing suitable
+habitat for catfish in Lake Rotoiti, particularly invasive macrophyte
+beds (Barnes and Hicks 2003). The single-site increase in catfish CPUE
+during Summer 2026 was mirrored by an increase at reference sites and
+was consistent with lake-wide seasonal redistribution into warm littoral
+waters rather than any stone-pile-specific event (Blanchfield et al.
+2026). Overall catfish catches remained low throughout the study
+relative to targeted removal netting in Te Weta Bay, where highest
+catfish densities are concentrated (Francis 2019). In autumn, catfish
+shift to mid-water movement across the lake basin remaining above 15 m
+depth (Blanchfield et al. 2026), reducing predation pressure on kōura in
+the littoral zone. This absence of attraction is an important management
+result in its own right: habitat enhancement can be targeted at a
+threatened native species without inadvertently improving conditions for
+its invasive predator.
+
+\subsection{Implications for restoration design and
+monitoring}\label{implications-for-restoration-design-and-monitoring}
+
+Predator-prey interactions are shaped by habitat structure, which offers
+refuge to prey, influences how easily predators locate and capture prey,
+and alters the costs and benefits of hunting for a predator (Lennox et
+al. 2025). This framework applies directly to catfish-invaded lakes,
+where habitat addition offers a practical lever on that interaction, and
+rocky environments have been identified as natural multi-threat refugia,
+capable of simultaneously buffering predation, thermal extremes, and
+invasive species pressure across a wide range of taxa and ecosystems
+(Selwood and Zimmer 2020). In Lake Rotoiti, catfish and thermal
+stratification --- the two primary drivers of kōura decline --- cannot
+be managed at the lake scale: eradication is not currently achievable,
+and targeted catfish removal in high density areas reduces local
+pressure without eliminating the lake-wide population (Dedual 2019).
+Emerging biotechnologies such as gene drives and host-specific
+biological control agents may offer future options (Thresher et al.
+2014; Kopf et al. 2019; Teem et al. 2020), but these remain
+experimental, and thermal stratification will continue to intensify
+under climate warming (Woolway et al. 2021; Lee et al. 2025). Where the
+primary stressors cannot be removed, habitat addition becomes one of the
+few available management tools, and refugia become correspondingly more
+valuable (Selwood and Zimmer 2020).
+
+The stone piles deployed here were isolated structures, separated from
+each other and from deeper water by soft sandy substrate. Isolated
+habitat patches support fewer species and are more vulnerable to local
+extinction than connected habitats (Hanski 1998), and the Winter 2026
+decline is consistent with this limitation: stone piles lacked the
+connectivity to deep refuge that allowed reference sites to remain
+stable. Orienting future structures perpendicular to the shoreline,
+extending through macrophyte beds and into deeper water, could create
+corridors linking the littoral zone with deeper refugia, allowing kōura
+to move more freely between depth ranges as conditions change, as they
+do at reference sites. This design has not been tested but is a
+promising direction for future deployments, with the addition of
+potential benefit of suppressing macrophyte growth along the corridor.
+
+The dense algal fouling observed in Winter 2026 also raises a placement
+question. In sheltered bays, stone piles are protected from wave damage,
+but algal growth and sediment accumulation could progressively reduce
+crevice accessibility and refugia value; in more exposed locations,
+natural scouring could limit fouling, but conditions may be too
+disturbed to provide effective shelter (Parkyn and Collier 2004). This
+placement trade-off warrants direct investigation in future deployments,
+and standardised photography of consistent stone faces each monitoring
+visit would allow fouling development to be tracked alongside changes in
+kōura use.
+
+Finally, the five stone pile structures deployed here cannot be expected
+to drive population-level recovery across a lake of this size on their
+own. The spatial and temporal scale of the ecosystem responses is
+typically greater than the scale of the interventions used to produce
+them (Minns et al. 1996), and scaling from individual stone pile
+deployment to habitat addition at population-relevant extents is a
+central challenge in restoration ecology (Ngwenya et al. 2025).
+
+Beyond the ecological results, this study establishes a practical
+foundation for scaling habitat enhancement in these lakes: the
+approvals, consents, and construction methodology needed to deploy stone
+piles have now been tested, with evidence that doing so is unlikely to
+have a counterproductive result by benefiting catfish. These outcomes
+give lake managers a practical, tested option for future large-scale
+deployment; continued monitoring for at least three years is recommended
+to determine whether the Winter 2026 decline was a one-off event and
+whether kōura abundance at stone pile sites continues to build in
+subsequent spring and summer seasons.
+
+\subsection{Conclusion}\label{conclusion-1}
+
+Stone pile deployment alone cannot reverse the trajectory of kōura
+decline in Lake Rotoiti, but it directly addresses the current
+bottleneck: the shortage of structural refuge in a lake where soft
+sediment dominates the shorelines and where the two primary stressors,
+catfish predation and thermal habitat compression, cannot be controlled
+at the lake scale. Both stressors are expected to intensify under
+continued climate warming (Woolway et al. 2021; Lee et al. 2025),
+narrowing the band of habitat available to kōura and increasing, rather
+than diminishing, the value of structural refugia over time.
+Establishing refugia before populations decline further may be more
+effective than waiting until source populations fall below critical
+densities for recolonisation (Morelli et al. 2016; Kusabs et al. 2026).
+The consistent positive directional trend in occupancy, the rapid and
+clearly seasonal use of the structures, and the developing biological
+community on the stone pile surfaces together suggest the foundations
+for a population-level response by kōura are being laid, even though
+catfish showed no comparable benefit from the structures. Whether this
+translates into a detectable population-level effect will depend on
+continued long-term monitoring --- the logical next phase of this
+restoration programme.
+
+\section{Acknowledgements}\label{acknowledgements-4}
+
+We thank Te Arawa Lakes Trust and Te Komiti Whakahaere for the
+opportunity to study kōura - a taonga (treasured) species. We are
+grateful to Soweeta Fort-D'ath and William Anaru (Te Arawa Lakes Trust),
+Tihini Grant (Ngāti Pikiao), and Andy Bruere (Bay of Plenty Regional
+Council). We thank Tāheke Opatia Marae, Te Takinga Marae, and
+landowners, Piripi Curtis, David McIlraith, Piki Thomas, Haddon Lock,
+Barnett Vercoe, Richard Vercoe, and Caroline Newton, for granting access
+to monitoring sites and facilitating fieldwork in Lake Rotoiti. We
+further thank, Alex Simes, Cory O'Neill, Joe Butterworth, Martin
+Sarkezi, Mael Marguet, Savio Dsouza, Ethan Morgan, Logan Kallam, Calum
+MacNeil, and Matt Prentice for assisting with fieldwork and data
+collection. Further thanks to Mael Marguet for suggesting the power
+analysis.
+
+--- title: ``Synthesis''
+
+execute: freeze: false cache: false
+
+title-block-style: none citation: false
+
+knitr: opts\_chunk: dev: ``ragg\_png'' ---
 
 \clearpage
 \providecommand{\chaptermark}[1]{}
@@ -4665,6 +4726,10 @@ marks the detection threshold for 80 \% power with five site pairs.}
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=-3.5cm]current page.north west)
     {Synthesis};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=1.2cm]current page.south east)
+    {Dead trout at the shore of Lake \={O}karo.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -4673,188 +4738,250 @@ marks the detection threshold for 80 \% power with five site pairs.}
 
 The chapters preceding this synthesis established the ecological and
 practical basis for using stone piles as a kōura habitat enhancement
-tool. Behavioural experiments (Chapter 2) confirmed that kōura respond
-with heightened refuge use to novel predators than native ones. Field
-observations (Chapter 3) identified the habitat features that support
-kōura along lake shorelines, and mesocosm trials (Chapter 4) showed that
-structure stability and complexity matter more than material when kōura
-select shelter. Chapter 5 deployed stone piles along the shoreline of
-Lake Rotoiti and monitored kōura response over 18 months in a BACI
-design. Kōura colonised the structures rapidly, with occupancy and
-abundance consistently trending positive at stone pile sites relative to
-controls, though this effect did not reach statistical significance.
-Catfish showed no evidence of being attracted to the stone piles. This
-chapter (Chapter 6) synthesises the findings across all four chapters
-and presents two pilot studies that extend the work in early and future
-directions. The first trialled the construction logistics and kōura
-reintroduction in Lake Ōkaro where it was found that water quality needs
-to meet kōura demands before reintroduction is feasible. The second
-extended stone pile deployment up to nine meters deep and found that
-kōura use stone piles across the littoral zone and that stone piles are
-able to suppress invasive macrophytes. Together with the main chapters,
-these case studies broaden the application of the kōura restoration
-approach developed in this thesis for future deployment and monitoring.
-
-\begin{enumerate}
-\def\labelenumi{(\arabic{enumi})}
-\tightlist
-\item
-\item
-\end{enumerate}
+tool in the Rotorua Te Arawa lakes. Behavioural laboratory experiments
+(Chapter 2) tested kōura refuge use when exposed to novel catfish
+predators compared to native eel predators. This demonstrated that kōura
+spend more time in refuges when they are exposed to catfish than to
+eels. Kōura habitat use of lake shorelines was assessed with field
+observations (Chapter 3) executed at 60 locations across five lakes.
+This identified that habitats comprising complex rocky substrates and
+riparian vegetation support higher kōura abundance than muddy or
+emergent macrophyte habitats. In mesocosm trials (Chapter 4) four
+consecutive experiments were carried out to establish the preferred
+material and structure of artificially introduced habitats. The results
+showed that structure stability and complexity matter more than material
+type when kōura select shelter. The field deployment study (Chapter 5)
+deployed five stone piles along the shoreline of Lake Rotoiti and
+monitored kōura response over 18 months in a BACI design. Kōura
+colonised the structures rapidly, with occupancy and abundance
+consistently trending positive at stone pile sites relative to controls,
+though this effect did not reach statistical significance. Catfish
+showed no evidence of being attracted to the stone piles. This chapter
+(Chapter 6) synthesises the findings across all four chapters and
+discusses their wider interpretation. Two additional field trials,
+detailed in the appendices, were incorporated to extend the findings of
+Chapter 3-5 into conditions not covered by the previous chapters. These
+included a reintroduction attempt in Lake Ōkaro that tested the water
+quality boundary of habitat enhancement (see Appendix:
+Section~\ref{sec-supp-okaro}), and a depth-gradient deployment in Lake
+Rotoiti that explored use of stone pile structures beyond wading depth
+(see Appendix: Section~\ref{sec-supp-rotoiti-deep}).
 
 \section{Three stressors working
 together}\label{three-stressors-working-together}
 
 Kōura decline in the Rotorua Te Arawa Lakes is driven by multiple
 compounding stressors, most prominently catfish predation, thermal
-stratification, and invasive macrophytes, which togeheter operate at
-both the local habitat scale and the broader lake scale.
+stratification, and invasive macrophytes, which together operate at both
+the local sub-lake scale and the broader lake scale.
 
-Chapter 2 supported the generalised fear hypothesis (Sih et al. 2023):
-koura resond with heightened refuge use to catfish compared to the
-native eel, meaning fear-induced behavioural suppression operates even
-in the absence of direct predation. An animal spending more time in
-refuge is an animal spending less time foraging, leading to slower
-growth and reduced reproductive output. This is the core mechanism
-behind the landscape of fear (Laundré et al. 2001), where predators do
-not need to eat every prey individual to suppress a population, but
-their presence alone is sufficient to reshape how prey use space and
-time, and those behavioural changes carry demographic consequences. In
-the context of the Rotorua Te Arawa Lakes, this means that catfish
-suppress kōura populations through two channels simultaneously. Direct
+The behavioural response demonstrated in Chapter 2, showed that kōura
+had greater refuge use in response to the novel catfish predator than to
+the native eel. This finding is consistent with prey exhibiting
+heightened caution toward unfamiliar predators with which they share no
+evolutionary history (Sih et al. 2023), and demonstrates that
+fear-induced behavioural suppression operates even in the absence of
+direct predation. An animal spending more time in refuge is an animal
+spending less time foraging, leading to slower growth and reduced
+reproductive output. This is the core mechanism behind the landscape of
+fear (Laundré et al. 2001), where predators do not need to eat every
+prey individual to suppress a population, but their presence alone is
+sufficient to reshape how prey use habitats over space and time, and
+those behavioural changes carry demographic consequences. In the context
+of the Rotorua Te Arawa Lakes, this means that catfish potentially
+suppress kōura populations through two mechanisms simultaneously. Direct
 predation removes individuals and fear-induced behavioural change
-reduces the reproductive capacity of those that survive. Population
-recovery under these conditions is likely to be slow even if predation
-rates are reduced, because the behaviour suppression persists as long as
-catfish are present.
+reduces the reproductive capacity of those that survive. Even if
+predation rates are reduced, population recovery under these conditions
+is likely to be slow, because the behaviour suppression can persist as
+long as catfish are present.
 
-Chapter 3 showed a comparison between five lakes, where oligotrophic
+The lake-scale and sub-lake-scale patterns identified in Chapter 3
+provide further evidence that kōura decline results from multiple
+interacting pressures rather than catfish predation alone. Oligotrophic
 lakes with no catfish had the highest overall kōura catches, while
-eutrophic lakes with catfish, and anoxic stratification yielded
-substantially lower kōura numbers. On the habitat scale structurally
-complex rocky shorelines were associated with more kōura abundance while
-excessive macrophyte cover revealed lower kōura densities, confirming
-that some stressors operate at lake scale while others matter at the
-habitat scale.
+eutrophic lakes with catfish and anoxic stratification yielded
+substantially lower kōura numbers. At the sub-lake scale, structurally
+complex rocky shorelines were associated with higher kōura abundance,
+while excessive macrophyte cover was associated with lower densities,
+which is consistent with preferred kōura habitat in streams (Usio and
+Townsend 2000; Parkyn and Collier 2004; Jowett et al. 2008; Parkyn et
+al. 2009). These findings show that kōura abundance is shaped by
+stressors operating at both lake scale and sub-lake scale.
 
-Habitat enhancement represents an important intervention under these
-conditions. The mesocosm trials (Chapter 4) showed that kōura
-preferentially select stable, crevice-rich structures, exactly the
-properties that stone piles provide in the field, suggesting that the
-positive trend in Chapter 5 reflects genuine preference rather than
-incidental use. Chapter 5 showed that stone piles in Lake Rotoiti
+Habitat enhancement represents an important intervention under current
+pressures. The mesocosm trials (Chapter 4) showed that kōura
+preferentially select stable, crevice-rich structures, similar to the
+habitat characteristics that stone piles provide in the lake, suggesting
+that the positive trend in Chapter 5 reflects genuine preference rather
+than incidental use. Chapter 5 showed that stone piles in Lake Rotoiti
 attracted kōura densities approaching those on natural rocky substrates,
-despite the ongoing presence of catfish. High-quality refuge does not
-eliminate the fear response, but it provides kōura with locations where
-they can shelter effectively, emerge to forage in relative safety, and
-maintain sufficient activity levels to reproduce. In catfish-invaded
-lakes where predator eradication is ongoing, habitat provision may
-therefore be what allows a remnant population to persist and slowly
-recover rather than declining to local extinction. Stone piles are not
-solving fear responses but they could be helpful in managing its
-consequences.
+despite the ongoing presence of catfish. While high-quality refuge does
+not eliminate the fear response, it provides kōura with locations where
+they can shelter effectively and emerge to forage in relative safety,
+remaining active and accessible to resources despite the continued
+presence of catfish (Shave et al. 1994; Adams 2007; Francis 2019; Zhao
+et al. 2024). In catfish-invaded lakes where predator eradication is not
+feasible, habitat provision may therefore help a remnant kōura
+population persist and gradually recover rather than decline towards
+local extinction.
 
 Kōura use of stone pile refuges in the littoral zone was strongly
-seasonal (Chapter 5), as during summer and autumn when stratification
-and catfish shoreline use simultaneously peaks, kōura are compressed in
-this small zone full of danger. Until winter comes, stratification
-breaks down and kōura can redistribute to deeper habitats. Climate
-projections suggest this dynamic will intensify as surface waters get
-warmer, stratification strengthens, and anoxic events become more
-frequent and prolonged, making conditions more favourable for catfish
-({Jane et al.} 2021; Woolway et al. 2021; Lee et al. 2025). Chapter 1
-documents the decline in liveable habitat for kōura over the last 20
-years across eleven of the lakes, with for example, a statistically
-significant annual trend of −0.4\%/yr in Lake Ōkāreka, confirming that
-the thermal compression window is narrowing under current conditions,
-not just future ones.
+seasonal (Chapter 5), with greatest use during summer and autumn when
+stratification and catfish shoreline use simultaneously peak. During
+these periods, deep-water oxygen depletion restricts access to deeper
+habitats, while increased catfish activity in the littoral zone may
+expose kōura to greater predation risk, effectively compressing them
+into a narrower band of suitable habitat. In winter, when stratification
+breaks down and deeper waters are reoxygenated, kōura may redistribute
+into deeper habitats or simply remain within existing shallow refuges
+once predation and thermal pressure ease (Devcich 1979). Climate
+projections suggest that this seasonal habitat constraint will intensify
+as surface waters warm, stratification becomes stronger and more
+persistent, and deep-water hypoxia and anoxia become more frequent and
+prolonged ({Jane et al.} 2021; Woolway et al. 2021; Lee et al. 2025).
+Chapter 1 documents a decline in suitable habitat for kōura over the
+last 20 years across eleven lakes, calculated as the proportion of the
+lakebed area meeting dissolved oxygen and temperature thresholds for
+kōura. For example, Lake Ōkāreka showed a statistically significant
+annual decline of 0.4\% in liveable habitat per year, indicating that
+the suitable habitat window is narrowing under current conditions, not
+just future ones.
 
 \section{Kōura monitoring approaches}\label{koura-monitoring-approaches}
 
-The choice of monitoring method depends on what question is being asked.
-Methods that sample a general area answer ``how many kōura are present
-in this location?'' while active, site specific methods answer ``are
-kōura using this structure?''. These are distinct questions, and
-selecting the right monitoring method for each is relevant. Traditional
-Māori harvesting methods using tau kōura with whakaweku (bundles of
-bracken fern \emph{Pteridium esculentum}) have proven effective for
-kōura monitoring in lakes and stream habitats (Kusabs and Quinn 2009;
-Kusabs et al. 2018). In the shallow wave-exposed zone of a lake, however
-whakaweku is less suitable as wave action destabilises the bundles,
-reducing their effectiveness as a consistent shelter substrate. A
-further limitation in the context of this thesis is that whakaweku
-creates habitat. Using it to assess whether stone piles attract kōura
-would confound the monitoring tool with the intervention, making it
-impossible to determine whether kōura are responding to the stone pile
-or the whakaweku itself. Passive netting with single-winged fyke nets
-and baited box traps was therefore used throughout Chapters 3 and 5. Box
-traps were baited with trout flesh in Chapter 3 and catfish flesh in
+A key insight from this research is that standard passive netting, while
+effective for estimating relative kōura abundance across sites, cannot
+distinguish whether kōura are actively using a specific structure or are
+simply present in the surrounding area. This distinction matters
+directly for interpreting the Chapter 5 results: higher catches near
+stone piles were taken as evidence of greater habitat use, but passive
+netting alone cannot confirm structural preference. Johnsen and Taugbøl
+(2008) monitored their stone addition site using both diving surveys and
+baited traps, finding evidence of crayfish colonisation using both
+methods. More structurally complex habitat may also introduce a
+systematic detection bias in the opposite direction: kōura sheltering
+within stone piles may become genuinely harder to catch or observe if
+they can forage on snails and other invertebrates within the structure
+itself, without needing to emerge at all (Francis 2019). A similar
+pattern has been reported in North American lakes containing largemouth
+bass (\emph{Micropterus salmoides}) (W. Perry, pers. comm.). This
+limitation influenced the monitoring approaches across the thesis, from
+netting in Chapter 3 and 5 toward direct observation methods in later
+trials (see Appendix: Section~\ref{sec-supp-rotoiti-deep}), where
+spotlighting, Remotely Operated Vehicle (ROV) surveys, and diving
+allowed kōura to be observed on structures directly.
+
+Traditional Māori harvesting methods using tau kōura with whakaweku
+(bundles of bracken fern \emph{Pteridium esculentum}) have proven
+effective for kōura monitoring in lakes and stream habitats (Kusabs and
+Quinn 2009; Kusabs et al. 2018) but presented two specifics constraints
+in this research context. In the shallow wave-exposed zone of the study
+lakes, wave action destabilises the whakaweku, reducing their
+effectiveness as a consistent shelter substrate. A further limitation in
+the context of this thesis is that whakaweku creates habitat. Using it
+to assess whether stone piles attract kōura would confound the
+monitoring tool with the intervention, making it difficult to determine
+whether kōura are responding to the stone pile or the whakaweku itself.
+
+Passive netting with single-winged fyke nets and baited box traps were
+therefore used throughout the monitoring described in Chapters 3 and 5.
+Box traps were baited with trout flesh in Chapter 3 and catfish flesh in
 Chapter 5. When comparing catches at Lake Rotoiti sites, no difference
 was found between bait types. This was expected as kōura scavenge
-carcasses of dead predator fish without bias towards native or
-non-native species (MacNeil et al. 2025). Trout as bait yielded a CPUE
-of 0.682 kōura per trap per night and catfish bait 0.638 kōura per trap
-per night. Unbaited fyke nets had a notably higher CPUE of 2.71 kōura
-per trap per night in the same lake, consistent with their larger net
-opening and longer fishing lead. However, 24-hour passive netting
-provides an approximation of local abundance rather than direct evidence
-of habitat use. Trap catches alone cannot determine whether kōura are
-actively using stone piles or are simply present in the surrounding
-area. For Chapter 5, higher catches near stone piles were therefore
-interpreted as indicating greater habitat use of the structures. In
+carcasses of dead fish without bias towards native or non-native species
+(MacNeil et al. 2025). Trout as bait yielded a mean CPUE of 0.63 kōura
+per trap per night (95\% CI: 0--1.42; \emph{n} = 12 trap nights) and
+catfish bait 0.65 kōura per trap per night (95\% CI: 0.43--0.90;
+\emph{n} = 135). Unbaited fyke nets had a notably higher CPUE of 2.55
+kōura per trap per night (95\% CI: 1.89--3.31; \emph{n} = 148),
+consistent with their larger net opening and longer fishing lead.
+However, 24-hour passive netting provides an approximation of local
+abundance rather than direct evidence of habitat use. As noted above,
+trap catches cannot distinguish presence from increased use of habitat
+structure. For Chapter 5, higher catches near stone piles were therefore
+interpreted as indicating greater use of the structures as habitat. In
 structurally complex habitats, fyke nets must be placed flat on the
 sediment to fish effectively; on rocky substrates this is often not
 possible, and kōura may pass beneath the net opening entirely. At the
 deep structures built in Lake Rotoiti, more active monitoring approaches
-were applied including spotlighting, ROV surveys and human dive surveys.
-These methods allow direct observation of kōura using the structures and
-are easier to execute over depth than netting.
+were applied including spotlighting from the jetty, ROV surveys and
+human dive surveys. These methods allow direct observation of kōura
+using the structures and are easier to execute over depth than netting.
+However, these direct methods capture only the moment of observation,
+and the detection bias introduced by structural complexity means that
+even direct observations may underestimate true habitat use if kōura
+remain sheltered during surveys. Passive Integrated Transponder (PIT)
+tagging, combined with an antenna array installed beneath or around a
+structure, would allow individual kōura to be tracked continuously
+without requiring their emergence or capture, resolving the detection
+bias identified above. The same approach could also support
+mark-recapture estimates of population size at stone pile sites,
+complementing its use for tracking movement and habitat use. PIT tagging
+is relatively low-cost and widely used in fish and crayfish movement
+studies and represents a promising direction for confirming genuine
+structural preference in future stone pile deployment (Bubb et al. 2006;
+Westhoff and Sievert 2013).
 
-Looking forward, it would be valuable to develop and trial additional
-monitoring techniques including environmental DNA (eDNA), remote
-underwater video (RUV), baited remote underwater video (BRUV), and
-passive acoustic monitoring. Comparative studies suggest that trapping,
-RUV, BRUV perform similarly for crayfish detection while eDNA has failed
-to detect crayfish in similar stream systems (Harwood et al. 2025,
-2026). Conversely, eDNA has detected invasive crayfish in lakes where
-trapping alone could not (Dougherty et al. 2016), suggesting it may be
-better suited to lake-scale presence-absence assessments than to
-evaluate kōura use of specific structures. Passive acoustics offer a
-complementary approach as crayfish produce distinctive sounds during
-movement and feeding, and acoustic methods have shown potential for
-identifying crayfish behaviour in field and laboratory settings
-(Buscaino et al. 2012; De Vita et al. 2023). Application in marine
-systems has advanced further, including detection of spiny lobsters over
-great distances (Jézéquel et al. 2020, 2023); whether passive acoustic
-monitoring is sensitive enough to detect kōura activity in the complex
-acoustic environment of a lake littoral zone remains untested.
+Additional monitoring techniques including environmental DNA (eDNA),
+remote underwater video (RUV), baited remote underwater video (BRUV),
+and passive acoustic monitoring, would be valuable to develop and trial.
+Comparative studies suggest that trapping, RUV, BRUV perform similarly
+for crayfish detection while eDNA has failed to detect crayfish in
+similar stream systems (Harwood et al. 2025, 2026). Conversely, eDNA has
+detected invasive crayfish in lakes where trapping alone could not
+(Dougherty et al. 2016), suggesting it may be better suited to
+lake-scale presence-absence assessments than to evaluate kōura use of
+specific structures. Passive acoustics offer a complementary approach as
+crayfish produce distinctive sounds during movement and feeding, and
+acoustic methods have shown potential for identifying crayfish behaviour
+in field and laboratory settings (Buscaino et al. 2012; De Vita et al.
+2023). Application in marine systems has advanced further, including
+detection of spiny lobsters over great distances (Jézéquel et al. 2020,
+2023); whether passive acoustic monitoring is sensitive enough to detect
+kōura activity in the complex acoustic environment of a lake littoral
+zone remains untested.
 
 \section{What habitat enhancement can and cannot
 fix}\label{what-habitat-enhancement-can-and-cannot-fix}
 
-Chapter 3 showed that kōura were most consistently associated with
-complex rocky habitats and riparian vegetation. Locations where this
-substrate has been lost or never existed are therefore logical
-candidates for stone pile deployment. Chapter 4 confirmed that stability
-and structural complexity are the decisive factors in kōura shelter
-selection, and stone piles deliver both. In lakes where populations are
-declining, stone piles can help a remnant population persist and create
-habitat stepping stones that lower the cost of dispersal between
-patches, keeping populations more connected while broader lake
-conditions improve. Stone piles can also physically suppress invasive
-macrophytes at the placement site as demonstrated in the deep Rotoiti
-case study. Chapter 5 demonstrates that stone piles represent a specific
-type of intervention that operates differently from stressor removal.
+Chapter 3's shoreline habitat survey across five Te Arawa Lakes showed
+that kōura were most consistently associated with complex rocky habitats
+and riparian vegetation (Jowett et al. 2008; Kusabs et al. 2015b).
+Locations where this substrate has been lost or never existed are
+therefore logical candidates for stone pile deployment. Chapter 4
+confirmed that structural permanence and complexity are the decisive
+factors in kōura shelter selection, and stone piles deliver both
+(Streissl and Hödl 2002). In lakes where populations are declining,
+stone piles can help a remnant population persist and create habitat
+stepping stones that lower the cost of dispersal between patches,
+keeping populations more connected while broader lake conditions
+improve. Stone piles may also physically suppress invasive macrophytes
+at the placement site, as demonstrated by the stone pile at 4 m depth in
+the deep Rotoiti case study, though whether this reflects sustained
+suppression or slow regrowth of macrophytes remains untested. Chapter 5
+demonstrates that stone piles represent a specific type of intervention
+that operates differently from stressor removal.
+
 Unlike water quality improvement or catfish management, structural
-habitat addition does not require the stressors to be controlled before
-it delivers benefits for kōura. Stone piles function as a buffer against
+habitat addition does not require these broader stressors to be fully
+controlled first, although the magnitude and persistence of those
+benefits will depend on the environmental conditions in which the
+structures are deployed. Stone piles function as a buffer against
 stressors that cannot be eliminated at lake scale. Catfish eradication
-from lakes Rotoiti and Rotorua is not feasible without measures that
-would be catastrophic for native fish communities, and thermal
-stratification will intensify under continued climate warming (Woolway
-et al. 2021; Lee et al. 2025). When these stressors cannot be removed
-habitat enhancement can become a practical management tool whose value
-increases when conditions worsen.
+would likely require broad-spectrum piscicides or complete lake drawdown
+which would also kill or displace native fish species (Dedual 2019).
+Future biotechnologies, including gene drives and pathogens that target
+only the invasive species, could eventually provide additional options,
+but these tools are still in early, experimental stages of development
+(Thresher et al. 2014; Kopf et al. 2019; Teem et al. 2020), making
+current eradication impractical at the Rotoiti and Rotorua scale. The
+expected future increase in lake water temperature will intensify
+thermal stratification under continued climate warming, which will
+benefit catfish more than kōura (Woolway et al. 2021; Lee et al. 2025).
+When these stressors cannot be removed habitat enhancement becomes a
+practical management tool whose importance grows even as worsening
+conditions constrain how much benefit it can ultimately deliver.
 
 Whether habitat enhancement delivers population-level benefits depends
 on whether habitat availability is genuinely limiting. In a Norwegian
@@ -4866,37 +4993,38 @@ and removing it produced a clear response. Similarly, structure
 additions to streams have been shown to improve success of crayfish
 restocking efforts (Huolila et al. 1997). In both cases, suitable
 habitat was the limiting factor that limited the crayfish population.
-The situation in the Rotorua Te Arawa Lakes is more complex, habitat
+The situation in the Rotorua Te Arawa Lakes is more complex as habitat
 availability is not independently limiting but becomes limiting in
 combination with other stressors. Thermal stratification and invasive
 macrophytes compress kōura into a narrow littoral zone, and catfish
 predation within that zone forces kōura into refuges, which are scarce
-in the predominant sandy littoral zone of Lake Rotoiti.
+in the predominant sandy littoral zone of Lake Rotoiti. The lack of
+suitable habitat is therefore one compounding stressor among several:
+structure cannot compensate for water that is unbreathable, nor can it
+fully counteract sustained predation pressure.
 
-The lack of suitable habitat is one of the compounding stressors, and
-addressing it alone will not produce the same clear population response.
-If dissolved oxygen drops below kōura tolerance, structure is
-irrelevant, as demonstrated by the anoxic event in Lake Ōkaro. If
-catfish pressure remains high, stone piles improve survival odds but
-cannot prevent the continuous suppression from the impacts of fear and
-predation.
-
-Habitat enhancement therefore sets a ceiling defined by the other
-stressors. Chapter 3 showed that the lakes with the best habitat and the
-best water quality, most complex habitat, and no catfish support the
-highest kōura abundance. As catfish can probably not be eradicated at
-lake scale and thermal stratification will intensify under continued
-climate warming, habitat enhancement must therefore be pursued not as
-final step in a linear recovery sequence, but as a parallel intervention
-whose benefit grows as the other stressore intensify.
+Kōura recovery is bounded by a ceiling set by whichever stressor is
+currently most limiting. This is consistent with the Liebig--Sprengel
+``law of the minimum'': population recovery is limited by the scarcest
+resource or most severe stressor, not by the average condition of the
+system (Holmes et al. 2018). Where water quality is poor or catfish
+predation is intense, that ceiling is low, as demonstrated by the anoxic
+event in Lake Ōkaro. Where conditions are already favourable the ceiling
+is correspondingly higher, consistent with Chapter 3's finding that
+lakes with the best water quality, most complex habitat, and no catfish
+support the highest kōura abundance. As catfish likely cannot be
+eradicated at lake scale, and thermal stratification will intensify
+under continued climate warming, the ceiling is unlikely to rise on its
+own in lakes like Rotoiti and Rotorua. This does not make habitat
+enhancement less valuable; it means structural refuge becomes more
+necessary even though its maximum benefit stays limited. Habitat
+enhancement should therefore be used alongside water quality and
+predator management; not instead of them.
 
 \section{Future direction}\label{future-direction}
 
-The findings of this thesis open several direction for future research
-and management, ranging from individual deployments to lake-wide kōura
-restoration strategies.
-
-\subsection{Scaling deployment}\label{scaling-deployment}
+\subsection{Scaling habitat
+enhancement}\label{scaling-habitat-enhancement}
 
 The five stone pile sites monitored in Chapter 5 represent a
 proof-of-concept deployment rather than a management-scale intervention.
@@ -4904,21 +5032,22 @@ The positive but non-significant trend in kōura abundance suggest that
 the 18-month monitoring period was insufficient to detect
 population-level responses. Continued monitoring of the existing Rotoiti
 stone piles would determine whether the positive trends continue and
-what the long term effect is without requiring new deployments.
+reveal longer-term population-level effects.
 
-Beyond continued monitoring, scaling deployment to additional sites and
-lakes would test whether the Rotoiti results are generalised across the
-Te Arawa system. Lake Rotorua, which has also declining kōura
-populations and limited natural rocky habitats would be logical next
+Beyond continued monitoring, scaling deployment to additional sites,
+depths, and lakes would test whether the Rotoiti results are generalised
+across the Te Arawa lakes. Lake Rotorua, which also has declining kōura
+populations and limited natural rocky habitats, would be a logical next
 deployment location. The deep stone pile case study in this chapter
 demonstrated that deployment across a depth gradient extends the range
 of conditions under which kōura can use the structures and further
 deployment should incorporate this principle. Standardised monitoring
 protocols across sites, including spotlighting, fyke netting, and ROV
-surveys, would allow for across-lake comparison of the habitat
+surveys, would allow for a cross-lake comparison of the habitat
 enhancement as a management tool.
 
-\subsection{Community contributions}\label{community-contributions}
+\subsection{Community involvement in kōura
+restoration}\label{community-involvement-in-kux14dura-restoration}
 
 One of the practical strengths of stone pile deployment is that
 construction does not require specialist equipment or expertise. Both
@@ -4936,11 +5065,11 @@ using similar principles (Figure~\ref{fig-koura-structures-diy}),
 demonstrating both the appeal and feasibility of community-led habitat
 enhancement. Future community contributions would benefit from using
 natural materials that will not degrade over time, and from maximising
-crevice diversity, as the more hiding places the structures creates, the
-wider the range of kōura life stages it can support. Stones in the 100-
-300 mm range, as used in this study, provide abundant shelter space when
-stacked together, are simple to deploy and persist in the lake without
-introducing pollutants.
+crevice diversity, as the more hiding places the structures create, the
+wider the range of kōura life stages it can support. Stones in the
+100--300 mm range, as used in this study, provide abundant shelter space
+when stacked together, are simple to deploy and persist in the lake
+without introducing pollutants.
 
 \begin{figure}
 
@@ -4950,74 +5079,96 @@ introducing pollutants.
 
 }
 
-\caption{\label{fig-koura-structures-diy}Home made kōura habitats by
-local residents. Left: Kōura pipes by Mark Thomson Lake Rotoiti. Right:
-Kōura weels by Mark Robinson Lake Tarawera.}
+\caption{\label{fig-koura-structures-diy}Home-made kōura habitats by
+local residents. Left: Kōura pipes by Mark Thomson at Lake Rotoiti.
+Right: Kōura wheels by Mark Robinson at Lake Tarawera.}
 
 \end{figure}%
 
-\subsection{Te Arawa and cultural
-dimension}\label{te-arawa-and-cultural-dimension}
+\subsection{Kōura restoration in a Te Arawa
+context}\label{kux14dura-restoration-in-a-te-arawa-context}
 
 Kōura are taonga, a treasured species with deep cultural significance
 for Te Arawa iwi. The decline documented in this thesis is not only an
 ecological loss but a cultural one. Increasing shelter availability may
 attract kōura and support population recovery, with potential benefits
-for cultural practices. Little tau kōura harvesting currently occurs at
+for cultural practices. Localised kōura harvesting currently occurs at
 Cherry Bay (Ōkahuroroa Bay) in Lake Rotoiti where regular monitoring
-using whakaweku has potentially already created a degree of structural
-complexity in the bay. Whether increased habitat provision at scale
-could support renewed harvest activity in areas like this is a question
-for future research and management to consider together with Te Arawa.
+using the tau kōura (and whakaweku) in conjunction with regular aquatic
+weed spraying and catfish netting has potentially already created a
+degree of structural complexity in the bay. This suggests a model for
+cultural kōura restoration in Lake Rotoiti: identifying areas with
+favourable lake bathymetry, maintaining regular spraying of aquatic
+weeds and active catfish removal, and creating habitat using whakaweku,
+tau kōura, and potentially stone piles to establish dedicated kōura
+reserves within in the lake that could support renewed cultural harvest
+activity. This is a suggestion for future research and management to
+consider together with Te Arawa.
 
-A hard but honest assessment is warrented regarding the restoration of
-cultural kōura harvest in Lake Rotoiti. Given the compounding effects of
-multiple stressore, and the expectation that both climate change and the
-threat of invasive species will persist, the honest conclusion of this
-thesis is that kōura will likely persist in the these lakes but that
-lake-wide populations are unlikely to reach the abundance historically
-required for cultural harvest while catfish predation remains
-persistent. Catfish and kōura may eventually reach a new predator-prey
-equaribium, particularly if active catfish control efforts cannot be
-sustained indefinitely. In this context, management priorities may be
-better directed toward protecting kōura populations that remain strong
-in lakes without catfish, like Rotomā, Ōkāreka, and Tarawera, by
+The evidence in this thesis has direct implications for the restoration
+of cultural kōura harvest in Lake Rotoiti. Given the compounding effects
+of multiple stressors, and the expectation that climate change and
+invasive species pressure will both persist, kōura are likely to remain
+present in these lakes, but lake-wide populations are unlikely to reach
+the abundance historically required for cultural harvest while catfish
+predation remains. Catfish and kōura are likely already setting into a
+new predator-prey equilibrium in lakes where sustained, catfish control
+is not feasible. In this context, management priorities may be better
+directed toward protecting kōura populations that remain strong in lakes
+without catfish, like Rotomā, Ōkataina, Ōkāreka, and Tarawera, by
 preventing the spread of catfish and invasive macrophytes into these
 systems, rather than solely focusing on recovery in already
 catfish-invaded lakes.
 
-\section{Conclusion}\label{conclusion-1}
+Rather than a single outcome, kōura recovery toward cultural harvest
+abundance can be understood as a staged process. The first step is to
+prevent localised extinction. Findings from this thesis suggest that
+rocky habitat or stone piles are a useful tool for sustaining remnant
+kōura populations as the lake warms and habitat compression intensifies.
+Stabilising the decline is a necessary foundation before broader
+recovery becomes possible. The second step is reducing nutrient loading
+to reverse lake eutrophication and unlock deep-water habitat during
+summer stratification. Lake Taupō illustrates what is possible when
+water quality is not limiting, as sixty years of catchment-scale
+management have kept the lake oligotrophic with deep waters remaining
+oxygenated through summer, giving kōura a place to coexist in the
+presence of catfish (West 2026). To achieve this in already eutrophic
+lakes such as Rotorua and Rotoiti would require active reversal of
+existing nutrient loading.
 
-Kōura populations in the Rotorua Te Arawa Lakes have declined by up to
-76-91 \% since 2003, and this thesis set out to determine whether
-habitat enhancement could offer a practical mean of supporting them.
+\section{Conclusion}\label{conclusion-2}
 
-The findings confirm that kōura decline is driven by multiple stressors
-acting together rather than in isolation. Non-consumptive, fear induced
-behavioural suppression from catfish predation compounds with thermal
-stratification that compresses suitable habitat into the shallow
-littoral zone, precisely where catfish predation pressure is greatest.
-This leaves kōura needing for refuge, and it is this compounding dynamic
-that structural habitat enhancement directly addresses.
+Kōura populations in some Rotorua Te Arawa Lakes have declined by 76-91
+\% since 2003. Freshwater species decline is rarely driven by a single
+stressor, and kōura in these lakes face several acting simultaneously:
+predation and fear-induced behavioural suppression caused by catfish;
+thermal stratification, which compresses suitable habitat into the
+shallow littoral zone, precisely where catfish predation pressure is
+greatest; and invasive macrophytes, which further constricts the habitat
+available to kōura. This thesis investigated whether, within this
+compounding-stressor context, habitat enhancement could provide a
+practical means of supporting kōura recovery.
 
-Stone piles will not remove catfish from the lakes or reverse thermal
-stratification. The evidence presented here shows that kōura
-consistently and rapidly find and use these structures, that stone piles
-provide refuge without attracting the predator, and their value is
-seasonal, with greatest need in summer and autumn. Whether this
-translates into a detectable population-level recovery will take longer
-than 18 months, but the direction of the evidence is consistent and
-encouriging.
+The findings of this thesis are best understood through the concept of a
+stressor ``ceiling'' on recovery: kōura population recovery is bounded
+not by the average condition of a lake but by whichever stressor is
+currently most limiting. Eutrophication acts as something of a master
+stressor in this system: reducing nitrogen and phosphorus loading would
+also ease the macrophyte and hypoxia pressures. Habitat enhancement
+cannot fix eutrophication; that requires action at the catchment scale,
+which is fundamentally a political and economic choice rather than an
+ecological one.
 
-On its own stone pile deployment will likely never restore lake-wide
-populations to the abundance needed for cultural harvest, while catfish
-predation persists. This is a hard conclusion, but an honest one. What
-structural habitat enhancement can do is buffer the worst effects of
-compounding stressors and help keep local populations in a condition
-from which recovery remains possible, when broader conditions improve in
-the future. In a system where the primary drivers of decline can not be
-removed, giving kōura somewhere to hide is not a complete solution, but
-it is a meaningful and actionable one.
+Habitat enhancement alone is unlikely to restore lake-wide kōura
+populations to the abundance needed for cultural harvest while
+eutrophication and catfish predation persist. What this thesis shows is
+that structural habitat enhancement can be used as a tool to reduce the
+risk of localised extinction, by providing refuge to mediate the
+predation pressure. Bringing kōura populations back to the abundance
+needed for cultural harvest will require action on those wider stressors
+too, particularly nutrient loading and invasive macrophyte spread. Until
+then, habitat enhancement remains a practical step that lake managers
+can take now.
 
 \chapter*{References}\label{references}
 \addcontentsline{toc}{chapter}{References}
@@ -5127,8 +5278,8 @@ eels. Freshwater Biology 29:89--97.
 
 \bibitem[\citeproctext]{ref-Blanchfield2026}
 Blanchfield PJ, Rodrigues TH, MacNeil C, et al (2026) Invading brown
-bullhead catfish (ameiurus nebulosus) show thermal niche rigidity and
-benthic niche plasticity: Implications for management. Biological
+bullhead catfish (\emph{ameiurus nebulosus}) show thermal niche rigidity
+and benthic niche plasticity: Implications for management. Biological
 Invasions 28: \url{https://doi.org/10.1007/s10530-026-03877-5}
 
 \bibitem[\citeproctext]{ref-Bolker2009}
@@ -5170,6 +5321,11 @@ Brown LA (2009) \href{http://hdl.handle.net/10179/1168}{Habitat
 determinants and predatory interactions of the endemic freshwater
 crayfish (koura, {\emph{Paranephrops planifrons}}) in the lower {North
 Island}, {New Zealand}}. Master's thesis, Massey University
+
+\bibitem[\citeproctext]{ref-Bubb2006}
+Bubb DH, Thom TJ, Lucas MC (2006) Movement patterns of the invasive
+signal crayfish determined by PIT telemetry. Canadian Journal of Zoology
+84:1202--1209. \url{https://doi.org/10.1139/z06-100}
 
 \bibitem[\citeproctext]{ref-Bunch2010}
 Bunch AJ, Allen MS, Gwinn DC (2010) Spatial and temporal hypoxia
@@ -5601,6 +5757,12 @@ the ever increasing threat to {European} crayfish from non-indigenous
 crayfish species. Knowledge and Management of Aquatic Ecosystems 11.
 \url{https://doi.org/10.1051/kmae/2009025}
 
+\bibitem[\citeproctext]{ref-Holmes2018}
+Holmes R, Matthaei C, Gabrielsson R, et al (2018) A decision support
+system to diagnose factors limiting stream trout fisheries. River
+Research and Applications 34:816--823.
+\url{https://doi.org/10.1002/rra.3292}
+
 \bibitem[\citeproctext]{ref-Hopkins1970}
 Hopkins CL (1970) Systematics of the {New Zealand} freshwater crayfish
 {\emph{Paranephrops}} ({Crustacea}: {Decapoda}: {Parastacidae}). New
@@ -5691,7 +5853,7 @@ of the {Hindon Maar Complex}: A {Miocene} terrestrial fossil
 Palaeoclimatology, Palaeoecology 500:52--68.
 \url{https://doi.org/10.1016/j.palaeo.2018.03.022}
 
-\bibitem[\citeproctext]{ref-Kindlinger2017}
+\bibitem[\citeproctext]{ref-Kindinger2017}
 Kindinger TL, Albins MA (2017) Consumptive and non-consumptive effects
 of an invasive marine predator on native coral-reef herbivores.
 Biological Invasions 19:131--146.
@@ -5771,6 +5933,11 @@ LAWA (2024) Lake okaro
 Lee F, Kusabs IAK, Perry GLW, MacNeil C (2025) Identifying refugia from
 the synergistic threats of climate change and invasive species. Web
 Ecology 25:221--239. \url{https://doi.org/10.5194/we-25-221-2025}
+
+\bibitem[\citeproctext]{ref-Lennox2025}
+Lennox RJ, Kambestad M, Berhe S, et al (2025) The role of habitat in
+predator--prey dynamics with applications to restoration. Restoration
+Ecology 33: \url{https://doi.org/10.1111/rec.14354}
 
 \bibitem[\citeproctext]{ref-Lenth2017}
 Lenth RV, Piaskowski J (2017)
@@ -5925,12 +6092,6 @@ mediate interactions between introduced brown trout, native fish,
 crayfish and other invertebrates in {West Coast New Zealand} streams?
 Biological Conservation 130:255--267.
 \url{https://doi.org/10.1016/j.biocon.2005.12.019}
-
-\bibitem[\citeproctext]{ref-Orr2024}
-Orr JA, Macaulay SJ, Mordente A, et al (2024) Studying interactions
-among anthropogenic stressors in freshwater ecosystems: A systematic
-review of 2396 multiple‐stressor experiments. Ecology Letters 27:
-\url{https://doi.org/10.1111/ele.14463}
 
 \bibitem[\citeproctext]{ref-Palmer2005}
 Palmer MA, Bernhardt ES, Allan JD, et al (2005) Standards for
@@ -6206,21 +6367,9 @@ and cover on fish and fish habitat in freshwater ecosystems --- a review
 and meta-analysis. Environmental Reviews 15:15--41.
 \url{https://doi.org/10.1139/a06-007}
 
-\bibitem[\citeproctext]{ref-Sniegula2025}
-Sniegula S, Konczarek D, Bonk M, et al (2025) Non-consumptive effects of
-native, alien and invasive alien crayfish on damselfly egg life history
-and carry-over effects on larval physiology. NeoBiota 97:215--235.
-\url{https://doi.org/10.3897/neobiota.97.139760}
-
 \bibitem[\citeproctext]{ref-Spanier1994}
 Spanier E (1994) What are the characteristics of a good artificial reef
 for lobsters? Crustaceana 67:173--186
-
-\bibitem[\citeproctext]{ref-Spears2021}
-Spears BM, Chapman DS, Carvalho L, et al (2021) Making waves. Bridging
-theory and practice towards multiple stressor management in freshwater
-ecosystems. Water Research 196:116981.
-\url{https://doi.org/10.1016/j.watres.2021.116981}
 
 \bibitem[\citeproctext]{ref-Statzner2003}
 Statzner B, Peltret O, Tomanova S (2003) Crayfish as geomorphic agents
@@ -6387,11 +6536,23 @@ Wentworth CK (1922) A scale of grade and class terms for clastic
 sediments. The Journal of Geology 30:377--392.
 \url{https://doi.org/10.1086/622910}
 
+\bibitem[\citeproctext]{ref-West2026}
+West J (2026) The quality of clarity: Lessons from the sixty-year
+struggle to maintain the purity of lake taupō. Kōtuitui: New Zealand
+Journal of Social Sciences Online 21:e70031.
+\url{https://doi.org/10.1002/kot2.70031}
+
 \bibitem[\citeproctext]{ref-vonWesternhagen2010}
 Westernhagen N von, Hamilton DP, Pilditch CA (2010) Temporal and spatial
 variations in phytoplankton productivity in surface waters of a
 warm-temperate, monomictic lake in {New Zealand}. Hydrobiologia
 652:57--70. \url{https://doi.org/10.1007/s10750-010-0318-4}
+
+\bibitem[\citeproctext]{ref-Westhoff2013}
+Westhoff JT, Sievert NA (2013) Mortality and growth of crayfish
+internally tagged with PIT tags. North American Journal of Fisheries
+Management 33:878--881.
+\url{https://doi.org/10.1080/02755947.2013.815669}
 
 \bibitem[\citeproctext]{ref-Wetzel2001}
 Wetzel RG (2001) Limnology: Lake and river ecosystems. Gulf Professional
@@ -7095,15 +7256,32 @@ p-value) and model R² values for fixed effects (R²m) and conditional
 
 \end{figure}%
 
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{images/Stone_pile_development.png}
+
+}
+
+\caption{\label{fig-stone-piles}Progressive algal biofouling at stone
+pile site 9 in Lake Rotoiti across three monitoring periods. Summer 2025
+(top left, shortly after construction) shows clean stone surfaces.
+Summer 2026 (bottom left) shows moderate biofilm accumulation is
+visible. Winter 2026 (right) shows extensive cover of stone surfaces by
+filamentous algae.}
+
+\end{figure}%
+
 \clearpage
 \setcounter{table}{0}
 \setcounter{figure}{0}
 
 \section*{Chapter 6 --- Supplementary
-information}\label{chapter-6-supplementary-information-1}
+information}\label{chapter-6-supplementary-information}
 \addcontentsline{toc}{section}{Chapter 6 --- Supplementary information}
 
-\subsection{Case study --- Field trial: stone piles in Lake
+\subsection{Case study --- Field trial of stone piles at Lake
 Ōkaro}\label{sec-supp-okaro}
 
 A trial in Lake Ōkaro tested stone pile construction logistics and kōura
@@ -7114,38 +7292,53 @@ Arawa volcanic lakes with an area of 30 ha, a max depth of 18 m and a
 mean depth of 12 m. Water quality in the lake has been very poor with
 trophic state flipping between hypereutrophic and eutrophic and frequent
 algal blooms (Paul et al. 2008; LAWA 2024). To improve water quality in
-the lake, in 2007 a wetland has been constructed to remove nitrogen and
+the lake, in 2007 a wetland was constructed to remove nitrogen and
 sediments from the main inflows into the lake (Hudson et al. 2009) and
-alum dosings (aluminium sulphate) are carried out as in lake phosphorous
+alum dosing (aluminium sulphate) are carried out as in-lake phosphorus
 treatment (Paul et al. 2008). Kōura have not been observed in Lake Ōkaro
 in monitoring surveys from 1981 to 2007 (Parkyn and Kusabs 2007) and
 monitoring in 2016 and 2017 still were not able to observe kōura in the
 lake even as water quality had improved (Kusabs 2017). Water quality has
-now improved sufficiently that kōura is considered feasible but natural
-recolonisation has not happened yet, therefore reintroduction might be
-possible. Lake Ōkaro is stocked with trout for angling and as a predator
-of kōura, stone piles would provide additional refuge to trial habitat
-enhancement alongside the existing trout stocking. The lake has no stone
-or rocky substrates therefore the construction of two stone piles would
-provide initial refuge for the introduced kōura in the lake.
+now improved sufficiently that kōura survival is considered feasible but
+natural recolonisation has not happened yet, therefore reintroduction
+might be possible. Lake Ōkaro is home to rainbow trout and is frequented
+by cormorants both well-known predators of kōura. The lake has little
+rocky substrate, so it was hoped that construction of two stone piles,
+in the year round oxygenated zone, would provide a beachhead for kōura,
+from which a local population could become established.
 
-Stone pile construction was carried out collaboratively with Te Arawa
-Lakes Trust, Tūhourangi, Ngāti Tahu-Ngāti Whaoa, Te Mana o Ngāti
-Rangitihi Trust, and Bay of Plenty Regional Council. Two stone piles
-(each 5 m × 2 m, depth 1 m; stones 70--210 mm, mean 120 mm; total 5
-m\(^{3}\)) were placed 3 and 6 m from the northeast shore, with stones
-sourced from local Rainbow Quarry on Rainbow Mountain. Dissolved oxygen
-and temperature were monitored using three HOBO U26-001 loggers (± 0.2
-mg/L DO, ± 0.2 °C; Onset Computer Corporation, Bourne, MA, USA), with
-two loggers buried within the stone piles and one at the control site,
-over six months from September 2024. Prior to kōura release, trapping
-and spotlighting surveys confirmed the lake held no kōura. In October
-2024, twenty kōura sourced from Lake Rerewhakaaitu were released onto
-the stone piles to initiate recolonisation.
+Stone pile construction was carried out collaboratively with staff from
+the Bay of Plenty Regional Council, Te Arawa Lakes Trust, Tūhourangi,
+Ngāti Tahu-Ngāti Whaoa, and Te Mana o Ngāti Rangitihi Trust. Two stone
+piles (each 5 m × 2 m, depth 1 m; stones 70--210 mm, mean 120 mm; total
+5 m\^{}3) were placed 3 and 6 m from the northeast shore, with stones
+sourced from local Rainbow Quarry on Rainbow Mountain
+(Figure~\ref{fig-Okaro-stonepile}). Dissolved oxygen and temperature
+were monitored using three HOBO U26-001 loggers (± 0.2 mg/L DO, ± 0.2
+°C; Onset Computer Corporation, Bourne, MA, USA), with two loggers
+buried within the stone piles and one at the control site, over six
+months from September 2024. Prior to kōura release, trapping and
+spotlighting surveys confirmed the lake held no kōura. In October 2024,
+twenty kōura sourced from the wider catchment were released onto the
+stone piles. Seasonal spotlighting surveys were carried out from January
+2025.
 
-In the early summer of 2024 the lake stratified rapidly with oxygen
-levels dropping quickly and at December 10th oxygen levels reached less
-than 3 mg/L at surface level for multiple days
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{images/Okaro_stonepile1.jpg}
+
+}
+
+\caption{\label{fig-Okaro-stonepile}Stone pile on shoreline of Lake
+Ōkaro (2025-02-28).}
+
+\end{figure}%
+
+In the early summer of 2024, however, the lake stratified rapidly with
+oxygen levels dropping quickly and on December 10th oxygen levels
+reached less than 3 mg/L at surface level for multiple days
 (Figure~\ref{fig-okaro-combined}). The HOBO loggers in the stone piles
 and the control next to the structures showed that inside the structures
 the dissolved oxygen levels dropped slightly faster than compared to the
@@ -7155,14 +7348,14 @@ is expected as the sensors inside the stone pile received less water
 mixing and were in close proximity to periphyton, which draws down
 dissolved oxygen through respiration during the night. During anoxic
 events, kōura are expected to move to the outer margins of the stone
-piles or emerge entirely, as DO levels inside the structure would fall
-below tolerance. Despite this anoxic event one kōura was repeatedly
-observed at the stone piles from January 2025 till June 2025 (pers.
-comm. Ian Kusabs). Expected is that the other kōura have spread out
-through the lake. The last spotlight session (July 2026) found no kōura,
-but revealed that the previous sandy shoreline around the stone piles
-had been colonised by milfoil (\emph{Myriophyllum propinquum}) (pers.
-comm. Ian Kusabs).
+piles or emerge entirely, as DO levels within the piles would fall below
+their tolerance. Despite this anoxic event, one kōura was repeatedly
+observed at the stone piles between January and June 2025 (pers. comm.
+Ian Kusabs). It is possible that other kōura had dispersed more widely
+through the lake. The final spotlight session (July 2026) recorded no
+kōura at the stone piles but revealed that the previously sandy
+shoreline around the stone piles had been colonised by milfoil
+(\emph{Myriophyllum propinquum}) (pers. comm. Ian Kusabs).
 
 \begin{figure}[htbp]
 
@@ -7173,10 +7366,10 @@ comm. Ian Kusabs).
 }
 
 \caption{\label{fig-okaro-combined}Daily mean water temperature (top)
-and dissolved oxygen (bottom) at Ōkaro stone pile, control sites, and
-the lake monitoring buoy \textless{} 1m. Period: 2024-09-11 to
-2025-02-27. Buoy data derived from CTD cast collected by LimnoTrack
-(Moore and McBride 2026).}
+and dissolved oxygen (bottom) at the Ōkaro stone pile, control sites,
+and the lake monitoring buoy, averaged over the 0--1 m depth range.
+Period: 2024-09-11 to 2025-02-27. Buoy data derived from CTD casts
+collected by LimnoTrack (Moore and McBride 2026).}
 
 \end{figure}%
 
@@ -7189,12 +7382,17 @@ selected, a size that could be thrown from the trailer edge directly
 into the lake and repositioned by hand if needed.
 
 The Ōkaro trial demonstrated that habitat enhancement cannot succeed
-ahead of water quality recovery. The anoxic event that followed stone
-pile deployment confirmed that structural complexity provides no benefit
-when dissolved oxygen drops below kōura tolerance, kōura cannot use a
-refuge they cannot survive in.
+without adequate water quality. Dissolved oxygen fell below kōura
+tolerance across the entire water column following stone pile
+deployment, an unusually severe and unexpected anoxic event that was not
+confined to deeper water. This showed that structural complexity
+provides little benefit when the surrounding water itself is
+unsurvivable; kōura cannot use refuges in conditions they cannot
+survive. Nonetheless, further surveys are required to determine the fate
+of kōura in Lake Ōkaro and assess whether they have dispersed to other
+areas of the lake or persisted in suitable refugia.
 
-\subsection{Case study --- Deep stone piles in Lake
+\subsection{Case study --- Trial of deep stone piles at Lake
 Rotoiti}\label{sec-supp-rotoiti-deep}
 
 Extending stone pile deployment across a depth gradient in Lake Rotoiti
@@ -7202,30 +7400,32 @@ showed that kōura use structures beyond the shallow littoral zone and
 that stone coverage suppresses invasive macrophyte growth, providing
 additional insights to the findings of Chapter 5. Stone piles deployed
 in the preceding chapters, and in the Ōkaro trial, were built by hand
-from the shore and therefore limited to shallow, nearshore depths.
-Extending deployment across a depth gradient required working from a
-boat, which opened two additional possibilities: placing structures at
-depths beyond wading distance, and positioning them within invasive
-macrophyte beds to test whether stone coverage could suppress growth.
-Monitoring at greater depths is not well suited to standard netting, so
-spotlighting, remotely operated vehicle (ROV) surveys, and human diving
-were used before and after construction at this deep Lake Rotoiti site.
-Spotlighting was executed after sunset along the shoreline and the area
-around the jetty, by observing for kōura using a torch. Each kōura was
-counted and their size estimated. The stone piles in the macrophyte bed
-and deeper were monitored using a FIFISH V-EVO (4K 60 fps camera; 166°
-field of view; QYSEA Technology, Shenzhen, China). The ROV was used to
-swim transects at the location of the stone piles and kōura observed
-were counted. Spotlight and ROV monitoring was executed two times before
-stone pile construction, and day-time diving was executed once before
-construction.
+from the shore and therefore limited to shallow, nearshore depths. In
+this case study we trialled how to build rock piles by extending
+deployment across a depth gradient required working from a boat and
+barge with winch system, this opened two additional possibilities:
+placing structures at depths beyond wading distance and positioning them
+within invasive macrophyte beds to test whether stone coverage could
+suppress growth. Monitoring at greater depths is not well suited to
+standard netting, so spotlighting, remotely operated vehicle (ROV)
+surveys, and human diving were used before and after construction at
+this deep Lake Rotoiti site. Spotlighting was executed after sunset
+along the shoreline and the area around the jetty, by observing for
+kōura using a torch. Each kōura was counted and their size estimated.
+The stone piles in the macrophyte bed and deeper were monitored using a
+FIFISH V-EVO (4K 60 fps camera; 166° field of view; QYSEA Technology,
+Shenzhen, China). The ROV was used to swim transects at the location of
+the stone piles and kōura observed were counted. Spotlight and ROV
+surveys were executed two times before stone pile construction, and
+day-time diving was executed once before construction.
 
 Four stone piles were constructed in November 2025 using a boat and
 winch system. Three stone piles were positioned perpendicular to shore,
 beneath a jetty (\textasciitilde1 m), within an invasive macrophyte bed
 (\textasciitilde4 m), and at the macrophyte edge (\textasciitilde8 m),
 with wooden slabs placed first to prevent sinking into the sandy
-sediment. A fourth pile was placed on bedrock 120 m away.
+sediment. A fourth pile was placed on a natural bedrock platform
+approximately 120 m away, at a depth of 1--2m.
 
 Pre-construction surveys detected low kōura numbers at the site, two by
 spotlighting and two by ROV in June 2025 (water temp 13 °C), and zero by
@@ -7233,21 +7433,37 @@ spotlighting but seven by ROV in August 2025 (water temp 11 °C). Daytime
 diving in November 2025 (water temp 19 °C), before construction, found
 no kōura. Following construction kōura numbers increased noticeably. The
 May 2026 survey (water temp 16 °C) found seven kōura by spotlighting
-around the jetty and eleven on the deeper stone pile by ROV. The August
-2026 survey (water temp 10 °C) found six by spotlighting and two by ROV,
-one on the stone pile in the macrophyte bed and one at the deeper stone
-pile. Most kōura were observed at the margins of the stone piles rather
-than within them, as internal crevices were visually inaccessible to
-both spotlighting and ROV surveys. Kōura were only detected when they
-emerged to forage, and ROV footage confirmed they did so despite
-thruster noise. The stone pile placed within the macrophyte bed showed
-complete suppression of macrophyte growth, though dense macrophyte
-growth at the margins complicated kōura detection in that area. Daytime
-diving surveys (January 2026, water temp 21 °C; July 2026, water temp 11
-°C) detected no kōura on either occasion. As kōura are nocturnal,
-daytime diving surveys were expected to yield lower counts as kōura are
-likely sheltering within the structures. Dissolved oxygen, measured with
-HOBO U26-001 loggers at the stone piles, remained above the 5 mg/L kōura
+around the jetty and eleven on the deeper stone pile by ROV
+(Figure~\ref{fig-koura-deep}). The August 2026 survey (water temp 10 °C)
+found six by spotlighting and two by ROV, one on the stone pile in the
+macrophyte bed and one at the deeper stone pile. Most kōura were
+observed at the margins of the stone piles rather than within them, as
+internal crevices were visually inaccessible to both spotlighting and
+ROV surveys. Kōura were only detected when they emerged to forage, and
+ROV footage confirmed they did so despite thruster noise.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{images/koura_deep.png}
+
+}
+
+\caption{\label{fig-koura-deep}Kōura emerging from its shelter at the
+bottom of the deepest stone pile in Lake Rotoiti. Observed with the
+ROV.}
+
+\end{figure}%
+
+The stone pile placed within the macrophyte bed showed complete
+suppression of macrophyte growth, though dense macrophyte growth at the
+margins complicated kōura detection in that area. Daytime diving surveys
+(January 2026, water temp 21 °C; July 2026, water temp 11 °C) detected
+no kōura on either occasion. As kōura are nocturnal, daytime diving
+surveys were expected to yield lower counts as kōura are likely
+sheltering within the structures. Dissolved oxygen, measured with HOBO
+U26-001 loggers at the stone piles, remained above the 5 mg/L kōura
 tolerance threshold throughout the monitoring period, confirming that
 the stone piles maintained habitable conditions, in contrast to the
 anoxic conditions that compromised the Ōkaro deployment
@@ -7263,9 +7479,9 @@ anoxic conditions that compromised the Ōkaro deployment
 
 \caption{\label{fig-deep-combined}Daily mean water temperature (top) and
 dissolved oxygen (bottom) at deep stone piles, control sites, and the
-lake monitoring buoy \textless{} 1m. Period: 2025-11-22 to 2026-06-8.
-Buoy data derived from CTD cast collected by LimnoTrack (Moore and
-McBride 2026).}
+Lake Rotoiti monitoring buoy, averaged over the 0--1 m depth range.
+Period: 2025-11-22 to 2026-06-8. Buoy data derived from CTD cast
+collected by LimnoTrack (Moore and McBride 2026).}
 
 \end{figure}%
 
@@ -7274,7 +7490,7 @@ absent from the shallow shoreline work of Chapter 5. Kōura used stone
 piles across the full depth gradient from the shallow nearshore to 9 m
 depth. As surface waters warm in summer, shallow refuges may exceed
 kōura thermal tolerance while deeper structures remain within the
-habitable temperature range, and stay above the anoxic hypolimnion.
+habitable temperature range and stay above the anoxic hypolimnion.
 Structures spanning this gradient therefore allow kōura to track the
 habitable depth window as it shifts seasonally between thermal and
 oxygen constraints. Stone piles at depth therefore address not only
@@ -7286,7 +7502,13 @@ organic matter that would otherwise die off, sink to depth, and
 intensify deep-water deoxygenation through a pathway distinct from
 thermal stratification. Stone piles could also potentially create
 connectivity between shallow and deep refuges in overgrown littoral
-zones, though this warrants further investigation.
+zones, though this warrants further investigation. Beyond these
+ecological findings, this case study establishes that constructing
+habitat at depth is logistically achievable with a simple boat and winch
+system, and future ideas to make the process more cost-effective have
+been developed, offering a practical and comparatively low-cost method
+for scaling habitat enhancement to deeper parts of the littoral zone in
+future deployments.
 
 \clearpage
 \nopagecolor
