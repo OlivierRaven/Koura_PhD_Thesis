@@ -68,6 +68,10 @@ format:
         \setcounter{tocdepth}{1}
         \usepackage{setspace}
         \onehalfspacing
+        \renewcommand{\floatpagefraction}{0.95}
+        \renewcommand{\topfraction}{0.9}
+        \renewcommand{\bottomfraction}{0.9}
+        \renewcommand{\textfraction}{0.05}
         \usepackage{xcolor}
         \usepackage{afterpage}
         \usepackage{eso-pic}

@@ -1,3 +1,28 @@
+```{=latex}
+\clearpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[inner sep=0pt] at ([yshift=-1cm]current page.center)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{images/appendix_cover.jpg}};
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.3cm]current page.north west)
+    {Supplementary Information};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-3.5cm]current page.north west)
+    {Appendices};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=1.2cm]current page.south east)
+    {Dead trout at the shore of Lake \={O}karo.};
+\end{tikzpicture}
+\null
+\clearpage
+```
+
 # Appendices {.unnumbered}
 
 ```{=latex}

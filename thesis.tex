@@ -161,6 +161,10 @@
 \setcounter{tocdepth}{1}
 \usepackage{setspace}
 \onehalfspacing
+\renewcommand{\floatpagefraction}{0.95}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.05}
 \usepackage{xcolor}
 \usepackage{afterpage}
 \usepackage{eso-pic}
@@ -252,6 +256,8 @@
 
 \setstretch{1.2}
 \mainmatter
+--- title-block-style: none ---
+
 \frontmatter
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
@@ -267,7 +273,7 @@
   \node[color=white, text width=0.92\paperwidth, align=center,
         font=\fontsize{28}{36}\selectfont\bfseries\sffamily]
     at ([yshift=-3cm]current page.north)
-    {\hyphenpenalty=10000\exhyphenpenalty=10000 Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems};
+    {Enhancing Kōura Habitat in Invaded Lake Ecosystems};
   \node[color=white, align=center,
         font=\fontsize{16}{22}\selectfont\sffamily]
     at ([yshift=4cm]current page.south)
@@ -289,7 +295,7 @@
 \vspace*{1.5cm}
 \begin{center}
 
-{\fontsize{20}{26}\selectfont\bfseries Enhancing K\={o}ura (Native Freshwater Crayfish)\\[0.3cm]Habitat in Invaded Lake Ecosystems}
+{\fontsize{20}{26}\selectfont\bfseries Enhancing K\={o}ura Habitat in Invaded Lake Ecosystems}
 
 \vfill
 
@@ -361,7 +367,7 @@ by\\[0.3cm]
 
 {\small\sffamily
 Propositions belonging to the thesis, entitled\\[0.3em]
-\textit{Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems}\\[0.3em]
+\textit{Enhancing Kōura Habitat in Invaded Lake Ecosystems}\\[0.3em]
 Olivier V. Raven\\
 The University of Waikato, 2026
 }
@@ -375,8 +381,8 @@ The University of Waikato, 2026
 Native freshwater crayfish (\emph{Paranephrops planifrons}, kōura) are a
 taonga (culturally treasured) species in Aotearoa New Zealand with a
 rich history of harvest and trade by iwi (Māori communities). Over the
-past two decades, however, kōura populations have declined by up to 90
-\% in Lake Rotoiti (North Island), making traditional harvesting less
+past two decades, however, kōura populations have declined by up to 90\%
+in Lake Rotoiti (North Island), making traditional harvesting less
 viable. This decline is driven by degraded water quality, intensified
 lake stratification, and the spread of invasive fish and macrophytes.
 Since around 2016, the non-native brown bullhead catfish (\emph{Ameiurus
@@ -489,8 +495,10 @@ Special thanks to my friends and flatmates Dion and Josh for their
 friendship. I am also very grateful to Rens, who made my time in New
 Zealand richer with his stories, and who I will carry with me. Un
 agradecimiento muy especial a mi amor, Lisbeth, por estar a mi lado
-incluso desde tan lejos. Tot slot wil ik graag mijn ouders, broertjes,
-omi, opa bedanken voor hun support en sorry voor het zo verweg zijn.
+incluso desde tan lejos. Tot slot wil ik graag mijn ouders en broertjes
+bedanken voor hun onvoorwaardelijke support en sorry voor het zo verweg
+zijn. Omi en opa, jullie hebben dit niet kunnen meemaken, maar ik draag
+dit ook voor jullie.
 
 During my PhD, I became increasingly aware of the limitations of the
 current scientific publishing system, with paywalls restricting access,
@@ -717,7 +725,7 @@ systems such as those of Aotearoa New Zealand.
 
 \centering{
 
-\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{images/fig-crayfish-families.png}
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{images/fig-crayfish-families.png}
 
 }
 
@@ -749,7 +757,7 @@ Island.
 
 \centering{
 
-\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{outputs/fig-nz-distribution-maps.png}
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{outputs/fig-nz-distribution-maps.png}
 
 }
 
@@ -808,8 +816,8 @@ a vital food source but also served as a medium for trade and barter
 among the Te Arawa iwi and hapū. The tau kōura is still used today, but
 mostly for research and monitoring of kōura abundance in lakes (Kusabs
 and Quinn 2009; Kusabs et al. 2018). Kōura monitoring from 2005 to 2025
-revealed declines of 76 \% and 91 \% in kōura catch per unit effort
-(CPUE) in Lakes Rotorua and Rotoiti respectively
+revealed declines of 76\% and 91\% in kōura catch per unit effort (CPUE)
+in Lakes Rotorua and Rotoiti respectively
 (Figure~\ref{fig-koura-decline}). These declines reflect a
 multiple-stressor problem: long-term water quality deterioration and
 habitat loss from invasive macrophytes have reduced kōura populations
@@ -965,17 +973,17 @@ quality, and predator presence.
 
 \centering{
 
-\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{outputs/fig-study-lakes-map.png}
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{outputs/fig-study-lakes-map.png}
 
 }
 
 \caption{\label{fig-study-lakes-map}Rotorua Te Arawa Lakes overview map.
-Colours represent the trophic state of each lake. Data sourced from:
-(LAWA 2025).}
+Colours represent the trophic state of each lake. Data sourced from LAWA
+(2025).}
 
 \end{figure}%
 
-\begin{landscape}\begingroup\fontsize{7}{9}\selectfont
+\begin{landscape}\begingroup\fontsize{8}{10}\selectfont
 
 \begin{longtable}[t]{lrrrrrrrll}
 
@@ -1107,7 +1115,7 @@ and Rotomāhana, while deeper oligotrophic lakes such as Rotomā,
 Tarawera, and Tikitapu remain relatively stable year-round
 (Figure~\ref{fig-livable-habitat-summary}). Over the past
 \textasciitilde20 years several lakes show statistically significant
-declines in annual mean liveable habitat, with Ōkāreka declining -0.4 \%
+declines in annual mean liveable habitat, with Ōkāreka declining -0.4\%
 per year (Figure~\ref{fig-livable-habitat-trends}).
 
 Climate change is expected to intensify all of these pressures. Stronger
@@ -1131,7 +1139,7 @@ refuge quality.
 
 \centering{
 
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-livable-habitat-summary.png}
+\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{outputs/fig-livable-habitat-summary.png}
 
 }
 
@@ -1159,11 +1167,11 @@ and annual mean liveable habitat for kōura across eleven of the Rotorua
 Te Arawa Lakes. Liveable habitat is defined as the proportion of the
 lake bottom area meeting dissolved oxygen (\textgreater{} 5 mg/L) and
 temperature (\textless{} 21 °C) thresholds suitable for kōura. Points
-represent means; lines show linear regressions with 95 \% confidence
+represent means; lines show linear regressions with 95\% confidence
 intervals. Annual slopes are reported as percentage change per year
-(significance: *** p \textless{} 0.001, ns = not significant). Derived
-from CTD cast data collected by BOPRC monthly monitoring and monitoring
-buoy data LimnoTrack (Moore and McBride 2026).}
+(significance: *** \emph{p} \textless{} 0.001, ns = not significant).
+Derived from CTD cast data collected by BOPRC monthly monitoring and
+monitoring buoy data LimnoTrack (Moore and McBride 2026).}
 
 \end{figure}%
 
@@ -1308,6 +1316,103 @@ general introduction provides a comprehensive overview of the study
 system, the species involved, and the research questions addressed in
 this thesis.
 
+--- title: ``Native vs.~Novel Threats'' subtitle: ``Fear of the new: a
+predatory invader provokes stronger non-consumptive effects on a
+keystone native prey than a native predator''
+
+execute: freeze: false cache: false
+
+author: - name: given: Olivier V. family: Raven orcid:
+0009-0008-6184-6831 affiliations: - name: University of Waikato
+department: Te Aka Mātuatua -- School of Science address: Private Bag
+3105, Hamilton 3240 country: New Zealand email:
+olivier.raven@icloud.com; or81@students.waikato.ac.nz corresponding:
+true
+
+\begin{itemize}
+\tightlist
+\item
+  name: given: Calum family: MacNeil orcid: 0000-0003-0402-9292
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: The Cawthron Institute address: 98 Halifax Street East, Nelson
+    7010, Private Bag 2, Nelson 7042 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Finnbar family: Lee orcid: 0000-0002-9219-1486
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: The Cawthron Institute address: 98 Halifax Street East, Nelson
+    7010, Private Bag 2, Nelson 7042 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Robin family: Holmes orcid: 0000-0002-8737-2717
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: The Cawthron Institute address: 98 Halifax Street East, Nelson
+    7010, Private Bag 2, Nelson 7042 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Ian A. K. family: Kusabs orcid: 0000-0002-1473-7447
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: Ian Kusabs and Associates Limited address: 21 Summit Road,
+    Rotorua 3076 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Francis J. family: Burdon orcid: 0000-0002-5398-4993
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\item
+  name:\\
+  given: Deniz family: Özkundakci orcid: 0000-0002-5442-4576
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\end{itemize}
+
+date: ``today''
+
+keywords: - Non-consumptive effects - Crayfish - Kōura - Brown bullhead
+catfish - Antipredator behaviour
+
+funding: ``This research was supported by the Fish Futures programme
+funded through a Ministry of Business, Innovation and Employment grant
+(CAWX2101) with additional funding provided by the Bay of Plenty
+Regional Council under the Toihuarewa Waimāori - Bay of Plenty Regional
+Council Chair in Lake and Freshwater Science programme.''
+
+citation: container-title: ``\ldots{}''
+
+title-block-style: none
+
+knitr: opts\_chunk: dev: ``ragg\_png'' ---
+
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -1355,7 +1460,7 @@ this thesis.
   \node[color=white!80, anchor=south east,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
     at ([xshift=-1.2cm, yshift=5cm]current page.south east)
-    {Experimental aquarium with a catfish (\textit{Ameiurus nebulosus}) separated from a k\={o}ura refuge by a mesh divider.};
+    {Experimental aquarium with a catfish (\textit{Ameiurus nebulosus}) and a k\={o}ura inside refuge.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -1512,7 +1617,7 @@ dechlorinated tap water with stable temperatures (15.6 °C), pH (8.4) and
 dissolved oxygen concentrations (10 mg l\(^{-1}\)). These parameters
 reflect typical physiochemical conditions in the source lakes. Kōura and
 fish were fed every other day with commercial carnivore pellets (Hikari
-Tropical, Kyorin Food Industries Ltd., Japan; animal protein 47 \%).
+Tropical, Kyorin Food Industries Ltd., Japan; animal protein 47\%).
 Because kōura are a taonga (treasured) species, permission was obtained
 from Te Arawa Lakes Trust and Te Komiti Whakahaere. All experimental
 procedures were conducted under University of Waikato animal ethics
@@ -1550,18 +1655,18 @@ location or compartment side effects, the position of predator
 treatments within the aquaria was systematically rotated between
 experimental rounds. The experiment was conducted across eight rounds
 (each lasting 5 hours), four rounds under light conditions
-(\textasciitilde400 lux, n = 32 kōura: 11 catfish, 11 eel, 10 control)
-and four separate rounds with different kōura under dark conditions
-(\textasciitilde70 lux, n = 32 kōura: 11 catfish, 11 eel, 10 control).
-Observations were made in the dark using red lighting positioned
-centrally above the tanks to minimise disturbance, as many aquatic
-species have limited sensitivity to red wavelengths and are unlikely to
-perceive this part of the spectrum. Following each individual
-experimental run, each tank was thoroughly cleaned and refilled with
-dechlorinated tap water before reuse. Each individual kōura was only
-exposed once to a fish predator and there were no mortalities of kōura
-or fish during experiments. All experiments were conducted within a
-three-week period during October 2025.
+(\textasciitilde400 lux, \emph{n} = 32 kōura: 11 catfish, 11 eel, 10
+control) and four separate rounds with different kōura under dark
+conditions (\textasciitilde70 lux, \emph{n} = 32 kōura: 11 catfish, 11
+eel, 10 control). Observations were made in the dark using red lighting
+positioned centrally above the tanks to minimise disturbance, as many
+aquatic species have limited sensitivity to red wavelengths and are
+unlikely to perceive this part of the spectrum. Following each
+individual experimental run, each tank was thoroughly cleaned and
+refilled with dechlorinated tap water before reuse. Each individual
+kōura was only exposed once to a fish predator and there were no
+mortalities of kōura or fish during experiments. All experiments were
+conducted within a three-week period during October 2025.
 
 \begin{figure}[htbp]
 
@@ -1623,12 +1728,13 @@ a range of 20.48 to 40.88 mm, and the mean (± SD) wet weight of 15.83 g
 individually in a tank. To investigate how starvation period influenced
 feeding motivation, each round kōura were starved for different periods
 (either 0, 3 or 4 days) prior to the feeding experiment. After 0 days
-starvation, 14 kōura were exposed to eel water (n = 4), catfish water (n
-= 6) or control water (n = 4). After 3 days starvation, 16 kōura were
-exposed to eel water (n = 6), catfish water (n = 5) or control water (n
-= 5). After 4 days starvation, 16 kōura were exposed to eel water (n =
-5), catfish water (n = 5) or control water (n = 6). After 24 hours, when
-each experiment was terminated, the number of pellets eaten (to the
+starvation, 14 kōura were exposed to eel water (\emph{n} = 4), catfish
+water (\emph{n} = 6) or control water (\emph{n} = 4). After 3 days
+starvation, 16 kōura were exposed to eel water (\emph{n} = 6), catfish
+water (\emph{n} = 5) or control water (\emph{n} = 5). After 4 days
+starvation, 16 kōura were exposed to eel water (\emph{n} = 5), catfish
+water (\emph{n} = 5) or control water (\emph{n} = 6). After 24 hours,
+when each experiment was terminated, the number of pellets eaten (to the
 nearest quarter pellet) was counted and the feeding rate (pellets eaten
 per gram of wet weight (WW) of kōura) calculated.
 
@@ -1772,10 +1878,10 @@ movement around tanks and use of refuges, even in the time intervals
 comprising the first 60 minutes of the experiment, before fish were
 introduced. The coefficient of variations (CVs) for kōura refuge use in
 the light and the dark before fish introduction were similarly high,
-being 60.4 \% and 58.2 \% (both n = 32) respectively, confirming high
-baseline variation in kōura refuge use, regardless of treatment type.
-Despite this inherent variation in individual kōura behaviour, clear
-patterns in kōura refuge use were evident over the course of the
+being 60.4\% and 58.2\% (both \emph{n} = 32) respectively, confirming
+high baseline variation in kōura refuge use, regardless of treatment
+type. Despite this inherent variation in individual kōura behaviour,
+clear patterns in kōura refuge use were evident over the course of the
 experiment (Figure~\ref{fig-refuge-plot};
 {Table~\ref{tbl-refuge-prop}}). Under light conditions, the control
 showed the largest overall increase in refuge use (40\% to 82\%), driven
@@ -2059,6 +2165,91 @@ Soweeta Fort-D'ath and William Anaru (Te Arawa Lakes Trust), and Tihini
 Grant (Ngāti Pikiao). We also thank Nick Ling and Ben Roche (University
 of Waikato) for assisting with catfish and eel collection.
 
+--- title: ``Where do Kōura Live?'' subtitle: ``Littoral habitat
+structure influences freshwater crayfish populations in five volcanic
+lakes of Aotearoa New Zealand''
+
+execute: freeze: false cache: false
+
+author: - name: given: Olivier V. family: Raven orcid:
+0009-0008-6184-6831 affiliations: - name: University of Waikato
+department: Te Aka Mātuatua -- School of Science address: Private Bag
+3105, Hamilton 3240 country: New Zealand email:
+olivier.raven@icloud.com; or81@students.waikato.ac.nz corresponding:
+true
+
+\begin{itemize}
+\tightlist
+\item
+  name: given: Francis J. family: Burdon orcid: 0000-0002-5398-4993
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\item
+  name: given: Ian A. K. family: Kusabs orcid: 0000-0002-1473-7447
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: Ian Kusabs and Associates Limited address: 21 Summit Road,
+    Rotorua 3076 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Robin family: Holmes orcid: 0000-0002-8737-2717
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: The Cawthron Institute address: 98 Halifax Street East, Nelson
+    7010, Private Bag 2, Nelson 7042 country: New Zealand
+  \end{itemize}
+\item
+  name:\\
+  given: Deniz family: Özkundakci orcid: 0000-0002-5442-4576
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\end{itemize}
+
+date: 09 July 2026
+
+keywords: - Rotorua Te Arawa Lakes - North Island - Habitat structure -
+Thermal stress - Generalised additive mixed models - Paranephrops
+planifrons
+
+funding: ``This research was supported by the Fish Futures programme
+funded through a Ministry of Business, Innovation and Employment grant
+(CAWX2101) with additional funding provided by the Bay of Plenty
+Regional Council under the Toihuarewa Waimāori - Bay of Plenty Regional
+Council Chair in Lake and Freshwater Science programme.''
+
+citation: container-title: ``Raven, O.V., Burdon, F.J., Kusabs, I.A.K.
+et al.~Littoral habitat structure influences freshwater crayfish
+populations in five volcanic lakes of Aotearoa New Zealand.
+Hydrobiologia (2026). \url{https://doi.org/10.1007/s10750-026-06302-z}''
+
+nocite: \textbar{} Coffey and Clayton (1988), Shave et al. (1994), Smith
+et al. (1996), Parkyn and Collier (2002), Vedia et al. (2017), Broughton
+et al. (2017)
+
+title-block-style: none
+
+knitr: opts\_chunk: dev: ``ragg\_png'' ---
+
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -2117,7 +2308,7 @@ of Waikato) for assisting with catfish and eel collection.
 Freshwater crayfish are increasingly threatened by habitat degradation,
 declining water quality, and invasive species. In Aotearoa New Zealand,
 lake populations of the endemic northern freshwater crayfish
-\emph{Paranephrops planifrons} (kōura) have declined by up to 91 \%.
+\emph{Paranephrops planifrons} (kōura) have declined by up to 91\%.
 Identifying key habitat requirements is essential to improve the
 conservation of crayfish facing multiple threats. To assess littoral
 habitat associations, we surveyed shoreline habitats in five Aotearoa
@@ -2167,7 +2358,7 @@ multiple interacting environmental stressors, including declining water
 quality, deoxygenation and the introduction and consequent impacts of
 non-native species (Kusabs and Quinn 2009). For example, in Lakes
 Rotorua and Rotoiti, located in the Bay of Plenty region of Aotearoa's
-North Island, kōura populations have declined by 76 \% and 91 \%,
+North Island, kōura populations have declined by 76\% and 91\%,
 respectively, over the past two decades (Kusabs et al. 2026).
 
 In 2016, the invasive North American brown bullhead catfish
@@ -2255,11 +2446,11 @@ The entire accessible shoreline of each lake was first mapped using
 aerial photos and then ground truthed and classified into dominant
 habitat types. Classification used the following criteria: a habitat was
 considered dominant ``rocky'' if the combined percentage of bedrock,
-boulders, and cobble exceeded 25 \% by surface area; ``sandy'' if sand
-was the dominant sediment (≥50 \%) and rocky conditions were not met;
+boulders, and cobble exceeded 25\% by surface area; ``sandy'' if sand
+was the dominant sediment (≥50\%) and rocky conditions were not met;
 ``muddy'' if soft mud or organic matter was dominant and rocky/sandy
 conditions were not met; and ``emergent macrophyte'' if emergent native
-macrophytes exceeded 25 \% of the shoreline cover by surface area.
+macrophytes exceeded 25\% of the shoreline cover by surface area.
 Shoreline sites exceeding two meters in depth or classified as
 geothermal were excluded, as these conditions were either unsuitable for
 kōura or inaccessible for field sampling.
@@ -2269,16 +2460,16 @@ this sample frame was calculated in a projected coordinate system (New
 Zealand Transverse Mercator 2000; EPSG:2193). To ensure balanced
 representation of littoral habitat types across systems and to avoid
 confounding lake identity with sampling effort, an equal number of sites
-(n = 12) was surveyed in each lake, with sites allocated proportionally
-among the dominant shoreline habitat types. All selected sites were
-fully accessible for fieldwork, and therefore an oversample was not
-required. Within each habitat type, site locations were generated using
-the Generalized Random Tessellation Stratified (GRTS) design (Stevens
-and Olsen 2004) executed using the spsurvey package in R (Dumelle et al.
-2023; R Core Team 2025), producing unbiased random coordinates without
-enforcing fixed spacing between sites. The final coordinates of the 12
-random survey sites per lake were extracted directly from the GRTS
-output (Figure~\ref{fig-site-map}).
+(\emph{n} = 12) was surveyed in each lake, with sites allocated
+proportionally among the dominant shoreline habitat types. All selected
+sites were fully accessible for fieldwork, and therefore an oversample
+was not required. Within each habitat type, site locations were
+generated using the Generalized Random Tessellation Stratified (GRTS)
+design (Stevens and Olsen 2004) executed using the spsurvey package in R
+(Dumelle et al. 2023; R Core Team 2025), producing unbiased random
+coordinates without enforcing fixed spacing between sites. The final
+coordinates of the 12 random survey sites per lake were extracted
+directly from the GRTS output (Figure~\ref{fig-site-map}).
 
 \begin{landscape}
 \begingroup\fontsize{8}{10}\selectfont
@@ -2438,10 +2629,10 @@ were recorded for abundance and measured for total length, and weighed
 for wet mass. Catch per unit effort (CPUE) and biomass per unit effort
 (BPUE) were calculated for all kōura and fish based on the number of
 nets and traps used at each site (Kusabs et al. 2015b). Missing kōura
-weights due to failure of scale (n = 81) were estimated using a
+weights due to failure of scale (\emph{n} = 81) were estimated using a
 log₁₀--log₁₀ length--weight regression fitted to individuals with both
-measurements (n = 240), following standard approaches for weight length
-relationships in aquatic organisms
+measurements (\emph{n} = 240), following standard approaches for weight
+length relationships in aquatic organisms
 ({Figure~\ref{fig-length-weight-ch3}}) (Froese 2006). Predicted values
 were back-transformed with a lognormal bias correction factor
 \(10^{0.5 \sigma^2}\) (Quinn and Keough 2002).
@@ -2476,7 +2667,7 @@ using Variance Inflation Factors (VIFs) calculated from linear models
 fitted to the fixed-effect design matrix. A conservative threshold of
 VIF \textgreater{} 5 was applied (Quinn and Keough 2002; Kutner et al.
 2005). Across all model sets, dissolved oxygen expressed as percentage
-saturation (DO \%) exceeded this threshold and was excluded from further
+saturation (DO\%) exceeded this threshold and was excluded from further
 analyses, while dissolved oxygen concentration (DO mg L\(^{-1}\)) was
 retained.
 
@@ -2594,15 +2785,15 @@ and kōaro were only caught from Ōkāreka.
 
 \subsection{Kōura occupancy}\label{kux14dura-occupancy}
 
-The full binomial GAMM for kōura occupancy explained 65 \% of the
+The full binomial GAMM for kōura occupancy explained 65\% of the
 deviance (AIC = 51; adj. R² = 0.647). Stepwise ML reduction
 (\(\alpha = 0.05\)) retained riparian vegetation, substrate index,
 temperature, and specific conductivity as smoother terms, lake identity
 as a random effect, and the presence of goldfish (negative) and catfish
 (positive) as parametric terms. The final model refitted using REML
-explained 57.9 \% of the deviance (adj. R² = 0.592) and retained
-positive influences of riparian vegetation (\emph{p} = 0.026), substrate
-index (\emph{p} = 0.001), specific conductivity (\emph{p} = 0.002) and a
+explained 57.9\% of the deviance (adj. R² = 0.592) and retained positive
+influences of riparian vegetation (\emph{p} = 0.026), substrate index
+(\emph{p} = 0.001), specific conductivity (\emph{p} = 0.002) and a
 negative influence of temperature (\emph{p} \textless{} 0.001), as
 significant smoother terms (Figure~\ref{fig-occupancy-model} a). The
 random effect of lake identity was not statistically significant
@@ -2649,17 +2840,17 @@ indicates perfect calibration.}
 
 \subsection{Kōura CPUE}\label{kux14dura-cpue}
 
-The full Gamma GAMM for positive CPUE explained 48.4 \% of the deviance
-(AIC = 122; adj. R² = 0.19; n = 33). Stepwise selection
+The full Gamma GAMM for positive CPUE explained 48.4\% of the deviance
+(AIC = 122; adj. R² = 0.19; \emph{n} = 33). Stepwise selection
 (\(\alpha = 0.05\)) reduced the model to temperature, pH, and emergent
 native macrophytes as smoother terms, lake identity as a random effect,
 and the presence of common smelt (negative) as a parametric effect. This
-reduced model achieved a lower AIC (115) and explained 47.3 \% of the
+reduced model achieved a lower AIC (115) and explained 47.3\% of the
 deviance (adj. R² = 0.194). Likelihood ratio tests indicated that the
 reduced model was statistically equivalent to the full model (\emph{p} =
 0.950), and it was therefore selected as the final CPUE model.
 
-The final REML-fitted model explained 47.3 \% of the deviance (adj. R² =
+The final REML-fitted model explained 47.3\% of the deviance (adj. R² =
 0.195) and retained positive influence of pH (\emph{p} \textless{}
 0.001) and negative influence of temperature (\emph{p} = 0.019) and
 emergent native macrophytes (\emph{p} \textless{} 0.001) as significant
@@ -2698,13 +2889,13 @@ annotated values report R² and RMSE to summarise model fit.}
 
 \subsection{Kōura BPUE}\label{kux14dura-bpue}
 
-The full Gamma GAMM for positive BPUE explained 97.4 \% of the deviance
-(AIC = 266; adj. R² = 0.76; n = 33). Stepwise ML selection
+The full Gamma GAMM for positive BPUE explained 97.4\% of the deviance
+(AIC = 266; adj. R² = 0.76; \emph{n} = 33). Stepwise ML selection
 (\(\alpha = 0.05\)) retained pH, emergent native macrophytes, and the
 lake identity random effect. The resulting reduced model had a higher
-AIC (318) and explained 26 \% of the deviance (adj. R² = 0.141). As the
+AIC (318) and explained 26\% of the deviance (adj. R² = 0.141). As the
 full model was overfitting the data the reduced model was chosen for
-inference. The final REML-fitted BPUE model explained 25.9 \% of the
+inference. The final REML-fitted BPUE model explained 25.9\% of the
 deviance (adj. R² = 0.14) and retained a positive influence of pH
 (\emph{p} = 0.002) and a negative influence of emergent native
 macrophytes (\emph{p} = 0.041) as significant, near-linear smoothing
@@ -2892,13 +3083,13 @@ suitability. Lakes were surveyed at different times across the
 spring-summer period, so between-lake temperature differences partly
 reflect when each lake was sampled, not only differences in thermal
 regime. Kōura are known to be temperature-sensitive, with activity
-increasing above approximately 10 °C and temperatures exceeding
-\textasciitilde21 °C considered thermally stressful, and probably
-leading to aestivation (Devcich 1979; Angilletta et al. 2004; Hammond et
-al. 2006; Hesni et al. 2009). During the study period, surface water
-temperatures in several lakes exceeded this threshold, including a mean
-summer temperature of 23.15 °C in Lake Rotorua, conditions likely to
-reduce suitable habitat availability during warm periods.
+increasing above approximately 10 °C; temperatures exceeding 21 °C are
+considered thermally stressful and may induce aestivation (Devcich 1979;
+Angilletta et al. 2004; Hammond et al. 2006; Hesni et al. 2009). During
+the study period, surface water temperatures in several lakes exceeded
+this threshold, including a mean summer temperature of 23.15 °C in Lake
+Rotorua, conditions likely to reduce suitable habitat availability
+during warm periods.
 
 In stratified lakes, elevated surface temperatures may further constrain
 kōura habitat by intensifying thermal stratification and limiting oxygen
@@ -3000,6 +3191,83 @@ Plenty Regional Council in helping to fund the fieldwork. We thank Calum
 MacNeil and three anonymous reviewers for feedback on an earlier version
 of this manuscript.
 
+--- title: ``The Importance of Structure'' subtitle: ``The importance of
+structure: mesocosm evidence for shelter design in freshwater crayfish
+restoration''
+
+execute: freeze: false cache: false
+
+author: - name: given: Olivier V. family: Raven orcid:
+0009-0008-6184-6831 affiliations: - name: University of Waikato
+department: Te Aka Mātuatua -- School of Science address: Private Bag
+3105, Hamilton 3240 country: New Zealand email:
+olivier.raven@icloud.com; or81@students.waikato.ac.nz corresponding:
+true
+
+\begin{itemize}
+\tightlist
+\item
+  name: given: Robin family: Holmes orcid: 0000-0002-8737-2717
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: The Cawthron Institute address: 98 Halifax Street East, Nelson
+    7010, Private Bag 2, Nelson 7042 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Ian A. K. family: Kusabs orcid: 0000-0002-1473-7447
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: Ian Kusabs and Associates Limited address: 21 Summit Road,
+    Rotorua 3076 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Francis J. family: Burdon orcid: 0000-0002-5398-4993
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\item
+  name:\\
+  given: Deniz family: Özkundakci orcid: 0000-0002-5442-4576
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\end{itemize}
+
+date: ``today''
+
+keywords: - Paranephrops planifrons - Artificial reef - Behaviour -
+Habitat preference - Aotearoa New Zealand
+
+funding: ``This research was supported by the Fish Futures programme
+funded through a Ministry of Business, Innovation and Employment grant
+(CAWX2101) with additional funding provided by the Bay of Plenty
+Regional Council under the Toihuarewa Waimāori - Bay of Plenty Regional
+Council Chair in Lake and Freshwater Science programme.''
+
+citation: container-title: ``\ldots{}''
+
+title-block-style: none
+
+knitr: opts\_chunk: dev: ``ragg\_png'' ---
+
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -3046,7 +3314,7 @@ of this manuscript.
     {Aquatic Conservation: Marine and Freshwater Ecosystems --- Under review};
   \node[color=white!80, anchor=south east,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
-    at ([xshift=-1.2cm, yshift=5cm]current page.south east)
+    at ([xshift=-1.2cm, yshift=9cm]current page.south east)
     {Mesocosm tank with stone and wood shelter configurations used in k\={o}ura refuge selection trials.};
 \end{tikzpicture}
 \null
@@ -3085,7 +3353,7 @@ kōura populations.
 Freshwater biodiversity is declining faster than in any other ecosystem
 globally, driven by habitat loss, pollution, and invasive species
 (Dudgeon et al. 2006). Crayfish are among the most threatened freshwater
-invertebrates, with 32 \% of species assessed as threatened with
+invertebrates, with 32\% of species assessed as threatened with
 extinction due to these same pressures (Richman et al. 2015). As
 keystone species and ecosystem engineers, crayfish play crucial roles in
 freshwater food webs through shredding of leaf litter, bioturbation of
@@ -3218,9 +3486,9 @@ for three months, paving sand as substrate, shelters, and were covered
 with a single layer of shade cloth. Each holding tank housed 10--12
 individuals. Kōura were fed every second day with commercial carnivore
 pellets (Hikari Tropical, Kyorin Food Industries Ltd., Japan; animal
-protein 47 \%). Water temperature and dissolved oxygen remained stable
+protein 47\%). Water temperature and dissolved oxygen remained stable
 throughout the experimental period (temperature: 12 ± 1.2 °C; dissolved
-oxygen: 99.9 ± 1.7 \%).
+oxygen: 99.9 ± 1.7\%).
 
 Experiments were conducted in six larger outdoor concrete tanks (1425 L;
 Ø 1.85 m) with the same substrate and water conditions, covered with a
@@ -3341,16 +3609,16 @@ individuals consisting of 18 females with mean OCL and weight ± SD: 26.2
 range: 20.9--29.5 mm, 11.6 ± 3.2 g. Due to reduced animal availability,
 individuals were drawn from a slightly broader size range than
 medium-size individuals, resulting in unbalanced size class
-representation (small: n = 4, medium: n = 35, large: n = 1). In each of
-the four experimental tank quadrants one structure was placed, with
-similar structure types positioned opposite to one another. Each group
-of kōura was released at the centre of the tank and the following day,
-the final location of each kōura was documented. This experiment was
-repeated across four temporal blocks using the same four groups of ten
-kōura, resulting in 16 group-trials in total (four groups × four
-blocks). Structure placements and tank assignments were re-randomised
-between blocks, such that each group was housed in a different tank in
-each successive round.
+representation (small: \emph{n} = 4, medium: \emph{n} = 35, large:
+\emph{n} = 1). In each of the four experimental tank quadrants one
+structure was placed, with similar structure types positioned opposite
+to one another. Each group of kōura was released at the centre of the
+tank and the following day, the final location of each kōura was
+documented. This experiment was repeated across four temporal blocks
+using the same four groups of ten kōura, resulting in 16 group-trials in
+total (four groups × four blocks). Structure placements and tank
+assignments were re-randomised between blocks, such that each group was
+housed in a different tank in each successive round.
 
 \begin{figure}
 
@@ -3446,8 +3714,8 @@ significantly more often than SingleStone, FlatStone, and StonePile
 0.011, 0.004, respectively; overall multinomial test: \emph{p}
 \textless{} 0.001; Figure~\ref{fig-exp1}). No significant differences
 were found among the stone structure types. Overall, WoodLog was
-selected by 67 \% of kōura at refuge (males: 80 \%; females: 53 \%), and
-no kōura were found at TankWall. Sex had no credible effect on structure
+selected by 67\% of kōura at refuge (males: 80\%; females: 53\%), and no
+kōura were found at TankWall. Sex had no credible effect on structure
 preference (\(\beta\) = 3.32, 95\% CI: -1.09 to 9.3; posterior
 probability = 0.92) with credible intervals spanning zero for all
 structure types. The symmetry test indicated that structure type use
@@ -3461,7 +3729,7 @@ after sunset.
 
 \centering{
 
-\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp1.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp1.png}
 
 }
 
@@ -3494,8 +3762,8 @@ weaker preference for FlatStone over SingleStone compared to small kōura
 0.99), while no other size class effect was credible. Overall, FlatStone
 remained the most selected structure type across all size classes, but
 its strength of preference declined from small (posterior probability of
-top choice = 82 \%) to medium (53 \%), and with large kōura showing
-similar preference between FlatStone and StonePile (42 \% vs 38 \%).
+top choice = 82\%) to medium (53\%), and with large kōura showing
+similar preference between FlatStone and StonePile (42\% vs 38\%).
 Structure type use shifted directionally between initial and next-day
 location (Stuart-Maxwell test: \emph{p} = 0.001), indicating that kōura
 actively relocated to preferred structure types overnight.
@@ -3504,7 +3772,7 @@ actively relocated to preferred structure types overnight.
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp2.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp2.png}
 
 }
 
@@ -3516,7 +3784,7 @@ deviation from null expectation (Wilcoxon signed-rank test, Bonferroni
 adjusted): \(\uparrow\) used more than expected, \(\downarrow\) used
 less than expected. Sample sizes shown in white. (B) Posterior predicted
 probability of structure type use by size class from Bayesian
-categorical mixed model, with 95 \% credible intervals.}
+categorical mixed model, with 95\% credible intervals.}
 
 \end{figure}%
 
@@ -3530,8 +3798,8 @@ level, FlatStone was used significantly more than expected (\emph{p} =
 Only one kōura was found at TankWall. The Bayesian model indicated that
 preference for FlatStone strengthened with body size, with the posterior
 probability of FlatStone being the top-ranked structure increasing from
-small (66 \%) to medium (79 \%), to large kōura (99 \%). Large kōura
-showed a particularly strong and credible preference for FlatStone over
+small (66\%) to medium (79\%), to large kōura (99\%). Large kōura showed
+a particularly strong and credible preference for FlatStone over
 WoodSplit (\(\beta\) = -2.55, 95\% CI: -4.7 to -0.9; posterior
 probability = \textgreater{} 0.99), while medium kōura did not differ
 from small kōura. Structure type use shifted directionally between
@@ -3542,7 +3810,7 @@ with kōura relocating toward FlatStone overnight.
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp3.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp3.png}
 
 }
 
@@ -3552,7 +3820,7 @@ structure type at next-day location across all groups and rounds. The
 dashed line indicates the null expectation of equal distribution (0.5).
 Significance symbols as in Figure 3. (B) Posterior predicted probability
 of structure type use by size class from Bayesian categorical mixed
-model, with 95 \% credible intervals. \(\uparrow\) used more than
+model, with 95\% credible intervals. \(\uparrow\) used more than
 expected, \(\downarrow\) used less than expected. TankWall excluded from
 model predictions.}
 
@@ -3563,9 +3831,9 @@ comparison}\label{experiment-4-material-comparison-1}
 
 Kōura used both structure types, showing no significant preference
 between ConcreteBrick and WoodBlock (\emph{p} = 0.137;
-Figure~\ref{fig-exp4}), with mean group proportions of 47 \% and 53 \%
+Figure~\ref{fig-exp4}), with mean group proportions of 47\% and 53\%
 respectively. Neither structure type differed significantly from equal
-distribution (\emph{p} = 0.273). 9 \% of kōura were found at TankWall,
+distribution (\emph{p} = 0.273). 9\% of kōura were found at TankWall,
 which is higher than in any previous experiment, likely reflecting the
 smaller total structure size in this experiment rather than active
 structure avoidance. Sex had no credible effect on preference between
@@ -3577,7 +3845,7 @@ suitable refuge for male and female kōura.
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp4.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{outputs/fig-exp4.png}
 
 }
 
@@ -3586,7 +3854,7 @@ Proportion of kōura found at each structure type at next-day location
 across all groups and rounds. The dashed line indicates the null
 expectation of equal distribution (0.5). (B) Posterior predicted
 probability of structure type use by sex from Bayesian categorical mixed
-model, with 95 \% credible intervals. TankWall excluded from model
+model, with 95\% credible intervals. TankWall excluded from model
 predictions.}
 
 \end{figure}%
@@ -3756,6 +4024,84 @@ opportunity to collect and study the treasured kōura. We are grateful to
 Soweeta Fort-D'ath and William Anaru (Te Arawa Lakes Trust), and Tihini
 Grant (Ngāti Pikiao).
 
+--- title: ``Rock Piles as Kōura Habitat'' subtitle: ``Stone pile
+refuges in an Aotearoa New Zealand lake: early benefits for threatened
+crayfish but not its invasive predator''
+
+execute: freeze: false cache: false
+
+author: - name: given: Olivier V. family: Raven orcid:
+0009-0008-6184-6831 affiliations: - name: University of Waikato
+department: Te Aka Mātuatua -- School of Science address: Private Bag
+3105, Hamilton 3240 country: New Zealand email:
+olivier.raven@icloud.com; or81@students.waikato.ac.nz corresponding:
+true
+
+\begin{itemize}
+\tightlist
+\item
+  name: given: Ian A. K. family: Kusabs orcid: 0000-0002-1473-7447
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: Ian Kusabs and Associates Limited address: 21 Summit Road,
+    Rotorua 3076 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Robin family: Holmes orcid: 0000-0002-8737-2717
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: The Cawthron Institute address: 98 Halifax Street East, Nelson
+    7010, Private Bag 2, Nelson 7042 country: New Zealand
+  \end{itemize}
+\item
+  name: given: Francis J. family: Burdon orcid: 0000-0002-5398-4993
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\item
+  name:\\
+  given: Deniz family: Özkundakci orcid: 0000-0002-5442-4576
+  affiliations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    name: University of Waikato department: Te Aka Mātuatua -- School of
+    Science address: Private Bag 3105, Hamilton 3240 country: New
+    Zealand
+  \end{itemize}
+\end{itemize}
+
+date: today
+
+keywords: - Aotearoa New Zealand - Artificial reef - Habitat enhancement
+- Invasive species - Lake Rotoiti, Rotorua Te Arawa Lakes - Paranephrops
+planifrons
+
+funding: ``This research was supported by the Fish Futures programme
+funded through a Ministry of Business, Innovation and Employment grant
+(CAWX2101) with additional funding provided by the Bay of Plenty
+Regional Council under the Toihuarewa Waimāori - Bay of Plenty Regional
+Council Chair in Lake and Freshwater Science programme.''
+
+citation: container-title: ``\ldots{}''
+
+title-block-style: none
+
+knitr: opts\_chunk: dev: ``ragg\_png'' ---
+
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -3800,9 +4146,9 @@ Grant (Ngāti Pikiao).
         font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
     {Journal of Applied Ecology--- In preparation};
-  \node[color=white!80, anchor=south east,
+  \node[color=white!80, anchor=south west,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
-    at ([xshift=-1.2cm, yshift=5cm]current page.south east)
+    at ([xshift=1.5cm, yshift=5cm]current page.south west)
     {Stone pile construction at Lake Rotoiti.};
 \end{tikzpicture}
 \null
@@ -3816,7 +4162,7 @@ Grant (Ngāti Pikiao).
 \tightlist
 \item
   Kōura (\emph{Paranephrops planifrons}), Aotearoa New Zealand's endemic
-  freshwater crayfish, have declined by up to 96 \% in Lake Rotoiti (Te
+  freshwater crayfish, have declined by up to 96\% in Lake Rotoiti (Te
   Arawa Lakes, Rotorua), driven by predation from the invasive brown
   bullhead catfish (\emph{Ameiurus nebulosus}) and thermal
   stratification that compress suitable habitat into the shallow
@@ -3844,7 +4190,7 @@ Grant (Ngāti Pikiao).
   A simulation-based power analysis revealed a promising, developing
   trend, despite showing the study was underpowered to detect the
   observed effect size, given high pre-construction kōura occupancy
-  (81--89 \%) at all site types and only five site pairs monitored.
+  (81--89\%) at all site types and only five site pairs monitored.
 \item
   \emph{Synthesis and applications}. Stone piles show early, consistent
   evidence of benefiting a threatened native crayfish without benefiting
@@ -3862,7 +4208,7 @@ Grant (Ngāti Pikiao).
 
 Freshwater biodiversity is declining faster than any other biome, with
 one quarter of freshwater fauna now threatened with extinction (Sayer et
-al. 2025). Among the most endangered are freshwater crayfish, with 32 \%
+al. 2025). Among the most endangered are freshwater crayfish, with 32\%
 of species assessed as threatened globally due to habitat loss, invasive
 species, and declining water quality (Richman et al. 2015). As keystone
 species and ecosystem engineers, crayfish play crucial roles in nutrient
@@ -3876,7 +4222,7 @@ in the country (Hiroa 1921; Kusabs and Quinn 2009).
 
 Kōura populations in Lake Rotoiti, located in the Rotorua Te Arawa Lakes
 region of the North Island of Aotearoa New Zealand (hereafter Aotearoa),
-have declined by up to 96 \% over the past two decades (Kusabs et al.
+have declined by up to 96\% over the past two decades (Kusabs et al.
 2026). This collapse has virtually ended customary harvest practices for
 Te Arawa iwi (Māori tribal group) who are hunga tiaki (traditional
 custodians) of the lake (Kusabs et al. 2015a, 2026). The decline in
@@ -4083,7 +4429,7 @@ After stone pile construction, measurements of the size and dimensions
 of each structure were taken. The post-construction substrate index for
 stone pile sites was recalculated using each site's combined stone-pile
 footprint area, expressed as a percentage of the 150 m² site area and
-treated as 80 \% cobble and 20 \% boulders displacing an equivalent area
+treated as 80\% cobble and 20\% boulders displacing an equivalent area
 of sand, to reflect their contribution to substrate complexity. Slope
 was assessed as the horizontal distance from the shoreline to the 20 m
 depth contour, derived from bathymetric maps and measured in a projected
@@ -4115,8 +4461,8 @@ of nets and traps deployed at each site per monitoring round,
 standardised by soak time (Kusabs et al. 2015b). Kōura weights were
 unavailable for 36 individuals because of scale failure and were
 therefore estimated from a log₁₀--log₁₀ length--weight regression fitted
-to individuals with both measurements (n = 840), following standard
-approaches for weight length relationships in aquatic organisms
+to individuals with both measurements (\emph{n} = 840), following
+standard approaches for weight length relationships in aquatic organisms
 {Figure~\ref{fig-length-weight-ch5}} (Froese 2006). Predicted values
 were back-transformed with a lognormal bias correction factor
 \(10^{0.5 \sigma^2}\) (Quinn and Keough 2002).
@@ -4238,7 +4584,7 @@ generated using fixed effects and variance components from the kōura
 abundance BACI model, using a log-normal approximation to the Tweedie
 distribution, and each dataset was analysed using a linear mixed model
 fitted to a log-transformed CPUE. Statistical power was estimated as the
-proportion of simulations (300 per scenario) in which the model's 95 \%
+proportion of simulations (300 per scenario) in which the model's 95\%
 confidence interval for the BACI coefficient excluded zero in the
 positive direction.
 
@@ -4332,7 +4678,7 @@ y-axis on log(1+x) scale.}
 
 }
 
-\caption{\label{fig-cpue-trends}Mean CPUE per monitoring round (± 95 \%
+\caption{\label{fig-cpue-trends}Mean CPUE per monitoring round (± 95\%
 CI, log scale) by site type for kōura (top) and catfish (bottom).
 Vertical dashed line distinguishes the pre-construction period (Before)
 from post-construction monitoring (After).}
@@ -4340,8 +4686,8 @@ from post-construction monitoring (After).}
 \end{figure}%
 
 Kōura occupancy was high across all site types before construction,
-81--89 \% in summer ({Table~\ref{tbl-psi-warm-supp}}). After
-construction, occupancy increased marginally at all sites, 89--94 \% in
+81--89\% in summer ({Table~\ref{tbl-psi-warm-supp}}). After
+construction, occupancy increased marginally at all sites, 89--94\% in
 summer, thereby limiting our ability to detect a treatment effect. The
 BACI contrast to compare how much stone pile sites changed relative to
 control sites was slightly positive, but the credible intervals spanned
@@ -4367,7 +4713,7 @@ near zero relative to reference sites
 \caption{\label{fig-occ-warm-contrasts}Posterior contrasts in kōura
 occupancy from the warm-season model. BACI contrast (stone pile minus
 control, before vs after construction). After-treatment contrasts
-between all site-type pairs. Points show posterior means with 95 \%
+between all site-type pairs. Points show posterior means with 95\%
 credible intervals; contrasts overlapping zero indicate no detectable
 difference.}
 
@@ -4378,7 +4724,7 @@ statistical power. For occupancy, power was near zero across all
 simulated scenarios (maximum 8\%), reflecting the ceiling effect leaving
 no statistical room for a BACI signal
 ({Figure~\ref{fig-power-curves-combined}}). Post-construction power
-analysis showed that achieving 80 \% power with the current five site
+analysis showed that achieving 80\% power with the current five site
 pairs would require an effect size of approximately 1.8 log-units,
 almost 6 times the current observed effect
 (Figure~\ref{fig-trajectory-projection}). If the estimated positive
@@ -4398,7 +4744,7 @@ additional monitoring rounds (\textasciitilde1.5 years).
 effect size over additional monitoring rounds. The solid line shows the
 linear projection based on the estimated post-construction trajectory;
 shaded ribbon shows 95\% uncertainty interval. Dashed horizontal line
-marks the detection threshold for 80 \% power with five site pairs.}
+marks the detection threshold for 80\% power with five site pairs.}
 
 \end{figure}%
 
@@ -4693,14 +5039,6 @@ MacNeil, and Matt Prentice for assisting with fieldwork and data
 collection. Further thanks to Mael Marguet for suggesting the power
 analysis.
 
---- title: ``Synthesis''
-
-execute: freeze: false cache: false
-
-title-block-style: none citation: false
-
-knitr: opts\_chunk: dev: ``ragg\_png'' ---
-
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -4729,7 +5067,7 @@ knitr: opts\_chunk: dev: ``ragg\_png'' ---
   \node[color=white!80, anchor=south east,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
     at ([xshift=-1.2cm, yshift=1.2cm]current page.south east)
-    {Dead trout at the shore of Lake \={O}karo.};
+    {Stone pile at Lake Rotoiti after 18 months of deployment.};
 \end{tikzpicture}
 \null
 \clearpage
@@ -5138,16 +5476,16 @@ existing nutrient loading.
 
 \section{Conclusion}\label{conclusion-2}
 
-Kōura populations in some Rotorua Te Arawa Lakes have declined by 76-91
-\% since 2003. Freshwater species decline is rarely driven by a single
-stressor, and kōura in these lakes face several acting simultaneously:
-predation and fear-induced behavioural suppression caused by catfish;
-thermal stratification, which compresses suitable habitat into the
-shallow littoral zone, precisely where catfish predation pressure is
-greatest; and invasive macrophytes, which further constricts the habitat
-available to kōura. This thesis investigated whether, within this
-compounding-stressor context, habitat enhancement could provide a
-practical means of supporting kōura recovery.
+Kōura populations in some Rotorua Te Arawa Lakes have declined by
+76-91\% since 2003. Freshwater species decline is rarely driven by a
+single stressor, and kōura in these lakes face several acting
+simultaneously: predation and fear-induced behavioural suppression
+caused by catfish; thermal stratification, which compresses suitable
+habitat into the shallow littoral zone, precisely where catfish
+predation pressure is greatest; and invasive macrophytes, which further
+constricts the habitat available to kōura. This thesis investigated
+whether, within this compounding-stressor context, habitat enhancement
+could provide a practical means of supporting kōura recovery.
 
 The findings of this thesis are best understood through the concept of a
 stressor ``ceiling'' on recovery: kōura population recovery is bounded
@@ -6632,6 +6970,29 @@ and extensions in ecology with {R}}. Springer
 
 \endgroup
 
+\clearpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[inner sep=0pt] at ([yshift=-1cm]current page.center)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{images/appendix_cover.jpg}};
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.3cm]current page.north west)
+    {Supplementary Information};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-3.5cm]current page.north west)
+    {Appendices};
+  \node[color=white!80, anchor=south east,
+        font=\fontsize{7}{9}\selectfont\itshape\sffamily]
+    at ([xshift=-1.2cm, yshift=1.2cm]current page.south east)
+    {Dead trout at the shore of Lake \={O}karo.};
+\end{tikzpicture}
+\null
+\clearpage
+
 \chapter*{Appendices}\label{appendices}
 \addcontentsline{toc}{chapter}{Appendices}
 
@@ -6755,10 +7116,10 @@ information}\label{chapter-3-supplementary-information}
 to estimate missing kōura weights. Observed (measured) and
 model-predicted body weights are shown in relation to orbital carapace
 length (OCL). The log₁₀--log₁₀ regression was fitted to individuals with
-both length and weight measurements (n = 240) and used to estimate
-missing weights (n = 81). Predicted values were back-transformed using a
-lognormal bias correction factor. The fitted regression equation is
-shown on the plot.}
+both length and weight measurements (\emph{n} = 240) and used to
+estimate missing weights (\emph{n} = 81). Predicted values were
+back-transformed using a lognormal bias correction factor. The fitted
+regression equation is shown on the plot.}
 
 \end{figure}%
 
@@ -6773,10 +7134,10 @@ shown on the plot.}
 \caption{\label{fig-raw-data-all-predictors}Raw relationships between
 all environmental predictors examined and kōura occurrence, CPUE, and
 BPUE across all 60 surveyed littoral sites. Each panel shows observed
-values at individual sites (n = 60 for occurrence; n = 33 for CPUE and
-BPUE). Points are jittered slightly for occurrence data to reduce
-overplotting. Predictors highlighted in bold were retained in final GAM
-models.}
+values at individual sites (\emph{n} = 60 for occurrence; \emph{n} = 33
+for CPUE and BPUE). Points are jittered slightly for occurrence data to
+reduce overplotting. Predictors highlighted in bold were retained in
+final GAM models.}
 
 \end{figure}%
 
@@ -6934,9 +7295,7 @@ All lakes & Presence Trout &  & 60 & 0.10 & 0.00 & 0.00 & 1.00 & 0.04 & 0.21\\*
 \setcounter{table}{0}
 \setcounter{figure}{0}
 
-\section*{Chapter 5 --- Supplementary
-information}\label{chapter-5-supplementary-information}
-\addcontentsline{toc}{section}{Chapter 5 --- Supplementary information}
+\#\# Chapter 5 --- Supplementary information \{.unnumbered\}
 
 \begin{figure}
 
@@ -7168,7 +7527,7 @@ rank-sum test).}
 \tabularnewline
 
 \toprule
-Variable & Stone pile & Control & Reference & *p* vs Control & *p* vs Reference\\
+Variable & Stone pile & Control & Reference & \$p\$ vs Control & \$p\$ vs Reference\\
 \midrule
 \cellcolor{gray!8}{Kōura CPUE} & \cellcolor{gray!8}{0.2 ± 0.27} & \cellcolor{gray!8}{0.15 ± 0.22} & \cellcolor{gray!8}{2.13 ± 2.32} & \cellcolor{gray!8}{1.000} & \cellcolor{gray!8}{0.205}\\
 Catfish CPUE & 0.05 ± 0.11 & 0.1 ± 0.22 & 0.3 ± 0.52 & 1.000 & 0.420\\
@@ -7196,7 +7555,7 @@ Specific conductivity (µS/cm) & 195.44 ± 70.05 & 199.8 ± 78.52 & 165.45 ± 8.
 \caption{\label{tbl-psi-warm-supp}Posterior kōura occupancy probability
 (\(\psi\)) from the warm-season occupancy model (Summer and Autumn
 rounds). Values are population-level estimates averaged over random site
-effects, with 95 \% credible intervals. Autumn has no Before period as
+effects, with 95\% credible intervals. Autumn has no Before period as
 baseline monitoring was conducted in summer only.}
 
 \tabularnewline
@@ -7235,7 +7594,7 @@ Autumn & After & Reference 2 & 0.92 [0.63–1.00]\\
 \caption{\label{fig-power-curves-combined}Simulation-based power curves
 for the occupancy BACI (left) and kōura CPUE BACI (right). Each line
 represents a different number of After-period monitoring rounds. Dashed
-line marks 80 \% power.}
+line marks 80\% power.}
 
 \end{figure}%
 

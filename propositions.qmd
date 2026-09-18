@@ -45,7 +45,7 @@
 
 {\small\sffamily
 Propositions belonging to the thesis, entitled\\[0.3em]
-\textit{Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems}\\[0.3em]
+\textit{Enhancing Kōura Habitat in Invaded Lake Ecosystems}\\[0.3em]
 Olivier V. Raven\\
 The University of Waikato, 2026
 }

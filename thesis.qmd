@@ -1,6 +1,6 @@
 ---
-title: "Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems"
-thesis-title: "Enhancing Kōura (Native Freshwater Crayfish) Habitat in Invaded Lake Ecosystems"
+title: "Enhancing Kōura Habitat in Invaded Lake Ecosystems"
+thesis-title: "Enhancing Kōura Habitat in Invaded Lake Ecosystems"
 author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none
@@ -11,7 +11,6 @@ citation: false
 #| label: global-setup
 #| include: false
 .bg <- if (knitr::is_latex_output()) "#FFFCF0" else "white"
-knitr::opts_chunk$set(dev.args = list(background = .bg))
 library(ggplot2)
 theme_update(
   plot.background  = element_rect(fill = .bg, colour = NA),
