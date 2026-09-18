@@ -3053,7 +3053,7 @@ of this manuscript.
     {Aquatic Conservation: Marine and Freshwater Ecosystems --- Under review};
   \node[color=white!80, anchor=south east,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
-    at ([xshift=-1.2cm, yshift=9cm]current page.south east)
+    at ([xshift=-1.2cm, yshift=5.0cm]current page.south east)
     {Mesocosm tank with stone and wood shelter configurations used in k\={o}ura refuge selection trials.};
 \end{tikzpicture}
 \null
@@ -4713,8 +4713,13 @@ analysis.
 \providecommand{\thechapter}{6}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0pt] at ([yshift=-1cm]current page.center)
-    {\includegraphics[width=\paperwidth,height=\paperheight]{images/ch6_cover.jpg}};
+  \begin{scope}
+    \clip ([yshift=-5.5cm]current page.north west)
+          rectangle (current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-5.5cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/ch6_cover.jpg}};
+  \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
   \node[color=thesissand, align=left,
@@ -6634,8 +6639,13 @@ and extensions in ecology with {R}}. Springer
 \clearpage
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0pt] at ([yshift=-1cm]current page.center)
-    {\includegraphics[width=\paperwidth,height=\paperheight]{images/appendix_cover.jpg}};
+  \begin{scope}
+    \clip ([yshift=-5.5cm]current page.north west)
+          rectangle (current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-5.5cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/appendix_cover.jpg}};
+  \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
   \node[color=thesissand, align=left,
