@@ -1246,10 +1246,11 @@ in the following four research chapters, followed by a synthesis and a
 general conclusion (Table~\ref{tbl-research-questions}).
 
 \begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1212}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2727}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6061}}@{}}
-\caption{Research questions addressed in each thesis
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\caption{Research questions and publication status of each thesis
 chapter.}\label{tbl-research-questions}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\centering
@@ -1258,6 +1259,8 @@ chapter.}\label{tbl-research-questions}\tabularnewline
 \textbf{Chapter}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 \textbf{Research question}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Publication status}
 \end{minipage} \\
 \midrule\noalign{}
 \endfirsthead
@@ -1268,6 +1271,8 @@ chapter.}\label{tbl-research-questions}\tabularnewline
 \textbf{Chapter}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 \textbf{Research question}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Publication status}
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
@@ -1275,13 +1280,15 @@ chapter.}\label{tbl-research-questions}\tabularnewline
 \endlastfoot
 1 & 2 --- Native vs.~Novel Threats & How do native and non-native
 predators differentially influence antipredator behaviour and refuge use
-in kōura? \\
+in kōura? & \emph{Biological Invasions} --- Revising for resubmission \\
 2 & 3 --- Where do Kōura Live? & Which natural shoreline features do
-kōura prefer? \\
+kōura prefer? & \emph{Hydrobiologia} --- Published \\
 3 & 4 --- The Importance of Structure & Does shelter structure or
-material composition drive kōura refuge selection? \\
+material composition drive kōura refuge selection? & \emph{Aquatic
+Conservation} --- Under review \\
 4 & 5 --- Rock Piles as Kōura Habitat & Can habitat enhancement
-structures provide effective habitat for kōura in Lake Rotoiti? \\
+structures provide effective habitat for kōura in Lake Rotoiti? &
+\emph{Journal of Applied Ecology} --- Under review \\
 \end{longtable}
 
 Before the deployment of any structures, it was first necessary to
@@ -3806,7 +3813,7 @@ Grant (Ngāti Pikiao).
   \node[color=thesissand, text width=0.85\paperwidth, align=left,
         font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
-    {Journal of Applied Ecology--- In preparation};
+    {Journal of Applied Ecology--- Under review};
   \node[color=white!80, anchor=south west,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
     at ([xshift=1.5cm, yshift=5cm]current page.south west)
@@ -6668,9 +6675,9 @@ and extensions in ecology with {R}}. Springer
 \addcontentsline{toc}{chapter}{Appendices}
 
 \markboth{Appendices}{Appendices}
-% Supplementary numbering: S1, S2, … reset per chapter
-\renewcommand{\thetable}{S\arabic{table}}
-\renewcommand{\thefigure}{S\arabic{figure}}
+% Supplementary numbering: S{chapter}.N (e.g. S2.1, S3.1, …)
+\renewcommand{\thetable}{S2.\arabic{table}}
+\renewcommand{\thefigure}{S2.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 
@@ -6768,6 +6775,8 @@ Day 3 & 0.132 & 0.033 & 43 & 4.033 & 0.000\\
 \endgroup{}
 
 \clearpage
+\renewcommand{\thetable}{S3.\arabic{table}}
+\renewcommand{\thefigure}{S3.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 
@@ -6963,10 +6972,14 @@ All lakes & Presence Trout &  & 60 & 0.10 & 0.00 & 0.00 & 1.00 & 0.04 & 0.21\\*
 \endgroup{}
 
 \clearpage
+\renewcommand{\thetable}{S5.\arabic{table}}
+\renewcommand{\thefigure}{S5.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 
-\#\# Chapter 5 --- Supplementary information \{.unnumbered\}
+\section*{Chapter 5 --- Supplementary
+information}\label{chapter-5-supplementary-information}
+\addcontentsline{toc}{section}{Chapter 5 --- Supplementary information}
 
 \begin{figure}
 
@@ -7304,6 +7317,8 @@ filamentous algae.}
 \end{figure}%
 
 \clearpage
+\renewcommand{\thetable}{S6.\arabic{table}}
+\renewcommand{\thefigure}{S6.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 

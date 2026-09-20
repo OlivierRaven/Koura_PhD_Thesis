@@ -32,9 +32,9 @@
 
 ```{=latex}
 \markboth{Appendices}{Appendices}
-% Supplementary numbering: S1, S2, … reset per chapter
-\renewcommand{\thetable}{S\arabic{table}}
-\renewcommand{\thefigure}{S\arabic{figure}}
+% Supplementary numbering: S{chapter}.N (e.g. S2.1, S3.1, …)
+\renewcommand{\thetable}{S2.\arabic{table}}
+\renewcommand{\thefigure}{S2.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 ```
@@ -43,6 +43,8 @@
 
 ```{=latex}
 \clearpage
+\renewcommand{\thetable}{S3.\arabic{table}}
+\renewcommand{\thefigure}{S3.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 ```
@@ -51,6 +53,8 @@
 
 ```{=latex}
 \clearpage
+\renewcommand{\thetable}{S5.\arabic{table}}
+\renewcommand{\thefigure}{S5.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 ```
@@ -59,6 +63,8 @@
 
 ```{=latex}
 \clearpage
+\renewcommand{\thetable}{S6.\arabic{table}}
+\renewcommand{\thefigure}{S6.\arabic{figure}}
 \setcounter{table}{0}
 \setcounter{figure}{0}
 ```
