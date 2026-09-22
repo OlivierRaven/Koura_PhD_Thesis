@@ -15,6 +15,7 @@ To assess long-term change, annual mean liveable habitat was calculated per lake
 
 ```{r}
 #| label: tbl-s1-liveable-trends
+#| echo: false
 #| tbl-cap: "OLS regression slopes for annual and seasonal mean liveable habitat per lake (Cast and buoy CTD profiles combined, 2003–2026)."
 
 .ch1_out <- if (exists("ch1_out_dir")) {
@@ -37,7 +38,7 @@ trends <- readr::read_csv(
 
 knitr::kable(
   trends,
-  col.names = c("Lake", "Season", "Slope (% yr⁻¹)", "SE", "p-value", "Sig.", "Direction")
+  col.names = c("Lake", "Season", "Slope (% per year)", "SE", "p-value", "Sig.", "Direction")
 )
 
 ```
