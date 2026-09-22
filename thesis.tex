@@ -68,6 +68,46 @@
 \fi
 \makeatother
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \usepackage{longtable,booktabs,array}
 \newcounter{none} % for unnumbered tables
@@ -617,7 +657,7 @@ rehabilitation of landscape connectivity (Meerhoff et al. 2022).
 \section{Ecosystem and habitat
 restoration}\label{ecosystem-and-habitat-restoration}
 
-Reversing widespread degradation of freshwater ecosystems, has prompted
+Reversing widespread degradation of freshwater ecosystems has prompted
 growing global investment in ecosystem and habitat restoration. The UN
 declared 2020-2030 the Decade for Ecosystem Restoration, with the goal
 of halting the degradation of ecosystems worldwide and made specific
@@ -1026,21 +1066,24 @@ significance of the lakes to Te Arawa iwi and hapū.
 
 Each lake supports a mix of native and introduced species. Alongside
 kōura and catfish discussed above, native taxa include the freshwater
-mussel kākahi (\emph{Echyridella menziesii}), kōaro (\emph{Galaxias
-brevipinnis}), bullies (toitoi; \emph{Gobiomorphus cotidianus}), longfin
-eel (tuna; \emph{Anguilla dieffenbachii}), and common smelt
-(\emph{Retropinna retropinna}). Introduced species include brown and
-rainbow trout (\emph{Salmo trutta}, \emph{Oncorhynchus mykiss}),
-mosquitofish (\emph{Gambusia affinis}), and goldfish (morihana;
-\emph{Carassius auratus}). The lakes also support a mix of native
-macrophytes and several invasive species that have transformed the
-littoral zone in many lakes (Figure~\ref{fig-rotoiti-weeds}) (Burton
-2017). Current lake management prioritises improving water quality and
-controlling invasive species. This includes alum dosing (aluminium
-sulphate) in Lakes Rotorua, Rotoehu, and Ōkaro to reduce phosphorus
-loading, mechanical and chemical control of invasive macrophytes, and
-the community-led ``Catfish Killas'' programme, which aims to reduce
-catfish abundance from the lakes.
+mussel kākahi (\emph{Echyridella menziesii} {[}Gray, 1843{]}), kōaro
+(\emph{Galaxias brevipinnis} Günther, 1866), bullies (toitoi;
+\emph{Gobiomorphus cotidianus} McDowall, 1975), longfin eel (tuna;
+\emph{Anguilla dieffenbachii} Gray, 1842), and common smelt
+(\emph{Retropinna retropinna} {[}Richardson, 1848{]}). Introduced
+species include brown and rainbow trout (\emph{Salmo trutta} Linnaeus,
+1758, \emph{Oncorhynchus mykiss} {[}Walbaum, 1792{]}), mosquitofish
+(\emph{Gambusia affinis} {[}Baird \& Girard, 1853{]}), and goldfish
+(morihana; \emph{Carassius auratus} {[}Linnaeus, 1758{]}). The lakes
+also support a mix of native macrophytes and several invasive species
+that have transformed the littoral zone in many lakes
+(Figure~\ref{fig-rotoiti-weeds}) (Burton 2017). Current lake management
+prioritises improving water quality and controlling invasive species.
+This includes alum dosing (aluminium sulphate) in Lakes Rotorua,
+Rotoehu, and Ōkaro to reduce phosphorus loading, mechanical and chemical
+control of invasive macrophytes, and the community-led ``Catfish
+Killas'' programme, which aims to reduce catfish abundance from the
+lakes.
 
 \begin{figure}
 
@@ -1069,7 +1112,7 @@ to thrive, both must remain accessible and habitable.
 
 In stratified lakes during summer and autumn, thermal stratification can
 create anoxic conditions below the thermocline. Since kōura avoid
-dissolved oxygen concentrations below 5 mg/L (Devcich 1979), this
+dissolved oxygen concentrations \textless{} 5 mg/L (Devcich 1979), this
 displaces kōura from their daytime deep refuge into the shallow littoral
 zone (Kusabs et al. 2026), placing kōura in the depth range where
 catfish predation pressure is greatest (Blanchfield et al. 2026). The
@@ -1097,24 +1140,16 @@ further intensifies oxygen depletion in deeper waters (Vincent et al.
 can be quantified by estimating the proportion of each lake's bottom
 area that remains ``liveable'' --- defined here as depth layers where
 dissolved oxygen exceeds 5 mg/L and water temperature remains below
-21°C, the known physiological limits for kōura (Devcich 1979). For each
-CTD depth profile, each depth layer was classified as liveable or not,
-and lake bathymetric data (hypsographs) were used to convert those depth
-layers into bottom area, giving a liveable habitat percentage for each
-profile. Monthly CTD cast data from Bay of Plenty Regional Council
-(BOPRC) monitoring and continuous buoy profiles from LimnoTrack (Moore
-and McBride 2026) were combined across eleven of the twelve Rotorua Te
-Arawa Lakes (2003--2026). Annual and seasonal trends in liveable habitat
-were estimated per lake using ordinary least-squares linear regression.
-Across the lakes, liveable habitat varies strongly with season with
-sharp summer declines in eutrophic, mesotrophic and shallow lakes such
-as Rotorua, Rotoiti, Rotoehu, Rotokākahi, Rerewhakaaitu, Ōkāreka, Ōkaro,
-and Rotomāhana, while deeper oligotrophic lakes such as Rotomā,
-Tarawera, and Tikitapu remain relatively stable year-round
-(Figure~\ref{fig-livable-habitat-summary}). Over the past
-\textasciitilde20 years several lakes show statistically significant
-declines in annual mean liveable habitat, with Ōkāreka declining -0.4\%
-per year (Figure~\ref{fig-livable-habitat-trends}).
+21°C, the known physiological limits for kōura (Devcich 1979). Across
+the Rotorua Te Arawa lakes, liveable habitat varies with seasons
+(Figure~\ref{fig-livable-habitat-summary}), summer declines are most
+pronounced in eutrophic and mesotrophic lakes, Rotorua, Rotoiti,
+Rotoehu, Rerewhakaaitu, Ōkāreka, Ōkaro, and Rotomāhana, while Rotomā and
+Tarawera remain almost completely habitable year round. Over the past
+\textasciitilde20 years several lakes show long term declines in annual
+mean liveable habitat (Figure~\ref{fig-livable-habitat-trends}). Full
+methods are provided in the Appendix (see Appendix: Chapter 1 ---
+Supplementary information).
 
 Climate change is expected to intensify all of these pressures. Stronger
 and longer thermal stratification will expand and prolong anoxic
@@ -1127,11 +1162,11 @@ enhancement can build resilience in kōura populations. This rationale is
 supported by evidence from other systems supporting crayfish: in lakes
 where muddy substrates provide limited refugia, adding rocky substrate
 has been shown to relax refugia limitation and increase noble crayfish
-(\emph{Astacus astacus}) population density (Johnsen and Taugbøl 2008).
-Structural addition can only deliver this benefit when water quality
-falls within species tolerance, as when dissolved oxygen or temperature
-exceeds physiological limits, species cannot persist regardless of
-refuge quality.
+(\emph{Astacus astacus} {[}Linnaeus, 1758{]}) population density
+(Johnsen and Taugbøl 2008). Structural addition can only deliver this
+benefit when water quality falls within species tolerance, as when
+dissolved oxygen or temperature exceeds physiological limits, species
+cannot persist regardless of refuge quality.
 
 \begin{figure}
 
@@ -1285,7 +1320,7 @@ in kōura? & \emph{Biological Invasions} --- Revising for resubmission \\
 kōura prefer? & \emph{Hydrobiologia} --- Published \\
 3 & 4 --- The Importance of Structure & Does shelter structure or
 material composition drive kōura refuge selection? & \emph{Aquatic
-Conservation} --- Under review \\
+Conservation: Marine and Freshwater Ecosystems} --- Under review \\
 4 & 5 --- Rock Piles as Kōura Habitat & Can habitat enhancement
 structures provide effective habitat for kōura in Lake Rotoiti? &
 \emph{Journal of Applied Ecology} --- Under review \\
@@ -1299,12 +1334,12 @@ was analysed. In \textbf{Chapter 3}, the natural preferred shoreline
 habitat for kōura was investigated by monitoring 60 sites over five
 lakes. From this we gained a clearer picture of which habitat features
 support kōura and which shoreline areas would most benefit from
-structural enhancement. In the next chapter, \textbf{Chapter 4}, we
-designed and tested shelter types to determine kōura preference. Kōura
-are known to use various materials and compositions, so for this study
-we tested different configurations of wood and stone structures in
-mesocosm experiments to determine kōura shelter preferences. With an
-optimal design identified, \textbf{Chapter 5} deployed five stone pile
+structural enhancement. In the next chapter, \textbf{Chapter 4}, shelter
+types were designed and tested to determine kōura preference. Kōura are
+known to use various materials and compositions, so for this study we
+tested different configurations of wood and stone structures in mesocosm
+experiments to determine kōura shelter preferences. With an optimal
+design identified, \textbf{Chapter 5} deployed five stone pile
 structures along the shoreline in Lake Rotoiti and monitored kōura
 colonisation and abundance development over 18 months. \textbf{Chapter
 6} synthesises the findings across all four research chapters,
@@ -1316,10 +1351,7 @@ with an overview of the findings and considers how structural habitat
 enhancement can contribute to building resilience in declining
 freshwater crayfish populations more broadly. As each of the four
 research chapters are written as stand-alone manuscripts, some overlap
-of background information and methods is unavoidable. However, the
-general introduction provides a comprehensive overview of the study
-system, the species involved, and the research questions addressed in
-this thesis.
+of background information and methods is unavoidable.
 
 \clearpage
 \providecommand{\chaptermark}[1]{}
@@ -1454,29 +1486,30 @@ species, contributing to widespread population declines (Lee et al.
 2025; Kusabs et al. 2026).
 
 Kōura have a long coevolutionary history with the native longfin eel
-(\emph{Anguilla dieffenbachii}) (hereafter eel) and shortfin eel
-(\emph{A. australis}) in Aotearoa (Brown 2009; MacNeil et al. 2025).
-Reflecting this coevolutionary history, kōura can respond more strongly
-to eel kairomones than to those of introduced non-native brown trout
-(\emph{Salmo trutta}), even when sourced from streams where both
-predators were present (Shave et al. 1994). Shave et al. (1994) suggest
-that kōura predator recognition is a fixed behavioural trait shaped by
-coevolution. An invasive fish species that threatens kōura is the brown
-bullhead catfish (\emph{Ameiurus nebulosus}) (hereafter catfish).
-Catfish were introduced to Aotearoa in 1877, and the invasive species
-has since spread to multiple lakes and rivers in the North Island
-(McDowall 1990; Barnes and Hicks 2003; Dedual 2019). For example, in
-2016/18, the presence of catfish was confirmed in two large volcanic
-lakes, Lakes Rotoiti and Rotorua in the Bay of Plenty region, which have
-historically contained large populations of kōura (Francis 2019; Lee et
-al. 2025). Catfish are highly tolerant of a wide range of environmental
-conditions (Scott and Crossman 1973; Lee et al. 2025) and their broad
-gape and opportunistic feeding behaviour enable the consumption of a
-wide variety of aquatic prey (Scott and Crossman 1973; Dedual 2019).
-Given Aotearoa lacks native Siluriformes, the recent and ongoing spread
-of catfish into North Island waterways represents a truly novel
-predation threat to which kōura may lack adequate behavioural or sensory
-adaptations to respond.
+(\emph{Anguilla dieffenbachii} Gray, 1842) (hereafter eel) and shortfin
+eel (\emph{Anguilla australis} Richardson, 1848) in Aotearoa (Brown
+2009; MacNeil et al. 2025). Reflecting this coevolutionary history,
+kōura can respond more strongly to eel kairomones than to those of
+introduced non-native brown trout (\emph{Salmo trutta} Linnaeus, 1758),
+even when sourced from streams where both predators were present (Shave
+et al. 1994). Shave et al. (1994) suggest that kōura predator
+recognition is a fixed behavioural trait shaped by coevolution. An
+invasive fish species that threatens kōura is the brown bullhead catfish
+(\emph{Ameiurus nebulosus} Lesueur, 1819) (hereafter catfish). Catfish
+were introduced to Aotearoa in 1877, and the invasive species has since
+spread to multiple lakes and rivers in the North Island (McDowall 1990;
+Barnes and Hicks 2003; Dedual 2019). For example, in 2016/18, the
+presence of catfish was confirmed in two large volcanic lakes, Lakes
+Rotoiti and Rotorua in the Bay of Plenty region, which have historically
+contained large populations of kōura (Francis 2019; Lee et al. 2025).
+Catfish are highly tolerant of a wide range of environmental conditions
+(Scott and Crossman 1973; Lee et al. 2025) and their broad gape and
+opportunistic feeding behaviour enable the consumption of a wide variety
+of aquatic prey (Scott and Crossman 1973; Dedual 2019). Given Aotearoa
+lacks native Siluriformes, the recent and ongoing spread of catfish into
+North Island waterways represents a truly novel predation threat to
+which kōura may lack adequate behavioural or sensory adaptations to
+respond.
 
 In this study, we used controlled laboratory experiments to test whether
 the presence of a novel and native predator induced differences in kōura
@@ -1522,9 +1555,9 @@ University of Waikato. All three species were held separately in holding
 tanks and acclimated for a week in the laboratory conditions. These
 included a 10:14 light:dark cycle reflecting the seasonal day-length and
 dechlorinated tap water with stable temperatures (15.6 °C), pH (8.4) and
-dissolved oxygen concentrations (10 mg l\(^{-1}\)). These parameters
-reflect typical physiochemical conditions in the source lakes. Kōura and
-fish were fed every other day with commercial carnivore pellets (Hikari
+dissolved oxygen concentrations (10 mg/L). These parameters reflect
+typical physiochemical conditions in the source lakes. Kōura and fish
+were fed every other day with commercial carnivore pellets (Hikari
 Tropical, Kyorin Food Industries Ltd., Japan; animal protein 47\%).
 Because kōura are a taonga (treasured) species, permission was obtained
 from Te Arawa Lakes Trust and Te Komiti Whakahaere. All experimental
@@ -2425,11 +2458,11 @@ estimated as percentage cover within each site, along with emergent,
 submerged, and turf vegetation cover. To assess proximity to deeper
 waters, slope was calculated as horizontal distance from the shoreline
 to the 5 m depth contour derived from bathymetric maps. Chemical
-parameters included water temperature (°C), dissolved oxygen (mg
-L\(^{-1}\)), and conductivity (\(\mu\)S cm\(^{-1}\)), measured with a
-YSI ProSolo meter (Pro2030 Dissolved Oxygen and Conductivity Meter, YSI
-Inc., Yellow Springs, OH, USA) and pH was determined using a handheld pH
-meter (EC-PCTestr35, Eutech Instruments Pte Ltd, Paisley, UK).
+parameters included water temperature (°C), dissolved oxygen (mg/L), and
+conductivity (μS/cm), measured with a YSI ProSolo meter (Pro2030
+Dissolved Oxygen and Conductivity Meter, YSI Inc., Yellow Springs, OH,
+USA) and pH was determined using a handheld pH meter (EC-PCTestr35,
+Eutech Instruments Pte Ltd, Paisley, UK).
 
 Catch data for kōura and fish were collected using two single-winged,
 double-throated fyke nets (600 mm high D-shaped entrance hoop) and two
@@ -2509,17 +2542,16 @@ predictors considered included substrate index, slope to 5 m depth,
 riparian vegetation, overhanging trees, wood cover, aquatic vegetation
 classes (emergent native, submerged native, submerged non-native, and
 emergent non-native vegetation), water temperature (°C), dissolved
-oxygen (mg L\(^{-1}\)), pH, specific conductivity (\(\mu\)S
-cm\(^{-1}\)), and the presence of catfish, eels, goldfish, and common
-smelt. Continuous predictors were centred and standardised prior to
-modelling to improve convergence and facilitate comparison of effect
-sizes and were modelled as smooth terms using thin plate regression
-splines (bs = `ts'), which apply additional shrinkage to penalise overly
-complex relationships and can shrink smooth terms fully to zero during
-selection (Wood 2017). Basis dimensions (k) were set based on the number
-of unique values per predictor and adjusted where necessary to balance
-flexibility and parsimony. Binary predictors (fish presence variables)
-were included as parametric terms.
+oxygen (mg/L), pH, specific conductivity (μS/cm), and the presence of
+catfish, eels, goldfish, and common smelt. Continuous predictors were
+centred and standardised prior to modelling to improve convergence and
+facilitate comparison of effect sizes and were modelled as smooth terms
+using thin plate regression splines (bs = `ts'), which apply additional
+shrinkage to penalise overly complex relationships and can shrink smooth
+terms fully to zero during selection (Wood 2017). Basis dimensions (k)
+were set based on the number of unique values per predictor and adjusted
+where necessary to balance flexibility and parsimony. Binary predictors
+(fish presence variables) were included as parametric terms.
 
 Model selection was performed using maximum likelihood estimation with
 stepwise backward elimination, sequentially removed and the model
@@ -3180,20 +3212,20 @@ material composition for crayfish shelter preference is poorly
 understood.
 
 In Aotearoa-New Zealand (hereafter Aotearoa), the endemic freshwater
-crayfish kōura (\emph{Paranephrops planifrons}) faces conservation
-pressure from habitat loss, water quality degradation, and predation by
-invasive species (Lee et al. 2025; Kusabs et al. 2026). Kōura are a
-taonga (culturally treasured) species for Māori, the indigenous people
-of Aotearoa, and hold significant ecological and cultural value in
-freshwater ecosystems (Kusabs and Quinn 2009; Kusabs et al. 2015a). In
-their natural habitat, kōura are positively associated with overhanging
-banks, coarse substrates, and woody debris (Raven et al. 2026a; Usio and
-Townsend 2000; Jowett et al. 2008; Parkyn et al. 2009). Kōura have been
-shown to significantly increase refuge use in the presence of predators
-(Raven et al. 2026b; Shave et al. 1994). Habitat restoration by
-increasing shelter availability represents a promising management tool
-for kōura recovery, and the use of natural materials aligns with
-ecological and cultural values.
+crayfish kōura (\emph{Paranephrops planifrons} White, 1842) faces
+conservation pressure from habitat loss, water quality degradation, and
+predation by invasive species (Lee et al. 2025; Kusabs et al. 2026).
+Kōura are a taonga (culturally treasured) species for Māori, the
+indigenous people of Aotearoa, and hold significant ecological and
+cultural value in freshwater ecosystems (Kusabs and Quinn 2009; Kusabs
+et al. 2015a). In their natural habitat, kōura are positively associated
+with overhanging banks, coarse substrates, and woody debris (Raven et
+al. 2026a; Usio and Townsend 2000; Jowett et al. 2008; Parkyn et al.
+2009). Kōura have been shown to significantly increase refuge use in the
+presence of predators (Raven et al. 2026b; Shave et al. 1994). Habitat
+restoration by increasing shelter availability represents a promising
+management tool for kōura recovery, and the use of natural materials
+aligns with ecological and cultural values.
 
 In this study, four mesocosm experiments were conducted to identify
 kōura habitat preferences. We assessed how different structures varying
@@ -4106,10 +4138,9 @@ coordinate system (NZTM2000; EPSG:2193).
 Seasonal variable parameters were recorded at every monitoring round and
 included aquatic vegetation cover (emergent and submerged macrophytes).
 Chemical parameters included water temperature (°C), dissolved oxygen
-(mg L\(^{-1}\)), and conductivity (\(\mu\)S cm\(^{-1}\)) were measured
-using a YSI ProSolo meter (Pro2030, YSI Inc., Yellow Springs, OH, USA).
-pH was measured using a handheld pH meter (EC-PCTestr35, Eutech
-Instruments).
+(mg/L), and conductivity (μS/cm) were measured using a YSI ProSolo meter
+(Pro2030, YSI Inc., Yellow Springs, OH, USA). pH was measured using a
+handheld pH meter (EC-PCTestr35, Eutech Instruments).
 
 Kōura and fish were sampled every monitoring round using two
 single-winged, double-throated fyke nets (600 mm high D-shaped entrance
@@ -4857,7 +4888,8 @@ lakebed area meeting dissolved oxygen and temperature thresholds for
 kōura. For example, Lake Ōkāreka showed a statistically significant
 annual decline of 0.4\% in liveable habitat per year, indicating that
 the suitable habitat window is narrowing under current conditions, not
-just future ones.
+just future ones (see Appendix: Chapter 1 --- Supplementary
+information).
 
 \section{Kōura monitoring approaches}\label{koura-monitoring-approaches}
 
@@ -4869,18 +4901,18 @@ directly for interpreting the Chapter 5 results: higher catches near
 stone piles were taken as evidence of greater habitat use, but passive
 netting alone cannot confirm structural preference. Johnsen and Taugbøl
 (2008) monitored their stone addition site using both diving surveys and
-baited traps, finding evidence of crayfish colonisation using both
-methods. More structurally complex habitat may also introduce a
-systematic detection bias in the opposite direction: kōura sheltering
-within stone piles may become genuinely harder to catch or observe if
-they can forage on snails and other invertebrates within the structure
-itself, without needing to emerge at all (Francis 2019). A similar
-pattern has been reported in North American lakes containing largemouth
-bass (\emph{Micropterus salmoides}) (W. Perry, pers. comm.). This
-limitation influenced the monitoring approaches across the thesis, from
-netting in Chapter 3 and 5 toward direct observation methods in later
-trials (see Appendix: Chapter 6 --- Supplementary information), where
-spotlighting, Remotely Operated Vehicle (ROV) surveys, and diving
+baited traps over 13 years, finding a large increase in noble crayfish
+abundance using both methods. More structurally complex habitat may also
+introduce a systematic detection bias in the opposite direction: kōura
+sheltering within stone piles may become genuinely harder to catch or
+observe if they can forage on snails and other invertebrates within the
+structure itself, without needing to emerge at all (Francis 2019). A
+similar pattern has been reported in North American lakes containing
+largemouth bass (\emph{Micropterus salmoides}) (W. Perry, pers. comm.).
+This limitation influenced the monitoring approaches across the thesis,
+from netting in Chapter 3 and 5 toward direct observation methods in
+later trials (see Appendix: Chapter 6 --- Supplementary information),
+where spotlighting, Remotely Operated Vehicle (ROV) surveys, and diving
 allowed kōura to be observed on structures directly.
 
 Traditional Māori harvesting methods using tau kōura with whakaweku
@@ -4917,22 +4949,23 @@ sediment to fish effectively; on rocky substrates this is often not
 possible, and kōura may pass beneath the net opening entirely. At the
 deep structures built in Lake Rotoiti, more active monitoring approaches
 were applied including spotlighting from the jetty, ROV surveys and
-human dive surveys. These methods allow direct observation of kōura
-using the structures and are easier to execute over depth than netting.
-However, these direct methods capture only the moment of observation,
-and the detection bias introduced by structural complexity means that
-even direct observations may underestimate true habitat use if kōura
-remain sheltered during surveys. Passive Integrated Transponder (PIT)
-tagging, combined with an antenna array installed beneath or around a
-structure, would allow individual kōura to be tracked continuously
-without requiring their emergence or capture, resolving the detection
-bias identified above. The same approach could also support
-mark-recapture estimates of population size at stone pile sites,
-complementing its use for tracking movement and habitat use. PIT tagging
-is relatively low-cost and widely used in fish and crayfish movement
-studies and represents a promising direction for confirming genuine
-structural preference in future stone pile deployment (Bubb et al. 2006;
-Westhoff and Sievert 2013).
+human dive surveys (see Appendix: Chapter 6 --- Supplementary
+information). These methods allow direct observation of kōura using the
+structures and are easier to execute over depth than netting. However,
+these direct methods capture only the moment of observation, and the
+detection bias introduced by structural complexity means that even
+direct observations may underestimate true habitat use if kōura remain
+sheltered during surveys. Passive Integrated Transponder (PIT) tagging,
+combined with an antenna array installed beneath or around a structure,
+would allow individual kōura to be tracked continuously without
+requiring their emergence or capture, resolving the detection bias
+identified above. The same approach could also support mark-recapture
+estimates of population size at stone pile sites, complementing its use
+for tracking movement and habitat use. PIT tagging is relatively
+low-cost and widely used in fish and crayfish movement studies and
+represents a promising direction for confirming genuine structural
+preference in future stone pile deployment (Bubb et al. 2006; Westhoff
+and Sievert 2013).
 
 Additional monitoring techniques including environmental DNA (eDNA),
 remote underwater video (RUV), baited remote underwater video (BRUV),
@@ -4956,11 +4989,11 @@ zone remains untested.
 \section{What habitat enhancement can and cannot
 fix}\label{what-habitat-enhancement-can-and-cannot-fix}
 
-Chapter 3's shoreline habitat survey across five Te Arawa Lakes showed
-that kōura were most consistently associated with complex rocky habitats
-and riparian vegetation (Jowett et al. 2008; Kusabs et al. 2015b).
-Locations where this substrate has been lost or never existed are
-therefore logical candidates for stone pile deployment. Chapter 4
+In Chapter 3, shoreline habitat surveys across five Te Arawa Lakes
+showed that kōura were most consistently associated with complex rocky
+habitats and riparian vegetation (Jowett et al. 2008; Kusabs et al.
+2015b). Locations where this substrate has been lost or never existed
+are therefore logical candidates for stone pile deployment. Chapter 4
 confirmed that structural permanence and complexity are the decisive
 factors in kōura shelter selection, and stone piles deliver both
 (Streissl and Hödl 2002). In lakes where populations are declining,
@@ -4977,22 +5010,24 @@ that operates differently from stressor removal.
 Unlike water quality improvement or catfish management, structural
 habitat addition does not require these broader stressors to be fully
 controlled first, although the magnitude and persistence of those
-benefits will depend on the environmental conditions in which the
-structures are deployed. Stone piles function as a buffer against
-stressors that cannot be eliminated at lake scale. Catfish eradication
-would likely require broad-spectrum piscicides or complete lake drawdown
-which would also kill or displace native fish species (Dedual 2019).
-Future biotechnologies, including gene drives and pathogens that target
-only the invasive species, could eventually provide additional options,
-but these tools are still in early, experimental stages of development
-(Thresher et al. 2014; Kopf et al. 2019; Teem et al. 2020), making
-current eradication impractical at the Rotoiti and Rotorua scale. The
-expected future increase in lake water temperature will intensify
-thermal stratification under continued climate warming, which will
-benefit catfish more than kōura (Woolway et al. 2021; Lee et al. 2025).
-When these stressors cannot be removed habitat enhancement becomes a
-practical management tool whose importance grows even as worsening
-conditions constrain how much benefit it can ultimately deliver.
+benefits will depend on local conditions, particularly trophic state,
+the severity and duration of bottom water anoxia during summer
+stratification, and catfish density. Stone piles function as a buffer
+against stressors that cannot be eliminated at lake scale. Catfish
+eradication would likely require broad-spectrum piscicides or complete
+lake drawdown which would also kill or displace native fish species
+(Dedual 2019). Future biotechnologies, including gene drives and
+pathogens that target only the invasive species, could eventually
+provide additional options, but these tools are still in early,
+experimental stages of development (Thresher et al. 2014; Kopf et al.
+2019; Teem et al. 2020), making current eradication impractical at the
+Rotoiti and Rotorua scale. The expected future increase in lake water
+temperature will intensify thermal stratification under continued
+climate warming, which will benefit catfish more than kōura (Woolway et
+al. 2021; Lee et al. 2025). When these stressors cannot be removed
+habitat enhancement becomes a practical management tool whose importance
+grows even as worsening conditions constrain how much benefit it can
+ultimately deliver.
 
 Whether habitat enhancement delivers population-level benefits depends
 on whether habitat availability is genuinely limiting. In a Norwegian
@@ -5020,9 +5055,10 @@ currently most limiting. This is consistent with the Liebig--Sprengel
 resource or most severe stressor, not by the average condition of the
 system (Holmes et al. 2018). Where water quality is poor or catfish
 predation is intense, that ceiling is low, as demonstrated by the anoxic
-event in Lake Ōkaro. Where conditions are already favourable the ceiling
-is correspondingly higher, consistent with Chapter 3's finding that
-lakes with the best water quality, most complex habitat, and no catfish
+event in Lake Ōkaro (see Appendix: Chapter 6 --- Supplementary
+information). Where conditions are already favourable the ceiling is
+correspondingly higher, consistent with findings in Chapter 3 that lakes
+with the best water quality, most complex habitat, and no catfish
 support the highest kōura abundance. As catfish likely cannot be
 eradicated at lake scale, and thermal stratification will intensify
 under continued climate warming, the ceiling is unlikely to rise on its
@@ -5100,21 +5136,21 @@ Right: Kōura wheels by Mark Robinson at Lake Tarawera.}
 context}\label{kux14dura-restoration-in-a-te-arawa-context}
 
 Kōura are taonga, a treasured species with deep cultural significance
-for Te Arawa iwi. The decline documented in this thesis is not only an
-ecological loss but a cultural one. Increasing shelter availability may
-attract kōura and support population recovery, with potential benefits
-for cultural practices. Localised kōura harvesting currently occurs at
-Cherry Bay (Ōkahuroroa Bay) in Lake Rotoiti where regular monitoring
-using the tau kōura (and whakaweku) in conjunction with regular aquatic
-weed spraying and catfish netting has potentially already created a
-degree of structural complexity in the bay. This suggests a model for
-cultural kōura restoration in Lake Rotoiti: identifying areas with
-favourable lake bathymetry, maintaining regular spraying of aquatic
-weeds and active catfish removal, and creating habitat using whakaweku,
-tau kōura, and potentially stone piles to establish dedicated kōura
-reserves within in the lake that could support renewed cultural harvest
-activity. This is a suggestion for future research and management to
-consider together with Te Arawa.
+for Te Arawa iwi. The decline of kōura observed in the lakes (Kusabs et
+al. 2026) is not only an ecological loss but a cultural one. Increasing
+shelter availability may attract kōura and support population recovery,
+with potential benefits for cultural practices. Localised kōura
+harvesting currently occurs at Cherry Bay (Ōkahuroroa Bay) in Lake
+Rotoiti where regular monitoring using the tau kōura (and whakaweku) in
+conjunction with regular aquatic weed spraying and catfish netting has
+potentially already created a degree of structural complexity in the
+bay. This suggests a model for cultural kōura restoration in Lake
+Rotoiti: identifying areas with favourable lake bathymetry, maintaining
+regular spraying of aquatic weeds and active catfish removal, and
+creating habitat using whakaweku, tau kōura, and potentially stone piles
+to establish dedicated kōura reserves within in the lake that could
+support renewed cultural harvest activity. This is a suggestion for
+future research and management to consider together with Te Arawa.
 
 The evidence in this thesis has direct implications for the restoration
 of cultural kōura harvest in Lake Rotoiti. Given the compounding effects
@@ -5278,7 +5314,7 @@ review. Sustainable Water Resources Management 2:161--173.
 \bibitem[\citeproctext]{ref-Blair2009}
 Blair JM, Hicks BJ (2009) An investigation to determine origin: Age and
 otolith chemistry of a brown bullhead catfish (\emph{ameiurus
-nebulosus}) found at {Okawa Bay, Lake Rotoiti}. Centre for Biodiversity;
+nebulosus}) found at {Ōkawa Bay, Lake Rotoiti}. Centre for Biodiversity;
 Ecology Research, University of Waikato, Hamilton, New Zealand
 
 \bibitem[\citeproctext]{ref-Blake1993}
@@ -5291,7 +5327,7 @@ eels. Freshwater Biology 29:89--97.
 Blanchfield PJ, Rodrigues TH, MacNeil C, et al (2026) Invading brown
 bullhead catfish (\emph{ameiurus nebulosus}) show thermal niche rigidity
 and benthic niche plasticity: Implications for management. Biological
-Invasions 28: \url{https://doi.org/10.1007/s10530-026-03877-5}
+Invasions 28:205. \url{https://doi.org/10.1007/s10530-026-03877-5}
 
 \bibitem[\citeproctext]{ref-Bolker2009}
 Bolker BM, Brooks ME, Clark CJ, et al (2009) Generalized linear mixed
@@ -5310,9 +5346,8 @@ Oxford University Press
 
 \bibitem[\citeproctext]{ref-Brooks2017}
 Brooks M, Bolker B, Kristensen K, et al (2017)
-\href{https://doi.org/10.32614/cran.package.glmmtmb}{glmmTMB:
-Generalized linear mixed models using template model builder}. CRAN:
-Contributed Packages
+\href{https://doi.org/10.32614/cran.package.glmmtmb}{{glmmTMB}:
+Generalized linear mixed models using template model builder}
 
 \bibitem[\citeproctext]{ref-Broughton2017}
 Broughton RJ, Marsden ID, Hill JV, Glover CN (2017) Behavioural,
@@ -5330,7 +5365,7 @@ Behavioral Ecology 15:810--815.
 \bibitem[\citeproctext]{ref-Brown2009}
 Brown LA (2009) \href{http://hdl.handle.net/10179/1168}{Habitat
 determinants and predatory interactions of the endemic freshwater
-crayfish (koura, {\emph{Paranephrops planifrons}}) in the lower {North
+crayfish (kōura, {\emph{Paranephrops planifrons}}) in the lower {North
 Island}, {New Zealand}}. Master's thesis, Massey University
 
 \bibitem[\citeproctext]{ref-Bubb2006}
@@ -5345,7 +5380,7 @@ dynamics in dense emergent macrophytes in a {Florida} lake. Wetlands
 
 \bibitem[\citeproctext]{ref-Burkner2017}
 Bürkner P-C (2017) {brms}: An {R} package for {B}ayesian multilevel
-models using {Stan}. Journal of Statistical Software 80:
+models using {Stan}. Journal of Statistical Software 80:1--28.
 \url{https://doi.org/10.18637/jss.v080.i01}
 
 \bibitem[\citeproctext]{ref-Burkner2018}
@@ -5367,9 +5402,9 @@ weed and the {Rotorua Te Arawa Lakes} then and now}
 
 \bibitem[\citeproctext]{ref-Buscaino2012}
 Buscaino G, Filiciotto F, Buffa G, et al (2012) The underwater acoustic
-activities of the red swamp crayfish \textless i\textgreater procambarus
-clarkii\textless/i\textgreater. The Journal of the Acoustical Society of
-America 132:1792--1798. \url{https://doi.org/10.1121/1.4742744}
+activities of the red swamp crayfish {\emph{Procambarus clarkii}}. The
+Journal of the Acoustical Society of America 132:1792--1798.
+\url{https://doi.org/10.1121/1.4742744}
 
 \bibitem[\citeproctext]{ref-Butler1999}
 Butler M, MacDiarmid A, Booth J (1999) The cause and consequence of
@@ -5470,13 +5505,13 @@ Aquatic Ecosystems 21. \url{https://doi.org/10.1051/kmae/2022016}
 
 \bibitem[\citeproctext]{ref-Dawkins1979}
 Dawkins R, Krebs JR (1979) Arms races between and within species.
-Proceedings of the Royal Society of London B Biological Sciences
+Proceedings of the Royal Society of London Series B, Biological Sciences
 205:489--511. \url{https://doi.org/10.1098/rspb.1979.0081}
 
 \bibitem[\citeproctext]{ref-DeVita2023}
 De Vita C, Mauro M, Vazzana M, et al (2023) Acoustic signals and
-behavior of the invasive freshwater crayfish cherax destructor (clark,
-1936). Journal of Marine Science and Engineering 11:1147.
+behavior of the invasive freshwater crayfish {\emph{Cherax destructor}}
+({Clark}, 1936). Journal of Marine Science and Engineering 11:1147.
 \url{https://doi.org/10.3390/jmse11061147}
 
 \bibitem[\citeproctext]{ref-Dedual2002}
@@ -5508,11 +5543,10 @@ global biodiversity loss. Proceedings of the National Academy of
 Sciences 113:11261--11265. \url{https://doi.org/10.1073/pnas.1602480113}
 
 \bibitem[\citeproctext]{ref-Dougherty2016}
-Dougherty MM, Larson ER, Renshaw MA, et al (2016)
-Environmental\textless scp\textgreater DNA\textless/scp\textgreater(\textless scp\textgreater eDNA\textless/scp\textgreater)
-detects the invasive rusty crayfish\textless i\textgreater orconectes
-rusticus\textless/i\textgreater at low abundances. Journal of Applied
-Ecology 53:722--732. \url{https://doi.org/10.1111/1365-2664.12621}
+Dougherty MM, Larson ER, Renshaw MA, et al (2016) Environmental {DNA}
+({eDNA}) detects the invasive rusty crayfish {\emph{Orconectes
+rusticus}} at low abundances. Journal of Applied Ecology 53:722--732.
+\url{https://doi.org/10.1111/1365-2664.12621}
 
 \bibitem[\citeproctext]{ref-Driscoll2020}
 Driscoll J, Kola M, Mathews L (2020) Perception of alarm cues influences
@@ -5538,8 +5572,7 @@ Effects of old risks and new cues. The American Naturalist 193:575--587.
 \bibitem[\citeproctext]{ref-Engels2014}
 Engels B (2014)
 \href{https://doi.org/10.32614/cran.package.xnomial}{{XNomial}: Exact
-goodness-of-fit test for multinomial data with fixed probabilities}.
-CRAN: Contributed Packages
+goodness-of-fit test for multinomial data with fixed probabilities}
 
 \bibitem[\citeproctext]{ref-EsquivelMuelbert2026}
 Esquivel-Muelbert JR, Fontoura L, Zawada K, et al (2026) The natural
@@ -5554,9 +5587,7 @@ Zealand}. New Zealand Journal of Geology and Geophysics 37:163--167.
 \url{https://doi.org/10.1080/00288306.1994.9514611}
 
 \bibitem[\citeproctext]{ref-Fetzner2019}
-Fetzner JW (2019)
-\href{https://www.invertebratezoology.org/NewAstacidea/infraorder.asp?io=Astacidea}{Crayfish
-{Taxon Browser :: Infraorder Page}}
+Fetzner JW (2019) Crayfish {Taxon Browser :: Infraorder Page}
 
 \bibitem[\citeproctext]{ref-Fielding1997}
 Fielding AH, Bell JF (1997) A review of methods for the assessment of
@@ -5606,13 +5637,13 @@ temperature. Journal of the Fisheries Research Board of Canada
 7b:169--175. \url{https://doi.org/10.1139/f47-018}
 
 \bibitem[\citeproctext]{ref-Gabry2025}
-Gabry J, Češnovar R, Johnson A, Bronder S (2025)
-\href{https://mc-stan.org/cmdstanr/}{Cmdstanr: R interface to 'CmdStan'}
+Gabry J, Češnovar R, Johnson A, Bronder S (2025) Cmdstanr: R interface
+to 'CmdStan'
 
 \bibitem[\citeproctext]{ref-Gann2019}
 Gann GD, McDonald T, Walder B, et al (2019) International principles and
 standards for the practice of ecological restoration. {Second edition}.
-Restoration Ecology 27: \url{https://doi.org/10.1111/rec.13035}
+Restoration Ecology 27:S1--S46. \url{https://doi.org/10.1111/rec.13035}
 
 \bibitem[\citeproctext]{ref-Garron2024}
 Garron C, Pangaud A, Taubaty M, et al (2024) Towards the development of
@@ -5648,7 +5679,7 @@ Biological Reviews 60:425--454
 
 \bibitem[\citeproctext]{ref-Hamilton2005}
 Hamilton D, McBride C, Uraoka T (2005) {Lake Rotoiti} fieldwork and
-modeling to support considerations of {Ohau} channel diversion from
+modeling to support considerations of {Ōhau} channel diversion from
 {Lake Rotoiti}. NIWA \& University of Waikato, Hamilton, New Zealand
 
 \bibitem[\citeproctext]{ref-Hammond2006}
@@ -5674,8 +5705,7 @@ crisis. Science 362:1369. \url{https://doi.org/10.1126/science.aav9242}
 \bibitem[\citeproctext]{ref-Hartig2016}
 Hartig F (2016)
 \href{https://doi.org/10.32614/cran.package.dharma}{{DHARMa}: Residual
-diagnostics for hierarchical (multi-level / mixed) regression models}.
-CRAN: Contributed Packages
+diagnostics for hierarchical (multi-level / mixed) regression models}
 
 \bibitem[\citeproctext]{ref-Hartig2024}
 {Hartig F, Lohse L, leite M de S} (2024)
@@ -5686,16 +5716,14 @@ models}
 \bibitem[\citeproctext]{ref-Harwood2026}
 Harwood M, Bray AW, Woolfenden KA, et al (2026) A multi‐method approach
 to assessing barrier effectiveness in preventing the spread of invasive
-signal crayfish (\textless i\textgreater pacifastacus
-leniusculus\textless/i\textgreater). River Research and Applications.
-\url{https://doi.org/10.1002/rra.70167}
+signal crayfish ({\emph{Pacifastacus leniusculus}}). River Research and
+Applications. \url{https://doi.org/10.1002/rra.70167}
 
 \bibitem[\citeproctext]{ref-Harwood2025}
 Harwood M, Stebbing PD, Dunn AM, et al (2025) Rapid assessment of
 population dynamics and monitoring methods for invasive narrow clawed
-crayfish \textless i\textgreater pontastacus
-leptodactylus\textless/i\textgreater{} in a freshwater reservoir.
-Knowledge \&amp; Management of Aquatic Ecosystems 22.
+crayfish {\emph{Pontastacus leptodactylus}} in a freshwater reservoir.
+Knowledge \& Management of Aquatic Ecosystems 22.
 \url{https://doi.org/10.1051/kmae/2025017}
 
 \bibitem[\citeproctext]{ref-Haschenburger2009}
@@ -5782,7 +5810,7 @@ Zealand Journal of Marine and Freshwater Research 4:278--291.
 
 \bibitem[\citeproctext]{ref-Hudson2009}
 Hudson N, Ballantine D, Nagels J, Rutherford J (2009) Assessing the
-nutrient removal performance of the lake okaro constructed wetland.
+nutrient removal performance of the {Lake Ōkaro} constructed wetland.
 NIWA, Hamilton, New Zealand
 
 \bibitem[\citeproctext]{ref-Huolila1997}
@@ -5804,10 +5832,9 @@ of temperate lakes. Nature 594:66--70.
 
 \bibitem[\citeproctext]{ref-Jezequel2023}
 Jézéquel Y, Aoki N, Mooney TA (2023) Acoustic properties and shallow
-water propagation distances of caribbean spiny lobster sounds
-(\textless i\textgreater panulirus argus\textless/i\textgreater). The
-Journal of the Acoustical Society of America 153:529--537.
-\url{https://doi.org/10.1121/10.0016898}
+water propagation distances of {Caribbean} spiny lobster sounds
+({\emph{Panulirus argus}}). The Journal of the Acoustical Society of
+America 153:529--537. \url{https://doi.org/10.1121/10.0016898}
 
 \bibitem[\citeproctext]{ref-Jezequel2020}
 Jézéquel Y, Chauvaud L, Bonnel J (2020) Spiny lobster sounds can be
@@ -5844,7 +5871,7 @@ Marine and Freshwater Research 24:19--30.
 \url{https://doi.org/10.1080/00288330.1990.9516399}
 
 \bibitem[\citeproctext]{ref-Joy2013}
-Joy M, David B, Lake M (2013) New zealand freshwater fish sampling
+Joy M, David B, Lake M (2013) {New Zealand} freshwater fish sampling
 protocols: Part 1 --- wadeable rivers and streams. Massey University,
 Palmerston North
 
@@ -5871,18 +5898,18 @@ Biological Invasions 19:131--146.
 \url{https://doi.org/10.1007/s10530-016-1268-1}
 
 \bibitem[\citeproctext]{ref-Kopf2019}
-Kopf RK, Boutier M, Finlayson CM, et al (2019) Biocontrol in australia:
-Can a carp herpesvirus (CyHV-3) deliver safe and effective ecological
-restoration? Biological Invasions 21:1857--1870.
+Kopf RK, Boutier M, Finlayson CM, et al (2019) Biocontrol in
+{Australia}: {Can} a carp herpesvirus ({CyHV-3}) deliver safe and
+effective ecological restoration? Biological Invasions 21:1857--1870.
 \url{https://doi.org/10.1007/s10530-019-01967-1}
 
 \bibitem[\citeproctext]{ref-Kusabs2023}
 Kusabs IAK (2023) {Lake Rotorua} alum dosing monitoring programme 2023
-koura and kakahi. Kusabs \& Associates Ltd, Rotorua, New Zealand
+kōura and kākahi. Kusabs \& Associates Ltd, Rotorua, New Zealand
 
 \bibitem[\citeproctext]{ref-Kusabs2017}
-Kusabs IAK (2017) {Te Arawa Lakes} kōura monitoring programme -
-rerewhakaaitu \& ōkaro. 2016 - 2017. Bay of Plenty Regional Council
+Kusabs IAK (2017) {Te Arawa Lakes Kōura Monitoring Programme ---
+Rerewhakaaitu \& Ōkaro. 2016--2017}. Bay of Plenty Regional Council
 
 \bibitem[\citeproctext]{ref-Kusabs2026}
 Kusabs IAK, Duggan IC, Bruere AC, et al (2026) Invasive catfish linked
@@ -5900,9 +5927,10 @@ Marine and Freshwater Research 52:603--625.
 
 \bibitem[\citeproctext]{ref-Kusabs2015a}
 Kusabs IAK, Hicks BJ, Quinn JM, Hamilton DP (2015a) Sustainable
-management of freshwater crayfish (kōura, paranephrops planifrons) in te
-arawa (rotorua) lakes, north island, new zealand. Fisheries Research
-168:35--46. \url{https://doi.org/10.1016/j.fishres.2015.03.015}
+management of freshwater crayfish (kōura, {\emph{Paranephrops
+planifrons}}) in {Te Arawa} ({Rotorua}) lakes, {North Island, New
+Zealand}. Fisheries Research 168:35--46.
+\url{https://doi.org/10.1016/j.fishres.2015.03.015}
 
 \bibitem[\citeproctext]{ref-Kusabs2009}
 Kusabs IAK, Quinn JM (2009) Use of a traditional {Māori} harvesting
@@ -5938,7 +5966,7 @@ Park}, {U.S.A.} Canadian Journal of Zoology 79:1401--1409.
 LAWA (2025) Lakes data for the {Bay of Plenty} region
 
 \bibitem[\citeproctext]{ref-LAWA2024}
-LAWA (2024) Lake okaro
+LAWA (2024) Lake {Ōkaro}
 
 \bibitem[\citeproctext]{ref-Lee2025}
 Lee F, Kusabs IAK, Perry GLW, MacNeil C (2025) Identifying refugia from
@@ -5952,8 +5980,8 @@ Ecology 33: \url{https://doi.org/10.1111/rec.14354}
 
 \bibitem[\citeproctext]{ref-Lenth2017}
 Lenth RV, Piaskowski J (2017)
-\href{https://doi.org/10.32614/cran.package.emmeans}{Emmeans: Estimated
-marginal means, aka least-squares means}. CRAN: Contributed Packages
+\href{https://doi.org/10.32614/cran.package.emmeans}{{emmeans}:
+Estimated marginal means, aka least-squares means}
 
 \bibitem[\citeproctext]{ref-Lenth2026}
 Lenth RV, Piaskowski J, Banfai B, et al (2026)
@@ -5990,8 +6018,9 @@ Management of Aquatic Ecosystems 29.
 
 \bibitem[\citeproctext]{ref-Magnelia2008}
 Magnelia SJ, Jesus MJD, Schlechte JW, et al (2008) Comparison of plastic
-pipe and juniper tree fish attractors in a central texas reservoir.
-62:183--188
+pipe and juniper tree fish attractors in a {Central Texas} reservoir.
+Proceedings of the Annual Conference Southeastern Association of Fish
+and Wildlife Agencies 62:183--188
 
 \bibitem[\citeproctext]{ref-Martin2014}
 Martin CW (2014) Naïve prey exhibit reduced antipredator behavior and
@@ -6007,7 +6036,7 @@ tuna}. {National Institute of Water} \& {Atmospheric Research Ltd},
 \bibitem[\citeproctext]{ref-Mazlum2017}
 Mazlum Y, Guner Gurlek O, Sirin S (2017) Effect of different substrates
 on survival and growth of juveniles of the freshwater narrow-clawed
-crayfish {\emph{Astacus leptodactylus}} eschscholtz, 1823 ({Decapoda,
+crayfish {\emph{Astacus leptodactylus}} {Eschscholtz}, 1823 ({Decapoda,
 Astacidae}). Crustaceana 90:1289--1302.
 \url{https://doi.org/10.1163/15685403-00003724}
 
@@ -6149,9 +6178,9 @@ Zealand Journal of Marine and Freshwater Research 43:689--700.
 \url{https://doi.org/10.1080/00288330909510034}
 
 \bibitem[\citeproctext]{ref-Paul2008}
-Paul WJ, Hamilton DP, Gibbs MM (2008) Low‐dose alum application trialled
-as a management tool for internal nutrient loads in lake okaro, new
-zealand. New Zealand Journal of Marine and Freshwater Research
+Paul WJ, Hamilton DP, Gibbs MM (2008) Low-dose alum application trialled
+as a management tool for internal nutrient loads in {Lake Ōkaro}, {New
+Zealand}. New Zealand Journal of Marine and Freshwater Research
 42:207--217. \url{https://doi.org/10.1080/00288330809509949}
 
 \bibitem[\citeproctext]{ref-Peacor2001}
@@ -6213,14 +6242,12 @@ and Freshwater Research 24:411--427.
 \url{https://doi.org/10.1080/00288330.1990.9516433}
 
 \bibitem[\citeproctext]{ref-RCoreTeam2025}
-R Core Team (2025) \href{https://www.R-project.org/}{{R}: A language and
-environment for statistical computing}. R Foundation for Statistical
-Computing, Vienna, Austria
+R Core Team (2025) {R}: A language and environment for statistical
+computing. R Foundation for Statistical Computing, Vienna, Austria
 
 \bibitem[\citeproctext]{ref-RCoreTeam2026}
-R Core Team (2026) \href{https://www.R-project.org/}{{R}: A language and
-environment for statistical computing}. R Foundation for Statistical
-Computing, Vienna, Austria
+R Core Team (2026) {R}: A language and environment for statistical
+computing. R Foundation for Statistical Computing, Vienna, Austria
 
 \bibitem[\citeproctext]{ref-Ramalho2010}
 Ramalho RO, McClain WR, Anastacio PM (2010) An effective and simple
@@ -6422,7 +6449,7 @@ Aquatic Sciences 72:127--163.
 
 \bibitem[\citeproctext]{ref-Streissl2002}
 Streissl F, Hödl W (2002) Habitat and shelter requirements of the stone
-crayfish, {\emph{Austropotamobius torrentium}} schrank. Hydrobiologia
+crayfish, {\emph{Austropotamobius torrentium}} {Schrank}. Hydrobiologia
 477:195--199. \url{https://doi.org/10.1023/A:1021094309738}
 
 \bibitem[\citeproctext]{ref-Takahashi2019}
@@ -6518,7 +6545,7 @@ Research 68:900--908. \url{https://doi.org/10.1071/MF16020}
 \bibitem[\citeproctext]{ref-Vehtari2021}
 Vehtari A, Gelman A, Simpson D, et al (2021) Rank-normalization,
 folding, and localization: An improved Rˆ for assessing convergence of
-MCMC (with discussion). Bayesian Analysis 16:
+MCMC (with discussion). Bayesian Analysis 16:667--718.
 \url{https://doi.org/10.1214/20-ba1221}
 
 \bibitem[\citeproctext]{ref-Verburg2019}
@@ -6549,7 +6576,7 @@ sediments. The Journal of Geology 30:377--392.
 
 \bibitem[\citeproctext]{ref-West2026}
 West J (2026) The quality of clarity: Lessons from the sixty-year
-struggle to maintain the purity of lake taupō. Kōtuitui: New Zealand
+struggle to maintain the purity of {Lake Taupō}. Kōtuitui: New Zealand
 Journal of Social Sciences Online 21:e70031.
 \url{https://doi.org/10.1002/kot2.70031}
 
@@ -6675,7 +6702,211 @@ and extensions in ecology with {R}}. Springer
 \addcontentsline{toc}{chapter}{Appendices}
 
 \markboth{Appendices}{Appendices}
-% Supplementary numbering: S{chapter}.N (e.g. S2.1, S3.1, …)
+% Supplementary numbering: S{chapter}.N (e.g. S1.1, S2.1, …)
+\renewcommand{\thetable}{S1.\arabic{table}}
+\renewcommand{\thefigure}{S1.\arabic{figure}}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+
+\section*{Chapter 1 --- Supplementary
+information}\label{chapter-1-supplementary-information}
+\addcontentsline{toc}{section}{Chapter 1 --- Supplementary information}
+
+\subsection*{Liveable habitat analysis: methods and
+results}\label{liveable-habitat-analysis-methods-and-results}
+\addcontentsline{toc}{subsection}{Liveable habitat analysis: methods and
+results}
+
+Liveable habitat was estimated for eleven of the twelve Rotorua Te Arawa
+Lakes from 2003--2026 to quantify the proportion of each lake's bottom
+area simultaneously meeting dissolved oxygen and temperature thresholds
+suitable for kōura. This section describes the data sources, calculation
+method, and statistical approach used to assess seasonal patterns and
+long-term trends in liveable habitat. Results are summarised in
+Table~\ref{tbl-s1-liveable-trends} and visualised in
+Figure~\ref{fig-livable-habitat-summary} and
+Figure~\ref{fig-livable-habitat-trends} in the main text.
+
+\subsection{Data}\label{data}
+
+Monthly water column profiles were obtained from Bay of Plenty Regional
+Council (BOPRC) as part of their routine lake monitoring programme.
+Profiles were collected using a conductivity, temperature, and depth
+(CTD) instrument, which records water temperature (°C) and dissolved
+oxygen concentration (mg/L) at 1 m depth intervals from the surface to
+near the lake floor. Additional high-frequency depth-resolved profiles
+were obtained from LimnoTrack monitoring buoys deployed in lakes
+Rotorua, Rotoiti, Rotoehu, Ōkataina, Ōkāreka, Tarawera, Ōkaro and
+Rerewhakaaitu (Moore and McBride 2026), which record temperature and
+dissolved oxygen continuously throughout the water column. Monthly cast
+and buoy profile data were pooled as individual profile observations.
+For annual and seasonal mean calculations, all profiles from a given
+lake and year (or season) were averaged, regardless of source. This
+means that in lakes with continues buoy deployment, the annual mean is
+computed from a substantially larger number of profiles than in
+cast-only lakes, making the precision of the estimate differ between
+lakes and across periods within lakes. The practical effect of pooling
+both sources is that the annual means in buoy lakes are more heavily
+weighted toward buoy measurements, this increases temporal resolution
+but introduces differences in sampling design across the dataset that
+should be considered when comparing trends between lakes.
+
+\subsection{Liveable habitat
+calculation}\label{liveable-habitat-calculation}
+
+A depth layer was classified as liveable for kōura if dissolved oxygen
+exceeded 5 mg/L and water temperature remained below 21 °C,
+corresponding to the lower oxygen tolerance and upper thermal tolerance
+limits for \emph{Paranephrops planifrons} established by Devcich (1979).
+For each profile, qualifying depth layers were summed and weighted by
+their proportional contribution to total lake area, using lake-specific
+bathymetric hypsographs. This yields a liveable habitat percentage for
+each profile: the proportion of the total lake bottom area that
+simultaneously meets both thresholds. A value of 100\% indicates the
+entire lake floor is accessible to kōura; a value of 0\% indicates
+complete habitat loss due to anoxia or thermal stress.
+
+\subsection{Trend analysis}\label{trend-analysis}
+
+To assess long-term change, annual mean liveable habitat was calculated
+per lake by averaging all profile measurements within each season year,
+defined as the calendar year with December assigned to the following
+year so that the Southern Hemisphere summer (December--February) is kept
+within a single year group. Trends were estimated using ordinary
+least-squares (OLS) linear regression of annual mean liveable habitat
+against year, fitted separately for each lake. To assess whether trends
+differed among seasons, seasonal mean liveable habitat was also
+calculated per lake per season, and OLS regression was applied
+separately to each lake × season combination. Estimated slopes
+(percentage points per year), standard errors, and p-values for all
+annual and seasonal models are reported in
+Table~\ref{tbl-s1-liveable-trends}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{.ch1\_out }\OtherTok{\textless{}{-}} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{exists}\NormalTok{(}\StringTok{"ch1\_out\_dir"}\NormalTok{)) \{}
+\NormalTok{  ch1\_out\_dir}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  f }\OtherTok{\textless{}{-}}\NormalTok{ knitr}\SpecialCharTok{::}\FunctionTok{current\_input}\NormalTok{(}\AttributeTok{dir =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  thesis\_dir }\OtherTok{\textless{}{-}} \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(f)) }\FunctionTok{dirname}\NormalTok{(}\FunctionTok{normalizePath}\NormalTok{(f)) }\ControlFlowTok{else} \FunctionTok{normalizePath}\NormalTok{(}\StringTok{"."}\NormalTok{)}
+  \FunctionTok{file.path}\NormalTok{(thesis\_dir, }\StringTok{"01\_general\_intro"}\NormalTok{, }\StringTok{"outputs"}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{trends }\OtherTok{\textless{}{-}}\NormalTok{ readr}\SpecialCharTok{::}\FunctionTok{read\_csv}\NormalTok{(}
+  \FunctionTok{file.path}\NormalTok{(.ch1\_out, }\StringTok{"tbl{-}livable{-}trends.csv"}\NormalTok{),}
+  \AttributeTok{show\_col\_types =} \ConstantTok{FALSE}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{estimate  =} \FunctionTok{round}\NormalTok{(estimate, }\DecValTok{3}\NormalTok{),}
+    \AttributeTok{std.error =} \FunctionTok{round}\NormalTok{(std.error, }\DecValTok{3}\NormalTok{),}
+    \AttributeTok{p.value   =} \FunctionTok{signif}\NormalTok{(p.value, }\DecValTok{3}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{  trends,}
+  \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Lake"}\NormalTok{, }\StringTok{"Season"}\NormalTok{, }\StringTok{"Slope (\% yr⁻¹)"}\NormalTok{, }\StringTok{"SE"}\NormalTok{, }\StringTok{"p{-}value"}\NormalTok{, }\StringTok{"Sig."}\NormalTok{, }\StringTok{"Direction"}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+{
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2090}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1045}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2239}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0896}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1343}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0746}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1642}}@{}}
+
+\caption{\label{tbl-s1-liveable-trends}OLS regression slopes for annual
+and seasonal mean liveable habitat per lake (Cast and buoy CTD profiles
+combined, 2003--2026).}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Lake
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Season
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Slope (\% yr⁻¹)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+SE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p-value
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sig.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Direction
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Rotorua & Annual & -0.484 & 0.249 & 6.47e-02 & ns & decreasing \\
+Rotorua & Summer & -1.112 & 0.782 & 1.70e-01 & ns & decreasing \\
+Rotorua & Autumn & -0.260 & 0.182 & 1.68e-01 & ns & decreasing \\
+Rotorua & Winter & -0.010 & 0.020 & 6.21e-01 & ns & decreasing \\
+Rotorua & Spring & -0.512 & 0.362 & 1.73e-01 & ns & decreasing \\
+Rotoiti & Annual & -0.306 & 0.268 & 2.66e-01 & ns & decreasing \\
+Rotoiti & Summer & -0.283 & 0.577 & 6.29e-01 & ns & decreasing \\
+Rotoiti & Autumn & -0.195 & 0.389 & 6.22e-01 & ns & decreasing \\
+Rotoiti & Winter & -0.264 & 0.215 & 2.33e-01 & ns & decreasing \\
+Rotoiti & Spring & -0.046 & 0.027 & 1.09e-01 & ns & decreasing \\
+Rotoehu & Annual & -0.290 & 0.114 & 1.81e-02 & * & decreasing \\
+Rotoehu & Summer & -0.636 & 0.392 & 1.20e-01 & ns & decreasing \\
+Rotoehu & Autumn & -0.125 & 0.085 & 1.58e-01 & ns & decreasing \\
+Rotoehu & Winter & 0.000 & 0.000 & 9.73e-02 & ns & decreasing \\
+Rotoehu & Spring & -0.130 & 0.057 & 3.35e-02 & * & decreasing \\
+Rotomā & Annual & -0.334 & 0.102 & 4.35e-03 & ** & decreasing \\
+Rotomā & Summer & -0.532 & 0.223 & 2.88e-02 & * & decreasing \\
+Rotomā & Autumn & -0.725 & 0.276 & 1.76e-02 & * & decreasing \\
+Rotomā & Winter & -0.095 & 0.187 & 6.19e-01 & ns & decreasing \\
+Rotomā & Spring & 0.000 & 0.000 & 1.01e-01 & ns & increasing \\
+Ōkataina & Annual & 0.081 & 0.151 & 5.95e-01 & ns & increasing \\
+Ōkataina & Summer & 0.035 & 0.298 & 9.09e-01 & ns & increasing \\
+Ōkataina & Autumn & 0.336 & 0.310 & 2.91e-01 & ns & increasing \\
+Ōkataina & Winter & 0.232 & 0.296 & 4.43e-01 & ns & increasing \\
+Ōkataina & Spring & -0.022 & 0.017 & 2.02e-01 & ns & decreasing \\
+Ōkāreka & Annual & -0.407 & 0.170 & 2.59e-02 & * & decreasing \\
+Ōkāreka & Summer & -1.297 & 0.268 & 8.57e-05 & *** & decreasing \\
+Ōkāreka & Autumn & -0.139 & 0.127 & 2.86e-01 & ns & decreasing \\
+Ōkāreka & Winter & -0.094 & 0.066 & 1.70e-01 & ns & decreasing \\
+Ōkāreka & Spring & -0.482 & 0.142 & 2.68e-03 & ** & decreasing \\
+Tikitapu & Annual & -0.255 & 0.115 & 3.92e-02 & * & decreasing \\
+Tikitapu & Summer & -0.452 & 0.265 & 1.06e-01 & ns & decreasing \\
+Tikitapu & Autumn & -0.145 & 0.205 & 4.90e-01 & ns & decreasing \\
+Tikitapu & Winter & -0.070 & 0.032 & 4.11e-02 & * & decreasing \\
+Tikitapu & Spring & -0.230 & 0.140 & 1.20e-01 & ns & decreasing \\
+Tarawera & Annual & -0.025 & 0.025 & 3.34e-01 & ns & decreasing \\
+Tarawera & Summer & -0.213 & 0.207 & 3.14e-01 & ns & decreasing \\
+Tarawera & Autumn & -0.032 & 0.025 & 2.24e-01 & ns & decreasing \\
+Tarawera & Winter & -0.027 & 0.085 & 7.51e-01 & ns & decreasing \\
+Tarawera & Spring & -0.007 & 0.008 & 3.78e-01 & ns & decreasing \\
+Rotomāhana & Annual & -0.870 & 0.223 & 1.02e-03 & ** & decreasing \\
+Rotomāhana & Summer & -0.593 & 0.324 & 8.52e-02 & ns & decreasing \\
+Rotomāhana & Autumn & -2.721 & 0.545 & 1.12e-04 & *** & decreasing \\
+Rotomāhana & Winter & -0.066 & 0.050 & 2.00e-01 & ns & decreasing \\
+Rotomāhana & Spring & -0.133 & 0.072 & 8.13e-02 & ns & decreasing \\
+Ōkaro & Annual & 0.194 & 0.160 & 2.38e-01 & ns & increasing \\
+Ōkaro & Summer & 0.142 & 0.346 & 6.85e-01 & ns & increasing \\
+Ōkaro & Autumn & 0.616 & 0.233 & 1.53e-02 & * & increasing \\
+Ōkaro & Winter & -0.086 & 0.272 & 7.55e-01 & ns & decreasing \\
+Ōkaro & Spring & 0.138 & 0.253 & 5.92e-01 & ns & increasing \\
+Rerewhakaaitu & Annual & -0.406 & 0.207 & 6.32e-02 & ns & decreasing \\
+Rerewhakaaitu & Summer & -0.838 & 0.621 & 1.91e-01 & ns & decreasing \\
+Rerewhakaaitu & Autumn & -0.203 & 0.200 & 3.21e-01 & ns & decreasing \\
+Rerewhakaaitu & Winter & 0.000 & 0.000 & 3.59e-01 & ns & decreasing \\
+Rerewhakaaitu & Spring & -0.255 & 0.275 & 3.64e-01 & ns & decreasing \\
+
+\end{longtable}
+
+}
+
+\clearpage
 \renewcommand{\thetable}{S2.\arabic{table}}
 \renewcommand{\thefigure}{S2.\arabic{figure}}
 \setcounter{table}{0}

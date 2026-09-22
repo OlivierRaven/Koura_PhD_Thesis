@@ -55,6 +55,7 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 Sys.setenv(LERNZMP_API = "lernzmp_lakes")
 
 suppressPackageStartupMessages({
+  library(dunn.test)
   library(nzffdr)
   library(sf)
   library(rnaturalearthdata)
@@ -114,6 +115,7 @@ knitr::opts_knit$set(root.dir = chapter_dir)
 raw_data_dir <- file.path(chapter_dir, "data", "raw")
 der_data_dir <- file.path(chapter_dir, "data", "derived")
 out_dir      <- file.path(chapter_dir, "outputs")
+ch1_out_dir  <- out_dir
 
 dir.create(der_data_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(out_dir,      showWarnings = FALSE, recursive = TRUE)
@@ -1710,6 +1712,51 @@ ggsave(file.path(out_dir, "fig-rotoiti-trend.png"),
 p_rotoiti_trend
 ```
 
+# Seasonal/ annual stability
+```{r}
+#| label: tbl-kw-seasonal
+#| tbl-cap: Kruskal-Wallis test results for seasonal differences in liveable habitat per lake.
+
+kw_results <- livable_habitat_all |>
+  dplyr::group_by(Lake) |>
+  dplyr::summarise(
+    kw_chi2 = kruskal.test(Livable_Habitat_Percentage ~ Season)$statistic,
+    kw_df   = kruskal.test(Livable_Habitat_Percentage ~ Season)$parameter,
+    kw_p    = kruskal.test(Livable_Habitat_Percentage ~ Season)$p.value,
+    n       = dplyr::n(),
+    .groups = "drop"
+  ) |>
+  dplyr::mutate(
+    sig = dplyr::case_when(
+      kw_p < 0.001 ~ "***",
+      kw_p < 0.01  ~ "**",
+      kw_p < 0.05  ~ "*",
+      TRUE         ~ "ns"
+    )
+  )
+
+sig_lakes <- kw_results |> dplyr::filter(kw_p < 0.05) |> dplyr::pull(Lake)
+
+dunn_results <- purrr::map_dfr(sig_lakes, function(lk) {
+  d <- dplyr::filter(livable_habitat_all, Lake == lk)
+  dt <- dunn.test::dunn.test(d$Livable_Habitat_Percentage, g = d$Season,
+                              method = "bonferroni", altp = TRUE)
+  tibble::tibble(
+    Lake       = lk,
+    comparison = dt$comparisons,
+    z          = dt$Z,
+    p_adj      = dt$altP.adjusted
+  )
+})
+
+readr::write_csv(kw_results,   file.path(out_dir, "tbl-kw-seasonal.csv"))
+readr::write_csv(dunn_results, file.path(out_dir, "tbl-dunn-pairwise.csv"))
+
+kw_results
+
+
+```
+
 # Trend analysis — is livable habitat changing over time?
 ```{r}
 #| label: livable-trend
@@ -1734,7 +1781,47 @@ livable_trends <- annual_livable |>
   ) |>
   select(Lake, estimate, std.error, p.value, sig, direction)
 
-print(livable_trends)
+# Seasonal trends — OLS per lake × season
+seasonal_livable <- livable_habitat_all |>
+  dplyr::group_by(Lake, Season, Season_Year) |>
+  dplyr::summarise(Season_Mean = mean(Livable_Habitat_Percentage, na.rm = TRUE),
+                   .groups = "drop") |>
+  dplyr::rename(Year = Season_Year)
+
+livable_trends_seasonal <- seasonal_livable |>
+  dplyr::group_by(Lake, Season) |>
+  dplyr::group_modify(~ broom::tidy(lm(Season_Mean ~ Year, data = .x))) |>
+  dplyr::filter(term == "Year") |>
+  dplyr::mutate(
+    sig       = dplyr::case_when(
+      p.value < 0.001 ~ "***", p.value < 0.01 ~ "**",
+      p.value < 0.05  ~ "*",   TRUE            ~ "ns"
+    ),
+    direction = dplyr::if_else(estimate > 0, "increasing", "decreasing")
+  ) |>
+  dplyr::select(Lake, Season, estimate, std.error, p.value, sig, direction)
+
+# Combined table: annual + seasonal
+livable_trends_combined <- dplyr::bind_rows(
+  livable_trends          |> dplyr::mutate(Season = "Annual", .after = Lake),
+  livable_trends_seasonal
+) |>
+  dplyr::mutate(Season = factor(Season,
+    levels = c("Annual", "Summer", "Autumn", "Winter", "Spring"))) |>
+  dplyr::arrange(Lake, Season)
+
+readr::write_csv(livable_trends_combined, file.path(out_dir, "tbl-livable-trends.csv"))
+
+knitr::kable(
+  livable_trends_combined |>
+    dplyr::mutate(
+      estimate  = round(estimate, 3),
+      std.error = round(std.error, 3),
+      p.value   = signif(p.value, 3)
+    ),
+  col.names = c("Lake", "Season", "Slope (% yr⁻¹)", "SE", "p-value", "Sig.", "Direction"),
+  caption   = "OLS trend in annual and seasonal mean liveable habitat per lake (Cast + Buoy combined)."
+)
 ```
 
 ## Figures — livable habitat trends (Cast + Buoy combined)

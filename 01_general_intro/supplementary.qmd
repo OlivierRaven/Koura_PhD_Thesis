@@ -1,0 +1,47 @@
+## Chapter 1 — Supplementary information {.unnumbered}
+
+### Liveable habitat analysis: methods and results {.unnumbered}
+Liveable habitat was estimated for eleven of the twelve Rotorua Te Arawa Lakes from 2003–2026 to quantify the proportion of each lake's bottom area simultaneously meeting dissolved oxygen and temperature thresholds suitable for kōura. This section describes the data sources, calculation method, and statistical approach used to assess seasonal patterns and long-term trends in liveable habitat. Results are summarised in @tbl-s1-liveable-trends and visualised in @fig-livable-habitat-summary and @fig-livable-habitat-trends in the main text.
+
+### Data
+Monthly water column profiles were obtained from Bay of Plenty Regional Council (BOPRC) as part of their routine lake monitoring programme. Profiles were collected using a conductivity, temperature, and depth (CTD) instrument, which records water temperature (°C) and dissolved oxygen concentration (mg/L) at 1 m depth intervals from the surface to near the lake floor. Additional high-frequency depth-resolved profiles were obtained from LimnoTrack monitoring buoys deployed in lakes Rotorua, Rotoiti, Rotoehu, Ōkataina, Ōkāreka, Tarawera, Ōkaro and Rerewhakaaitu [@Moore2026], which record temperature and dissolved oxygen continuously throughout the water column. Monthly cast and buoy profile data were pooled as individual profile observations. For annual and seasonal mean calculations, all profiles from a given lake and year (or season) were averaged, regardless of source. This means that in lakes with continues buoy deployment, the annual mean is computed from a substantially larger number of profiles than in cast-only lakes, making the precision of the estimate differ between lakes and across periods within lakes. The practical effect of pooling both sources is that the annual means in buoy lakes are more heavily weighted toward buoy measurements, this increases temporal resolution but introduces differences in sampling design across the dataset that should be considered when comparing trends between lakes.
+
+### Liveable habitat calculation
+A depth layer was classified as liveable for kōura if dissolved oxygen exceeded 5 mg/L and water temperature remained below 21 °C, corresponding to the lower oxygen tolerance and upper thermal tolerance limits for *Paranephrops planifrons* established by @Devcich1979. For each profile, qualifying depth layers were summed and weighted by their proportional contribution to total lake area, using lake-specific bathymetric hypsographs. This yields a liveable habitat percentage for each profile: the proportion of the total lake bottom area that simultaneously meets both thresholds. A value of 100% indicates the entire lake floor is accessible to kōura; a value of 0% indicates complete habitat loss due to anoxia or thermal stress.
+
+### Trend analysis
+To assess long-term change, annual mean liveable habitat was calculated per lake by averaging all profile measurements within each season year, defined as the calendar year with December assigned to the following year so that the Southern Hemisphere summer (December–February) is kept within a single year group. Trends were estimated using ordinary least-squares (OLS) linear regression of annual mean liveable habitat against year, fitted separately for each lake. To assess whether trends differed among seasons, seasonal mean liveable habitat was also calculated per lake per season, and OLS regression was applied separately to each lake × season combination. Estimated slopes (percentage points per year), standard errors, and p-values for all annual and seasonal models are reported in @tbl-s1-liveable-trends
+
+
+```{r}
+#| label: tbl-s1-liveable-trends
+#| tbl-cap: "OLS regression slopes for annual and seasonal mean liveable habitat per lake (Cast and buoy CTD profiles combined, 2003–2026)."
+
+.ch1_out <- if (exists("ch1_out_dir")) {
+  ch1_out_dir
+} else {
+  f <- knitr::current_input(dir = TRUE)
+  thesis_dir <- if (!is.null(f)) dirname(normalizePath(f)) else normalizePath(".")
+  file.path(thesis_dir, "01_general_intro", "outputs")
+}
+
+trends <- readr::read_csv(
+  file.path(.ch1_out, "tbl-livable-trends.csv"),
+  show_col_types = FALSE
+) |>
+  dplyr::mutate(
+    estimate  = round(estimate, 3),
+    std.error = round(std.error, 3),
+    p.value   = signif(p.value, 3)
+  )
+
+knitr::kable(
+  trends,
+  col.names = c("Lake", "Season", "Slope (% yr⁻¹)", "SE", "p-value", "Sig.", "Direction")
+)
+
+```
+
+
+
+

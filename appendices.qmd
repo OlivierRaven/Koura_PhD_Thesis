@@ -32,7 +32,17 @@
 
 ```{=latex}
 \markboth{Appendices}{Appendices}
-% Supplementary numbering: S{chapter}.N (e.g. S2.1, S3.1, …)
+% Supplementary numbering: S{chapter}.N (e.g. S1.1, S2.1, …)
+\renewcommand{\thetable}{S1.\arabic{table}}
+\renewcommand{\thefigure}{S1.\arabic{figure}}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+```
+
+{{< include 01_general_intro/supplementary.qmd >}}
+
+```{=latex}
+\clearpage
 \renewcommand{\thetable}{S2.\arabic{table}}
 \renewcommand{\thefigure}{S2.\arabic{figure}}
 \setcounter{table}{0}
