@@ -36,11 +36,34 @@ trends <- readr::read_csv(
     p.value   = signif(p.value, 3)
   )
 
-knitr::kable(
-  trends,
-  col.names = c("Lake", "Season", "Slope (% per year)", "SE", "p-value", "Sig.", "Direction")
-)
+col_names_trends <- c("Lake", "Season", "Slope (% per year)", "SE", "p-value", "Sig.", "Direction")
 
+if (isTRUE(getOption("thesis.is.html")) && knitr::is_html_output()) {
+  DT::datatable(
+    trends,
+    colnames    = col_names_trends,
+    filter      = "top",
+    rownames    = FALSE,
+    options     = list(pageLength = 20, dom = 'Bfrtip', buttons = c('csv', 'excel')),
+    extensions  = 'Buttons'
+  ) |>
+    DT::formatRound(columns = intersect(names(trends), c("estimate", "std.error", "p.value")),
+                    digits = 3)
+} else if (knitr::is_latex_output()) {
+  knitr::kable(
+    trends,
+    col.names = col_names_trends,
+    booktabs  = TRUE,
+    longtable = TRUE
+  ) |>
+    kableExtra::kable_styling(
+      latex_options = c("striped", "repeat_header"),
+      font_size     = 8,
+      stripe_color  = "gray!8"
+    )
+} else {
+  knitr::kable(trends, col.names = col_names_trends)
+}
 ```
 
 

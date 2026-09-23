@@ -16,7 +16,7 @@
   \setlength{\itemsep}{1.2em}
 
   \item Structural complexity is essential for the recovery of kōura populations, when
-        threatened by non-native predator.\\
+        threatened by a non-native predator.\\
         \hspace*{1em}{\small\itshape (this thesis)}
 
   \item The fear of predators shapes prey behaviour as powerfully as predation
@@ -60,7 +60,7 @@ The University of Waikato, 2026
 
 **From this thesis**
 
-1. Structural complexity is essential for the recovery of kōura populations, when threatened by non-native predator.
+1. Structural complexity is essential for the recovery of kōura populations, when threatened by a non-native predator.
 2. The fear of predators shapes prey behaviour as powerfully as predation itself, yet invasion biology rarely accounts for it.
 3. Rock pile deployment is a viable and scalable tool for freshwater crayfish restoration in lakes, but success depends on location and design, not just presence.
 
