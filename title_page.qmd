@@ -8,12 +8,12 @@
     rectangle
     ([xshift=-1.3cm, yshift=1.3cm]current page.south east);
 \end{tikzpicture}
-\vspace*{1.5cm}
+\vspace*{0.8cm}
 \begin{center}
 
 {\fontsize{20}{26}\selectfont\bfseries Enhancing K\={o}ura Habitat in Invaded Lake Ecosystems}
 
-\vspace{0.5cm}
+\vspace{0.4cm}
 
 {\fontsize{13}{18}\selectfont\itshape Conservation of K\={o}ura Under Brown Bullhead Catfish Invasion\\in the Rotorua Te Arawa Lakes}
 
@@ -39,7 +39,7 @@ by\\[0.3cm]
 {\fontsize{11}{14}\selectfont 2026}
 
 \end{center}
-\vspace*{1.5cm}
+\vspace*{0.5cm}
 \newpage
 :::
 

@@ -2,20 +2,21 @@
 \clearpage
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-  \node[inner sep=0pt, anchor=north]
-    at ([yshift=-5.5cm]current page.north)
-    {\rotatebox{90}{\includegraphics[height=\paperwidth]{images/koura_dish_cover.png}}};
-  \fill[black]
-    (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
-  \fill[black]
-    (current page.south west) rectangle ([yshift=9cm]current page.south east);
+  \fill[black] (current page.south west) rectangle (current page.north east);
+  \begin{scope}
+    \clip ([yshift=-3.5cm]current page.north west)
+          rectangle (current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-3.5cm]current page.north)
+      {\rotatebox{90}{\includegraphics[height=\paperwidth]{images/koura_dish_cover.png}}};
+  \end{scope}
   \node[color=white, text width=0.85\paperwidth, align=left,
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
-    at ([xshift=1.5cm, yshift=-3.5cm]current page.north west)
+    at ([xshift=1.5cm, yshift=-1.8cm]current page.north west)
     {References};
-  \node[color=white!80, anchor=south west,
+  \node[color=white!80, anchor=north east,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
-    at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
+    at ([xshift=-1.2cm, yshift=-3.8cm]current page.north east)
     {K\={o}ura dish. Photo: Soweeta Fort-D'ath.};
 \end{tikzpicture}
 \null
