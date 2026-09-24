@@ -159,7 +159,7 @@ Critically, Aotearoa lacks native Siluriformes, meaning kōura and other native 
 This research was conducted in the Rotorua Te Arawa Lakes, a group of twelve volcanic lakes in the central North Island of Aotearoa (Bay of Plenty region; @fig-study-lakes-map; @tbl-bop-lake-overview). The lakes were formed by rhyolitic volcanic activity over the past ~230,000 years and continue to experience volcanic influence, most recently through the 1886 eruption of Mount Tarawera, which deposited basalt scoria and the distinctive Rotomāhana Mud across the surrounding catchments [@Cole2014]. The lakes vary considerably in size (0.3–81 km²) and maximum depth (13.5–125 m) and span a gradient of mixing regimes and trophic states from oligotrophic (e.g. Tarawera, Rotomā) to eutrophic (e.g. Rotorua, Ōkaro; @tbl-bop-lake-overview). This diversity makes the Te Arawa Lakes a particularly informative system for studying how kōura respond to differing combinations of habitat structure, water quality, and predator presence.
 
 ::: {.content-visible unless-format="html"}
-![Rotorua Te Arawa Lakes overview map. Colours represent the trophic state of each lake. Data sourced from @LAWA2025.](outputs/fig-study-lakes-map.png){#fig-study-lakes-map width=85%}
+![Rotorua Te Arawa Lakes overview map. Colours represent the trophic state of each lake. Data sourced from @LAWA2025.](outputs/fig-study-lakes-map.png){#fig-study-lakes-map width=75%}
 :::
 
 ::: {.content-visible when-format="html"}

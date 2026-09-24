@@ -5,11 +5,13 @@ author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none
 citation: false
-header-includes: |
-  \renewcommand{\topfraction}{0.92}
-  \renewcommand{\bottomfraction}{0.92}
-  \renewcommand{\textfraction}{0.05}
-  \renewcommand{\floatpagefraction}{0.88}
+format:
+  pdf:
+    header-includes: |
+      \renewcommand{\topfraction}{0.92}
+      \renewcommand{\bottomfraction}{0.92}
+      \renewcommand{\textfraction}{0.05}
+      \renewcommand{\floatpagefraction}{0.88}
 ---
 
 ```{r}

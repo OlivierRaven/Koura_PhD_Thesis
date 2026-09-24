@@ -8,7 +8,7 @@
           rectangle (current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-3.5cm]current page.north)
-      {\rotatebox{90}{\includegraphics[height=\paperwidth]{images/koura_dish_cover.png}}};
+      {\includegraphics[width=\paperwidth]{images/koura_dish_cover.png}};
   \end{scope}
   \node[color=white, text width=0.85\paperwidth, align=left,
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]

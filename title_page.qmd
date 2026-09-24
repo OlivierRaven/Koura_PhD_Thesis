@@ -15,7 +15,7 @@
 
 \vspace{0.4cm}
 
-{\fontsize{13}{18}\selectfont\itshape Conservation of K\={o}ura Under Brown Bullhead Catfish Invasion\\in the Rotorua Te Arawa Lakes}
+{\fontsize{13}{18}\selectfont\itshape Conservation of Freshwater Crayfish Under Brown Bullhead Catfish Invasion\\in the Rotorua Te Arawa Lakes}
 
 \vfill
 
@@ -53,7 +53,7 @@ by\\[0.3cm]
 
 **Enhancing Kōura Habitat in Invaded Lake Ecosystems**
 
-*Conservation of Kōura Under Brown Bullhead Catfish Invasion in the Rotorua Te Arawa Lakes*
+*Conservation of Freshwater Crayfish Under Brown Bullhead Catfish Invasion in the Rotorua Te Arawa Lakes*
 
 &nbsp;
 
@@ -88,7 +88,7 @@ The University of Waikato
 Enhancing Kōura Habitat in Invaded Lake Ecosystems
 </h1>
 <p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; font-style:italic; max-width:520px; line-height:1.5; margin:0 0 3rem; color:#555;">
-Conservation of Kōura Under Brown Bullhead Catfish Invasion in the Rotorua Te Arawa Lakes
+Conservation of Freshwater Crayfish Under Brown Bullhead Catfish Invasion in the Rotorua Te Arawa Lakes
 </p>
 
 <p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; line-height:2.4; margin:0 0 2.5rem;">
