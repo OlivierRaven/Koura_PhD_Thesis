@@ -961,7 +961,7 @@ flat_steps <- hypsograph_check_data |>
   group_by(Lake) |>
   mutate(area_change = Area - lag(Area)) |>
   filter(!is.na(area_change), area_change == 0) |>
-  select(Lake, Depth, Area) |>
+  dplyr::select(Lake, Depth, Area) |>
   ungroup()
 
 if (nrow(flat_steps) > 0) {
@@ -982,7 +982,7 @@ shallow_gaps <- hypsograph_check_data |>
     area_change = Area  - lag(Area)
   ) |>
   filter(!is.na(depth_gap), depth_gap > 1) |>
-  select(Lake, from_depth = Depth, depth_gap, Area, area_change) |>
+  dplyr::select(Lake, from_depth = Depth, depth_gap, Area, area_change) |>
   ungroup()
 
 if (nrow(shallow_gaps) > 0) {
@@ -1217,7 +1217,7 @@ bathy_points_sub <- bathy_points |> group_by(Lake) |> slice_sample(n = 20000) |>
 bathy_grid <- bathy_points |> mutate(Depth_round5 = floor(depth / 5) * 5)
 
 profile_conditions <- area_data_all_lakes |>
-select(Lake, Date, Cast_ID, Depth, Year, Season, Livable_Habitat)
+dplyr::select(Lake, Date, Cast_ID, Depth, Year, Season, Livable_Habitat)
 
 bathy_cast <- bathy_points_sub |>
 rename(Depth = depth) |>
@@ -1779,7 +1779,7 @@ livable_trends <- annual_livable |>
                        p.value < 0.05 ~ "*", TRUE ~ "ns"),
     direction = if_else(estimate > 0, "increasing", "decreasing")
   ) |>
-  select(Lake, estimate, std.error, p.value, sig, direction)
+  dplyr::select(Lake, estimate, std.error, p.value, sig, direction)
 
 # Seasonal trends — OLS per lake × season
 seasonal_livable <- livable_habitat_all |>
@@ -1984,7 +1984,7 @@ depth_zones_long <- depth_ranges_all |>
                                   dplyr::coalesce(shallowest_livable, cast_shallowest), 0),
     nonlivable_thickness = total_depth - livable_thickness
   ) |>
-  select(Lake, Date, Season, livable_thickness, nonlivable_thickness) |>
+  dplyr::select(Lake, Date, Season, livable_thickness, nonlivable_thickness) |>
   tidyr::pivot_longer(c(nonlivable_thickness, livable_thickness),
                        names_to = "Zone", values_to = "Thickness") |>
   mutate(Zone = factor(Zone,
@@ -2435,7 +2435,6 @@ season_persistence_maps[["Summer"]]
 ```
 
 # Interactive widgets (saved as RDS for HTML thesis)
-
 ```{r}
 #| label: widget-nzffd-map
 #| include: false

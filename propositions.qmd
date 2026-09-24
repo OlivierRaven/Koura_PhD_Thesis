@@ -23,7 +23,7 @@
         itself, yet invasion biology rarely accounts for it.\\
         \hspace*{1em}{\small\itshape (this thesis)}
 
-  \item Rock pile deployment is a viable and scalable tool for freshwater crayfish
+  \item Stone pile deployment is a viable and scalable tool for freshwater crayfish
         restoration in lakes, but success depends on location and design, not just presence.\\
         \hspace*{1em}{\small\itshape (this thesis)}
 
@@ -62,7 +62,7 @@ The University of Waikato, 2026
 
 1. Structural complexity is essential for the recovery of kōura populations, when threatened by a non-native predator.
 2. The fear of predators shapes prey behaviour as powerfully as predation itself, yet invasion biology rarely accounts for it.
-3. Rock pile deployment is a viable and scalable tool for freshwater crayfish restoration in lakes, but success depends on location and design, not just presence.
+3. Stone pile deployment is a viable and scalable tool for freshwater crayfish restoration in lakes, but success depends on location and design, not just presence.
 
 **On science and publishing**
 

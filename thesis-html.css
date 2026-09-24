@@ -160,8 +160,18 @@ code {
   color: #FFFCF0 !important;
   line-height: 1.22 !important;
   text-wrap: balance;
-  margin-bottom: 20px !important;
+  margin-bottom: 10px !important;
   border: none !important;
+}
+.thesis-hero-subtitle {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  font-weight: 400;
+  color: rgba(255,252,240,0.75);
+  line-height: 1.45;
+  text-wrap: balance;
+  margin: 0 0 22px;
 }
 .thesis-hero-rule {
   width: 44px;

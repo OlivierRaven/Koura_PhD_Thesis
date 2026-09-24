@@ -12,6 +12,10 @@
 
 {\fontsize{20}{26}\selectfont\bfseries Enhancing K\={o}ura Habitat in Invaded Lake Ecosystems}
 
+\vspace{0.5cm}
+
+{\fontsize{13}{18}\selectfont\itshape Conservation of K\={o}ura Under Brown Bullhead Catfish Invasion\\in the Rotorua Te Arawa Lakes}
+
 \vfill
 
 {\fontsize{11}{19}\selectfont
@@ -48,6 +52,8 @@ by\\[0.3cm]
 
 **Enhancing Kōura Habitat in Invaded Lake Ecosystems**
 
+*Conservation of Kōura Under Brown Bullhead Catfish Invasion in the Rotorua Te Arawa Lakes*
+
 &nbsp;
 
 A thesis submitted in partial fulfilment of the requirements for the degree of
@@ -77,9 +83,12 @@ The University of Waikato
 ::: {.content-visible when-format="html"}
 <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:82vh; text-align:center; padding:2rem 1rem;">
 
-<h1 style="font-family:'Crimson Pro',Georgia,serif; font-size:2rem; font-weight:700; max-width:560px; line-height:1.45; margin:0 0 3.5rem;">
+<h1 style="font-family:'Crimson Pro',Georgia,serif; font-size:2rem; font-weight:700; max-width:560px; line-height:1.45; margin:0 0 0.8rem;">
 Enhancing Kōura Habitat in Invaded Lake Ecosystems
 </h1>
+<p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; font-style:italic; max-width:520px; line-height:1.5; margin:0 0 3rem; color:#555;">
+Conservation of Kōura Under Brown Bullhead Catfish Invasion in the Rotorua Te Arawa Lakes
+</p>
 
 <p style="font-family:'Crimson Pro',Georgia,serif; font-size:1.1rem; line-height:2.4; margin:0 0 2.5rem;">
 A thesis submitted in partial fulfilment of the requirements<br>
