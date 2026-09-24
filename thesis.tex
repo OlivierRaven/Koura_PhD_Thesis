@@ -195,6 +195,10 @@
   {\newenvironment{abstract}{}{}}%
   {\renewenvironment{abstract}{}{}}
 \makeatother
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.92}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.88}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -286,6 +290,7 @@
 \clearpage
 \thispagestyle{empty}
 
+\let\cleardoublepage\clearpage
 \frontmatter
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
@@ -711,6 +716,20 @@ Statzner et al. 2003; Creed and Reed 2004), making them important
 ecosystem engineers and keystone species (Crandall and Buhay 2008; Jones
 et al. 2016).
 
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{images/fig-crayfish-families.png}
+
+}
+
+\caption{\label{fig-crayfish-families}Global native distribution of
+freshwater crayfish families, following Crandall and De Grave (2017).
+Adapted from: (Fetzner 2019).}
+
+\end{figure}%
+
 Despite their significant ecological role, 32\% of crayfish species
 worldwide are threatened with extinction (Richman et al. 2015) due to
 numerous threats, including habitat degradation, pollution, invasive
@@ -728,20 +747,6 @@ of native crayfish requires not only an understanding of the threats
 they face, but also of the habitats they depend on, a challenge
 particularly acute for endemic species in geographically isolated
 systems such as those of Aotearoa New Zealand.
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{images/fig-crayfish-families.png}
-
-}
-
-\caption{\label{fig-crayfish-families}Global native distribution of
-freshwater crayfish families, following Crandall and De Grave (2017).
-Adapted from: (Fetzner 2019).}
-
-\end{figure}%
 
 \section{Kōura: Aotearoa's native freshwater
 crayfish}\label{kux14dura-aotearoas-native-freshwater-crayfish}
@@ -4721,23 +4726,25 @@ analysis.
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
   \begin{scope}
-    \clip ([yshift=-7cm]current page.north west)
-          rectangle ([yshift=4.5cm]current page.south east);
-    \node[inner sep=0pt, anchor=center]
-      at (current page.center)
-      {\rotatebox{90}{\includegraphics[height=\paperwidth, width=18.2cm, keepaspectratio=false]{images/ch6_cover.jpg}}};
+    \clip ([yshift=-5.5cm]current page.north west)
+          rectangle (current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-5.5cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/ch6_cover.jpg}};
   \end{scope}
   \fill[black]
-    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
-  \fill[black]
-    (current page.south west) rectangle ([yshift=4.5cm]current page.south east);
+    (current page.north west) rectangle ([yshift=-5.5cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.3cm]current page.north west)
+    {Chapter \thechapter};
   \node[color=white, text width=0.85\paperwidth, align=left,
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=-3.5cm]current page.north west)
     {Synthesis};
-  \node[color=white!80, anchor=south west,
+  \node[color=white!80, anchor=south east,
         font=\fontsize{7}{9}\selectfont\itshape\sffamily]
-    at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
+    at ([xshift=-1.2cm, yshift=1.2cm]current page.south east)
     {Stone pile at Lake Rotoiti after 18 months of deployment.};
 \end{tikzpicture}
 \null

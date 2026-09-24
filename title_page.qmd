@@ -1,4 +1,5 @@
 ::: {.content-visible when-format="pdf"}
+\let\cleardoublepage\clearpage
 \frontmatter
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
