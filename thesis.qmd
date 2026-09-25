@@ -5,6 +5,9 @@ author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none
 citation: false
+format:
+  pdf:
+    latex-max-runs: 14
 ---
 
 ```{r}
