@@ -195,10 +195,6 @@
   {\newenvironment{abstract}{}{}}%
   {\renewenvironment{abstract}{}{}}
 \makeatother
-\renewcommand{\topfraction}{0.92}
-\renewcommand{\bottomfraction}{0.92}
-\renewcommand{\textfraction}{0.05}
-\renewcommand{\floatpagefraction}{0.88}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -260,6 +256,11 @@
 
 \setstretch{1.2}
 \mainmatter
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.92}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.88}
+
 \frontmatter
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
@@ -1004,7 +1005,7 @@ Te Arawa Lakes under a mahere whakahaere (Fisheries Management Plan; Te
 Arawa Lakes Trust (2015)), reflecting the deep cultural and ecological
 significance of the lakes to Te Arawa iwi and hapū.
 
-\begin{landscape}\begingroup\fontsize{8}{10}\selectfont
+\begingroup\fontsize{8}{10}\selectfont
 
 \begin{longtable}[t]{lrrrrrrrll}
 
@@ -1016,7 +1017,7 @@ populations and Lakes Ōkaro and Rotomāhana have no kōura populations.}
 \tabularnewline
 
 \toprule
-Lake name & Surface area (km²) & Perimeter length (km) & Catchment area (km²) & Mean depth (m) & Max depth (m) & Depth ratio & Elevation (m) & Mixing regime & Trophic state\\
+Lake name & \textbackslash{}makecell[c]\{Surface\textbackslash{}\textbackslash{}area (km²)\} & \textbackslash{}makecell[c]\{Perimeter\textbackslash{}\textbackslash{}length (km)\} & \textbackslash{}makecell[c]\{Catchment\textbackslash{}\textbackslash{}area (km²)\} & \textbackslash{}makecell[c]\{Mean\textbackslash{}\textbackslash{}depth (m)\} & \textbackslash{}makecell[c]\{Max\textbackslash{}\textbackslash{}depth (m)\} & \textbackslash{}makecell[c]\{Depth\textbackslash{}\textbackslash{}ratio\} & \textbackslash{}makecell[c]\{Elevation\textbackslash{}\textbackslash{}(m)\} & \textbackslash{}makecell[c]\{Mixing\textbackslash{}\textbackslash{}regime\} & \textbackslash{}makecell[c]\{Trophic\textbackslash{}\textbackslash{}state\}\\
 \midrule
 \cellcolor{gray!8}{Rotorua} & \cellcolor{gray!8}{81.0} & \cellcolor{gray!8}{45} & \cellcolor{gray!8}{508.0} & \cellcolor{gray!8}{11.0} & \cellcolor{gray!8}{45.0} & \cellcolor{gray!8}{0.24} & \cellcolor{gray!8}{280} & \cellcolor{gray!8}{Polymictic} & \cellcolor{gray!8}{Eutrophic}\\
 Rotoiti & 34.0 & 61 & 123.7 & 31.5 & 124.0 & 0.25 & 279 & Monomictic & Mesotrophic\\
@@ -1037,7 +1038,6 @@ Rerewhakaaitu & 5.0 & 25 & 37.0 & 7.0 & 15.8 & 0.44 & NA & Polymictic & Eutrophi
 \end{longtable}
 
 \endgroup{}
-\end{landscape}
 
 Each lake supports a mix of native and introduced species. Alongside
 kōura and catfish discussed above, native taxa include the freshwater

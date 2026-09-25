@@ -5,13 +5,6 @@ author: "Olivier V. Raven"
 date: "2026"
 title-block-style: none
 citation: false
-format:
-  pdf:
-    header-includes: |
-      \renewcommand{\topfraction}{0.92}
-      \renewcommand{\bottomfraction}{0.92}
-      \renewcommand{\textfraction}{0.05}
-      \renewcommand{\floatpagefraction}{0.88}
 ---
 
 ```{r}
@@ -24,6 +17,13 @@ theme_update(
   panel.background = element_rect(fill = .bg, colour = NA)
 )
 options(thesis.is.html = knitr::is_html_output())
+```
+
+```{=latex}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.92}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.88}
 ```
 
 {{< include index.qmd >}}

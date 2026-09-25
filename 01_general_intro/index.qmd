@@ -198,10 +198,15 @@ lake_data <- data.frame(
 )
 
 if (knitr::is_latex_output()) {
-  knitr::kable(lake_data, booktabs = TRUE) |>
-    kableExtra::kable_styling(font_size = 8, latex_options = c("striped"),
-                              stripe_color = "gray!8") |>
-    kableExtra::landscape()
+  col_names <- kableExtra::linebreak(
+    c("Lake name", "Surface\narea (km²)", "Perimeter\nlength (km)",
+      "Catchment\narea (km²)", "Mean\ndepth (m)", "Max\ndepth (m)",
+      "Depth\nratio", "Elevation\n(m)", "Mixing\nregime", "Trophic\nstate"),
+    align = "c"
+  )
+  knitr::kable(lake_data, booktabs = TRUE, col.names = col_names, escape = FALSE) |>
+    kableExtra::kable_styling(font_size = 8, latex_options = c("striped", "scale_down"),
+                              stripe_color = "gray!8")
 } else if (isTRUE(getOption("thesis.is.html")) && knitr::is_html_output()) {
   DT::datatable(lake_data, rownames = FALSE, filter = "top",
                 options = list(pageLength = 12, dom = 'frtip', scrollX = TRUE))
